@@ -28,6 +28,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
+          height: Get.height,
           width: double.infinity,
           decoration: BoxDecoration(
             image: DecorationImage(
@@ -187,8 +188,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
   }
 
   login() async {
-    final uri = Uri.parse(
-        '${apiGlobal}user/login?email=${email.text}&password=${password.text}');
+    final uri = Uri.parse('${apiGlobal}user/login');
 
     print(uri);
 
