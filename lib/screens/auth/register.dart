@@ -25,7 +25,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   String apiGlobal = "https://qtdev.the4loop.com/";
 
-  // late String _selectedValue;
   late String _selectedValue1;
   @override
   Widget build(BuildContext context) {
@@ -105,66 +104,65 @@ class _RegisterScreenState extends State<RegisterScreen> {
               SizedBox(
                 height: res_height * 0.015,
               ),
-              // Container(
-              //   width: MediaQuery.of(context).size.width * 0.9,
-              //   child: TextField(
-              //     decoration: new InputDecoration(
-              //       hintText: 'City',
-              //       border: OutlineInputBorder(
-              //           borderRadius: BorderRadius.circular(7.0),
-              //           borderSide: BorderSide(
-              //             color: Colors.transparent,
-              //           )),
-              //       hintStyle: TextStyle(),
-              //       contentPadding: EdgeInsets.only(top: 16, left: 16),
-              //       fillColor: Colors.white,
-              //       filled: true,
-              //     ),
-              //   ),
-              // ),
               Container(
-                width: Get.width * 0.9,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(7.0),
-                ),
-                child: DropdownButtonFormField<String>(
-                  // underline: SizedBox(),
-
-                  decoration: InputDecoration(
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.all(12)),
-                  hint: Text(
-                    'City',
-                    style: TextStyle(
-                      fontSize: 17,
-                    ),
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: TextField(
+                  controller: city,
+                  decoration: new InputDecoration(
+                    hintText: 'City',
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(7.0),
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                        )),
+                    hintStyle: TextStyle(),
+                    contentPadding: EdgeInsets.only(top: 16, left: 16),
+                    fillColor: Colors.white,
+                    filled: true,
                   ),
-                  isExpanded: true,
-                  items: <String>['NewYork', 'NewJersy'].map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedValue1 = value!;
-                      city = _selectedValue1 as TextEditingController;
-                      // controller.text = _myActivity;
-                      print(_selectedValue1.toString());
-                      print(city.toString());
-                    });
-                  },
-                  style: TextStyle(color: Colors.grey),
-                  // icon: Icon(
-                  //   Icons.arrow_forward_ios,
-                  //   color: kPrimaryColor,
-                  //   size: 20,
-                  // ),
-                  // iconSize: 20,
                 ),
               ),
+              // Container(
+              //   width: Get.width * 0.9,
+              //   decoration: BoxDecoration(
+              //     color: Colors.white,
+              //     borderRadius: BorderRadius.circular(7.0),
+              //   ),
+              //   child: DropdownButtonFormField<String>(
+              //     decoration: InputDecoration(
+              //         fillColor: Colors.white,
+              //         contentPadding: EdgeInsets.all(12)),
+              //     hint: Text(
+              //       'City',
+              //       style: TextStyle(
+              //         fontSize: 17,
+              //       ),
+              //     ),
+              //     isExpanded: true,
+              //     items: <String>['NewYork', 'NewJersy'].map((String value) {
+              //       return DropdownMenuItem<String>(
+              //         value: value,
+              //         child: Text(value),
+              //       );
+              //     }).toList(),
+              //     onChanged: (value) {
+              //       setState(() {
+              //         _selectedValue1 = value!;
+              //         city = _selectedValue1 as TextEditingController;
+
+              //         print(_selectedValue1.toString());
+              //         print(city.toString());
+              //       });
+              //     },
+              //     style: TextStyle(color: Colors.grey),
+              //     // icon: Icon(
+              //     //   Icons.arrow_forward_ios,
+              //     //   color: kPrimaryColor,
+              //     //   size: 20,
+              //     // ),
+              //     // iconSize: 20,
+              //   ),
+              // ),
               SizedBox(
                 height: res_height * 0.015,
               ),
@@ -290,17 +288,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   register() async {
-    final uri = Uri.parse('${apiGlobal}api/user/registration');
+    final uri = Uri.parse('https://qtdev.the4loop.com/api/user/registration');
 
     print(uri);
 
     var sendData = {
-      "fullname": fullname.text,
-      "email": email.text,
-      "city": city.text,
-      "phone": phone.text,
-      "password": password.text,
-      "password_confirmation": password_confirmation,
+      'fullname': fullname.text,
+      'email': email.text,
+      'city': city.text,
+      'phone': phone.text,
+      'password': password.text,
+      'password_confirmation': password_confirmation.text,
+      // "fullname": fullname.text,
+      // "email": email.text,
+      // "city": city.text,
+      // "phone": phone.text,
+      // "password": password.text,
+      // "password_confirmation": password_confirmation,
     };
 
     String jsonBody = json.encode(sendData);

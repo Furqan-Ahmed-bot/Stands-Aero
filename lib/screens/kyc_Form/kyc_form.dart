@@ -1,11 +1,41 @@
+import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stande_aero/screens/Profile/profile.dart';
 import 'package:stande_aero/screens/credit_Form/credit_form.dart';
+import 'package:stande_aero/screens/mainhome.dart';
 
-class kyc_form extends StatelessWidget {
+class kyc_form extends StatefulWidget {
   const kyc_form({Key? key}) : super(key: key);
 
+  @override
+  State<kyc_form> createState() => _kyc_formState();
+}
+
+class _kyc_formState extends State<kyc_form> {
+  TextEditingController ClientId = TextEditingController();
+  TextEditingController CompanyName = TextEditingController();
+  TextEditingController company_type = TextEditingController();
+  TextEditingController company_type1 = TextEditingController();
+  TextEditingController company_address = TextEditingController();
+  TextEditingController password_confirmation = TextEditingController();
+  TextEditingController number = TextEditingController();
+  TextEditingController fax = TextEditingController();
+  TextEditingController contact_person = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController company_website = TextEditingController();
+  TextEditingController company_additional_members = TextEditingController();
+  TextEditingController company_prmy_bsns = TextEditingController();
+  TextEditingController fund_src = TextEditingController();
+  TextEditingController company_countrylist = TextEditingController();
+  TextEditingController company2_name = TextEditingController();
+  TextEditingController _by = TextEditingController();
+  TextEditingController title = TextEditingController();
+  TextEditingController date = TextEditingController();
+
+  String apiGlobal = "https://qtdev.the4loop.com/";
   @override
   Widget build(BuildContext context) {
     double res_width = MediaQuery.of(context).size.width;
@@ -88,7 +118,7 @@ class kyc_form extends StatelessWidget {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(controller: ClientId, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -99,7 +129,7 @@ class kyc_form extends StatelessWidget {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(controller: CompanyName, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -110,7 +140,7 @@ class kyc_form extends StatelessWidget {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(controller: company_type, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -122,6 +152,7 @@ class kyc_form extends StatelessWidget {
                     ),
                   ),
                   textfiel_kyc(
+                    controller: company_type1,
                     res_width: res_width,
                     maxLines: 4,
                   ),
@@ -135,7 +166,8 @@ class kyc_form extends StatelessWidget {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(
+                      controller: company_address, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -146,7 +178,7 @@ class kyc_form extends StatelessWidget {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(controller: number, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -157,7 +189,7 @@ class kyc_form extends StatelessWidget {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(controller: fax, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -168,7 +200,8 @@ class kyc_form extends StatelessWidget {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(
+                      controller: contact_person, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -179,7 +212,7 @@ class kyc_form extends StatelessWidget {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(controller: email, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -292,7 +325,8 @@ class kyc_form extends StatelessWidget {
                       fontSize: 13,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(
+                      controller: company_website, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -313,7 +347,9 @@ class kyc_form extends StatelessWidget {
                       fontSize: 10,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(
+                      controller: company_additional_members,
+                      res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -324,7 +360,8 @@ class kyc_form extends StatelessWidget {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(
+                      controller: company_prmy_bsns, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -362,12 +399,68 @@ class kyc_form extends StatelessWidget {
       ),
     );
   }
+
+  kyc() async {
+    final uri = Uri.parse('https://qtdev.the4loop.com/api/user/kyc-submit');
+
+    print(uri);
+
+    var sendData = {
+      'client_id': ClientId.text,
+      'company_name': CompanyName.text,
+      'company_type': company_type.text,
+      'company_type': company_type1.text,
+      'company_address': company_address.text,
+      'number': number.text,
+      'fax': fax.text,
+      'contact_person': contact_person.text,
+      'email': email.text,
+      'company_website': company_website.text,
+      'company_additional_members': company_additional_members.text,
+      'company_prmy_bsns': company_prmy_bsns.text,
+      'fund_src': fund_src.text,
+      'company_countrylist': company_countrylist.text,
+      'company2_name': company2_name.text,
+      '_by': _by.text,
+      'title': title.text,
+      'date': date.text,
+    };
+
+    String jsonBody = json.encode(sendData);
+
+    final headers = {'Content-Type': 'application/json'};
+
+    http.Response response = await http.post(
+      uri,
+      headers: headers,
+      body: jsonBody,
+    );
+
+    print(response.statusCode);
+
+    print(response.body);
+
+    var res_data = json.decode(response.body.toString());
+
+    print(res_data);
+    if (res_data["status"] == true) {
+      Get.to(() => MainScreen());
+    } else
+      Get.snackbar(
+        'Error',
+        'Wrong Credentials',
+        animationDuration: Duration(seconds: 2),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+
+    return res_data;
+  }
 }
 
 class textfiel_kyc extends StatelessWidget {
   var maxLines;
-
   textfiel_kyc({
+    TextEditingController? controller,
     Key? key,
     this.maxLines,
     required this.res_width,
@@ -377,12 +470,14 @@ class textfiel_kyc extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var controller;
     return Container(
       width: res_width * 0.925,
       decoration: BoxDecoration(
           color: Colors.grey,
           borderRadius: BorderRadius.all(Radius.circular(7))),
       child: TextField(
+        controller: controller,
         maxLines: maxLines,
         decoration: InputDecoration(
           border: InputBorder.none,
