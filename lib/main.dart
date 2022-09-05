@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stande_aero/screens/auth/emaillogin.dart';
 import 'package:stande_aero/screens/mainhome.dart';
 
 void main() {
@@ -56,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   start() {
-    Timer(Duration(seconds: 2), () => Get.to(() => MainScreen()));
+    Timer(Duration(seconds: 2), () => Get.to(() => EmailLoginScreen()));
   }
 
   @override
