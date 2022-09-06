@@ -12,6 +12,7 @@ class credit_form extends StatefulWidget {
 }
 
 class _credit_formState extends State<credit_form> {
+  TextEditingController client_id = TextEditingController();
   TextEditingController company_name = TextEditingController();
   TextEditingController company_address = TextEditingController();
   TextEditingController city = TextEditingController();
@@ -29,7 +30,7 @@ class _credit_formState extends State<credit_form> {
   TextEditingController partnership = TextEditingController();
   TextEditingController type_of_business = TextEditingController();
   TextEditingController d_and_b = TextEditingController();
-  String apiGlobal = "https://qtdev.the4loop.com/api/";
+  String apiGlobal = "https://qtdev.the4loop.com/";
   @override
   Widget build(BuildContext context) {
     double res_width = MediaQuery.of(context).size.width;
@@ -344,11 +345,13 @@ class _credit_formState extends State<credit_form> {
   }
 
   CFA() async {
-    final uri = Uri.parse('${apiGlobal}user/credit-application-submit');
+    final uri = Uri.parse(
+        'https://qtdev.the4loop.com/api/user/credit-application-submit');
 
     print(uri);
 
     var sendData = {
+      'client_id': client_id.text,
       'company_name': company_name.text,
       'company_address': company_address.text,
       'city': city.text,
