@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stande_aero/screens/credit_Form/credit_form2.dart';
+import 'package:stande_aero/helper/global.dart';
 
 class credit_form extends StatefulWidget {
   const credit_form({Key? key}) : super(key: key);
@@ -309,7 +311,7 @@ class _credit_formState extends State<credit_form> {
 
                   GestureDetector(
                     onTap: () {
-                      print("object");
+                      print(Response);
                       CFA();
                     },
                     child: Container(
@@ -344,11 +346,47 @@ class _credit_formState extends State<credit_form> {
   }
 
   CFA() async {
-    final uri = Uri.parse('${apiGlobal}user/credit-application-submit');
+    final uri = Uri.parse(
+        'https://qtdev.the4loop.com/api/user/credit-application-submit');
 
     print(uri);
 
     var sendData = {
+      // 'client_id': '29',
+      // 'company_name': 'test company',
+      // 'company_address': 'abc address',
+      // 'city': 'california',
+      // 'contact_name': 'george',
+      // 'phone': '+1321654987',
+      // 'sole_proprietorship': 'test sole proprietorship',
+      // 'corporation': 'block box',
+      // 'other': 'other details',
+      // 'date_business_stared': '2022-06-06',
+      // 'federal_id': '56456',
+      // 'state': 'las vegas',
+      // 'fax': '3234234',
+      // 'zip': '022985',
+      // 'email': 'saasd@qwqw.com',
+      // 'partnership': 'asdsd',
+      // 'type_of_business': 'dasd',
+      // 'd_and_b': 'asdasd',
+      // 'bank_name': 'sdasd',
+      // 'bank_address': 'asdas',
+      // 'bank_city': 'as',
+      // 'bank_contact_name': 'asdasd',
+      // 'bank_state': 'asds',
+      // 'bank_zip': '32154',
+      // 'bank_phone': 'asdadasdsa',
+      // 'bsns_trde_company_name': 'asasd',
+      // 'bsns_trde_company_address': 'asdsda',
+      // 'bsns_trde_city': 'assdasd',
+      // 'bsns_trde_state': 'asdas',
+      // 'bsns_trde_zip': '2565',
+      // 'bsns_trde_phone': 'asdasd',
+      // 'bsns_trde_fax': 'asdasd',
+      // 'bsns_trde_email': 'asdsad',
+      // 'sig_name_title': 'asdasd',
+      // 'sig_date': '2022-05-05'
       'company_name': company_name.text,
       'company_address': company_address.text,
       'city': city.text,
@@ -367,9 +405,12 @@ class _credit_formState extends State<credit_form> {
       'd_and_b': d_and_b.text,
     };
 
-    String jsonBody = json.encode(sendData);
+    var jsonBody = json.encode(sendData);
 
-    final headers = {'Content-Type': 'application/json'};
+    final headers = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Bearer ${globaltoken}',
+    };
 
     http.Response response = await http.post(
       uri,
@@ -380,8 +421,12 @@ class _credit_formState extends State<credit_form> {
     print(response.statusCode);
 
     print(response.body);
-
-    var res_data = json.decode(response.body.toString());
+    // try {
+    //   var res_data = json.decode(response.body);
+    // } catch (e) {
+    //   log('$e');
+    // }
+    var res_data = json.decode(response.body);
 
     print(res_data);
     if (res_data["status"] == true) {

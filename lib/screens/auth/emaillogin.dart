@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stande_aero/helper/colors.dart';
+import 'package:stande_aero/helper/global.dart';
 import 'package:stande_aero/screens/auth/register.dart';
 import 'package:stande_aero/screens/home/home.dart';
 import 'package:stande_aero/screens/mainhome.dart';
@@ -118,8 +119,8 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
               GestureDetector(
                 onTap: () {
                   print("login");
-                  // login();
-                  Get.to(() => MainScreen());
+                  login();
+                  // Get.to(() => MainScreen());
                 },
                 child: Container(
                   width: res_width * 0.9,
@@ -217,6 +218,8 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
 
     print(res_data);
     if (res_data["status"] == true) {
+      globaltoken = res_data["data"]["token"];
+      print(globaltoken);
       Get.to(() => MainScreen());
     } else
       Get.snackbar(
