@@ -117,7 +117,9 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  login();
+                  print("login");
+                  // login();
+                  Get.to(() => MainScreen());
                 },
                 child: Container(
                   width: res_width * 0.9,

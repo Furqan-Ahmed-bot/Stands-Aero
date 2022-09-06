@@ -459,6 +459,72 @@ class _NavDrawerState extends State<NavDrawer> {
                   ),
                 ),
               ),
+              GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () {
+                  Get.to(() => kyc_form());
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 13, right: 13),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: Padding(
+                              padding: const EdgeInsets.all(7.0),
+                              child:
+                                  Image.asset("assets/slicing/Untitled-38.png"),
+                            ),
+                            onPressed: () {},
+                          ),
+                          Text(
+                            'Kyc',
+                            style: TextStyle(fontSize: 15, color: Colors.white),
+                          )
+                        ],
+                      ),
+                      Container(
+                        height: 1,
+                        color: Colors.grey.withOpacity(0.2),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () {
+                  Get.to(() => credit_form());
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 13, right: 13),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: Padding(
+                              padding: const EdgeInsets.all(7.0),
+                              child:
+                                  Image.asset("assets/slicing/Untitled-38.png"),
+                            ),
+                            onPressed: () {},
+                          ),
+                          Text(
+                            'creditapp',
+                            style: TextStyle(fontSize: 15, color: Colors.white),
+                          )
+                        ],
+                      ),
+                      Container(
+                        height: 1,
+                        color: Colors.grey.withOpacity(0.2),
+                      )
+                    ],
+                  ),
+                ),
+              ),
               // GestureDetector(
               //   behavior: HitTestBehavior.translucent,
               //   onTap: () {

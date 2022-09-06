@@ -1,10 +1,35 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stande_aero/screens/credit_Form/credit_form2.dart';
 
-class credit_form extends StatelessWidget {
+class credit_form extends StatefulWidget {
   const credit_form({Key? key}) : super(key: key);
 
+  @override
+  State<credit_form> createState() => _credit_formState();
+}
+
+class _credit_formState extends State<credit_form> {
+  TextEditingController company_name = TextEditingController();
+  TextEditingController company_address = TextEditingController();
+  TextEditingController city = TextEditingController();
+  TextEditingController contact_name = TextEditingController();
+  TextEditingController phone = TextEditingController();
+  TextEditingController sole_proprietorship = TextEditingController();
+  TextEditingController corporation = TextEditingController();
+  TextEditingController other = TextEditingController();
+  TextEditingController date_business_stared = TextEditingController();
+  TextEditingController federal_id = TextEditingController();
+  TextEditingController state = TextEditingController();
+  TextEditingController fax = TextEditingController();
+  TextEditingController zip = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController partnership = TextEditingController();
+  TextEditingController type_of_business = TextEditingController();
+  TextEditingController d_and_b = TextEditingController();
+  String apiGlobal = "https://qtdev.the4loop.com/api/";
   @override
   Widget build(BuildContext context) {
     double res_width = MediaQuery.of(context).size.width;
@@ -87,7 +112,7 @@ class credit_form extends StatelessWidget {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(controller: company_name, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -98,7 +123,8 @@ class credit_form extends StatelessWidget {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(
+                      controller: company_address, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -109,7 +135,7 @@ class credit_form extends StatelessWidget {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(controller: city, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -121,6 +147,7 @@ class credit_form extends StatelessWidget {
                     ),
                   ),
                   textfiel_kyc(
+                    controller: contact_name,
                     res_width: res_width,
                     maxLines: 4,
                   ),
@@ -134,7 +161,7 @@ class credit_form extends StatelessWidget {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(controller: phone, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -145,7 +172,8 @@ class credit_form extends StatelessWidget {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(
+                      controller: sole_proprietorship, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -156,7 +184,7 @@ class credit_form extends StatelessWidget {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(controller: corporation, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -167,7 +195,7 @@ class credit_form extends StatelessWidget {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(controller: other, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -178,7 +206,8 @@ class credit_form extends StatelessWidget {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(
+                      controller: date_business_stared, res_width: res_width),
 
                   SizedBox(
                     height: res_height * 0.02,
@@ -190,7 +219,7 @@ class credit_form extends StatelessWidget {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(controller: federal_id, res_width: res_width),
 
                   SizedBox(
                     height: res_height * 0.02,
@@ -202,7 +231,7 @@ class credit_form extends StatelessWidget {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(controller: state, res_width: res_width),
 
                   SizedBox(
                     height: res_height * 0.02,
@@ -214,7 +243,7 @@ class credit_form extends StatelessWidget {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(controller: fax, res_width: res_width),
 
                   SizedBox(
                     height: res_height * 0.02,
@@ -226,7 +255,7 @@ class credit_form extends StatelessWidget {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(controller: zip, res_width: res_width),
 
                   SizedBox(
                     height: res_height * 0.02,
@@ -238,7 +267,7 @@ class credit_form extends StatelessWidget {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(controller: email, res_width: res_width),
 
                   SizedBox(
                     height: res_height * 0.02,
@@ -250,7 +279,7 @@ class credit_form extends StatelessWidget {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(controller: partnership, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -261,7 +290,8 @@ class credit_form extends StatelessWidget {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(
+                      controller: type_of_business, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -272,7 +302,7 @@ class credit_form extends StatelessWidget {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(controller: d_and_b, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -280,7 +310,7 @@ class credit_form extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       print("object");
-                      Get.to(() => credit_from2());
+                      CFA();
                     },
                     child: Container(
                       width: res_width * 0.925,
@@ -312,12 +342,67 @@ class credit_form extends StatelessWidget {
       ),
     );
   }
+
+  CFA() async {
+    final uri = Uri.parse('${apiGlobal}user/credit-application-submit');
+
+    print(uri);
+
+    var sendData = {
+      'company_name': company_name.text,
+      'company_address': company_address.text,
+      'city': city.text,
+      'contact_name': contact_name.text,
+      'phone': phone.text,
+      'sole_proprietorship': sole_proprietorship.text,
+      'corporation': corporation.text,
+      'other': other.text,
+      'date_business_stared': date_business_stared.text,
+      'federal_id': federal_id.text,
+      'state': state.text,
+      'fax': fax.text,
+      'zip': zip.text,
+      'email': email.text,
+      'type_of_business': type_of_business.text,
+      'd_and_b': d_and_b.text,
+    };
+
+    String jsonBody = json.encode(sendData);
+
+    final headers = {'Content-Type': 'application/json'};
+
+    http.Response response = await http.post(
+      uri,
+      headers: headers,
+      body: jsonBody,
+    );
+
+    print(response.statusCode);
+
+    print(response.body);
+
+    var res_data = json.decode(response.body.toString());
+
+    print(res_data);
+    if (res_data["status"] == true) {
+      Get.to(() => credit_from2());
+    } else
+      Get.snackbar(
+        'Error',
+        'Wrong Credentials',
+        animationDuration: Duration(seconds: 2),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+
+    return res_data;
+  }
 }
 
 class textfiel_kyc extends StatelessWidget {
   var maxLines;
 
   textfiel_kyc({
+    TextEditingController? controller,
     Key? key,
     this.maxLines,
     required this.res_width,

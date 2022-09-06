@@ -104,65 +104,65 @@ class _RegisterScreenState extends State<RegisterScreen> {
               SizedBox(
                 height: res_height * 0.015,
               ),
-              Container(
-                width: MediaQuery.of(context).size.width * 0.9,
-                child: TextField(
-                  controller: city,
-                  decoration: new InputDecoration(
-                    hintText: 'City',
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(7.0),
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                        )),
-                    hintStyle: TextStyle(),
-                    contentPadding: EdgeInsets.only(top: 16, left: 16),
-                    fillColor: Colors.white,
-                    filled: true,
-                  ),
-                ),
-              ),
               // Container(
-              //   width: Get.width * 0.9,
-              //   decoration: BoxDecoration(
-              //     color: Colors.white,
-              //     borderRadius: BorderRadius.circular(7.0),
-              //   ),
-              //   child: DropdownButtonFormField<String>(
-              //     decoration: InputDecoration(
-              //         fillColor: Colors.white,
-              //         contentPadding: EdgeInsets.all(12)),
-              //     hint: Text(
-              //       'City',
-              //       style: TextStyle(
-              //         fontSize: 17,
-              //       ),
+              //   width: MediaQuery.of(context).size.width * 0.9,
+              //   child: TextField(
+              //     controller: city,
+              //     decoration: new InputDecoration(
+              //       hintText: 'City',
+              //       border: OutlineInputBorder(
+              //           borderRadius: BorderRadius.circular(7.0),
+              //           borderSide: BorderSide(
+              //             color: Colors.transparent,
+              //           )),
+              //       hintStyle: TextStyle(),
+              //       contentPadding: EdgeInsets.only(top: 16, left: 16),
+              //       fillColor: Colors.white,
+              //       filled: true,
               //     ),
-              //     isExpanded: true,
-              //     items: <String>['NewYork', 'NewJersy'].map((String value) {
-              //       return DropdownMenuItem<String>(
-              //         value: value,
-              //         child: Text(value),
-              //       );
-              //     }).toList(),
-              //     onChanged: (value) {
-              //       setState(() {
-              //         _selectedValue1 = value!;
-              //         city = _selectedValue1 as TextEditingController;
-
-              //         print(_selectedValue1.toString());
-              //         print(city.toString());
-              //       });
-              //     },
-              //     style: TextStyle(color: Colors.grey),
-              //     // icon: Icon(
-              //     //   Icons.arrow_forward_ios,
-              //     //   color: kPrimaryColor,
-              //     //   size: 20,
-              //     // ),
-              //     // iconSize: 20,
               //   ),
               // ),
+              Container(
+                width: Get.width * 0.9,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(7.0),
+                ),
+                child: DropdownButtonFormField<String>(
+                  decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      contentPadding: EdgeInsets.all(12)),
+                  hint: Text(
+                    'City',
+                    style: TextStyle(
+                      fontSize: 17,
+                    ),
+                  ),
+                  isExpanded: true,
+                  items: <String>['NewYork', 'NewJersy'].map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedValue1 = value!;
+                      city.text = _selectedValue1;
+                      print("selected value" + _selectedValue1.toString());
+                      print("selected city" + city.text);
+                      // city = _selectedValue1 as TextEditingController;
+                    });
+                  },
+                  style: TextStyle(color: Colors.grey),
+                  // icon: Icon(
+                  //   Icons.arrow_forward_ios,
+                  //   color: kPrimaryColor,
+                  //   size: 20,
+                  // ),
+                  // iconSize: 20,
+                ),
+              ),
               SizedBox(
                 height: res_height * 0.015,
               ),
