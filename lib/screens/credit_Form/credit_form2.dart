@@ -1,6 +1,9 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stande_aero/bottomcontroller.dart';
+import 'package:stande_aero/helper/global.dart';
 import 'package:stande_aero/screens/kyc_Form/kyc_form.dart';
 import 'package:stande_aero/screens/mainhome.dart';
 
@@ -12,6 +15,24 @@ class credit_from2 extends StatefulWidget {
 }
 
 class _credit_from2State extends State<credit_from2> {
+  TextEditingController bank_name = TextEditingController();
+  TextEditingController bank_address = TextEditingController();
+  TextEditingController bank_city = TextEditingController();
+  TextEditingController bank_contact_name = TextEditingController();
+  TextEditingController bank_state = TextEditingController();
+  TextEditingController bank_zip = TextEditingController();
+  TextEditingController bank_phone = TextEditingController();
+  TextEditingController bsns_trde_company_name = TextEditingController();
+  TextEditingController bsns_trde_company_address = TextEditingController();
+  TextEditingController bsns_trde_city = TextEditingController();
+  TextEditingController bsns_trde_state = TextEditingController();
+  TextEditingController bsns_trde_zip = TextEditingController();
+  TextEditingController bsns_trde_phone = TextEditingController();
+  TextEditingController bsns_trde_fax = TextEditingController();
+  TextEditingController bsns_trde_email = TextEditingController();
+  TextEditingController sig_name_title = TextEditingController();
+  TextEditingController sig_date = TextEditingController();
+
   final bottomctrl = Get.put(BottomController());
 
   @override
@@ -96,7 +117,7 @@ class _credit_from2State extends State<credit_from2> {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(controller: bank_name, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -107,7 +128,7 @@ class _credit_from2State extends State<credit_from2> {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(controller: bank_address, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -118,7 +139,7 @@ class _credit_from2State extends State<credit_from2> {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(controller: bank_city, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -130,6 +151,7 @@ class _credit_from2State extends State<credit_from2> {
                     ),
                   ),
                   textfiel_kyc(
+                    controller: bank_contact_name,
                     res_width: res_width,
                     // maxLines: 4,
                   ),
@@ -143,7 +165,7 @@ class _credit_from2State extends State<credit_from2> {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(controller: bank_state, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -154,7 +176,7 @@ class _credit_from2State extends State<credit_from2> {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(controller: bank_zip, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -165,7 +187,7 @@ class _credit_from2State extends State<credit_from2> {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(controller: bank_phone, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -210,7 +232,8 @@ class _credit_from2State extends State<credit_from2> {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(
+                      controller: bsns_trde_company_name, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -221,7 +244,9 @@ class _credit_from2State extends State<credit_from2> {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(
+                      controller: bsns_trde_company_address,
+                      res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -232,7 +257,8 @@ class _credit_from2State extends State<credit_from2> {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(
+                      controller: bsns_trde_city, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -243,7 +269,8 @@ class _credit_from2State extends State<credit_from2> {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(
+                      controller: bsns_trde_state, res_width: res_width),
 
                   SizedBox(
                     height: res_height * 0.02,
@@ -255,7 +282,7 @@ class _credit_from2State extends State<credit_from2> {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(controller: bsns_trde_zip, res_width: res_width),
 
                   SizedBox(
                     height: res_height * 0.02,
@@ -267,7 +294,8 @@ class _credit_from2State extends State<credit_from2> {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(
+                      controller: bsns_trde_phone, res_width: res_width),
 
                   SizedBox(
                     height: res_height * 0.02,
@@ -279,7 +307,7 @@ class _credit_from2State extends State<credit_from2> {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(controller: bsns_trde_fax, res_width: res_width),
 
                   SizedBox(
                     height: res_height * 0.02,
@@ -291,7 +319,8 @@ class _credit_from2State extends State<credit_from2> {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(
+                      controller: bsns_trde_email, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -344,7 +373,8 @@ class _credit_from2State extends State<credit_from2> {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(
+                      controller: sig_name_title, res_width: res_width),
 
                   SizedBox(
                     height: res_height * 0.02,
@@ -356,7 +386,7 @@ class _credit_from2State extends State<credit_from2> {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(res_width: res_width),
+                  textfiel_kyc(controller: sig_date, res_width: res_width),
 
                   SizedBox(
                     height: res_height * 0.02,
@@ -365,7 +395,8 @@ class _credit_from2State extends State<credit_from2> {
                   GestureDetector(
                     onTap: () {
                       bottomctrl.navBarChange(2);
-                      Get.to(() => MainScreen());
+                      CFA2();
+                      // Get.to(() => MainScreen());
                     },
                     child: Container(
                       width: res_width * 0.925,
@@ -395,6 +426,103 @@ class _credit_from2State extends State<credit_from2> {
           ),
         ),
       ),
+    );
+  }
+
+  CFA2() async {
+    final uri = Uri.parse(
+        'https://qtdev.the4loop.com/api/user/credit-application-submit');
+
+    print(uri);
+
+    var sendData = {
+      'bank_name': bank_name.text,
+      'bank_address': bank_address.text,
+      'bank_city': bank_city.text,
+      'bank_contact_name': bank_contact_name.text,
+      'bank_state': bank_state.text,
+      'bank_zip': bank_zip.text,
+      'bank_phone': bank_phone.text,
+      'bsns_trde_company_name': bsns_trde_company_name.text,
+      'bsns_trde_company_address': bsns_trde_company_address.text,
+      'bsns_trde_city': bsns_trde_city.text,
+      'bsns_trde_state': bsns_trde_state.text,
+      'bsns_trde_zip': bsns_trde_zip.text,
+      'bsns_trde_phone': bsns_trde_phone.text,
+      'bsns_trde_fax': bsns_trde_fax.text,
+      'bsns_trde_email': bsns_trde_email.text,
+      'sig_name_title': sig_name_title.text,
+      'sig_date': sig_date.text,
+    };
+
+    var jsonBody = json.encode(sendData);
+
+    final headers = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Bearer ${globaltoken}',
+    };
+
+    http.Response response = await http.post(
+      uri,
+      headers: headers,
+      body: jsonBody,
+    );
+
+    print(response.statusCode);
+
+    print(response.body);
+    // try {
+    //   var res_data = json.decode(response.body);
+    // } catch (e) {
+    //   log('$e');
+    // }
+    var res_data = json.decode(response.body);
+
+    print(res_data);
+    if (res_data["status"] == true) {
+      Get.to(() => MainScreen());
+    } else
+      Get.snackbar(
+        'Error',
+        'Wrong Credentials',
+        animationDuration: Duration(seconds: 2),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+
+    return res_data;
+  }
+}
+
+class textfiel_kyc extends StatelessWidget {
+  var maxLines;
+
+  textfiel_kyc({
+    TextEditingController? controller,
+    Key? key,
+    this.maxLines,
+    required this.res_width,
+  }) : super(key: key);
+
+  final double res_width;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+          height: 4,
+        ),
+        Container(
+          width: res_width * 0.925,
+          decoration: BoxDecoration(
+              color: Colors.grey,
+              borderRadius: BorderRadius.all(Radius.circular(7))),
+          child: TextField(
+            maxLines: maxLines,
+            decoration: InputDecoration(border: InputBorder.none),
+          ),
+        ),
+      ],
     );
   }
 }
