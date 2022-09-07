@@ -1,9 +1,13 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stande_aero/helper/colors.dart';
+import 'package:stande_aero/helper/global.dart';
 import 'package:stande_aero/screens/Profile/editprofile.dart';
 import 'package:stande_aero/screens/auth/mainlogin.dart';
 import 'package:stande_aero/screens/home/drawer.dart';
+
 // import 'package:stande_aero/screens/home/Profile/editprofile.dart';
 
 class profile extends StatefulWidget {
@@ -17,6 +21,7 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   late AnimationController animation;
   late Animation<double> _fadeInFadeOut;
+
   @override
   void initState() {
     super.initState();
@@ -128,7 +133,7 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Get.to(() => MainLoginScreen());
+                      logout();
                     },
                     child: Container(
                       width: res_width * 0.9,
@@ -160,6 +165,107 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
       ),
     );
   }
+
+  prof() async {
+    final uri = Uri.parse('https://qtdev.the4loop.com/api/user/details');
+
+    print(uri);
+
+    // var jsonBody = json.encode(sendData);
+
+    final headers = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Bearer ${globaltoken}',
+    };
+
+    http.Response response = await http.get(
+      uri,
+      headers: headers,
+      // body: jsonBody,
+    );
+
+    print(response.statusCode);
+
+    print(response.body);
+    // try {
+    //   var res_data = json.decode(response.body);
+    // } catch (e) {
+    //   log('$e');
+    // }
+    var res_data = json.decode(response.body);
+
+    print(res_data);
+    if (res_data["status"] == true) {
+      Get.to(() => MainLoginScreen());
+    } else
+      Get.snackbar(
+        'Error',
+        'Wrong Credentials',
+        animationDuration: Duration(seconds: 2),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+
+    return res_data;
+  }
+}
+
+logout() async {
+  final uri = Uri.parse('https://qtdev.the4loop.com/api/user/logout');
+
+  print(uri);
+
+  // var sendData = {
+  //   'client_id': client_id.text,
+  //   'company_name': company_name.text,
+  //   'company_type': company_type.text,
+  //   'company_state_country': company_state_country.text,
+  //   'company_address': company_address.text,
+  //   'number': number.text,
+  //   'fax': fax.text,
+  //   'contact_person': contact_person.text,
+  //   'email': email.text,
+  //   'company_website': company_website.text,
+  //   'company_additional_members': company_additional_members.text,
+  //   'company_prmy_bsns': company_prmy_bsns.text,
+  //   'fund_src': fund_src.text,
+  //   'company_countrylist': company_countrylist.text,
+  // };
+
+  // var jsonBody = json.encode(sendData);
+
+  final headers = {
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'Authorization': 'Bearer ${globaltoken}',
+  };
+
+  http.Response response = await http.post(
+    uri,
+    headers: headers,
+    // body: jsonBody,
+  );
+
+  print(response.statusCode);
+
+  print(response.body);
+  // try {
+  //   var res_data = json.decode(response.body);
+  // } catch (e) {
+  //   log('$e');
+  // }
+  var res_data = json.decode(response.body);
+
+  print(res_data);
+  if (res_data["status"] == true) {
+    Get.to(() => MainLoginScreen());
+  } else
+    Get.snackbar(
+      'Error',
+      'Wrong Credentials',
+      animationDuration: Duration(seconds: 2),
+      snackPosition: SnackPosition.BOTTOM,
+    );
+
+  return res_data;
 }
 
 class profile_text extends StatelessWidget {

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stande_aero/helper/global.dart';
 import 'package:stande_aero/screens/Profile/profile.dart';
 import 'package:stande_aero/screens/credit_Form/credit_form.dart';
 import 'package:stande_aero/screens/mainhome.dart';
@@ -15,12 +16,11 @@ class kyc_form extends StatefulWidget {
 }
 
 class _kyc_formState extends State<kyc_form> {
-  TextEditingController ClientId = TextEditingController();
-  TextEditingController CompanyName = TextEditingController();
+  TextEditingController client_id = TextEditingController();
+  TextEditingController company_name = TextEditingController();
   TextEditingController company_type = TextEditingController();
-  TextEditingController company_type1 = TextEditingController();
+  TextEditingController company_state_country = TextEditingController();
   TextEditingController company_address = TextEditingController();
-  TextEditingController password_confirmation = TextEditingController();
   TextEditingController number = TextEditingController();
   TextEditingController fax = TextEditingController();
   TextEditingController contact_person = TextEditingController();
@@ -30,10 +30,6 @@ class _kyc_formState extends State<kyc_form> {
   TextEditingController company_prmy_bsns = TextEditingController();
   TextEditingController fund_src = TextEditingController();
   TextEditingController company_countrylist = TextEditingController();
-  TextEditingController company2_name = TextEditingController();
-  TextEditingController _by = TextEditingController();
-  TextEditingController title = TextEditingController();
-  TextEditingController date = TextEditingController();
 
   String apiGlobal = "https://qtdev.the4loop.com/";
   @override
@@ -118,7 +114,7 @@ class _kyc_formState extends State<kyc_form> {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(controller: ClientId, res_width: res_width),
+                  textfiel_kyc(controller: company_name, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -129,7 +125,7 @@ class _kyc_formState extends State<kyc_form> {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(controller: CompanyName, res_width: res_width),
+                  textfiel_kyc(controller: company_type, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -140,7 +136,8 @@ class _kyc_formState extends State<kyc_form> {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(controller: company_type, res_width: res_width),
+                  textfiel_kyc(
+                      controller: company_state_country, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -152,7 +149,7 @@ class _kyc_formState extends State<kyc_form> {
                     ),
                   ),
                   textfiel_kyc(
-                    controller: company_type1,
+                    controller: company_address,
                     res_width: res_width,
                     maxLines: 4,
                   ),
@@ -166,8 +163,7 @@ class _kyc_formState extends State<kyc_form> {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(
-                      controller: company_address, res_width: res_width),
+                  textfiel_kyc(controller: number, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -178,23 +174,12 @@ class _kyc_formState extends State<kyc_form> {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(controller: number, res_width: res_width),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  Text(
-                    'Contact Person:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
                   textfiel_kyc(controller: fax, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
                   Text(
-                    'Email:',
+                    'Contact Person:',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 12,
@@ -206,13 +191,25 @@ class _kyc_formState extends State<kyc_form> {
                     height: res_height * 0.02,
                   ),
                   Text(
-                    'Company Website:',
+                    'Email:',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 12,
                     ),
                   ),
                   textfiel_kyc(controller: email, res_width: res_width),
+                  SizedBox(
+                    height: res_height * 0.02,
+                  ),
+                  Text(
+                    'Company Website:',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 12,
+                    ),
+                  ),
+                  textfiel_kyc(
+                      controller: company_website, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -233,6 +230,7 @@ class _kyc_formState extends State<kyc_form> {
                         child: Padding(
                           padding: EdgeInsets.only(left: 8.0),
                           child: TextField(
+                            controller: company_additional_members,
                             decoration: InputDecoration(hintText: "Name"),
                             keyboardType: TextInputType.datetime,
                           ),
@@ -245,6 +243,7 @@ class _kyc_formState extends State<kyc_form> {
                         child: Padding(
                           padding: EdgeInsets.only(left: 8.0),
                           child: TextField(
+                            controller: company_additional_members,
                             decoration: InputDecoration(hintText: "Title"),
                             keyboardType: TextInputType.datetime,
                           ),
@@ -265,6 +264,7 @@ class _kyc_formState extends State<kyc_form> {
                         child: Padding(
                           padding: EdgeInsets.only(left: 8.0),
                           child: TextField(
+                            controller: company_additional_members,
                             decoration: InputDecoration(hintText: "Name"),
                             keyboardType: TextInputType.datetime,
                           ),
@@ -277,6 +277,7 @@ class _kyc_formState extends State<kyc_form> {
                         child: Padding(
                           padding: EdgeInsets.only(left: 8.0),
                           child: TextField(
+                            controller: company_additional_members,
                             decoration: InputDecoration(hintText: "Title"),
                             keyboardType: TextInputType.datetime,
                           ),
@@ -326,7 +327,7 @@ class _kyc_formState extends State<kyc_form> {
                     ),
                   ),
                   textfiel_kyc(
-                      controller: company_website, res_width: res_width),
+                      controller: company_prmy_bsns, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -347,9 +348,7 @@ class _kyc_formState extends State<kyc_form> {
                       fontSize: 10,
                     ),
                   ),
-                  textfiel_kyc(
-                      controller: company_additional_members,
-                      res_width: res_width),
+                  textfiel_kyc(controller: fund_src, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -361,13 +360,13 @@ class _kyc_formState extends State<kyc_form> {
                     ),
                   ),
                   textfiel_kyc(
-                      controller: company_prmy_bsns, res_width: res_width),
+                      controller: company_countrylist, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
                   GestureDetector(
                     onTap: () {
-                      Get.to(() => credit_form());
+                      KYC();
                     },
                     child: Container(
                       width: res_width * 0.925,
@@ -400,16 +399,16 @@ class _kyc_formState extends State<kyc_form> {
     );
   }
 
-  kyc() async {
+  KYC() async {
     final uri = Uri.parse('https://qtdev.the4loop.com/api/user/kyc-submit');
 
     print(uri);
 
     var sendData = {
-      'client_id': ClientId.text,
-      'company_name': CompanyName.text,
+      'client_id': client_id.text,
+      'company_name': company_name.text,
       'company_type': company_type.text,
-      'company_type': company_type1.text,
+      'company_state_country': company_state_country.text,
       'company_address': company_address.text,
       'number': number.text,
       'fax': fax.text,
@@ -420,15 +419,14 @@ class _kyc_formState extends State<kyc_form> {
       'company_prmy_bsns': company_prmy_bsns.text,
       'fund_src': fund_src.text,
       'company_countrylist': company_countrylist.text,
-      'company2_name': company2_name.text,
-      '_by': _by.text,
-      'title': title.text,
-      'date': date.text,
     };
 
-    String jsonBody = json.encode(sendData);
+    var jsonBody = json.encode(sendData);
 
-    final headers = {'Content-Type': 'application/json'};
+    final headers = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Bearer ${globaltoken}',
+    };
 
     http.Response response = await http.post(
       uri,
@@ -439,12 +437,16 @@ class _kyc_formState extends State<kyc_form> {
     print(response.statusCode);
 
     print(response.body);
-
-    var res_data = json.decode(response.body.toString());
+    // try {
+    //   var res_data = json.decode(response.body);
+    // } catch (e) {
+    //   log('$e');
+    // }
+    var res_data = json.decode(response.body);
 
     print(res_data);
     if (res_data["status"] == true) {
-      Get.to(() => MainScreen());
+      Get.to(() => credit_form());
     } else
       Get.snackbar(
         'Error',

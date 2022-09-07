@@ -213,7 +213,7 @@ class _EditprofileState extends State<Editprofile> {
     );
   }
 
-  CFA() async {
+  CFA1() async {
     final uri = Uri.parse('https://qtdev.the4loop.com/api/user/profile/update');
 
     print(uri);
