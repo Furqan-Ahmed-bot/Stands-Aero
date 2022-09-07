@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stande_aero/contrloller/usercontroller.dart';
 import 'package:stande_aero/helper/colors.dart';
 import 'package:stande_aero/helper/global.dart';
+import 'package:stande_aero/helper/model.dart';
 import 'package:stande_aero/screens/auth/register.dart';
 import 'package:stande_aero/screens/home/home.dart';
 import 'package:stande_aero/screens/mainhome.dart';
@@ -21,6 +23,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   String apiGlobal = "https://qtdev.the4loop.com/api/";
+  var user = UserModel();
   @override
   Widget build(BuildContext context) {
     double res_width = MediaQuery.of(context).size.width;
@@ -218,8 +221,23 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
 
     print(res_data);
     if (res_data["status"] == true) {
+      UserController userController = UserController();
+      userController.addUser(
+        UserModel(
+          id: res_data['data']['user']['id'],
+          fullName: res_data['data']['user']['full_name'],
+          phone: res_data['data']['user']['phone'],
+          email: res_data['data']['user']['email'],
+          propic: res_data['data']['user']['propic'],
+          city: res_data['data']['user']['city'],
+          country: res_data['data']['user']['country'],
+          desc: res_data['data']['user']['desc'],
+        ),
+      );
+
       globaltoken = res_data["data"]["token"];
       print(globaltoken);
+      print("nameee :  " + userController.user.fullName.toString());
       Get.to(() => MainScreen());
     } else
       Get.snackbar(

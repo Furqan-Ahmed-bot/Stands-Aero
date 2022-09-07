@@ -2,11 +2,14 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stande_aero/contrloller/usercontroller.dart';
 import 'package:stande_aero/helper/colors.dart';
 import 'package:stande_aero/helper/global.dart';
 import 'package:stande_aero/screens/Profile/editprofile.dart';
 import 'package:stande_aero/screens/auth/mainlogin.dart';
 import 'package:stande_aero/screens/home/drawer.dart';
+
+import '../../helper/model.dart';
 
 // import 'package:stande_aero/screens/home/Profile/editprofile.dart';
 
@@ -21,10 +24,11 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   late AnimationController animation;
   late Animation<double> _fadeInFadeOut;
-
+  UserController userController = UserController();
   @override
   void initState() {
     super.initState();
+    prof();
     animation = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 400),
@@ -43,6 +47,7 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    print(userController.user.fullName);
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -118,16 +123,12 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
                       height: 150,
                     ),
                   ),
-                  profile_text(
-                    text: "John Doe",
-                  ),
-                  profile_text(text: "John@gmail.com"),
-                  profile_text(text: "Country"),
-                  profile_text(text: "City"),
-                  profile_text(text: "Phone Number"),
-                  profile_text(
-                      text:
-                          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,"),
+                  profile_text(text: userController.user.fullName),
+                  profile_text(text: userController.user.email),
+                  profile_text(text: userController.user.country),
+                  profile_text(text: userController.user.city),
+                  profile_text(text: userController.user.phone),
+                  profile_text(text: userController.user.desc),
                   SizedBox(
                     height: res_height * 0.01,
                   ),
@@ -196,7 +197,20 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
 
     print(res_data);
     if (res_data["status"] == true) {
-      Get.to(() => MainLoginScreen());
+      userController.addUser(
+        UserModel(
+          id: res_data['data']['id'],
+          fullName: res_data['data']['full_name'],
+          phone: res_data['data']['phone'],
+          email: res_data['data']['email'],
+          propic: res_data['data']['propic'],
+          city: res_data['data']['city'],
+          country: res_data['data']['country'],
+          desc: res_data['data']['desc'],
+        ),
+      );
+
+      // Get.to(() => MainLoginScreen());
     } else
       Get.snackbar(
         'Error',
