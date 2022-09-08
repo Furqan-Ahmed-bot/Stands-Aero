@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: _yellow700Swatch,
       ),
-      home: booking(),
+      home: SplashScreen(),
     );
   }
 }

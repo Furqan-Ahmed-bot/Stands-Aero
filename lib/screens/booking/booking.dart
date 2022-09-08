@@ -310,7 +310,7 @@ class _bookingState extends State<booking> {
                 ),
                 SizedBox(
                   height: Get.height * 0.03,
-                )
+                )  
               ],
             ),
           ),
