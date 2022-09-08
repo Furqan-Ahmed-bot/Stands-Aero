@@ -129,7 +129,7 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
                   profile_text(text: userController.user.city),
                   profile_text(text: userController.user.phone),
                   profile_text(text: userController.user.desc),
-                  SizedBox(
+                  SizedBox(   
                     height: res_height * 0.01,
                   ),
                   GestureDetector(
