@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stande_aero/screens/auth/emaillogin.dart';
+import 'package:stande_aero/screens/booking/booking.dart';
 import 'package:stande_aero/screens/mainhome.dart';
 
 void main() {
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: _yellow700Swatch,
       ),
-      home: SplashScreen(),
+      home: booking(),
     );
   }
 }

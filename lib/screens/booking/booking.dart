@@ -159,32 +159,75 @@ class _bookingState extends State<booking> {
                 // ),
                 Padding(
                   padding: EdgeInsets.all(pad),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(13.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                      ),
-                      child: SfDateRangePicker(
-                        onSelectionChanged: _onSelectionChanged,
-                        selectionMode: DateRangePickerSelectionMode.range,
-                        // rangeTextStyle: TextStyle(color: Colors.red),
-                        // selectionTextStyle: TextStyle(color: Colors.red),
+                  child: Container(
+                    decoration: BoxDecoration(color: Colors.white),
+                    child: TableCalendar(
+                      // daysOfWeekVisible: false,
 
-                        selectionColor: kPrimaryColor,
-                        rangeSelectionColor: kPrimaryColor.withOpacity(0.3),
-                        endRangeSelectionColor: kPrimaryColor,
-                        startRangeSelectionColor: kPrimaryColor,
-                        todayHighlightColor: kPrimaryColor,
-                        backgroundColor: Colors.white,
-                        // showTodayButton: false,
-                        initialSelectedRange: PickerDateRange(
-                            DateTime.now().subtract(const Duration(days: 4)),
-                            DateTime.now().add(const Duration(days: 3))),
-                      ),
+                      calendarStyle: CalendarStyle(
+                          todayDecoration: BoxDecoration(
+                              color: kPrimaryColor,
+                              borderRadius: BorderRadius.circular(50)),
+                          selectedDecoration:
+                              BoxDecoration(color: kPrimaryColor)),
+                      // calendarFormat: false,
+                      headerStyle: HeaderStyle(
+                          formatButtonVisible: false,
+                          titleCentered: true,
+                          leftChevronIcon: CircleAvatar(
+                            backgroundColor: kPrimaryColor,
+                            child: Icon(
+                              Icons.chevron_left,
+                              color: Colors.white,
+                              size: 28,
+                            ),
+                          ),
+                          rightChevronIcon: CircleAvatar(
+                            backgroundColor: kPrimaryColor,
+                            child: Icon(
+                              Icons.chevron_right,
+                              color: Colors.white,
+                              size: 28,
+                            ),
+                          ),
+                          decoration: BoxDecoration(color: Colors.white)),
+                      firstDay: DateTime.now(),
+                      lastDay: DateTime.utc(2030, 3, 14),
+                      focusedDay: DateTime.now(),
                     ),
                   ),
                 ),
+
+                ///hjsdadsad
+                // Padding(
+                //   padding: EdgeInsets.all(pad),
+                //   child: ClipRRect(
+                //     borderRadius: BorderRadius.circular(13.0),
+                //     child: Container(
+                //       decoration: BoxDecoration(
+                //         color: Colors.white,
+                //       ),
+                //       child: SfDateRangePicker(
+                //         onSelectionChanged: _onSelectionChanged,
+                //         selectionMode: DateRangePickerSelectionMode.range,
+                //         // rangeTextStyle: TextStyle(color: Colors.red),
+                //         // selectionTextStyle: TextStyle(color: Colors.red),
+
+                //         selectionColor: kPrimaryColor,
+                //         rangeSelectionColor: kPrimaryColor.withOpacity(0.3),
+                //         endRangeSelectionColor: kPrimaryColor,
+                //         startRangeSelectionColor: kPrimaryColor,
+                //         todayHighlightColor: kPrimaryColor,
+                //         backgroundColor: Colors.white,
+                //         // showTodayButton: false,
+                //         initialSelectedRange: PickerDateRange(
+                //             DateTime.now().subtract(const Duration(days: 4)),
+                //             DateTime.now().add(const Duration(days: 3))),
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                //sasjkdbajdsbadjasbdhas
                 // Padding(
                 //   padding: EdgeInsets.all(pad),
                 //   child: ClipRRect(
@@ -265,6 +308,9 @@ class _bookingState extends State<booking> {
                     ),
                   ),
                 ),
+                SizedBox(
+                  height: Get.height * 0.03,
+                )
               ],
             ),
           ),
