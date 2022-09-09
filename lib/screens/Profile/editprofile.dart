@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
@@ -6,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:stande_aero/contrloller/usercontroller.dart';
 import 'package:stande_aero/helper/colors.dart';
 import 'package:http/http.dart' as http;
 import 'package:stande_aero/screens/Profile/profile.dart';
@@ -19,6 +21,7 @@ class Editprofile extends StatefulWidget {
 }
 
 class _EditprofileState extends State<Editprofile> {
+    final usercontroller = Get.put(UserController());
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController phone = TextEditingController();
@@ -29,6 +32,7 @@ class _EditprofileState extends State<Editprofile> {
   File? imageFile;
   @override
   Widget build(BuildContext context) {
+    log(usercontroller.user.id.toString());
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
 
@@ -174,6 +178,7 @@ class _EditprofileState extends State<Editprofile> {
                     labelText: "Phone Number",
                   ),
                   profile_textfield(
+                    controller: desc,
                     hed: "Description",
                     labelText:
                         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
@@ -218,20 +223,25 @@ class _EditprofileState extends State<Editprofile> {
   }
 
   CFA1() async {
+
+
+
+
     final uri = Uri.parse('https://qtdev.the4loop.com/api/user/profile/update');
 
     print(uri);
 
     var sendData = {
+      'id' : userid,
       'full_name': name.text,
       'email': email.text,
       'phone': phone.text,
       'country': country.text,
       'city': city.text,
-      'propic': imageFile,
+      'propic': imageFile!.path.toString(),
       'desc': desc.text,
     };
-
+print(sendData);
     var jsonBody = json.encode(sendData);
     print(sendData.toString());
 
@@ -273,11 +283,11 @@ class _EditprofileState extends State<Editprofile> {
 
 class profile_textfield extends StatelessWidget {
   var labelText, hed;
-
+TextEditingController? controller ;
   var maxLines;
 
   profile_textfield({
-    TextEditingController? controller,
+     this.controller,
     Key? key,
     this.labelText,
     this.hed,
@@ -289,7 +299,7 @@ class profile_textfield extends StatelessWidget {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
 
-    var controller;
+    //  TextEditingController controller =profile_textfield.control ;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

@@ -259,7 +259,8 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
       );
 
       globaltoken = res_data["data"]["token"];
-      print(globaltoken);
+      userid=res_data['data']['user']['id'].toString();
+      print("USER MODEL"+userController.user.id.toString());
       print("nameee :  " + userController.user.fullName.toString());
       Get.to(() => MainScreen());
     } else

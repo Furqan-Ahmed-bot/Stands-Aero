@@ -420,7 +420,7 @@ class _kyc_formState extends State<kyc_form> {
       'fund_src': fund_src.text,
       'company_countrylist': company_countrylist.text,
     };
-
+      print(sendData);
     var jsonBody = json.encode(sendData);
 
     final headers = {
@@ -461,8 +461,9 @@ class _kyc_formState extends State<kyc_form> {
 
 class textfiel_kyc extends StatelessWidget {
   var maxLines;
+  TextEditingController? controller;
   textfiel_kyc({
-    TextEditingController? controller,
+    this.controller,
     Key? key,
     this.maxLines,
     required this.res_width,
@@ -472,7 +473,7 @@ class textfiel_kyc extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var controller;
+    // var controller;
     return Container(
       width: res_width * 0.925,
       decoration: BoxDecoration(
