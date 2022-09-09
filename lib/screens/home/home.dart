@@ -426,7 +426,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     return GestureDetector(
       onTap: () {
         // print(productController.Product1.name);
-        // Get.to(booking());
+        Get.to(booking());
       },
       child: Container(
         width: res_width * 0.475,
