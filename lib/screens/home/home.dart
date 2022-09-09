@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:stande_aero/contrloller/ProductController.dart';
+import 'package:stande_aero/helper/ProductModel.dart';
 import 'package:stande_aero/helper/colors.dart';
+import 'package:stande_aero/helper/global.dart';
+import 'package:stande_aero/helper/model.dart';
 import 'package:stande_aero/screens/Profile/profile.dart';
 import 'package:stande_aero/screens/booking/booking.dart';
 import 'package:stande_aero/screens/credit_Form/credit_form.dart';
@@ -10,6 +14,8 @@ import 'package:stande_aero/screens/home/drawer.dart';
 import 'package:stande_aero/screens/kyc_Form/kyc_form.dart';
 import 'package:stande_aero/screens/lease%20Form/lease_form.dart';
 import 'package:stande_aero/screens/lease%20Form/lease_form2.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 // import 'package:stande_aero/screens/home/Profile/editprofile.dart';
 // import 'package:stande_aero/screens/home/Profile/profile.dart';
 
@@ -23,9 +29,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   late AnimationController animation;
   late Animation<double> _fadeInFadeOut;
+  final productController = Get.put(ProductController());
+
   @override
   void initState() {
     super.initState();
+    homeApi();
     animation = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 400),
@@ -280,62 +289,116 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   SizedBox(
                     height: res_height * 0.025,
                   ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(left: 13),
+                  //   child: Container(
+                  //     child: SingleChildScrollView(
+                  //       scrollDirection: Axis.horizontal,
+                  //       child: Row(
+                  //         children: [
+                  //           StandsBox(
+                  //               context, 'assets/slicing/Untitled-26.png'),
+                  //           SizedBox(
+                  //             width: res_width * 0.05,
+                  //           ),
+                  //           StandsBox(
+                  //               context, 'assets/slicing/Untitled-26.png'),
+                  //           SizedBox(
+                  //             width: res_width * 0.05,
+                  //           ),
+                  //           StandsBox(
+                  //               context, 'assets/slicing/Untitled-26.png'),
+                  //           SizedBox(
+                  //             width: res_width * 0.05,
+                  //           ),
+                  //           StandsBox(context, 'assets/slicing/Untitled-26.png')
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   Padding(
                     padding: const EdgeInsets.only(left: 13),
                     child: Container(
-                      child: SingleChildScrollView(
+                      height: Get.height * 0.35,
+                      child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            StandsBox(
-                                context, 'assets/slicing/Untitled-26.png'),
-                            SizedBox(
-                              width: res_width * 0.05,
+                        itemCount: productController.productList.length,
+                        itemBuilder: (context, i) {
+                          return Padding(
+                            padding: const EdgeInsets.only(
+                                top: 5, left: 5, right: 5, bottom: 5),
+                            child: StandsBox(
+                              context,
+                              'assets/slicing/Untitled-26.png',
+                              productController.productList[i].name,
+                              productController.productList[i].location,
+                              productController.productList[i].desc,
                             ),
-                            StandsBox(
-                                context, 'assets/slicing/Untitled-26.png'),
-                            SizedBox(
-                              width: res_width * 0.05,
-                            ),
-                            StandsBox(
-                                context, 'assets/slicing/Untitled-26.png'),
-                            SizedBox(
-                              width: res_width * 0.05,
-                            ),
-                            StandsBox(context, 'assets/slicing/Untitled-26.png')
-                          ],
-                        ),
+                          );
+                        },
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: res_height * 0.025,
-                  ),
+                  // SizedBox(
+                  //   height: res_height * 0.025,
+                  // ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(left: 13),
+                  //   child: Container(
+                  //       child: ListView.builder(
+                  //           shrinkWrap: true,
+                  //           scrollDirection: Axis.horizontal,
+                  //           itemCount: 5,
+                  //           itemBuilder: (BuildContext context, int index) {
+                  //             return StandsBox(
+                  //                 context, "assets/slicing/Untitled-26.png");
+                  //           })
+                  //       //     SingleChildScrollView(
+                  //       //   scrollDirection: Axis.horizontal,
+                  //       //   child: Row(
+                  //       //     children: [
+                  //       //       StandsBox(
+                  //       //           context, 'assets/slicing/Untitled-26.png'),
+                  //       //       SizedBox(
+                  //       //         width: res_width * 0.05,
+                  //       //       ),
+                  //       //       StandsBox(
+                  //       //           context, 'assets/slicing/Untitled-26.png'),
+                  //       //       SizedBox(
+                  //       //         width: res_width * 0.05,
+                  //       //       ),
+                  //       //       StandsBox(
+                  //       //           context, 'assets/slicing/Untitled-26.png'),
+                  //       //       SizedBox(
+                  //       //         width: res_width * 0.05,
+                  //       //       ),
+                  //       //       StandsBox(context, 'assets/slicing/Untitled-26.png')
+                  //       //     ],
+                  //       //   ),
+                  //       // ),
+                  //       ),
+                  // ),
                   Padding(
                     padding: const EdgeInsets.only(left: 13),
                     child: Container(
-                      child: SingleChildScrollView(
+                      height: Get.height * 0.35,
+                      child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            StandsBox(
-                                context, 'assets/slicing/Untitled-26.png'),
-                            SizedBox(
-                              width: res_width * 0.05,
+                        itemCount: productController.productList.length,
+                        itemBuilder: (context, i) {
+                          return Padding(
+                            padding: const EdgeInsets.only(
+                                top: 5, left: 5, right: 5, bottom: 5),
+                            child: StandsBox(
+                              context,
+                              'assets/slicing/Untitled-26.png',
+                              productController.productList[i].name,
+                              productController.productList[i].location,
+                              productController.productList[i].desc,
                             ),
-                            StandsBox(
-                                context, 'assets/slicing/Untitled-26.png'),
-                            SizedBox(
-                              width: res_width * 0.05,
-                            ),
-                            StandsBox(
-                                context, 'assets/slicing/Untitled-26.png'),
-                            SizedBox(
-                              width: res_width * 0.05,
-                            ),
-                            StandsBox(context, 'assets/slicing/Untitled-26.png')
-                          ],
-                        ),
+                          );
+                        },
                       ),
                     ),
                   ),
@@ -351,12 +414,19 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  Widget StandsBox(context, image) {
+  Widget StandsBox(
+    context,
+    image,
+    name,
+    location,
+    description,
+  ) {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
     return GestureDetector(
       onTap: () {
-        Get.to(booking());
+        // print(productController.Product1.name);
+        // Get.to(booking());
       },
       child: Container(
         width: res_width * 0.475,
@@ -368,27 +438,91 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               height: res_height * 0.01,
             ),
             Text(
-              'CF34-10 DAE',
+              name.toString(),
               style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
             ),
             SizedBox(
               height: res_height * 0.0015,
             ),
             Text(
-              'Location: Miami, Florida',
+              location.toString(),
               style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
             ),
             SizedBox(
               height: res_height * 0.0015,
             ),
-            Text(
-              'Lorem ipsum dolor sit amet, con-sectetur adip',
-              style: TextStyle(fontSize: 13),
+            Container(
+              width: res_width * 0.4,
+              child: Text(
+                maxLines: 3,
+                description.toString(),
+                style: TextStyle(fontSize: 13),
+              ),
             )
           ],
         ),
       ),
     );
+  }
+
+  homeApi() async {
+    final uri = Uri.parse('https://qtdev.the4loop.com/api/front/products');
+
+    print(uri);
+
+    // var jsonBody = json.encode(sendData);
+
+    final headers = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Bearer ${globaltoken}',
+    };
+
+    http.Response response = await http.get(
+      uri,
+      headers: headers,
+      // body: jsonBody,
+    );
+
+    print(response.statusCode);
+
+    print(response.body);
+    // try {
+    //   var res_data = json.decode(response.body);
+    // } catch (e) {
+    //   log('$e');
+    // }
+    var res_data = json.decode(response.body);
+
+    print(res_data);
+
+    if (res_data["status"] == true) {
+      print(res_data['data'].length);
+      res_data['data'].forEach((element) => {
+            productController.addProduct(
+              product(
+                id: element['id'],
+                name: element['name'],
+                sku: element['sku'],
+                leaseRate: element['lease_rate'],
+                thumbnail: element['thumbnail'],
+                location: '',
+                desc: element['desc'],
+                createdAt: element['created_at'],
+                updatedAt: element['updated_at'],
+              ),
+            )
+          });
+
+      // Get.to(() => MainLoginScreen());
+    } else
+      Get.snackbar(
+        'Error',
+        'Wrong Credentials',
+        animationDuration: Duration(seconds: 2),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+
+    return res_data;
   }
 
   var catvalue;
