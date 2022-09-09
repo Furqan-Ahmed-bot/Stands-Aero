@@ -128,7 +128,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                       filled: true,
                     ),
                     validator: (text) {
-                      if (text == null || text.isEmpty || text.length < 6) {
+                      if (text == null || text.isEmpty) {
                         return 'Enter Valid Password !';
                       }
                       return null;
