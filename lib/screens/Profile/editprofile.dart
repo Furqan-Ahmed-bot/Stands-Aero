@@ -21,7 +21,7 @@ class Editprofile extends StatefulWidget {
 }
 
 class _EditprofileState extends State<Editprofile> {
-    final usercontroller = Get.put(UserController());
+  final usercontroller = Get.put(UserController());
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController phone = TextEditingController();
@@ -155,33 +155,32 @@ class _EditprofileState extends State<Editprofile> {
                   profile_textfield(
                     controller: name,
                     hed: "Name",
-                    labelText: "John Doe",
+                    labelText: usercontroller.user.fullName,
                   ),
                   profile_textfield(
                     controller: email,
                     hed: "Email",
-                    labelText: "John@gmail.com",
+                    labelText: usercontroller.user.email,
                   ),
                   profile_textfield(
                     controller: country,
                     hed: "Country",
-                    labelText: "Country",
+                    labelText: usercontroller.user.country,
                   ),
                   profile_textfield(
                     controller: city,
                     hed: "City",
-                    labelText: "City",
+                    labelText: usercontroller.user.city,
                   ),
                   profile_textfield(
                     controller: phone,
                     hed: "Phone Number",
-                    labelText: "Phone Number",
+                    labelText: usercontroller.user.phone,
                   ),
                   profile_textfield(
                     controller: desc,
                     hed: "Description",
-                    labelText:
-                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
+                    labelText: usercontroller.user.desc,
                     maxLines: 6,
                   ),
                   SizedBox(
@@ -223,16 +222,12 @@ class _EditprofileState extends State<Editprofile> {
   }
 
   CFA1() async {
-
-
-
-
     final uri = Uri.parse('https://qtdev.the4loop.com/api/user/profile/update');
 
     print(uri);
 
     var sendData = {
-      'id' : userid,
+      'id': userid,
       'full_name': name.text,
       'email': email.text,
       'phone': phone.text,
@@ -241,7 +236,7 @@ class _EditprofileState extends State<Editprofile> {
       'propic': imageFile!.path.toString(),
       'desc': desc.text,
     };
-print(sendData);
+    print(sendData);
     var jsonBody = json.encode(sendData);
     print(sendData.toString());
 
@@ -283,11 +278,11 @@ print(sendData);
 
 class profile_textfield extends StatelessWidget {
   var labelText, hed;
-TextEditingController? controller ;
+  TextEditingController? controller;
   var maxLines;
 
   profile_textfield({
-     this.controller,
+    this.controller,
     Key? key,
     this.labelText,
     this.hed,
