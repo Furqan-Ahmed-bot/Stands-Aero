@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:stande_aero/helper/colors.dart';
 import 'package:http/http.dart' as http;
+import 'package:stande_aero/screens/Profile/profile.dart';
 import '../../helper/global.dart';
 
 class Editprofile extends StatefulWidget {
@@ -23,7 +24,7 @@ class _EditprofileState extends State<Editprofile> {
   TextEditingController phone = TextEditingController();
   TextEditingController country = TextEditingController();
   TextEditingController city = TextEditingController();
-  TextEditingController photo = TextEditingController();
+  TextEditingController desc = TextEditingController();
   String apiGlobal = "https://qtdev.the4loop.com/api/";
   File? imageFile;
   @override
@@ -34,8 +35,8 @@ class _EditprofileState extends State<Editprofile> {
     _getFromGallery() async {
       PickedFile? pickedFile = await ImagePicker().getImage(
         source: ImageSource.gallery,
-        maxWidth: 2500,
-        maxHeight: 2500,
+        maxWidth: 2000,
+        maxHeight: 2000,
       );
       if (pickedFile != null) {
         setState(() {
@@ -53,7 +54,8 @@ class _EditprofileState extends State<Editprofile> {
         leading: GestureDetector(
           behavior: HitTestBehavior.translucent,
           onTap: () {
-            Navigator.pop(context);
+            // Navigator.pop(context);
+            Get.back();
             // _key.currentState!.openDrawer();
           },
           child: Padding(
@@ -181,7 +183,9 @@ class _EditprofileState extends State<Editprofile> {
                     height: res_height * 0.0125,
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      CFA1();
+                    },
                     child: Container(
                       width: res_width * 0.9,
                       decoration: BoxDecoration(
@@ -219,15 +223,17 @@ class _EditprofileState extends State<Editprofile> {
     print(uri);
 
     var sendData = {
-      'name': name.text,
+      'full_name': name.text,
       'email': email.text,
       'phone': phone.text,
       'country': country.text,
       'city': city.text,
-      'photo': imageFile,
+      'propic': imageFile,
+      'desc': desc.text,
     };
 
     var jsonBody = json.encode(sendData);
+    print(sendData.toString());
 
     final headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -252,7 +258,7 @@ class _EditprofileState extends State<Editprofile> {
 
     print(res_data);
     if (res_data["status"] == true) {
-      // Get.to(() => credit_from2());
+      Get.to(() => profile());
     } else
       Get.snackbar(
         'Error',
