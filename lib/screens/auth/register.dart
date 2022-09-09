@@ -22,7 +22,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController fullname = TextEditingController();
   TextEditingController phone = TextEditingController();
   TextEditingController password_confirmation = TextEditingController();
-
+  final _formKey = GlobalKey<FormState>();
   String apiGlobal = "https://qtdev.the4loop.com/";
 
   late String _selectedValue1;
@@ -41,246 +41,290 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
         ),
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(
-                height: res_height * 0.1,
-              ),
-              Container(
-                  width: res_width * 0.8,
-                  child: Image.asset('assets/slicing/Untitled-2.png')),
-              SizedBox(
-                height: res_height * 0.025,
-              ),
-              Text(
-                'Signup',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    fontSize: 28),
-              ),
-              SizedBox(
-                height: res_height * 0.025,
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width * 0.9,
-                child: TextField(
-                  controller: fullname,
-                  decoration: new InputDecoration(
-                    hintText: 'Name',
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(7.0),
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                        )),
-                    hintStyle: TextStyle(),
-                    contentPadding: EdgeInsets.only(top: 16, left: 16),
-                    fillColor: Colors.white,
-                    filled: true,
-                  ),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: res_height * 0.1,
                 ),
-              ),
-              SizedBox(
-                height: res_height * 0.015,
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width * 0.9,
-                child: TextField(
-                  controller: email,
-                  decoration: new InputDecoration(
-                    hintText: 'Email',
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(7.0),
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                        )),
-                    hintStyle: TextStyle(),
-                    contentPadding: EdgeInsets.only(top: 16, left: 16),
-                    fillColor: Colors.white,
-                    filled: true,
-                  ),
+                Container(
+                    width: res_width * 0.8,
+                    child: Image.asset('assets/slicing/Untitled-2.png')),
+                SizedBox(
+                  height: res_height * 0.025,
                 ),
-              ),
-              SizedBox(
-                height: res_height * 0.015,
-              ),
-              // Container(
-              //   width: MediaQuery.of(context).size.width * 0.9,
-              //   child: TextField(
-              //     controller: city,
-              //     decoration: new InputDecoration(
-              //       hintText: 'City',
-              //       border: OutlineInputBorder(
-              //           borderRadius: BorderRadius.circular(7.0),
-              //           borderSide: BorderSide(
-              //             color: Colors.transparent,
-              //           )),
-              //       hintStyle: TextStyle(),
-              //       contentPadding: EdgeInsets.only(top: 16, left: 16),
-              //       fillColor: Colors.white,
-              //       filled: true,
-              //     ),
-              //   ),
-              // ),
-              Container(
-                width: Get.width * 0.9,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(7.0),
+                Text(
+                  'Signup',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 28),
                 ),
-                child: DropdownButtonFormField<String>(
-                  decoration: InputDecoration(
+                SizedBox(
+                  height: res_height * 0.025,
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: TextFormField(
+                    controller: fullname,
+                    decoration: new InputDecoration(
+                      hintText: 'Name',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(7.0),
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                          )),
+                      hintStyle: TextStyle(),
+                      contentPadding: EdgeInsets.only(top: 16, left: 16),
                       fillColor: Colors.white,
-                      contentPadding: EdgeInsets.all(12)),
-                  hint: Text(
-                    'City',
-                    style: TextStyle(
-                      fontSize: 17,
+                      filled: true,
                     ),
-                  ),
-                  isExpanded: true,
-                  items: <String>['NewYork', 'NewJersy'].map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedValue1 = value!;
-                      city.text = _selectedValue1;
-                      print("selected value" + _selectedValue1.toString());
-                      print("selected city" + city.text);
-                      // city = _selectedValue1 as TextEditingController;
-                    });
-                  },
-                  style: TextStyle(color: Colors.grey),
-                  // icon: Icon(
-                  //   Icons.arrow_forward_ios,
-                  //   color: kPrimaryColor,
-                  //   size: 20,
-                  // ),
-                  // iconSize: 20,
-                ),
-              ),
-              SizedBox(
-                height: res_height * 0.015,
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width * 0.9,
-                child: TextField(
-                  controller: phone,
-                  decoration: new InputDecoration(
-                    hintText: 'Phone Number',
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(7.0),
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                        )),
-                    hintStyle: TextStyle(),
-                    contentPadding: EdgeInsets.only(top: 16, left: 16),
-                    fillColor: Colors.white,
-                    filled: true,
+                    validator: (text) {
+                      if (text == null || text.isEmpty) {
+                        return 'Enter Your Name !';
+                      }
+                      return null;
+                    },
                   ),
                 ),
-              ),
-              SizedBox(
-                height: res_height * 0.015,
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width * 0.9,
-                child: TextField(
-                  controller: password,
-                  decoration: new InputDecoration(
-                    hintText: 'Password',
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(7.0),
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                        )),
-                    hintStyle: TextStyle(),
-                    contentPadding: EdgeInsets.only(top: 16, left: 16),
-                    fillColor: Colors.white,
-                    filled: true,
+                SizedBox(
+                  height: res_height * 0.015,
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: TextFormField(
+                    controller: email,
+                    decoration: new InputDecoration(
+                      hintText: 'Email',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(7.0),
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                          )),
+                      hintStyle: TextStyle(),
+                      contentPadding: EdgeInsets.only(top: 16, left: 16),
+                      fillColor: Colors.white,
+                      filled: true,
+                    ),
+                    validator: (text) {
+                      if (text == null ||
+                          text.isEmpty ||
+                          text.length < 5 ||
+                          !text.contains("@")) {
+                        return 'Enter Valid Email !';
+                      }
+                      return null;
+                    },
                   ),
                 ),
-              ),
-              SizedBox(
-                height: res_height * 0.015,
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width * 0.9,
-                child: TextField(
-                  controller: password_confirmation,
-                  decoration: new InputDecoration(
-                    hintText: 'Confirm Password',
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(7.0),
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                        )),
-                    hintStyle: TextStyle(),
-                    contentPadding: EdgeInsets.only(top: 16, left: 16),
-                    fillColor: Colors.white,
-                    filled: true,
-                  ),
+                SizedBox(
+                  height: res_height * 0.015,
                 ),
-              ),
-              SizedBox(
-                height: res_height * 0.014,
-              ),
-              GestureDetector(
-                onTap: () {
-                  register();
-                },
-                child: Container(
-                  width: res_width * 0.9,
+                // Container(
+                //   width: MediaQuery.of(context).size.width * 0.9,
+                //   child: TextFormField(
+                //     controller: city,
+                //     decoration: new InputDecoration(
+                //       hintText: 'City',
+                //       border: OutlineInputBorder(
+                //           borderRadius: BorderRadius.circular(7.0),
+                //           borderSide: BorderSide(
+                //             color: Colors.transparent,
+                //           )),
+                //       hintStyle: TextStyle(),
+                //       contentPadding: EdgeInsets.only(top: 16, left: 16),
+                //       fillColor: Colors.white,
+                //       filled: true,
+                //     ),
+                //   ),
+                // ),
+                Container(
+                  width: Get.width * 0.9,
                   decoration: BoxDecoration(
-                      color: Color(0xffaf8a39),
-                      borderRadius: BorderRadius.all(Radius.circular(7))),
-                  child: Padding(
-                    padding: const EdgeInsets.all(13.0),
-                    child: Center(
-                      child: Text(
-                        'Signup',
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(7.0),
+                  ),
+                  child: DropdownButtonFormField<String>(
+                      decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          contentPadding: EdgeInsets.all(12)),
+                      hint: Text(
+                        'City',
                         style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 17),
+                          fontSize: 17,
+                        ),
+                      ),
+                      isExpanded: true,
+                      items:
+                          <String>['NewYork', 'NewJersy'].map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedValue1 = value!;
+                          city.text = _selectedValue1;
+                          print("selected value" + _selectedValue1.toString());
+                          print("selected city" + city.text);
+                          // city = _selectedValue1 as TextEditingController;
+                        });
+                      },
+                      style: TextStyle(color: Colors.grey),
+                      // icon: Icon(
+                      //   Icons.arrow_forward_ios,
+                      //   color: kPrimaryColor,
+                      //   size: 20,
+                      // ),
+                      // iconSize: 20,
+                      validator: (text) {
+                        if (text == null || text.isEmpty || text.length < 5) {
+                          return 'Select City !';
+                        }
+                        return null;
+                      }),
+                ),
+                SizedBox(
+                  height: res_height * 0.015,
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: TextFormField(
+                    controller: phone,
+                    decoration: new InputDecoration(
+                      hintText: 'Phone Number',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(7.0),
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                          )),
+                      hintStyle: TextStyle(),
+                      contentPadding: EdgeInsets.only(top: 16, left: 16),
+                      fillColor: Colors.white,
+                      filled: true,
+                    ),
+                    validator: (text) {
+                      if (text == null || text.isEmpty || text.length < 5) {
+                        return 'Enter Phone Number !';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: res_height * 0.015,
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: TextFormField(
+                    controller: password,
+                    decoration: new InputDecoration(
+                      hintText: 'Password',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(7.0),
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                          )),
+                      hintStyle: TextStyle(),
+                      contentPadding: EdgeInsets.only(top: 16, left: 16),
+                      fillColor: Colors.white,
+                      filled: true,
+                    ),
+                    validator: (text) {
+                      if (text == null || text.isEmpty || text.length < 6) {
+                        return 'Password Must Contain Atleast 6 Characters !';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: res_height * 0.015,
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: TextFormField(
+                    controller: password_confirmation,
+                    decoration: new InputDecoration(
+                      hintText: 'Confirm Password',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(7.0),
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                          )),
+                      hintStyle: TextStyle(),
+                      contentPadding: EdgeInsets.only(top: 16, left: 16),
+                      fillColor: Colors.white,
+                      filled: true,
+                    ),
+                    validator: (text) {
+                      if (text == null || text.isEmpty || text.length < 8) {
+                        return 'Enter Same Password !';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: res_height * 0.014,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    if (_formKey.currentState!.validate()) {
+                      register();
+                    }
+                  },
+                  child: Container(
+                    width: res_width * 0.9,
+                    decoration: BoxDecoration(
+                        color: Color(0xffaf8a39),
+                        borderRadius: BorderRadius.all(Radius.circular(7))),
+                    child: Padding(
+                      padding: const EdgeInsets.all(13.0),
+                      child: Center(
+                        child: Text(
+                          'Signup',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: res_height * 0.015,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Already have an account? ",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white,
-                      fontSize: 17,
+                SizedBox(
+                  height: res_height * 0.015,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Already have an account? ",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white,
+                        fontSize: 17,
+                      ),
                     ),
-                  ),
-                  Text(
-                    'Login',
-                    style: TextStyle(
-                      decoration: TextDecoration.underline,
-                      fontWeight: FontWeight.w500,
-                      color: kPrimaryColor,
-                      fontSize: 17,
+                    Text(
+                      'Login',
+                      style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        fontWeight: FontWeight.w500,
+                        color: kPrimaryColor,
+                        fontSize: 17,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: res_height * 0.015,
-              ),
-            ],
+                  ],
+                ),
+                SizedBox(
+                  height: res_height * 0.015,
+                ),
+              ],
+            ),
           ),
         ),
       ),

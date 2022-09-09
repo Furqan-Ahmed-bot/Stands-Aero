@@ -20,9 +20,11 @@ class EmailLoginScreen extends StatefulWidget {
 }
 
 class _EmailLoginScreenState extends State<EmailLoginScreen> {
+  final _formKey = GlobalKey<FormState>();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   String apiGlobal = "https://qtdev.the4loop.com/api/";
+
   var user = UserModel();
   @override
   Widget build(BuildContext context) {
@@ -40,153 +42,174 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
               fit: BoxFit.cover,
             ),
           ),
-          child: Column(
-            children: [
-              SizedBox(
-                height: res_height * 0.125,
-              ),
-              Container(
-                  width: res_width * 0.85,
-                  child: Image.asset('assets/slicing/Untitled-2.png')),
-              SizedBox(
-                height: res_height * 0.1,
-              ),
-              Text(
-                'Login',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: res_height * 0.125,
+                ),
+                Container(
+                    width: res_width * 0.85,
+                    child: Image.asset('assets/slicing/Untitled-2.png')),
+                SizedBox(
+                  height: res_height * 0.1,
+                ),
+                Text(
+                  'Login',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 28),
+                ),
+                SizedBox(
+                  height: res_height * 0.025,
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: TextFormField(
+                    controller: email,
+                    decoration: new InputDecoration(
+                      hintText: 'Email Address',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(7.0),
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                          )),
+                      hintStyle: TextStyle(),
+                      contentPadding: EdgeInsets.only(top: 16, left: 16),
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.all(13.0),
+                        child: ImageIcon(
+                          AssetImage("assets/slicing/Untitled-23.png"),
+                          color: kPrimaryColor,
+                          //  size: 20,
+                        ),
+                      ),
+                      fillColor: Colors.white,
+                      filled: true,
+                    ),
+                    validator: (text) {
+                      if (text == null ||
+                          text.isEmpty ||
+                          text.length < 5 ||
+                          !text.contains("@")) {
+                        return 'Enter Valid Email !';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: res_height * 0.01,
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: TextFormField(
+                    controller: password,
+                    decoration: new InputDecoration(
+                      hintText: 'Password',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(7.0),
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                          )),
+                      hintStyle: TextStyle(),
+                      contentPadding: EdgeInsets.only(top: 16, left: 16),
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.all(13.0),
+                        child: ImageIcon(
+                          AssetImage("assets/slicing/Untitled-24.png"),
+                          color: kPrimaryColor,
+                          //  size: 20,
+                        ),
+                      ),
+                      fillColor: Colors.white,
+                      filled: true,
+                    ),
+                    validator: (text) {
+                      if (text == null || text.isEmpty || text.length < 6) {
+                        return 'Enter Valid Password !';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: res_height * 0.01,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    print("login");
+
+                    if (_formKey.currentState!.validate()) {
+                      login();
+                    }
+                    // Get.to(() => MainScreen());
+                  },
+                  child: Container(
+                    width: res_width * 0.9,
+                    decoration: BoxDecoration(
+                        color: Color(0xffaf8a39),
+                        borderRadius: BorderRadius.all(Radius.circular(7))),
+                    child: Padding(
+                      padding: const EdgeInsets.all(13.0),
+                      child: Center(
+                        child: Text(
+                          'Login',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: res_height * 0.035,
+                ),
+                Text(
+                  'Forgot Password?',
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    fontWeight: FontWeight.w500,
                     color: Colors.white,
-                    fontSize: 28),
-              ),
-              SizedBox(
-                height: res_height * 0.025,
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width * 0.9,
-                child: TextField(
-                  controller: email,
-                  decoration: new InputDecoration(
-                    hintText: 'Email Address',
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(7.0),
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                        )),
-                    hintStyle: TextStyle(),
-                    contentPadding: EdgeInsets.only(top: 16, left: 16),
-                    prefixIcon: Padding(
-                      padding: const EdgeInsets.all(13.0),
-                      child: ImageIcon(
-                        AssetImage("assets/slicing/Untitled-23.png"),
-                        color: kPrimaryColor,
-                        //  size: 20,
-                      ),
-                    ),
-                    fillColor: Colors.white,
-                    filled: true,
+                    fontSize: 17,
                   ),
                 ),
-              ),
-              SizedBox(
-                height: res_height * 0.01,
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width * 0.9,
-                child: TextField(
-                  controller: password,
-                  decoration: new InputDecoration(
-                    hintText: 'Password',
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(7.0),
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                        )),
-                    hintStyle: TextStyle(),
-                    contentPadding: EdgeInsets.only(top: 16, left: 16),
-                    prefixIcon: Padding(
-                      padding: const EdgeInsets.all(13.0),
-                      child: ImageIcon(
-                        AssetImage("assets/slicing/Untitled-24.png"),
-                        color: kPrimaryColor,
-                        //  size: 20,
-                      ),
-                    ),
-                    fillColor: Colors.white,
-                    filled: true,
-                  ),
+                SizedBox(
+                  height: res_height * 0.13,
                 ),
-              ),
-              SizedBox(
-                height: res_height * 0.01,
-              ),
-              GestureDetector(
-                onTap: () {
-                  print("login");
-                  login();
-                  // Get.to(() => MainScreen());
-                },
-                child: Container(
-                  width: res_width * 0.9,
-                  decoration: BoxDecoration(
-                      color: Color(0xffaf8a39),
-                      borderRadius: BorderRadius.all(Radius.circular(7))),
-                  child: Padding(
-                    padding: const EdgeInsets.all(13.0),
-                    child: Center(
-                      child: Text(
-                        'Login',
+                GestureDetector(
+                  onTap: () {
+                    Get.to(() => RegisterScreen());
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Don't have an account? ",
                         style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 17),
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                          fontSize: 17,
+                        ),
                       ),
-                    ),
+                      Text(
+                        'Signup',
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          fontWeight: FontWeight.w500,
+                          color: kPrimaryColor,
+                          fontSize: 17,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ),
-              SizedBox(
-                height: res_height * 0.035,
-              ),
-              Text(
-                'Forgot Password?',
-                style: TextStyle(
-                  decoration: TextDecoration.underline,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white,
-                  fontSize: 17,
-                ),
-              ),
-              SizedBox(
-                height: res_height * 0.13,
-              ),
-              GestureDetector(
-                onTap: () {
-                  Get.to(() => RegisterScreen());
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Don't have an account? ",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
-                        fontSize: 17,
-                      ),
-                    ),
-                    Text(
-                      'Signup',
-                      style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        fontWeight: FontWeight.w500,
-                        color: kPrimaryColor,
-                        fontSize: 17,
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),
