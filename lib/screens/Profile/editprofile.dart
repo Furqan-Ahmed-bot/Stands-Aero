@@ -33,6 +33,15 @@ class _EditprofileState extends State<Editprofile> {
   @override
   Widget build(BuildContext context) {
     log(usercontroller.user.id.toString());
+
+    name.text = usercontroller.user.fullName.toString();
+    email.text = usercontroller.user.email.toString();
+
+    phone.text = usercontroller.user.phone.toString();
+    country.text = usercontroller.user.country.toString();
+    city.text = usercontroller.user.city.toString();
+    desc.text = usercontroller.user.desc.toString();
+    // email.text = usercontroller.user.email.toString();
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
 
@@ -227,14 +236,14 @@ class _EditprofileState extends State<Editprofile> {
     print(uri);
 
     var sendData = {
-      'id': userid,
-      'full_name': name.text,
+      // 'id': userid,
+      'name': name.text,
       'email': email.text,
       'phone': phone.text,
       'country': country.text,
       'city': city.text,
-      'propic': imageFile!.path.toString(),
-      'desc': desc.text,
+      'photo': "abc.jpg"
+      // 'desc': desc.text,
     };
     print(sendData);
     var jsonBody = json.encode(sendData);
@@ -280,8 +289,10 @@ class profile_textfield extends StatelessWidget {
   var labelText, hed;
   TextEditingController? controller;
   var maxLines;
+  
 
   profile_textfield({
+  
     this.controller,
     Key? key,
     this.labelText,
@@ -293,6 +304,7 @@ class profile_textfield extends StatelessWidget {
   Widget build(BuildContext context) {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
+
 
     //  TextEditingController controller =profile_textfield.control ;
     return Column(
@@ -314,7 +326,8 @@ class profile_textfield extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(5),
                 border: Border.all(color: Colors.white)),
-            child: TextField(
+            child: TextFormField(
+             
               controller: controller,
               maxLines: maxLines,
               decoration: InputDecoration(

@@ -24,11 +24,17 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   late AnimationController animation;
   late Animation<double> _fadeInFadeOut;
-  UserController userController = UserController();
+  final userController = Get.put(UserController());
+
+  // UserController userController = UserController();
   @override
   void initState() {
+    // setState(() {
+    //   prof();
+    // });
+    
     super.initState();
-    prof();
+    
     animation = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 400),
@@ -47,6 +53,9 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+
+
+
     print(userController.user.fullName);
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
