@@ -289,10 +289,8 @@ class profile_textfield extends StatelessWidget {
   var labelText, hed;
   TextEditingController? controller;
   var maxLines;
-  
 
   profile_textfield({
-  
     this.controller,
     Key? key,
     this.labelText,
@@ -304,7 +302,6 @@ class profile_textfield extends StatelessWidget {
   Widget build(BuildContext context) {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
-
 
     //  TextEditingController controller =profile_textfield.control ;
     return Column(
@@ -327,7 +324,6 @@ class profile_textfield extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5),
                 border: Border.all(color: Colors.white)),
             child: TextFormField(
-             
               controller: controller,
               maxLines: maxLines,
               decoration: InputDecoration(

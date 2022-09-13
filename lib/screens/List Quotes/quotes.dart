@@ -13,6 +13,7 @@ class quotes extends StatefulWidget {
 class _quotesState extends State<quotes> with TickerProviderStateMixin {
   late AnimationController animation;
   late Animation<double> _fadeInFadeOut;
+  bool Quotes_Card = true;
   @override
   void initState() {
     super.initState();
@@ -112,25 +113,85 @@ class _quotesState extends State<quotes> with TickerProviderStateMixin {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Quotes_Card(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        behavior: HitTestBehavior.translucent,
+                        onTap: () {
+                          setState(() {
+                            Quotes_Card = true;
+                          });
+                        },
+                        child: Column(
+                          children: [
+                            Text(
+                              'Job Feeds',
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color:
+                                      Quotes_Card ? Colors.black : Colors.grey),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              width: res_width * 0.45,
+                              color: Quotes_Card ? Colors.blue : Colors.black,
+                              height: 1,
+                            )
+                          ],
+                        ),
+                      ),
+                      GestureDetector(
+                        behavior: HitTestBehavior.translucent,
+                        onTap: () {
+                          setState(() {
+                            Quotes_Card = false;
+                          });
+                        },
+                        child: Column(
+                          children: [
+                            Text(
+                              'Services',
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color: !Quotes_Card
+                                      ? Colors.black
+                                      : Colors.grey),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              width: res_width * 0.45,
+                              color: !Quotes_Card ? Colors.blue : Colors.black,
+                              height: 1,
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                  Quotess_Card(
                     MODEL: "CF34-10 DAE",
                     location: "Miami, Florida",
                     description:
                         "Lorem Ipsum is simply \ndummy text of the printing \nand typesetting industry",
                   ),
-                  Quotes_Card(
+                  Quotess_Card(
                     MODEL: "CF34-10 DAE",
                     location: "Miami, Florida",
                     description:
                         "Lorem Ipsum is simply \ndummy text of the printing \nand typesetting industry",
                   ),
-                  Quotes_Card(
+                  Quotess_Card(
                     MODEL: "CF34-10 DAE",
                     location: "Miami, Florida",
                     description:
                         "Lorem Ipsum is simply \ndummy text of the printing \nand typesetting industry",
                   ),
-                  Quotes_Card(
+                  Quotess_Card(
                     MODEL: "CF34-10 DAE",
                     location: "Miami, Florida",
                     description:
@@ -146,10 +207,10 @@ class _quotesState extends State<quotes> with TickerProviderStateMixin {
   }
 }
 
-class Quotes_Card extends StatelessWidget {
+class Quotess_Card extends StatelessWidget {
   var MODEL, location, description;
 
-  Quotes_Card({Key? key, this.MODEL, this.location, this.description})
+  Quotess_Card({Key? key, this.MODEL, this.location, this.description})
       : super(key: key);
 
   @override

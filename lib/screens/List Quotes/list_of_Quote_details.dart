@@ -73,7 +73,7 @@ class quotes_details extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Quotes_Card(
+                  Quotess_Card(
                     MODEL: "CF34-10 DAE",
                     location: "Miami, Florida",
                     description:
