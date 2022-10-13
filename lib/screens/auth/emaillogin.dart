@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stande_aero/services/remote_services.dart';
 import 'package:stande_aero/contrloller/usercontroller.dart';
 import 'package:stande_aero/helper/colors.dart';
 import 'package:stande_aero/helper/global.dart';
@@ -23,7 +24,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
-  String apiGlobal = "https://qtdev.the4loop.com/api/";
+   
 
   var user = UserModel();
   @override
@@ -141,9 +142,14 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                 GestureDetector(
                   onTap: () {
                     print("login");
+                    var sendData = {
+                        "email": email.text,
+                        "password": password.text,
+                        "device_token": "123654"
+                      };
 
                     if (_formKey.currentState!.validate()) {
-                      login();
+                      ApiService().login(sendData);
                     }
                     // Get.to(() => MainScreen());
                   },
@@ -216,61 +222,5 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
     );
   }
 
-  login() async {
-    final uri = Uri.parse('${apiGlobal}user/login');
-
-    print(uri);
-
-    var sendData = {
-      "email": email.text,
-      "password": password.text,
-    };
-
-    String jsonBody = json.encode(sendData);
-
-    final headers = {'Content-Type': 'application/json'};
-
-    http.Response response = await http.post(
-      uri,
-      headers: headers,
-      body: jsonBody,
-    );
-
-    print(response.statusCode);
-
-    print(response.body);
-
-    var res_data = json.decode(response.body.toString());
-
-    print(res_data);
-    if (res_data["status"] == true) {
-      UserController userController = UserController();
-      userController.addUser(
-        UserModel(
-          id: res_data['data']['user']['id'],
-          fullName: res_data['data']['user']['full_name'],
-          phone: res_data['data']['user']['phone'],
-          email: res_data['data']['user']['email'],
-          propic: res_data['data']['user']['propic'],
-          city: res_data['data']['user']['city'],
-          country: res_data['data']['user']['country'],
-          desc: res_data['data']['user']['desc'],
-        ),
-      );
-
-      globaltoken = res_data["data"]["token"];
-      userid=res_data['data']['user']['id'].toString();
-      print("USER MODEL"+userController.user.id.toString());
-      print("nameee :  " + userController.user.fullName.toString());
-      Get.to(() => MainScreen());
-    } else
-      Get.snackbar(
-        'Error',
-        'Wrong Credentials',
-        animationDuration: Duration(seconds: 2),
-        snackPosition: SnackPosition.BOTTOM,
-      );
-
-    return res_data;
-  }
+  
 }

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stande_aero/services/remote_services.dart';
 import 'package:stande_aero/bottomcontroller.dart';
 import 'package:stande_aero/helper/global.dart';
 import 'package:stande_aero/screens/kyc_Form/kyc_form.dart';
@@ -431,7 +432,7 @@ class _credit_from2State extends State<credit_from2> {
 
   CFA2() async {
     final uri = Uri.parse(
-        'https://qtdev.the4loop.com/api/user/credit-application-submit');
+        '${apiGlobal}/user/credit-application-submit');
 
     print(uri);
 

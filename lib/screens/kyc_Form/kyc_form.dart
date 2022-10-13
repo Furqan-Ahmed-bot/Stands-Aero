@@ -26,12 +26,15 @@ class _kyc_formState extends State<kyc_form> {
   TextEditingController contact_person = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController company_website = TextEditingController();
-  TextEditingController company_additional_members = TextEditingController();
+  TextEditingController company_additional_member_name1 = TextEditingController();
+  TextEditingController company_additional_member_title1 = TextEditingController();
+  TextEditingController company_additional_member_name2 = TextEditingController();
+  TextEditingController company_additional_member_title2 = TextEditingController();
   TextEditingController company_prmy_bsns = TextEditingController();
   TextEditingController fund_src = TextEditingController();
   TextEditingController company_countrylist = TextEditingController();
 
-  String apiGlobal = "https://qtdev.the4loop.com/";
+  String apiGlobal = "https://standsaero.jumppace.com/api/";
   @override
   Widget build(BuildContext context) {
     double res_width = MediaQuery.of(context).size.width;
@@ -230,7 +233,7 @@ class _kyc_formState extends State<kyc_form> {
                         child: Padding(
                           padding: EdgeInsets.only(left: 8.0),
                           child: TextField(
-                            controller: company_additional_members,
+                            controller: company_additional_member_name1,
                             decoration: InputDecoration(hintText: "Name"),
                             keyboardType: TextInputType.datetime,
                           ),
@@ -243,7 +246,7 @@ class _kyc_formState extends State<kyc_form> {
                         child: Padding(
                           padding: EdgeInsets.only(left: 8.0),
                           child: TextField(
-                            controller: company_additional_members,
+                            controller: company_additional_member_title1,
                             decoration: InputDecoration(hintText: "Title"),
                             keyboardType: TextInputType.datetime,
                           ),
@@ -264,7 +267,7 @@ class _kyc_formState extends State<kyc_form> {
                         child: Padding(
                           padding: EdgeInsets.only(left: 8.0),
                           child: TextField(
-                            controller: company_additional_members,
+                            controller: company_additional_member_name2,
                             decoration: InputDecoration(hintText: "Name"),
                             keyboardType: TextInputType.datetime,
                           ),
@@ -277,7 +280,7 @@ class _kyc_formState extends State<kyc_form> {
                         child: Padding(
                           padding: EdgeInsets.only(left: 8.0),
                           child: TextField(
-                            controller: company_additional_members,
+                            controller: company_additional_member_title2,
                             decoration: InputDecoration(hintText: "Title"),
                             keyboardType: TextInputType.datetime,
                           ),
@@ -400,7 +403,7 @@ class _kyc_formState extends State<kyc_form> {
   }
 
   KYC() async {
-    final uri = Uri.parse('https://qtdev.the4loop.com/api/user/kyc-submit');
+    final uri = Uri.parse('${apiGlobal}user/kyc-submit');
 
     print(uri);
 
@@ -415,7 +418,7 @@ class _kyc_formState extends State<kyc_form> {
       'contact_person': contact_person.text,
       'email': email.text,
       'company_website': company_website.text,
-      'company_additional_members': company_additional_members.text,
+      'company_additional_members':company_additional_member_name1.text + "," +company_additional_member_title1.text +","+ company_additional_member_name2.text +","+ company_additional_member_title2.text,      
       'company_prmy_bsns': company_prmy_bsns.text,
       'fund_src': fund_src.text,
       'company_countrylist': company_countrylist.text,
@@ -482,7 +485,7 @@ class textfiel_kyc extends StatelessWidget {
       child: TextField(
         controller: controller,
         maxLines: maxLines,
-        decoration: InputDecoration(
+        decoration: InputDecoration( contentPadding: EdgeInsets.symmetric(horizontal: 10),
           border: InputBorder.none,
         ),
       ),

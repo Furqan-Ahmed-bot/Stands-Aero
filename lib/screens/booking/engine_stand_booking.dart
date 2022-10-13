@@ -236,6 +236,32 @@ class _stand_bookingState extends State<stand_booking> {
                     ],
                   ),
                 ),
+                SizedBox(
+                        height: 5,
+                      ),
+                Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Location",
+                            style: TextStyle(fontSize: 15, color: Colors.black),
+                          ),
+                          Container(
+                            height: 40,
+                            width: res_width * 0.9,
+                            decoration: BoxDecoration(color: Colors.grey),
+                            child: TextField(
+                              decoration: InputDecoration(
+                                  hintText: "Location",
+                                  contentPadding: EdgeInsets.only(left: 10)),
+                              keyboardType: TextInputType.text,
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
                 GestureDetector(
                   onTap: () {
                     Get.to(() => MainLoginScreen());

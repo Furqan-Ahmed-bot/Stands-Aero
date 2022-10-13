@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stande_aero/screens/List%20Quotes/list_of_Quote_details.dart';
 import 'package:stande_aero/screens/home/drawer.dart';
+import 'package:stande_aero/services/remote_services.dart';
 
 class OrderHistory extends StatefulWidget {
   const OrderHistory({Key? key}) : super(key: key);
@@ -12,8 +15,26 @@ class OrderHistory extends StatefulWidget {
 
 class _OrderHistoryState extends State<OrderHistory> {
   final GlobalKey<ScaffoldState> _key = GlobalKey();
+  dynamic order_historyvar;
 
   @override
+  void initState() {
+    Future.delayed(Duration.zero, () {
+      setState(() {
+        order_history();
+      });
+    });
+
+    super.initState();
+  }
+
+  Future<void> order_history() async {
+    order_historyvar = await ApiService().order_history();
+
+    log("order_historyvar" + order_historyvar['data'].toString());
+    setState(() {});
+  }
+
   Widget build(BuildContext context) {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
@@ -38,7 +59,6 @@ class _OrderHistoryState extends State<OrderHistory> {
             behavior: HitTestBehavior.translucent,
             onTap: () {
               Navigator.pop(context);
-              // _key.currentState!.openDrawer();
             },
             child: Padding(
               padding: const EdgeInsets.all(15),
@@ -49,21 +69,6 @@ class _OrderHistoryState extends State<OrderHistory> {
                   )),
             ),
           ),
-          // leading: GestureDetector(
-          //   behavior: HitTestBehavior.translucent,
-          //   onTap: () {
-          //     Navigator.pop(context);
-          //     // _key.currentState!.openDrawer();
-          //   },
-          //   child: Padding(
-          //     padding: const EdgeInsets.all(15),
-          //     child: Container(
-          //         width: 25,
-          //         child: Image.asset(
-          //           'assets/slicing/Untitled-3.png',
-          //         )),
-          //   ),
-          // ),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -79,56 +84,42 @@ class _OrderHistoryState extends State<OrderHistory> {
             ],
           ),
         ),
-        // extendBodyBehindAppBar: true,
-        body: Container(
-          width: double.infinity,
-          // height:  double.infinity,
-          // decoration: BoxDecoration(
-          //   image: DecorationImage(
-          //     image: AssetImage("assets/slicing/Untitled-46.jpg"),
-          //     fit: BoxFit.cover,
-          //   ),
-          // ),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Quotes_Card(
-                  MODEL: "CF34-10 DAE",
-                  location: "Miami, Florida",
-                  description:
-                      "Lorem Ipsum is simply \ndummy text of the printing \nand typesetting industry",
-                ),
-                Quotes_Card(
-                  MODEL: "CF34-10 DAE",
-                  location: "Miami, Florida",
-                  description:
-                      "Lorem Ipsum is simply \ndummy text of the printing \nand typesetting industry",
-                ),
-                Quotes_Card(
-                  MODEL: "CF34-10 DAE",
-                  location: "Miami, Florida",
-                  description:
-                      "Lorem Ipsum is simply \ndummy text of the printing \nand typesetting industry",
-                ),
-                Quotes_Card(
-                  MODEL: "CF34-10 DAE",
-                  location: "Miami, Florida",
-                  description:
-                      "Lorem Ipsum is simply \ndummy text of the printing \nand typesetting industry",
-                )
-              ],
-            ),
-          ),
-        ),
+        body: FutureBuilder<void>(
+            future: order_history(),
+            builder: (context, snapshot) {
+              return Container(
+                      width: double.infinity,
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: ListView.builder(
+                              itemCount: order_historyvar['data'].length,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              scrollDirection: Axis.vertical,
+                              itemBuilder: (context, index) {
+                                return Quotes_Card(
+                                      orderNumber:order_historyvar['data'][index]['order_number'] ,
+                                      payAmount: order_historyvar['data'][index]['pay_amount'],
+                                      orderDate: order_historyvar['data'][index]['order_date'],
+                                          orderStatus: order_historyvar['data'][index]['order_status'],
+                                          paymentStatus:order_historyvar['data'][index]['payment_status']
+                                    );                                
+                              }),
+                        ),
+                      ),
+                    );                  
+            }),
       ),
     );
   }
 }
 
 class Quotes_Card extends StatelessWidget {
-  var MODEL, location, description;
+  // var MODEL, location, description;
+  var orderNumber,payAmount,orderDate,orderStatus,paymentStatus;
 
-  Quotes_Card({Key? key, this.MODEL, this.location, this.description})
+  Quotes_Card({Key? key, this.orderNumber, this.payAmount, this.orderDate,this.orderStatus,this.paymentStatus})
       : super(key: key);
 
   @override
@@ -156,23 +147,15 @@ class Quotes_Card extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "$MODEL",
-                          style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.w500),
-                        ),
-                        SizedBox(
-                          height: res_height * 0.006,
-                        ),
                         Row(
                           children: [
                             Text(
-                              "Location: ",
+                              "Order Number: ",
                               style: TextStyle(
                                   fontSize: 13, fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              "$location",
+                              "$orderNumber",
                               style: TextStyle(fontSize: 13),
                             ),
                           ],
@@ -180,24 +163,81 @@ class Quotes_Card extends StatelessWidget {
                         SizedBox(
                           height: res_height * 0.006,
                         ),
-                        Text(
-                          "$description",
-                          style: TextStyle(fontSize: 10),
+                        Row(
+                          children: [
+                            Text(
+                              "Pay Amount: ",
+                              style: TextStyle(
+                                  fontSize: 13, fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              "$payAmount",
+                              style: TextStyle(fontSize: 13),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: res_height * 0.006,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              "Dated Ordered: ",
+                              style: TextStyle(
+                                  fontSize: 13, fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              "$orderDate",
+                              style: TextStyle(fontSize: 13),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                            height: res_height * 0.006,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              "Order Status: ",
+                              style: TextStyle(
+                                  fontSize: 13, fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              "$orderStatus",
+                              style: TextStyle(fontSize: 13),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                            height: res_height * 0.006,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              "Payment Status: ",
+                              style: TextStyle(
+                                  fontSize: 13, fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              "$paymentStatus",
+                              style: TextStyle(fontSize: 13),
+                            ),
+                          ],
                         ),
                       ],
                     ),
                     // SizedBox(
                     //   width: res_width * 0.05,
                     // ),
-                    Container(
-                        width: res_width * 0.375,
-                        height: res_height * 0.17,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(7))),
-                        child: Image.asset(
-                          "assets/slicing/Untitled-6.png",
-                          fit: BoxFit.cover,
-                        ))
+                    // Container(
+                    //     width: res_width * 0.375,
+                    //     height: res_height * 0.17,
+                    //     decoration: BoxDecoration(
+                    //         borderRadius: BorderRadius.all(Radius.circular(7))),
+                    //     child: Image.asset(
+                    //       "assets/slicing/Untitled-6.png",
+                    //       fit: BoxFit.cover,
+                    //     ))
                   ],
                 ),
               ),

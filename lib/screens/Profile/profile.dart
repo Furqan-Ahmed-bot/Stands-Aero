@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stande_aero/services/remote_services.dart';
 import 'package:stande_aero/contrloller/usercontroller.dart';
 import 'package:stande_aero/helper/colors.dart';
 import 'package:stande_aero/helper/global.dart';
@@ -24,14 +26,19 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   late AnimationController animation;
   late Animation<double> _fadeInFadeOut;
-  final userController = Get.put(UserController());
-
+  UserController userController = Get.put(UserController());
+  dynamic profileInfo;
   // UserController userController = UserController();
   @override
   void initState() {
     // setState(() {
     //   prof();
     // });
+    Future.delayed(Duration.zero, () {
+      setState(() {
+        getProfileInfo();
+      });
+    });
     
     super.initState();
     
@@ -49,6 +56,27 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
       }
     });
     animation.forward();
+  }
+
+  Future<void> getProfileInfo() async{
+      profileInfo =await ApiService().prof();
+
+      log("profileInfo"+profileInfo.toString());
+      setState(() {
+        userController.addUser(
+        UserModel(
+          id: profileInfo['data']['id'],
+          fullName: profileInfo['data']['full_name'],
+          phone: profileInfo['data']['phone'],
+          email: profileInfo['data']['email'],
+          propic: profileInfo['data']['propic'],
+          city: profileInfo['data']['city'],
+          country: profileInfo['data']['country'],
+          desc: profileInfo['data']['desc'],
+        ),
+      );
+      });
+
   }
 
   @override
@@ -176,64 +204,64 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
     );
   }
 
-  prof() async {
-    final uri = Uri.parse('https://qtdev.the4loop.com/api/user/details');
+  // prof() async {
+  //   final uri = Uri.parse('${apiGlobal}/api/user/details');
 
-    print(uri);
+  //   print(uri);
 
-    // var jsonBody = json.encode(sendData);
+  //   // var jsonBody = json.encode(sendData);
 
-    final headers = {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Bearer ${globaltoken}',
-    };
+  //   final headers = {
+  //     'Content-Type': 'application/x-www-form-urlencoded',
+  //     'Authorization': 'Bearer ${globaltoken}',
+  //   };
 
-    http.Response response = await http.get(
-      uri,
-      headers: headers,
-      // body: jsonBody,
-    );
+  //   http.Response response = await http.get(
+  //     uri,
+  //     headers: headers,
+  //     // body: jsonBody,
+  //   );
 
-    print(response.statusCode);
+  //   print(response.statusCode);
 
-    print(response.body);
-    // try {
-    //   var res_data = json.decode(response.body);
-    // } catch (e) {
-    //   log('$e');
-    // }
-    var res_data = json.decode(response.body);
+  //   print(response.body);
+  //   // try {
+  //   //   var res_data = json.decode(response.body);
+  //   // } catch (e) {
+  //   //   log('$e');
+  //   // }
+  //   var res_data = json.decode(response.body);
 
-    print(res_data);
-    if (res_data["status"] == true) {
-      userController.addUser(
-        UserModel(
-          id: res_data['data']['id'],
-          fullName: res_data['data']['full_name'],
-          phone: res_data['data']['phone'],
-          email: res_data['data']['email'],
-          propic: res_data['data']['propic'],
-          city: res_data['data']['city'],
-          country: res_data['data']['country'],
-          desc: res_data['data']['desc'],
-        ),
-      );
+  //   print(res_data);
+  //   if (res_data["status"] == true) {
+  //     userController.addUser(
+  //       UserModel(
+  //         id: res_data['data']['id'],
+  //         fullName: res_data['data']['full_name'],
+  //         phone: res_data['data']['phone'],
+  //         email: res_data['data']['email'],
+  //         propic: res_data['data']['propic'],
+  //         city: res_data['data']['city'],
+  //         country: res_data['data']['country'],
+  //         desc: res_data['data']['desc'],
+  //       ),
+  //     );
 
-      // Get.to(() => MainLoginScreen());
-    } else
-      Get.snackbar(
-        'Error',
-        'Wrong Credentials',
-        animationDuration: Duration(seconds: 2),
-        snackPosition: SnackPosition.BOTTOM,
-      );
+  //     // Get.to(() => MainLoginScreen());
+  //   } else
+  //     Get.snackbar(
+  //       'Error',
+  //       'Wrong Credentials',
+  //       animationDuration: Duration(seconds: 2),
+  //       snackPosition: SnackPosition.BOTTOM,
+  //     );
 
-    return res_data;
-  }
+  //   return res_data;
+  // }
 }
 
 logout() async {
-  final uri = Uri.parse('https://qtdev.the4loop.com/api/user/logout');
+  final uri = Uri.parse('${apiGlobal}/api/user/logout');
 
   print(uri);
 

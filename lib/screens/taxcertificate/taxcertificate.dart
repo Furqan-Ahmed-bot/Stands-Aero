@@ -1,18 +1,42 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:stande_aero/screens/mainhome.dart';
+import 'package:stande_aero/services/remote_services.dart';
 
 class TexCertificateScreen extends StatefulWidget {
   const TexCertificateScreen({Key? key}) : super(key: key);
 
   @override
   State<TexCertificateScreen> createState() => _TexCertificateScreenState();
+  
 }
 
 class _TexCertificateScreenState extends State<TexCertificateScreen> {
+  @override
+  void initState() {
+    Future.delayed(Duration.zero, () {
+      setState(() {
+        taxCertificateList();
+      });
+    });
+    
+    super.initState();
+  }
+ 
+Future<void> taxCertificateList() async{
+      var taxCertificates =await ApiService().TaxCertificates_list();
+      
+      log("taxCertificates"+taxCertificates['data'].toString());
+
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
     double res_width = MediaQuery.of(context).size.width;

@@ -1,10 +1,46 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stande_aero/screens/List%20Quotes/quotes.dart';
+import 'package:stande_aero/screens/home/orderhistory.dart';
 import 'package:stande_aero/screens/payment/payment.dart';
+import 'package:stande_aero/services/remote_services.dart';
 
-class quotes_details extends StatelessWidget {
-  const quotes_details({Key? key}) : super(key: key);
+class quotes_details extends StatefulWidget {
+  final quoteId;
+  const quotes_details({Key? key, required this.quoteId}) : super(key: key);
+
+  @override
+  State<quotes_details> createState() => _quotes_detailsState();
+}
+
+class _quotes_detailsState extends State<quotes_details> {
+  List<dynamic> responseData = [];
+  @override
+  void initState() {
+    Future.delayed(Duration.zero, () {
+      // setState(() {
+      quotesDetails();
+      // });
+    });
+    super.initState();
+  }
+
+  quotesDetails() {
+    log("widget quote id"+ widget.quoteId);
+    ApiService().single_quotation_data(widget.quoteId).then((res_data) {
+      log("response of single quotation console");
+      if (res_data['status'] == true) {
+        // print("ALL Video Links : " + res_data['data'].toString());
+        setState(() {
+          responseData = res_data['data'];
+        });
+
+        log("response of quotationData" + responseData.toString());
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,10 +86,10 @@ class quotes_details extends StatelessWidget {
                 style: TextStyle(color: Colors.black),
               ),
               Container(
-                  width: 40,
-                  height: 40,
-                  child: Image.asset('assets/slicing/Untitled-4.png',
-                      fit: BoxFit.cover)),
+                width: 40,
+                height: 40,
+                child: Image.asset('assets/slicing/Untitled-3.png'),
+              )
             ],
           ),
         ),
@@ -61,12 +97,6 @@ class quotes_details extends StatelessWidget {
         body: Container(
           width: double.infinity,
           height: double.infinity,
-          // decoration: BoxDecoration(
-          //   image: DecorationImage(
-          //     image: AssetImage("assets/slicing/Untitled-46.jpg"),
-          //     fit: BoxFit.cover,
-          //   ),
-          // ),
           child: SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: pad / 2),
@@ -74,11 +104,13 @@ class quotes_details extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Quotess_Card(
-                    MODEL: "CF34-10 DAE",
-                    location: "Miami, Florida",
-                    description:
-                        "Lorem Ipsum is simply \ndummy text of the printing \nand typesetting industry",
-                  ),
+                      id: responseData[0]['quote_id'],
+                      status: "Approved",
+                      name: responseData[0]['product_name'],
+                      location: responseData[0]['product_location']==null ?  "abc" : responseData[0]['product_location'],
+                      description: responseData[0]['details'],
+                      image:
+                          "https://standsaero.jumppace.com/assets/images/products/1662148664iYo2gV72.png"),
                   Padding(
                     padding: EdgeInsets.only(top: 8.0),
                     child: Text(
@@ -150,10 +182,10 @@ class quotes_details extends StatelessWidget {
                     decoration: BoxDecoration(
                         color: Colors.grey,
                         borderRadius: BorderRadius.all(Radius.circular(7))),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                      ),
+                    height: 50,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 15, left: 10),
+                      child: Text(responseData[0]['product_location']),
                     ),
                   ),
                   SizedBox(
@@ -180,15 +212,10 @@ class quotes_details extends StatelessWidget {
                               color: Colors.grey,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(7))),
+                          height: 50,
                           child: Padding(
-                            padding: EdgeInsets.only(left: 8.0),
-                            child: TextField(
-                              decoration: InputDecoration(
-                                hintText: "Start Date",
-                                border: InputBorder.none,
-                              ),
-                              keyboardType: TextInputType.datetime,
-                            ),
+                            padding: const EdgeInsets.only(top: 17, left: 10),
+                            child: Text(responseData[0]['date_from']),
                           ),
                         ),
                         Container(
@@ -197,15 +224,10 @@ class quotes_details extends StatelessWidget {
                               color: Colors.grey,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(7))),
+                          height: 50,
                           child: Padding(
-                            padding: EdgeInsets.only(left: 8.0),
-                            child: TextField(
-                              decoration: InputDecoration(
-                                hintText: "End Date",
-                                border: InputBorder.none,
-                              ),
-                              keyboardType: TextInputType.datetime,
-                            ),
+                            padding: const EdgeInsets.only(top: 17, left: 10),
+                            child: Text(responseData[0]['date_to']),
                           ),
                         ),
                       ],
@@ -231,6 +253,7 @@ class quotes_details extends StatelessWidget {
                   SizedBox(
                     height: res_height * 0.01,
                   ),
+                  responseData[0]['discount_amount'] ==true ?
                   Container(
                     width: res_width * 0.95,
                     decoration: BoxDecoration(
@@ -240,7 +263,7 @@ class quotes_details extends StatelessWidget {
                       padding: const EdgeInsets.all(13.0),
                       child: Center(
                         child: Text(
-                          "\$500",
+                          "\$${responseData[0]['discount_amount']}",
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -248,7 +271,7 @@ class quotes_details extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ),
+                  ): Container(),
                   Padding(
                     padding: EdgeInsets.only(top: 8.0),
                     child: Text(
@@ -271,7 +294,7 @@ class quotes_details extends StatelessWidget {
                       padding: const EdgeInsets.all(13.0),
                       child: Center(
                         child: Text(
-                          "\$4500",
+                          "\$${responseData[0]['total_amount']}",
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,

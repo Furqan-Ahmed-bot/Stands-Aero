@@ -31,7 +31,7 @@ class _credit_formState extends State<credit_form> {
   TextEditingController partnership = TextEditingController();
   TextEditingController type_of_business = TextEditingController();
   TextEditingController d_and_b = TextEditingController();
-  String apiGlobal = "https://qtdev.the4loop.com/api/";
+  String apiGlobal = "https://standsaero.jumppace.com/api/";
   @override
   Widget build(BuildContext context) {
     double res_width = MediaQuery.of(context).size.width;
@@ -347,7 +347,7 @@ class _credit_formState extends State<credit_form> {
 
   CFA() async {
     final uri = Uri.parse(
-        'https://qtdev.the4loop.com/api/user/credit-application-submit');
+        '${apiGlobal}user/credit-application-submit');
 
     print(uri);
 

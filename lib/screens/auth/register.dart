@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stande_aero/services/remote_services.dart';
 import 'package:stande_aero/helper/colors.dart';
 import 'package:stande_aero/screens/home/home.dart';
 import 'package:stande_aero/screens/kyc_Form/kyc_form.dart';
@@ -23,7 +24,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController phone = TextEditingController();
   TextEditingController password_confirmation = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  String apiGlobal = "https://qtdev.the4loop.com/";
 
   late String _selectedValue1;
   @override
@@ -272,9 +272,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    if (_formKey.currentState!.validate()) {
-                      register();
-                    }
+
+                        var sendData = {
+                            'fullname': fullname.text,
+                            'email': email.text,
+                            'city': city.text,
+                            'phone': phone.text,
+                            'password': password.text,
+                            'password_confirmation': password_confirmation.text,
+                            // "fullname": fullname.text,
+                            // "email": email.text,
+                            // "city": city.text,
+                            // "phone": phone.text,
+                            // "password": password.text,
+                            // "password_confirmation": password_confirmation,
+                          };
+                              if (_formKey.currentState!.validate()) {
+                                 ApiService().register(sendData);
+                              }
                   },
                   child: Container(
                     width: res_width * 0.9,
@@ -331,53 +346,4 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  register() async {
-    final uri = Uri.parse('https://qtdev.the4loop.com/api/user/registration');
-
-    print(uri);
-
-    var sendData = {
-      'fullname': fullname.text,
-      'email': email.text,
-      'city': city.text,
-      'phone': phone.text,
-      'password': password.text,
-      'password_confirmation': password_confirmation.text,
-      // "fullname": fullname.text,
-      // "email": email.text,
-      // "city": city.text,
-      // "phone": phone.text,
-      // "password": password.text,
-      // "password_confirmation": password_confirmation,
-    };
-
-    String jsonBody = json.encode(sendData);
-
-    final headers = {'Content-Type': 'application/json'};
-
-    http.Response response = await http.post(
-      uri,
-      headers: headers,
-      body: jsonBody,
-    );
-
-    print(response.statusCode);
-
-    print(response.body);
-
-    var res_data = json.decode(response.body.toString());
-
-    print(res_data);
-    if (res_data["status"] == true) {
-      Get.to(() => MainScreen());
-    } else
-      Get.snackbar(
-        'Error',
-        'Wrong Credentials',
-        animationDuration: Duration(seconds: 2),
-        snackPosition: SnackPosition.BOTTOM,
-      );
-
-    return res_data;
-  }
 }

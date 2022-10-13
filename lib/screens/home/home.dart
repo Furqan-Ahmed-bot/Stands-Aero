@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:stande_aero/services/remote_services.dart';
 import 'package:stande_aero/contrloller/ProductController.dart';
 import 'package:stande_aero/helper/ProductModel.dart';
 import 'package:stande_aero/helper/colors.dart';
@@ -30,11 +33,21 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   late AnimationController animation;
   late Animation<double> _fadeInFadeOut;
   final productController = Get.put(ProductController());
-
+  dynamic getPorductResponse;
   @override
   void initState() {
     super.initState();
-    homeApi();
+    Future.delayed(Duration.zero, () {
+      setState(() {
+        getProducts();
+      });
+      
+    }
+   
+    );
+   
+
+    // print("getPorductResponse"+getPorductResponse['data'].toString());
     animation = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 400),
@@ -51,12 +64,38 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     animation.forward();
   }
 
+
+
+Future<void> getProducts() async{
+  getPorductResponse=await ApiService().homeApi();
+  // log("getPorductResponse"+getPorductResponse.toString());
+  getPorductResponse['data'].forEach((element) => {
+        // log("Element"+ element.toString());
+        setState(() {
+           productController.addProduct(
+              product(
+                id: element['id'],
+                name: element['name'],
+                sku: element['sku'],
+                thumbnail: element['thumbnail'],
+                location: element['location'].toString(),
+                desc: element['desc'].toString(),
+                createdAt: element['created_at'],
+                updatedAt: element['updated_at']
+              ),
+            );
+          })
+        });
+           
+
+
+}
   @override
   Widget build(BuildContext context) {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
     final GlobalKey<ScaffoldState> _key = GlobalKey();
-
+    
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -463,66 +502,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         ),
       ),
     );
-  }
-
-  homeApi() async {
-    final uri = Uri.parse('https://qtdev.the4loop.com/api/front/products');
-
-    print(uri);
-
-    // var jsonBody = json.encode(sendData);
-
-    final headers = {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Bearer ${globaltoken}',
-    };
-
-    http.Response response = await http.get(
-      uri,
-      headers: headers,
-      // body: jsonBody,
-    );
-
-    print(response.statusCode);
-
-    print(response.body);
-    // try {
-    //   var res_data = json.decode(response.body);
-    // } catch (e) {
-    //   log('$e');
-    // }
-    var res_data = json.decode(response.body);
-
-    print(res_data);
-
-    if (res_data["status"] == true) {
-      print(res_data['data'].length);
-      res_data['data'].forEach((element) => {
-            productController.addProduct(
-              product(
-                id: element['id'],
-                name: element['name'],
-                sku: element['sku'],
-                leaseRate: element['lease_rate'],
-                thumbnail: element['thumbnail'],
-                location: '',
-                desc: element['desc'],
-                createdAt: element['created_at'],
-                updatedAt: element['updated_at'],
-              ),
-            )
-          });
-
-      // Get.to(() => MainLoginScreen());
-    } else
-      Get.snackbar(
-        'Error',
-        'Wrong Credentials',
-        animationDuration: Duration(seconds: 2),
-        snackPosition: SnackPosition.BOTTOM,
-      );
-
-    return res_data;
   }
 
   var catvalue;

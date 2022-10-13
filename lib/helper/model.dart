@@ -42,3 +42,17 @@ class productModel {
   });
   
 }
+
+class quoteModel {
+  int? id;
+  String? name;
+  String? location;
+  String? details;
+  quoteModel({
+    this.id,
+    this.name,
+    this.location,
+    this.details,  
+  });
+  
+}
