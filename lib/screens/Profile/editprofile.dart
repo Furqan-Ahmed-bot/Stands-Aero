@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:stande_aero/contrloller/usercontroller.dart';
+import 'package:stande_aero/controller/usercontroller.dart';
 import 'package:stande_aero/helper/colors.dart';
 import 'package:http/http.dart' as http;
 import 'package:stande_aero/screens/Profile/profile.dart';
@@ -31,7 +31,7 @@ class _EditprofileState extends State<Editprofile> {
   TextEditingController phone = TextEditingController();
   TextEditingController country = TextEditingController();
   TextEditingController city = TextEditingController();
-  TextEditingController desc = TextEditingController();
+  TextEditingController description = TextEditingController();
   final ImagePicker _picker = ImagePicker();
   
   // String apiGlobal = "https://standsaero.jumppace.com/api/";
@@ -63,7 +63,7 @@ class _EditprofileState extends State<Editprofile> {
     phone.text = usercontroller.user.phone.toString();
     country.text = usercontroller.user.country.toString();
     city.text = usercontroller.user.city.toString();
-    desc.text = usercontroller.user.desc.toString();
+    description.text = usercontroller.user.description.toString();
     // email.text = usercontroller.user.email.toString();
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
@@ -200,9 +200,9 @@ class _EditprofileState extends State<Editprofile> {
                       labelText: usercontroller.user.phone,
                     ),
                     profile_textfield(
-                      controller: desc,
+                      controller: description,
                       hed: "Description",
-                      labelText: usercontroller.user.desc,
+                      labelText: usercontroller.user.description,
                       maxLines: 6,
                     ),
                     SizedBox(
@@ -221,7 +221,7 @@ class _EditprofileState extends State<Editprofile> {
                                   "country": country.text,
                                   "city": city.text,
                                   "phone": phone.text,
-                                  "desc":desc.text,
+                                  "description":description.text,
                                   // "image": ""
                                 };
                                 ApiService().updateProfile(context, data);

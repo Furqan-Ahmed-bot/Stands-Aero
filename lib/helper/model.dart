@@ -6,7 +6,7 @@ class UserModel {
   String? propic;
   String? city;
   String? country;
-  String? desc;
+  String? description;
 
   UserModel(
       {this.id,
@@ -16,7 +16,7 @@ class UserModel {
       this.propic,
       this.city,
       this.country,
-      this.desc});
+      this.description});
 }
 
 class productModel {
@@ -26,7 +26,7 @@ class productModel {
   int? leaseRate;
   String? thumbnail;
   String? location;
-  String? desc;
+  String? description;
   String? createdAt;
   String? updatedAt;
   productModel({
@@ -36,7 +36,7 @@ class productModel {
     this.leaseRate,
     this.thumbnail,
     this.location,
-    this.desc,
+    this.description,
     this.createdAt,
     this.updatedAt,
   });

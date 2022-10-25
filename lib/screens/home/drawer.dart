@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stande_aero/bottomcontroller.dart';
+import 'package:stande_aero/controller/usercontroller.dart';
 import 'package:stande_aero/screens/about/aboutus.dart';
 import 'package:stande_aero/screens/credit_Form/credit_form.dart';
 import 'package:stande_aero/screens/home/orderhistory.dart';
@@ -12,6 +13,8 @@ import 'package:stande_aero/screens/lease%20Form/lease_form.dart';
 import 'package:stande_aero/screens/notifications/chat.dart';
 import 'package:stande_aero/screens/taxcertificate/taxcertificate.dart';
 
+
+
 class NavDrawer extends StatefulWidget {
   const NavDrawer({Key? key}) : super(key: key);
 
@@ -21,6 +24,7 @@ class NavDrawer extends StatefulWidget {
 
 class _NavDrawerState extends State<NavDrawer> {
   final bottomctrl = Get.put(BottomController());
+  final userController = UserController();
   @override
   Widget build(BuildContext context) {
     double res_width = MediaQuery.of(context).size.width;
@@ -58,13 +62,13 @@ class _NavDrawerState extends State<NavDrawer> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'John Doe',
+                                userController.user.fullName.toString(),
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
                                     color: Colors.white),
                               ),
-                              Text('john@email.com',
+                              Text(userController.user.email.toString(),
                                   style: TextStyle(color: Colors.white))
                             ],
                           ),

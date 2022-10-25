@@ -4,12 +4,13 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stande_aero/services/remote_services.dart';
-import 'package:stande_aero/contrloller/usercontroller.dart';
+import 'package:stande_aero/controller/usercontroller.dart';
 import 'package:stande_aero/helper/colors.dart';
 import 'package:stande_aero/helper/global.dart';
 import 'package:stande_aero/screens/Profile/editprofile.dart';
 import 'package:stande_aero/screens/auth/mainlogin.dart';
 import 'package:stande_aero/screens/home/drawer.dart';
+import 'package:stande_aero/helper/loader.dart';
 
 import '../../helper/model.dart';
 
@@ -72,7 +73,7 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
           propic: profileInfo['data']['propic'],
           city: profileInfo['data']['city'],
           country: profileInfo['data']['country'],
-          desc: profileInfo['data']['desc'],
+          description: profileInfo['data']['description'],
         ),
       );
       });
@@ -138,7 +139,7 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
         ),
       ),
       extendBodyBehindAppBar: true,
-      body: FadeTransition(
+      body: profileInfo.length>0?FadeTransition(
         opacity: _fadeInFadeOut,
         child: Container(
           width: double.infinity,
@@ -155,8 +156,8 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
                 children: [
                   Container(
                     width: res_width * 0.375,
-                    child: Image.asset(
-                      'assets/slicing/Untitled-31.png',
+                    child: Image.network(
+                      userController.user.propic.toString(),
                       height: 150,
                     ),
                   ),
@@ -165,7 +166,7 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
                   profile_text(text: userController.user.country),
                   profile_text(text: userController.user.city),
                   profile_text(text: userController.user.phone),
-                  profile_text(text: userController.user.desc),
+                  profile_text(text: userController.user.description),
                   SizedBox(
                     height: res_height * 0.01,
                   ),
@@ -200,7 +201,7 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
             ),
           ),
         ),
-      ),
+      ):spinkit,
     );
   }
 

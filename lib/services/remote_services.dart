@@ -6,8 +6,8 @@ import 'package:http_parser/http_parser.dart';
 import 'package:http/http.dart' as http;
 import 'dart:developer';
 
-import '../contrloller/usercontroller.dart';
-import '../contrloller//ProductController.dart';
+import '../controller/usercontroller.dart';
+import '../controller//ProductController.dart';
 import '../helper/ProductModel.dart';
 import '../helper/global.dart';
 import '../helper/loader.dart';
@@ -77,7 +77,7 @@ class ApiService {
           propic: res_data['data']['user']['propic'],
           city: res_data['data']['user']['city'],
           country: res_data['data']['user']['country'],
-          desc: res_data['data']['user']['desc'],
+          description: res_data['data']['user']['description'],
         ),
       );
 
@@ -264,7 +264,7 @@ class ApiService {
     request.fields['country'] = data['country'].toString();
     request.fields['city'] = data['city'].toString();
     // request.fields['propic'] = data['city'].toString();
-    // request.fields['desc'] = data['desc'].toString();
+    request.fields['description'] = data['description'].toString();
     // request.fields['city'] = data['city'];
     // request.fields['city'] = data['city'];
     log("image value coming from frontend" + data['propic'].toString());

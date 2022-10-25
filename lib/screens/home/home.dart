@@ -5,7 +5,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:stande_aero/services/remote_services.dart';
-import 'package:stande_aero/contrloller/ProductController.dart';
+import 'package:stande_aero/controller/ProductController.dart';
 import 'package:stande_aero/helper/ProductModel.dart';
 import 'package:stande_aero/helper/colors.dart';
 import 'package:stande_aero/helper/global.dart';
