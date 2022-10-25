@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stande_aero/helper/loader.dart';
 import 'package:stande_aero/screens/List%20Quotes/list_of_Quote_details.dart';
 import 'package:stande_aero/screens/home/drawer.dart';
 import 'package:stande_aero/services/remote_services.dart';
@@ -24,10 +25,11 @@ class _PaymentHistoryState extends State<PaymentHistory> {
     });
     super.initState();
   }
-  Future<void> payment_history() async {
 
-  paymentsHistory = await ApiService().payment_history();
-}
+  Future<void> payment_history() async {
+    paymentsHistory = await ApiService().payment_history();
+  }
+
   @override
   Widget build(BuildContext context) {
     double res_width = MediaQuery.of(context).size.width;
@@ -82,43 +84,53 @@ class _PaymentHistoryState extends State<PaymentHistory> {
         body: FutureBuilder<void>(
             future: payment_history(),
             builder: (context, snapshot) {
-              return Container(
-                      width: double.infinity,
-                      child: SingleChildScrollView(
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: ListView.builder(
-                              itemCount: paymentsHistory['data'].length,
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              scrollDirection: Axis.vertical,
-                              itemBuilder: (context, index) {
-                                return Quotes_Card(
-                                      orderNumber:paymentsHistory['data'][index]['order_number'] ,
-                                      payAmount: paymentsHistory['data'][index]['pay_amount'],
-                                      paymentDate: paymentsHistory['data'][index]['payment_date'],
-                                          txnId: paymentsHistory['data'][index]['txnid'],
-                                          paymentStatus:paymentsHistory['data'][index]['payment_status']
-                                    );                                
-                              }),
-                        ),
-                      ),
-                    );                  
+              if (snapshot.connectionState == ConnectionState.done) {
+                return Container(
+                  width: double.infinity,
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: ListView.builder(
+                          itemCount: paymentsHistory['data'].length,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          scrollDirection: Axis.vertical,
+                          itemBuilder: (context, index) {
+                            return Quotes_Card(
+                                orderNumber: paymentsHistory['data'][index]
+                                    ['order_number'],
+                                payAmount: paymentsHistory['data'][index]
+                                    ['pay_amount'],
+                                paymentDate: paymentsHistory['data'][index]
+                                    ['payment_date'],
+                                txnId: paymentsHistory['data'][index]['txnid'],
+                                paymentStatus: paymentsHistory['data'][index]
+                                    ['payment_status']);
+                          }),
+                    ),
+                  ),
+                );
+              }
+              else{
+                return spinkit;
+              };
             }),
       ),
     );
   }
-  
-
 }
-
-
 
 class Quotes_Card extends StatelessWidget {
   // var MODEL, location, description;
-  var orderNumber,payAmount,paymentDate,txnId,paymentStatus;
+  var orderNumber, payAmount, paymentDate, txnId, paymentStatus;
 
-  Quotes_Card({Key? key, this.orderNumber, this.payAmount, this.paymentDate,this.txnId,this.paymentStatus})
+  Quotes_Card(
+      {Key? key,
+      this.orderNumber,
+      this.payAmount,
+      this.paymentDate,
+      this.txnId,
+      this.paymentStatus})
       : super(key: key);
 
   @override
@@ -192,7 +204,7 @@ class Quotes_Card extends StatelessWidget {
                           ],
                         ),
                         SizedBox(
-                            height: res_height * 0.006,
+                          height: res_height * 0.006,
                         ),
                         Row(
                           children: [
@@ -208,7 +220,7 @@ class Quotes_Card extends StatelessWidget {
                           ],
                         ),
                         SizedBox(
-                            height: res_height * 0.006,
+                          height: res_height * 0.006,
                         ),
                         Row(
                           children: [

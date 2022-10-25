@@ -30,9 +30,9 @@ class _quotes_detailsState extends State<quotes_details> {
   quotesDetails() {
     log("widget quote id"+ widget.quoteId);
     ApiService().single_quotation_data(widget.quoteId).then((res_data) {
-      log("response of single quotation console");
+      // log("response of single quotation console");
       if (res_data['status'] == true) {
-        // print("ALL Video Links : " + res_data['data'].toString());
+        log("response of single quotation console : " + res_data['data'].toString());
         setState(() {
           responseData = res_data['data'];
         });
@@ -110,7 +110,7 @@ class _quotes_detailsState extends State<quotes_details> {
                       location: responseData[0]['product_location']==null ?  "abc" : responseData[0]['product_location'],
                       description: responseData[0]['details'],
                       image:
-                          "https://standsaero.jumppace.com/assets/images/products/1662148664iYo2gV72.png"),
+                          responseData[0]['product_image']),
                   Padding(
                     padding: EdgeInsets.only(top: 8.0),
                     child: Text(

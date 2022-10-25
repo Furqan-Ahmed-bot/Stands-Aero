@@ -369,10 +369,11 @@ Future<void> getProducts() async{
                                 top: 5, left: 5, right: 5, bottom: 5),
                             child: StandsBox(
                               context,
-                              'assets/slicing/Untitled-26.png',
+                              productController.productList[i].thumbnail,
                               productController.productList[i].name,
                               productController.productList[i].location,
                               productController.productList[i].desc,
+                              productController.productList[i].id,
                             ),
                           );
                         },
@@ -431,10 +432,11 @@ Future<void> getProducts() async{
                                 top: 5, left: 5, right: 5, bottom: 5),
                             child: StandsBox(
                               context,
-                              'assets/slicing/Untitled-26.png',
+                              productController.productList[i].thumbnail,
                               productController.productList[i].name,
                               productController.productList[i].location,
                               productController.productList[i].desc,
+                              productController.productList[i].id
                             ),
                           );
                         },
@@ -459,20 +461,25 @@ Future<void> getProducts() async{
     name,
     location,
     description,
+    id
   ) {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
     return GestureDetector(
       onTap: () {
         // print(productController.Product1.name);
-        Get.to(booking());
+        Get.to(booking(
+          productId:id
+        ));
       },
       child: Container(
         width: res_width * 0.475,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(child: Image.asset(image, fit: BoxFit.cover)),
+            Container(child: 
+            // Image.asset(image, fit: BoxFit.cover)),
+            Image.network(image)),
             SizedBox(
               height: res_height * 0.01,
             ),

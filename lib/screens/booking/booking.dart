@@ -1,22 +1,56 @@
 // import 'dart:html';
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:get/get.dart';
+import 'package:stande_aero/helper/ProductModel.dart';
 import 'package:stande_aero/helper/colors.dart';
+import 'package:stande_aero/helper/loader.dart';
 import 'package:stande_aero/screens/booking/engine_stand_booking.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:stande_aero/services/remote_services.dart';
 
 class booking extends StatefulWidget {
-  const booking({Key? key}) : super(key: key);
+  final productId;
+  const booking({Key? key, required this.productId}) : super(key: key);
 
   @override
   State<booking> createState() => _bookingState();
 }
 
 class _bookingState extends State<booking> {
+  List<dynamic> responseData = [];
+  @override
+  void initState() {
+    Future.delayed(Duration.zero, () {
+      // setState(() {
+      productDetails();
+      // });
+    });
+    super.initState();
+  }
+
+  productDetails() async {
+    // print("eventDetailsId "+widget.eventDetailsId);
+    var response_data = await ApiService()
+        .singleProductDetails(widget.productId)
+        .then((res_data) {
+      // log("response of product details" + res_data.toString());
+
+      if (res_data['status'] == true) {
+        responseData = res_data['data'];
+        // responseData = res_data['data'];
+        // print("ALL Video Links : " + res_data['data'].toString());
+
+        log("products data" + responseData.toString());
+      }
+    });
+  }
+
   CalendarFormat _calendarFormat = CalendarFormat.month;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
       .toggledOn; // Can be toggled on/off by longpressing a date
@@ -79,7 +113,7 @@ class _bookingState extends State<booking> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'CF34-10 DAE',
+              responseData[0]['sku'],
               style: TextStyle(color: Colors.black),
             ),
             Container(
@@ -127,14 +161,14 @@ class _bookingState extends State<booking> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'CF34-10 DAE',
+                        responseData[0]['location'],
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 15,
                         ),
                       ),
                       Text(
-                        "Location: Miami, Florida",
+                        responseData[0]['location'],
                         style: TextStyle(fontSize: 15, color: Colors.black),
                       ),
                       // Text(
@@ -148,7 +182,7 @@ class _bookingState extends State<booking> {
                   padding: EdgeInsets.symmetric(horizontal: pad),
                   child: DescriptionTextWidget(
                       text:
-                          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing"),
+                          responseData[0]['details'].toString()),
                 ),
                 // Padding(
                 //   padding: EdgeInsets.symmetric(horizontal: pad),
@@ -310,7 +344,7 @@ class _bookingState extends State<booking> {
                 ),
                 SizedBox(
                   height: Get.height * 0.03,
-                )  
+                )
               ],
             ),
           ),

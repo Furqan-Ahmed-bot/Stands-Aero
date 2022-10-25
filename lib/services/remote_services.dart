@@ -12,6 +12,7 @@ import '../helper/ProductModel.dart';
 import '../helper/global.dart';
 import '../helper/loader.dart';
 import '../helper/model.dart';
+import '../screens/auth/mainlogin.dart';
 import '../screens/mainhome.dart';
 
 // String apiGlobal = "http://localhost:3000/api/v1";
@@ -77,7 +78,6 @@ class ApiService {
           city: res_data['data']['user']['city'],
           country: res_data['data']['user']['country'],
           desc: res_data['data']['user']['desc'],
-          
         ),
       );
 
@@ -96,7 +96,6 @@ class ApiService {
 
     return res_data;
   }
-
 
   homeApi() async {
     final uri = Uri.parse('${apiGlobal}/api/front/products');
@@ -118,7 +117,7 @@ class ApiService {
 
     print(response.statusCode);
 
-    log("home API"+response.body.toString());
+    log("home API" + response.body.toString());
 
     var res_data = json.decode(response.body);
 
@@ -126,7 +125,6 @@ class ApiService {
 
     if (res_data["status"] == true) {
       print(res_data['data'].length);
-
     } else
       Get.snackbar(
         'Error',
@@ -138,8 +136,7 @@ class ApiService {
     return res_data;
   }
 
-
- quotation_list() async {
+  quotation_list() async {
     final uri = Uri.parse('${apiGlobal}/api/user/quotations-list');
     // ProductController productController = Get.put(ProductController());
     print(uri);
@@ -157,14 +154,12 @@ class ApiService {
       // body: jsonBody,
     );
 
-
     var res_data = json.decode(response.body);
 
     // print(res_data);
 
     if (res_data["status"] == true) {
       print(res_data['data'].length);
-     
     } else
       Get.snackbar(
         'Error',
@@ -176,9 +171,9 @@ class ApiService {
     return res_data;
   }
 
-
   single_quotation_data(quoteId) async {
-    final uri = Uri.parse('${apiGlobal}/api/user/quotation-response/${quoteId}');
+    final uri =
+        Uri.parse('${apiGlobal}/api/user/quotation-response/${quoteId}');
     // ProductController productController = Get.put(ProductController());
     print(uri);
 
@@ -198,7 +193,6 @@ class ApiService {
     var res_data = json.decode(response.body);
     if (res_data["status"] == true) {
       print(res_data['data'].length);
-     
     } else
       Get.snackbar(
         'Error',
@@ -210,8 +204,7 @@ class ApiService {
     return res_data;
   }
 
-
-prof() async {
+  prof() async {
     final uri = Uri.parse('${apiGlobal}/api/user/details');
 
     print(uri);
@@ -237,7 +230,6 @@ prof() async {
 
     print(res_data);
     if (res_data["status"] == true) {
-
     } else
       Get.snackbar(
         'Error',
@@ -249,9 +241,7 @@ prof() async {
     return res_data;
   }
 
-
-  
-updateProfile(context, data) async {
+  updateProfile(context, data) async {
     final usercontroller = Get.put(UserController());
     data["id"] = usercontroller.user.id;
     print(data);
@@ -277,8 +267,8 @@ updateProfile(context, data) async {
     // request.fields['desc'] = data['desc'].toString();
     // request.fields['city'] = data['city'];
     // request.fields['city'] = data['city'];
-    log("image value coming from frontend"+data['propic'].toString());
-var headers = {'Authorization':"bearer "+globaltoken};
+    log("image value coming from frontend" + data['propic'].toString());
+    var headers = {'Authorization': "bearer " + globaltoken};
 // Add Check propic
     if (data['propic'] != null) {
       var multipartFile = await http.MultipartFile.fromPath(
@@ -286,25 +276,21 @@ var headers = {'Authorization':"bearer "+globaltoken};
           filename: data['propic'].path.split('/').last,
           // contentType: MediaType("image", "${data['propic'].path.split('.').last}"));
           contentType: MediaType("image", "png"));
-          // log("multipartFile"+ multipartFile.toString());
+      // log("multipartFile"+ multipartFile.toString());
       request.files.add(multipartFile);
     }
     request.headers.addAll(headers);
-    log("request"+request.toString());
+    log("request" + request.toString());
     var response = await request.send();
-    
-      
+
     final res = await http.Response.fromStream(response);
-    
-    log("res print"+res.body.toString());
+
+    log("res print" + res.body.toString());
 
     var res_data = json.decode(res.body.toString());
     print(res_data);
 
-    if (res_data['success']==true) {
-     
-    }
-  
+    if (res_data['success'] == true) {}
   }
 
   order_history() async {
@@ -323,7 +309,7 @@ var headers = {'Authorization':"bearer "+globaltoken};
     log("response status code ${response.body}");
     var res_data = json.decode(response.body);
     print(res_data);
-    if (res_data["status"] == true) {      
+    if (res_data["status"] == true) {
     } else
       Get.snackbar(
         'Error',
@@ -334,7 +320,6 @@ var headers = {'Authorization':"bearer "+globaltoken};
 
     return res_data;
   }
-
 
   TaxCertificates_list() async {
     final uri = Uri.parse('${apiGlobal}/api/user/tax-certs');
@@ -352,7 +337,7 @@ var headers = {'Authorization':"bearer "+globaltoken};
     print(response.statusCode);
     var res_data = json.decode(response.body);
     print(res_data);
-    if (res_data["status"] == true) {      
+    if (res_data["status"] == true) {
     } else
       Get.snackbar(
         'Error',
@@ -363,7 +348,6 @@ var headers = {'Authorization':"bearer "+globaltoken};
 
     return res_data;
   }
-
 
   payment_history() async {
     final uri = Uri.parse('${apiGlobal}/api/user/payments');
@@ -381,7 +365,7 @@ var headers = {'Authorization':"bearer "+globaltoken};
     print(response.statusCode);
     var res_data = json.decode(response.body);
     print(res_data);
-    if (res_data["status"] == true) {      
+    if (res_data["status"] == true) {
     } else
       Get.snackbar(
         'Error',
@@ -393,13 +377,70 @@ var headers = {'Authorization':"bearer "+globaltoken};
     return res_data;
   }
 
+  logout() async {
+    final uri = Uri.parse('${apiGlobal}/api/user/logout');
 
-  
+    print(uri);
 
+    final headers = {'Authorization': 'bearer ${globaltoken}'};
 
+    http.Response response = await http.get(
+      uri,
+      headers: headers,
+      // body: jsonBody,
+    );
 
+    print(response.statusCode);
+
+    // print(response.body);
+    // try {
+    //   var res_data = json.decode(response.body);
+    // } catch (e) {
+    //   log('$e');
+    // }
+    var res_data = json.decode(response.body);
+
+    print(res_data);
+    if (res_data["status"] == true) {
+      Get.to(() => MainLoginScreen());
+    } else
+      Get.snackbar(
+        'Error',
+        'Wrong Credentials',
+        animationDuration: Duration(seconds: 2),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+
+    return res_data;
+  }
+
+  singleProductDetails(productId) async {
+    final uri = Uri.parse('${apiGlobal}/api/front/product/${productId}/details');
+
+    print(uri);
+
+    final headers = {'Authorization': 'bearer ${globaltoken}'};
+
+    http.Response response = await http.get(
+      uri,
+      headers: headers,
+      // body: jsonBody,
+    );
+
+    print(response.statusCode);
+    var res_data = json.decode(response.body);
+
+    // print(res_data);
+    // if (res_data["status"] == true) {
+    //   Get.to(() => MainLoginScreen());
+    // } else
+    //   Get.snackbar(
+    //     'Error',
+    //     'Wrong Credentials',
+    //     animationDuration: Duration(seconds: 2),
+    //     snackPosition: SnackPosition.BOTTOM,
+    //   );
+
+    return res_data;
+  }
 }
-
-
-
-

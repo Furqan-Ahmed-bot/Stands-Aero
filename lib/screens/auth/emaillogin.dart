@@ -108,6 +108,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                   width: MediaQuery.of(context).size.width * 0.9,
                   child: TextFormField(
                     controller: password,
+                    obscureText: true,
                     decoration: new InputDecoration(
                       hintText: 'Password',
                       border: OutlineInputBorder(

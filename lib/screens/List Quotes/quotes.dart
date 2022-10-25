@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:stande_aero/screens/List%20Quotes/list_of_Quote_details.dart';
 import 'package:stande_aero/screens/home/drawer.dart';
 import 'package:stande_aero/services/remote_services.dart';
-
+import 'package:stande_aero/helper/loader.dart';
 class quotes extends StatefulWidget {
   const quotes({Key? key}) : super(key: key);
 
@@ -102,6 +102,7 @@ class _quotesState extends State<quotes> with TickerProviderStateMixin {
           child: FutureBuilder<void>(
               future: quotation_list(),
               builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
                 return FadeTransition(
                   opacity: _fadeInFadeOut,
                   child: Container(
@@ -138,6 +139,10 @@ class _quotesState extends State<quotes> with TickerProviderStateMixin {
                     ),
                   ),
                 );
+                }
+                else{
+                  return spinkit;
+                }
               }),
         ),
       ),

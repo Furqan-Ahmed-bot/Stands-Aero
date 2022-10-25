@@ -17,6 +17,7 @@ class TexCertificateScreen extends StatefulWidget {
 }
 
 class _TexCertificateScreenState extends State<TexCertificateScreen> {
+  dynamic taxCertificates;
   @override
   void initState() {
     Future.delayed(Duration.zero, () {
@@ -29,7 +30,7 @@ class _TexCertificateScreenState extends State<TexCertificateScreen> {
   }
  
 Future<void> taxCertificateList() async{
-      var taxCertificates =await ApiService().TaxCertificates_list();
+      taxCertificates =await ApiService().TaxCertificates_list();
       
       log("taxCertificates"+taxCertificates['data'].toString());
 
