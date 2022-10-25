@@ -23,7 +23,7 @@ class booking extends StatefulWidget {
 }
 
 class _bookingState extends State<booking> {
-  List<dynamic> responseData = [];
+  var responseData ;
   @override
   void initState() {
     Future.delayed(Duration.zero, () {
@@ -42,11 +42,11 @@ class _bookingState extends State<booking> {
       // log("response of product details" + res_data.toString());
 
       if (res_data['status'] == true) {
-        responseData = res_data['data'];
+        responseData = res_data['data'][0];
         // responseData = res_data['data'];
         // print("ALL Video Links : " + res_data['data'].toString());
 
-        log("products data" + responseData.toString());
+        log("products data" + responseData[0].toString());
       }
     });
   }
@@ -88,268 +88,281 @@ class _bookingState extends State<booking> {
   Widget build(BuildContext context) {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        centerTitle: true,
-        leading: GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          onTap: () {
-            Navigator.pop(context);
-            // _key.currentState!.openDrawer();
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(15),
-            child: Container(
-                width: 25,
-                child: Image.asset(
-                  'assets/slicing/Untitled-3.png',
-                )),
-          ),
-        ),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              responseData[0]['sku'],
-              style: TextStyle(color: Colors.black),
+    return FutureBuilder<void>(
+      future: productDetails(),
+      builder: (context, snapshot) {
+   if (snapshot.connectionState == ConnectionState.done) {
+        return Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            centerTitle: true,
+            leading: GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: () {
+                Navigator.pop(context);
+                // _key.currentState!.openDrawer();
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(15),
+                child: Container(
+                    width: 25,
+                    child: Image.asset(
+                      'assets/slicing/Untitled-3.png',
+                    )),
+              ),
             ),
-            Container(
-                width: 40,
-                height: 40,
-                child: Image.asset('assets/slicing/Untitled-4.png',
-                    fit: BoxFit.cover)),
-          ],
-        ),
-        // actions: [
-        //   Padding(
-        //     padding: const EdgeInsets.all(8.0),
-        //     child: GestureDetector(
-        //       onTap: () {
-        //         Get.to(Editprofile());
-        //       },
-        //       child: Container(
-        //           width: 30,
-        //           height: 20,
-        //           child: Image.asset('assets/slicing/Untitled-45.png',
-        //               fit: BoxFit.contain)),
-        //     ),
-        //   ),
-        // ],
-      ),
-      extendBodyBehindAppBar: true,
-      body: Container(
-        width: double.infinity,
-        // height:  double.infinity,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/slicing/Untitled-46.jpg"),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                custum_Slider(res_width: res_width),
-                Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: pad, vertical: pad / 2),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        responseData[0]['location'],
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 15,
-                        ),
-                      ),
-                      Text(
-                        responseData[0]['location'],
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ),
-                      // Text(
-                      //   'Miami, Florida',
-                      //   style: TextStyle(color: Colors.black),
-                      // ),
-                    ],
-                  ),
+                Text(
+                  responseData['sku'],
+                  style: TextStyle(color: Colors.black),
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: pad),
-                  child: DescriptionTextWidget(
-                      text:
-                          responseData[0]['details'].toString()),
-                ),
-                // Padding(
-                //   padding: EdgeInsets.symmetric(horizontal: pad),
-                //   child: Text(
-                //     "",
-                //     style: TextStyle(fontSize: 15, color: Colors.black),
-                //   ),
-                // ),
-                Padding(
-                  padding: EdgeInsets.all(pad),
-                  child: Container(
-                    decoration: BoxDecoration(color: Colors.white),
-                    child: TableCalendar(
-                      // daysOfWeekVisible: false,
-
-                      calendarStyle: CalendarStyle(
-                          todayDecoration: BoxDecoration(
-                              color: kPrimaryColor,
-                              borderRadius: BorderRadius.circular(50)),
-                          selectedDecoration:
-                              BoxDecoration(color: kPrimaryColor)),
-                      // calendarFormat: false,
-                      headerStyle: HeaderStyle(
-                          formatButtonVisible: false,
-                          titleCentered: true,
-                          leftChevronIcon: CircleAvatar(
-                            backgroundColor: kPrimaryColor,
-                            child: Icon(
-                              Icons.chevron_left,
-                              color: Colors.white,
-                              size: 28,
-                            ),
-                          ),
-                          rightChevronIcon: CircleAvatar(
-                            backgroundColor: kPrimaryColor,
-                            child: Icon(
-                              Icons.chevron_right,
-                              color: Colors.white,
-                              size: 28,
-                            ),
-                          ),
-                          decoration: BoxDecoration(color: Colors.white)),
-                      firstDay: DateTime.now(),
-                      lastDay: DateTime.utc(2030, 3, 14),
-                      focusedDay: DateTime.now(),
-                    ),
-                  ),
-                ),
-
-                ///hjsdadsad
-                // Padding(
-                //   padding: EdgeInsets.all(pad),
-                //   child: ClipRRect(
-                //     borderRadius: BorderRadius.circular(13.0),
-                //     child: Container(
-                //       decoration: BoxDecoration(
-                //         color: Colors.white,
-                //       ),
-                //       child: SfDateRangePicker(
-                //         onSelectionChanged: _onSelectionChanged,
-                //         selectionMode: DateRangePickerSelectionMode.range,
-                //         // rangeTextStyle: TextStyle(color: Colors.red),
-                //         // selectionTextStyle: TextStyle(color: Colors.red),
-
-                //         selectionColor: kPrimaryColor,
-                //         rangeSelectionColor: kPrimaryColor.withOpacity(0.3),
-                //         endRangeSelectionColor: kPrimaryColor,
-                //         startRangeSelectionColor: kPrimaryColor,
-                //         todayHighlightColor: kPrimaryColor,
-                //         backgroundColor: Colors.white,
-                //         // showTodayButton: false,
-                //         initialSelectedRange: PickerDateRange(
-                //             DateTime.now().subtract(const Duration(days: 4)),
-                //             DateTime.now().add(const Duration(days: 3))),
-                //       ),
-                //     ),
-                //   ),
-                // ),
-                //sasjkdbajdsbadjasbdhas
-                // Padding(
-                //   padding: EdgeInsets.all(pad),
-                //   child: ClipRRect(
-                //     borderRadius: BorderRadius.circular(13.0),
-                //     child: Container(
-                //       decoration: BoxDecoration(
-                //         color: Colors.white,
-                //       ),
-                //       // height: 200,
-                //       child: TableCalendar(
-                //         // daysOfWeekVisible: false,
-                //         firstDay: kFirstDay,
-                //         lastDay: kLastDay,
-                //         focusedDay: _focusedDay,
-                //         selectedDayPredicate: (day) =>
-                //             isSameDay(_selectedDay, day),
-                //         rangeStartDay: _rangeStart,
-                //         rangeEndDay: _rangeEnd,
-                //         calendarFormat: _calendarFormat,
-                //         rangeSelectionMode: _rangeSelectionMode,
-
-                //         calendarStyle: CalendarStyle(
-                //             // cellPadding: EdgeInsets.all(1),
-                //             todayDecoration: BoxDecoration(
-                //                 color: kPrimaryColor,
-                //                 borderRadius: BorderRadius.circular(50)),
-                //             selectedDecoration:
-                //                 BoxDecoration(color: kPrimaryColor)),
-
-                //         headerStyle: HeaderStyle(
-                //             formatButtonVisible: false,
-                //             titleCentered: true,
-                //             leftChevronIcon: CircleAvatar(
-                //               backgroundColor: kPrimaryColor,
-                //               child: Icon(
-                //                 Icons.chevron_left,
-                //                 color: Colors.white,
-                //                 size: 28,
-                //               ),
-                //             ),
-                //             rightChevronIcon: CircleAvatar(
-                //               backgroundColor: kPrimaryColor,
-                //               child: Icon(
-                //                 Icons.chevron_right,
-                //                 color: Colors.white,
-                //                 size: 28,
-                //               ),
-                //             ),
-                //             decoration: BoxDecoration(color: Colors.white)),
-                //         // firstDay: DateTime.utc(2010, 10, 16),
-                //         // lastDay: DateTime.utc(2030, 3, 14),
-                //         // focusedDay: DateTime.now(),
-                //       ),
-                //     ),
-                //   ),
-                // ),
-
-                GestureDetector(
-                  onTap: () {
-                    Get.to(stand_booking());
-                  },
-                  child: Container(
-                    width: res_width * 0.9,
-                    decoration: BoxDecoration(
-                        color: Color(0xffaf8a39),
-                        borderRadius: BorderRadius.all(Radius.circular(7))),
-                    child: Padding(
-                      padding: EdgeInsets.all(13.0),
-                      child: Center(
-                        child: Text(
-                          'Select Booking Dates',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: Get.height * 0.03,
-                )
+                Container(
+                    width: 40,
+                    height: 40,
+                    child: Image.asset('assets/slicing/Untitled-4.png',
+                        fit: BoxFit.cover)),
               ],
             ),
+            // actions: [
+            //   Padding(
+            //     padding: const EdgeInsets.all(8.0),
+            //     child: GestureDetector(
+            //       onTap: () {
+            //         Get.to(Editprofile());
+            //       },
+            //       child: Container(
+            //           width: 30,
+            //           height: 20,
+            //           child: Image.asset('assets/slicing/Untitled-45.png',
+            //               fit: BoxFit.contain)),
+            //     ),
+            //   ),
+            // ],
           ),
-        ),
-      ),
+          extendBodyBehindAppBar: true,
+          body: Container(
+            width: double.infinity,
+            // height:  double.infinity,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/slicing/Untitled-46.jpg"),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    custum_Slider(res_width: res_width),
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: pad, vertical: pad / 2),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            responseData['location'],
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 15,
+                            ),
+                          ),
+                          Text(
+                            responseData['location'],
+                            style: TextStyle(fontSize: 15, color: Colors.black),
+                          ),
+                          // Text(
+                          //   'Miami, Florida',
+                          //   style: TextStyle(color: Colors.black),
+                          // ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: pad),
+                      child: DescriptionTextWidget(
+                          text:
+                              responseData['details'].toString()),
+                    ),
+                    // Padding(
+                    //   padding: EdgeInsets.symmetric(horizontal: pad),
+                    //   child: Text(
+                    //     "",
+                    //     style: TextStyle(fontSize: 15, color: Colors.black),
+                    //   ),
+                    // ),
+                    Padding(
+                      padding: EdgeInsets.all(pad),
+                      child: Container(
+                        decoration: BoxDecoration(color: Colors.white),
+                        child: TableCalendar(
+                          // daysOfWeekVisible: false,
+    
+                          calendarStyle: CalendarStyle(
+                              todayDecoration: BoxDecoration(
+                                  color: kPrimaryColor,
+                                  borderRadius: BorderRadius.circular(50)),
+                              selectedDecoration:
+                                  BoxDecoration(color: kPrimaryColor)),
+                          // calendarFormat: false,
+                          headerStyle: HeaderStyle(
+                              formatButtonVisible: false,
+                              titleCentered: true,
+                              leftChevronIcon: CircleAvatar(
+                                backgroundColor: kPrimaryColor,
+                                child: Icon(
+                                  Icons.chevron_left,
+                                  color: Colors.white,
+                                  size: 28,
+                                ),
+                              ),
+                              rightChevronIcon: CircleAvatar(
+                                backgroundColor: kPrimaryColor,
+                                child: Icon(
+                                  Icons.chevron_right,
+                                  color: Colors.white,
+                                  size: 28,
+                                ),
+                              ),
+                              decoration: BoxDecoration(color: Colors.white)),
+                          firstDay: DateTime.now(),
+                          lastDay: DateTime.utc(2030, 3, 14),
+                          focusedDay: DateTime.now(),
+                        ),
+                      ),
+                    ),
+    
+                    ///hjsdadsad
+                    // Padding(
+                    //   padding: EdgeInsets.all(pad),
+                    //   child: ClipRRect(
+                    //     borderRadius: BorderRadius.circular(13.0),
+                    //     child: Container(
+                    //       decoration: BoxDecoration(
+                    //         color: Colors.white,
+                    //       ),
+                    //       child: SfDateRangePicker(
+                    //         onSelectionChanged: _onSelectionChanged,
+                    //         selectionMode: DateRangePickerSelectionMode.range,
+                    //         // rangeTextStyle: TextStyle(color: Colors.red),
+                    //         // selectionTextStyle: TextStyle(color: Colors.red),
+    
+                    //         selectionColor: kPrimaryColor,
+                    //         rangeSelectionColor: kPrimaryColor.withOpacity(0.3),
+                    //         endRangeSelectionColor: kPrimaryColor,
+                    //         startRangeSelectionColor: kPrimaryColor,
+                    //         todayHighlightColor: kPrimaryColor,
+                    //         backgroundColor: Colors.white,
+                    //         // showTodayButton: false,
+                    //         initialSelectedRange: PickerDateRange(
+                    //             DateTime.now().subtract(const Duration(days: 4)),
+                    //             DateTime.now().add(const Duration(days: 3))),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    //sasjkdbajdsbadjasbdhas
+                    // Padding(
+                    //   padding: EdgeInsets.all(pad),
+                    //   child: ClipRRect(
+                    //     borderRadius: BorderRadius.circular(13.0),
+                    //     child: Container(
+                    //       decoration: BoxDecoration(
+                    //         color: Colors.white,
+                    //       ),
+                    //       // height: 200,
+                    //       child: TableCalendar(
+                    //         // daysOfWeekVisible: false,
+                    //         firstDay: kFirstDay,
+                    //         lastDay: kLastDay,
+                    //         focusedDay: _focusedDay,
+                    //         selectedDayPredicate: (day) =>
+                    //             isSameDay(_selectedDay, day),
+                    //         rangeStartDay: _rangeStart,
+                    //         rangeEndDay: _rangeEnd,
+                    //         calendarFormat: _calendarFormat,
+                    //         rangeSelectionMode: _rangeSelectionMode,
+    
+                    //         calendarStyle: CalendarStyle(
+                    //             // cellPadding: EdgeInsets.all(1),
+                    //             todayDecoration: BoxDecoration(
+                    //                 color: kPrimaryColor,
+                    //                 borderRadius: BorderRadius.circular(50)),
+                    //             selectedDecoration:
+                    //                 BoxDecoration(color: kPrimaryColor)),
+    
+                    //         headerStyle: HeaderStyle(
+                    //             formatButtonVisible: false,
+                    //             titleCentered: true,
+                    //             leftChevronIcon: CircleAvatar(
+                    //               backgroundColor: kPrimaryColor,
+                    //               child: Icon(
+                    //                 Icons.chevron_left,
+                    //                 color: Colors.white,
+                    //                 size: 28,
+                    //               ),
+                    //             ),
+                    //             rightChevronIcon: CircleAvatar(
+                    //               backgroundColor: kPrimaryColor,
+                    //               child: Icon(
+                    //                 Icons.chevron_right,
+                    //                 color: Colors.white,
+                    //                 size: 28,
+                    //               ),
+                    //             ),
+                    //             decoration: BoxDecoration(color: Colors.white)),
+                    //         // firstDay: DateTime.utc(2010, 10, 16),
+                    //         // lastDay: DateTime.utc(2030, 3, 14),
+                    //         // focusedDay: DateTime.now(),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+    
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(stand_booking());
+                      },
+                      child: Container(
+                        width: res_width * 0.9,
+                        decoration: BoxDecoration(
+                            color: Color(0xffaf8a39),
+                            borderRadius: BorderRadius.all(Radius.circular(7))),
+                        child: Padding(
+                          padding: EdgeInsets.all(13.0),
+                          child: Center(
+                            child: Text(
+                              'Select Booking Dates',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 17),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: Get.height * 0.03,
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+        // Else Condition
+   }
+   else
+   {
+    return spinkit;
+   }
+   
+   }
     );
   }
 }
