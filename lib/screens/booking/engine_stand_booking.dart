@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stande_aero/helper/colors.dart';
 import 'package:stande_aero/screens/auth/mainlogin.dart';
+import 'package:stande_aero/services/remote_services.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -13,13 +14,21 @@ import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class stand_booking extends StatefulWidget {
-  const stand_booking({Key? key}) : super(key: key);
+  final productId;
+  final productSku;
+  final firstDay;
+  final lastDay;
+
+  const stand_booking({Key? key, required this.productId, required this.productSku, required this.firstDay, required this.lastDay}) : super(key: key);
 
   @override
   State<stand_booking> createState() => _stand_bookingState();
 }
 
 class _stand_bookingState extends State<stand_booking> {
+  TextEditingController location = TextEditingController();
+  TextEditingController firstDay = TextEditingController();
+  TextEditingController lastDay = TextEditingController();
   CalendarFormat _calendarFormat = CalendarFormat.month;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
       .toggledOn; // Can be toggled on/off by longpressing a date
@@ -55,6 +64,9 @@ class _stand_bookingState extends State<stand_booking> {
 
   @override
   Widget build(BuildContext context) {
+
+    firstDay.text= DateFormat('yyyy-MM-dd').format(widget.firstDay).toString();
+    lastDay.text= DateFormat('yyyy-MM-dd').format(widget.lastDay).toString();
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
     double pad = 23.0;
@@ -83,7 +95,7 @@ class _stand_bookingState extends State<stand_booking> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'CF34-10 DAE',
+              widget.productSku.toString(),
               style: TextStyle(color: Colors.black),
             ),
             Container(
@@ -200,7 +212,9 @@ class _stand_bookingState extends State<stand_booking> {
                             height: 40,
                             width: res_width / 2.4,
                             decoration: BoxDecoration(color: Colors.grey),
-                            child: TextField(
+                            child: TextFormField(
+                              readOnly: true,
+                              controller: firstDay,
                               decoration: InputDecoration(
                                   hintText: "22/5/22",
                                   contentPadding: EdgeInsets.only(left: 10)),
@@ -220,7 +234,9 @@ class _stand_bookingState extends State<stand_booking> {
                             height: 40,
                             width: res_width / 2.4,
                             decoration: BoxDecoration(color: Colors.grey),
-                            child: TextField(
+                            child: TextFormField(
+                              readOnly: true,
+                              controller: lastDay,
                               decoration: InputDecoration(
                                   hintText: "22/5/22",
                                   contentPadding: EdgeInsets.only(left: 10)),
@@ -250,7 +266,8 @@ class _stand_bookingState extends State<stand_booking> {
                             height: 40,
                             width: res_width * 0.9,
                             decoration: BoxDecoration(color: Colors.grey),
-                            child: TextField(
+                            child: TextFormField(
+                              controller: location,
                               decoration: InputDecoration(
                                   hintText: "Location",
                                   contentPadding: EdgeInsets.only(left: 10)),
@@ -264,7 +281,20 @@ class _stand_bookingState extends State<stand_booking> {
                       ),
                 GestureDetector(
                   onTap: () {
-                    Get.to(() => MainLoginScreen());
+                    // Get.to(() => MainLoginScreen());
+
+                    var sendData={
+                        'product_id' : widget.productId,
+                        'location': location.text,
+                        'date_from' : firstDay.text,
+                        'date_to' : lastDay.text
+                    };
+
+                    var res_data= ApiService().quoteRequest(context,sendData);
+                    if(res_data['status'] ==true){
+                      
+                    }
+
                   },
                   child: Container(
                     width: res_width * 0.9,

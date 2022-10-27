@@ -6,6 +6,7 @@ import 'package:stande_aero/screens/List%20Quotes/list_of_Quote_details.dart';
 import 'package:stande_aero/screens/home/drawer.dart';
 import 'package:stande_aero/services/remote_services.dart';
 import 'package:stande_aero/helper/loader.dart';
+
 class quotes extends StatefulWidget {
   const quotes({Key? key}) : super(key: key);
 
@@ -97,54 +98,58 @@ class _quotesState extends State<quotes> with TickerProviderStateMixin {
             ],
           ),
         ),
-        body: Padding(
+        body: quotations_data !=null ? Padding(
           padding: const EdgeInsets.all(12.0),
           child: FutureBuilder<void>(
               future: quotation_list(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
-                return FadeTransition(
-                  opacity: _fadeInFadeOut,
-                  child: Container(
-                    width: double.infinity,
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          SingleChildScrollView(
-                            physics: ScrollPhysics(),
-                            child: ListView.builder(
-                                shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
-                                scrollDirection: Axis.vertical,
-                                itemCount: quotations_data['data'].length,
-                                itemBuilder: (context, index) {
-                                  return Quotess_Card(
-                                    id:quotations_data['data'][index]['quote_id'],
-                                    status: quotations_data['data'][index]
-                                        ['status'],
-                                    name: quotations_data['data'][index]
-                                        ['product_name'],
-                                    location: quotations_data['data'][index]
-                                        ['location']==null ?
-                                        "No Location" :quotations_data['data'][index]
-                                        ['location'],
-                                    description: quotations_data['data'][index]
-                                        ['product_description'],
-                                        image:quotations_data['data'][index]['product_image']
-                                  );
-                                }),
-                          ),
-                        ],
+                  return FadeTransition(
+                    opacity: _fadeInFadeOut,
+                    child: Container(
+                      width: double.infinity,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            SingleChildScrollView(
+                              physics: ScrollPhysics(),
+                              child: ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  scrollDirection: Axis.vertical,
+                                  // itemCount: quotations_data['data'].length,
+                                  itemCount: quotations_data['data'].length,
+                                  itemBuilder: (context, index) {
+                                    // log("length" + quotations_data['data'].length);
+                                    return Quotess_Card(
+                                        id: quotations_data['data'][index]
+                                            ['quote_id'],
+                                        status: quotations_data['data'][index]
+                                            ['status'],
+                                        name: quotations_data['data'][index]
+                                            ['product_name'],
+                                        location: quotations_data['data'][index]
+                                                    ['location'] ==
+                                                null
+                                            ? "No Location"
+                                            : quotations_data['data'][index]
+                                                ['location'],
+                                        description: quotations_data['data']
+                                            [index]['product_description'],
+                                        image: quotations_data['data'][index]
+                                            ['product_image']);
+                                  }),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                );
-                }
-                else{
+                  );
+                } else {
                   return spinkit;
                 }
               }),
-        ),
+        ): spinkit,
       ),
     );
   }
@@ -152,15 +157,20 @@ class _quotesState extends State<quotes> with TickerProviderStateMixin {
 
 // ignore: must_be_immutable
 class Quotess_Card extends StatelessWidget {
-  dynamic name, location, description, status,image,id;
+  dynamic name, location, description, status, image, id;
 
   Quotess_Card(
-      {Key? key, this.name, this.location, this.description, this.status,this.image,this.id})
+      {Key? key,
+      this.name,
+      this.location,
+      this.description,
+      this.status,
+      this.image,
+      this.id})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
     log("idgetting " + id);
@@ -168,11 +178,13 @@ class Quotess_Card extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         GestureDetector(
-          onTap: () {
-            log("onclic id"+ id);
-            Get.to( () =>quotes_details(
-              quoteId:id
-            ));
+          onTap: () async {
+            log("onclic id" + id);
+            
+            if (id != null) {
+              Get.to(() => quotes_details(quoteId: id));
+            }
+
             // Get.to(quotes_details(
             //   quoteId:id
             // ));
@@ -205,20 +217,22 @@ class Quotess_Card extends StatelessWidget {
                         SizedBox(
                           height: res_height * 0.006,
                         ),
-                        location ==null ? Container() :  
-                        Row(
-                          children: [
-                            Text(
-                              "Location: ",
-                              style: TextStyle(
-                                  fontSize: 13, fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              "$location",
-                              style: TextStyle(fontSize: 13),
-                            ),
-                          ],
-                        ) ,
+                        location == null
+                            ? Container()
+                            : Row(
+                                children: [
+                                  Text(
+                                    "Location: ",
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    "$location",
+                                    style: TextStyle(fontSize: 13),
+                                  ),
+                                ],
+                              ),
                         SizedBox(
                           height: res_height * 0.006,
                         ),
@@ -237,8 +251,7 @@ class Quotess_Card extends StatelessWidget {
                         height: res_height * 0.17,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(7))),
-                        child: Image.network(image)
-                        )
+                        child: Image.network(image))
                   ],
                 ),
               ),

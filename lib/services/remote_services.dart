@@ -38,6 +38,23 @@ class ApiService {
 
     print(res_data);
     if (res_data["status"] == true) {
+      final userController = Get.put(UserController());
+      userController.addUser(
+        UserModel(
+          id: res_data['data']['id'],
+          fullName: res_data['data']['full_name'],
+          phone: res_data['data']['phone'],
+          email: res_data['data']['email'],
+          propic: res_data['data']['propic'],
+          city: res_data['data']['city'],
+          country: res_data['data']['country'],
+          description: res_data['data']['description'],
+        ),
+      );
+
+      globaltoken = res_data["data"]["token"];
+      userid = res_data['data']['user']['id'].toString();
+
       Get.to(() => MainScreen());
     } else
       Get.snackbar(
@@ -83,8 +100,9 @@ class ApiService {
 
       globaltoken = res_data["data"]["token"];
       userid = res_data['data']['user']['id'].toString();
+      // userid = res_data['data']['user']['id'].toString();
       print("USER MODEL" + userController.user.id.toString());
-      print("nameee :  " + userController.user.fullName.toString());
+      print("nameee :  " + userController.user.propic.toString());
       Get.to(() => MainScreen());
     } else
       Get.snackbar(
@@ -117,7 +135,7 @@ class ApiService {
 
     print(response.statusCode);
 
-    log("home API" + response.body.toString());
+    // log("home API" + response.body.toString());
 
     var res_data = json.decode(response.body);
 
@@ -153,7 +171,7 @@ class ApiService {
       headers: headers,
       // body: jsonBody,
     );
-
+  
     var res_data = json.decode(response.body);
 
     // print(res_data);
@@ -263,22 +281,21 @@ class ApiService {
     request.fields['phone'] = data['phone'].toString();
     request.fields['country'] = data['country'].toString();
     request.fields['city'] = data['city'].toString();
-    // request.fields['propic'] = data['city'].toString();
     request.fields['description'] = data['description'].toString();
-    // request.fields['city'] = data['city'];
-    // request.fields['city'] = data['city'];
-    log("image value coming from frontend" + data['propic'].toString());
-    var headers = {'Authorization': "bearer " + globaltoken};
+    log("image value coming from frontend" + data['photo'].toString());
+    var headers = {'Authorization': "Bearer " + globaltoken};
 // Add Check propic
-    if (data['propic'] != null) {
+    if (data['photo'] != null) {
+      print(data['photo'].toString());
+      print(data['photo'].path.toString());
       var multipartFile = await http.MultipartFile.fromPath(
-          'propic', data['propic']!.path,
-          filename: data['propic'].path.split('/').last,
-          // contentType: MediaType("image", "${data['propic'].path.split('.').last}"));
-          contentType: MediaType("image", "png"));
-      // log("multipartFile"+ multipartFile.toString());
+          'photo', data['photo']!.path,
+          filename: data['photo'].path.split('/').last,
+          contentType: MediaType("image", "jpg"));
       request.files.add(multipartFile);
     }
+    String jsonBody = json.encode(request.fields);
+    log("Request " + jsonBody.toString());
     request.headers.addAll(headers);
     log("request" + request.toString());
     var response = await request.send();
@@ -288,9 +305,23 @@ class ApiService {
     log("res print" + res.body.toString());
 
     var res_data = json.decode(res.body.toString());
-    print(res_data);
+    if (res_data['status'] == true) {
+      UserController userController = UserController();
+      userController.addUser(
+        UserModel(
+          id: res_data['id'],
+          fullName: res_data['full_name'],
+          phone: res_data['phone'],
+          email: res_data['email'],
+          propic: res_data['photo'],
+          city: res_data['city'],
+          country: res_data['country'],
+          description: res_data['description'],
+        ),
+      );
+    }
 
-    if (res_data['success'] == true) {}
+    return res_data;
   }
 
   order_history() async {
@@ -382,7 +413,7 @@ class ApiService {
 
     print(uri);
 
-    final headers = {'Authorization': 'bearer ${globaltoken}'};
+    final headers = {'Authorization': 'Bearer ${globaltoken}'};
 
     http.Response response = await http.get(
       uri,
@@ -415,7 +446,8 @@ class ApiService {
   }
 
   singleProductDetails(productId) async {
-    final uri = Uri.parse('${apiGlobal}/api/front/product/${productId}/details');
+    final uri =
+        Uri.parse('${apiGlobal}/api/front/product/${productId}/details');
 
     print(uri);
 

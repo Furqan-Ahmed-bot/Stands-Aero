@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stande_aero/bottomcontroller.dart';
@@ -24,11 +26,14 @@ class NavDrawer extends StatefulWidget {
 
 class _NavDrawerState extends State<NavDrawer> {
   final bottomctrl = Get.put(BottomController());
-  final userController = UserController();
+  
+  
   @override
   Widget build(BuildContext context) {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
+    final userController = Get.put(UserController());
+    log("usercontroller" + userController.user.propic.toString());
     return ClipRRect(
       borderRadius: BorderRadius.only(
           topRight: Radius.circular(100), bottomRight: Radius.circular(100)),
@@ -51,8 +56,8 @@ class _NavDrawerState extends State<NavDrawer> {
                     children: [
                       Row(
                         children: [
-                          Image.asset(
-                            'assets/slicing/Untitled-31.png',
+                          Image.network(
+                            userController.user.propic.toString(),
                             width: 80,
                           ),
                           SizedBox(

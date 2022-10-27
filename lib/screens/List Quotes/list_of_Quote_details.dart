@@ -6,6 +6,7 @@ import 'package:stande_aero/screens/List%20Quotes/quotes.dart';
 import 'package:stande_aero/screens/home/orderhistory.dart';
 import 'package:stande_aero/screens/payment/payment.dart';
 import 'package:stande_aero/services/remote_services.dart';
+import 'package:stande_aero/helper/loader.dart';
 
 class quotes_details extends StatefulWidget {
   final quoteId;
@@ -16,7 +17,7 @@ class quotes_details extends StatefulWidget {
 }
 
 class _quotes_detailsState extends State<quotes_details> {
-  List<dynamic> responseData = [];
+  var responseData ;
   @override
   void initState() {
     Future.delayed(Duration.zero, () {
@@ -94,7 +95,7 @@ class _quotes_detailsState extends State<quotes_details> {
           ),
         ),
         // extendBodyBehindAppBar: true,
-        body: Container(
+        body: responseData !=null ?Container(
           width: double.infinity,
           height: double.infinity,
           child: SingleChildScrollView(
@@ -336,7 +337,7 @@ class _quotes_detailsState extends State<quotes_details> {
               ),
             ),
           ),
-        ),
+        ): spinkit,
       ),
     );
   }

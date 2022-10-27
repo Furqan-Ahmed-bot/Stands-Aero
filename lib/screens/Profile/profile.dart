@@ -27,6 +27,12 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   late AnimationController animation;
   late Animation<double> _fadeInFadeOut;
+  TextEditingController name = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController phone = TextEditingController();
+  TextEditingController country = TextEditingController();
+  TextEditingController city = TextEditingController();
+  TextEditingController description = TextEditingController();
   UserController userController = Get.put(UserController());
   dynamic profileInfo;
   // UserController userController = UserController();
@@ -40,9 +46,9 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
         getProfileInfo();
       });
     });
-    
+
     super.initState();
-    
+
     animation = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 400),
@@ -59,12 +65,12 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
     animation.forward();
   }
 
-  Future<void> getProfileInfo() async{
-      profileInfo =await ApiService().prof();
+  Future<void> getProfileInfo() async {
+    profileInfo = await ApiService().prof();
 
-      log("profileInfo"+profileInfo.toString());
-      setState(() {
-        userController.addUser(
+    log("profileInfo" + profileInfo.toString());
+    setState(() {
+      userController.addUser(
         UserModel(
           id: profileInfo['data']['id'],
           fullName: profileInfo['data']['full_name'],
@@ -76,16 +82,21 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
           description: profileInfo['data']['description'],
         ),
       );
-      });
-
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-
-
-
     print(userController.user.fullName);
+
+    name.text = userController.user.fullName.toString();
+    email.text = userController.user.email.toString();
+
+    phone.text = userController.user.phone.toString();
+    country.text = userController.user.country.toString();
+    city.text = userController.user.city.toString();
+    description.text = userController.user.description.toString();
+
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -139,105 +150,163 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
         ),
       ),
       extendBodyBehindAppBar: true,
-      body: profileInfo.length>0?FadeTransition(
-        opacity: _fadeInFadeOut,
-        child: Container(
-          width: double.infinity,
-          height: double.infinity,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/slicing/Untitled-46.jpg"),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Container(
-                    width: res_width * 0.375,
-                    child: Image.network(
-                      userController.user.propic.toString(),
-                      height: 150,
-                    ),
+      body: profileInfo != null
+          ? FadeTransition(
+              opacity: _fadeInFadeOut,
+              child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("assets/slicing/Untitled-46.jpg"),
+                    fit: BoxFit.cover,
                   ),
-                  profile_text(text: userController.user.fullName),
-                  profile_text(text: userController.user.email),
-                  profile_text(text: userController.user.country),
-                  profile_text(text: userController.user.city),
-                  profile_text(text: userController.user.phone),
-                  profile_text(text: userController.user.description),
-                  SizedBox(
-                    height: res_height * 0.01,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      ApiService().logout();
-                    },
-                    child: Container(
-                      width: res_width * 0.9,
-                      decoration: BoxDecoration(
-                          color: Color(0xffaf8a39),
-                          borderRadius: BorderRadius.all(Radius.circular(7))),
-                      child: Padding(
-                        padding: const EdgeInsets.all(13.0),
-                        child: Center(
-                          child: Text(
-                            'Logout',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 17),
+                ),
+                child: SafeArea(
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(18.0, 8.0, 18.0, 18.0),
+                      child: Column(
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: Colors.transparent,
+                            radius: 50,
+                            backgroundImage: NetworkImage(
+                                userController.user.propic.toString()),
                           ),
-                        ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          profile_textfield(
+                            controller: name,
+                            hed: "Name",
+                            labelText: userController.user.fullName,
+                          ),
+                          profile_textfield(
+                            controller: email,
+                            hed: "Email",
+                            labelText: userController.user.email,
+                          ),
+                          profile_textfield(
+                            controller: country,
+                            hed: "Country",
+                            labelText: userController.user.country,
+                          ),
+                          profile_textfield(
+                            controller: city,
+                            hed: "City",
+                            labelText: userController.user.city,
+                          ),
+                          profile_textfield(
+                            controller: phone,
+                            hed: "Phone Number",
+                            labelText: userController.user.phone,
+                          ),
+                          profile_textfield(
+                            controller: description,
+                            hed: "Description",
+                            labelText: userController.user.description,
+                            maxLines: 3,
+                          ),
+                          SizedBox(
+                            height: res_height * 0.01,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              ApiService().logout();
+                            },
+                            child: Container(
+                              width: res_width * 0.9,
+                              decoration: BoxDecoration(
+                                  color: Color(0xffaf8a39),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(7))),
+                              child: Padding(
+                                padding: const EdgeInsets.all(13.0),
+                                child: Center(
+                                  child: Text(
+                                    'Logout',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 17),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: res_height * 0.015,
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: res_height * 0.015,
-                  ),
-                ],
+                ),
               ),
-            ),
-          ),
-        ),
-      ):spinkit,
+            )
+          : spinkit,
     );
   }
-
-  
 }
 
+class profile_textfield extends StatelessWidget {
+  var labelText, hed;
+  TextEditingController? controller;
+  var maxLines;
 
-
-class profile_text extends StatelessWidget {
-  var text;
-
-  profile_text({Key? key, this.text}) : super(key: key);
+  profile_textfield({
+    this.controller,
+    Key? key,
+    this.labelText,
+    this.hed,
+    this.maxLines,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
 
+    //  TextEditingController controller =profile_textfield.control ;
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          width: res_width * 0.925,
-          child: Card(
-            // margin: EdgeInsets.fromLTRB(18.0, 4.0, 18.0, 18.0),
-            elevation: 8,
+        // Text(
+        //   "$hed",
+        //   style: TextStyle(color: Colors.black, fontSize: 15),
+        // ),
+        SizedBox(
+          height: res_height * 0.01,
+        ),
+        Card(
+          elevation: 8,
+          child: Container(
+            // height: 50,
+            // padding: EdgeInsets.fromLTRB(10, 2, 10, 2),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(5),
+                border: Border.all(color: Colors.white)),
             child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Text(
-                "$text",
-                style: TextStyle(fontSize: 16),
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                controller: controller,
+                maxLines: maxLines,
+                readOnly: true,
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    // hintText: "$labelText",
+                    labelText: hed,
+                    contentPadding: EdgeInsets.only(
+                        left: 10, top: maxLines != null ? 10 : 0)),
+                // controller: controller,
               ),
             ),
           ),
         ),
         SizedBox(
-          height: res_height * 0.0075,
+          height: res_height * 0.01,
         ),
       ],
     );

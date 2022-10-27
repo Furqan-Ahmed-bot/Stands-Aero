@@ -33,11 +33,11 @@ class _EditprofileState extends State<Editprofile> {
   TextEditingController city = TextEditingController();
   TextEditingController description = TextEditingController();
   final ImagePicker _picker = ImagePicker();
-  
+
   // String apiGlobal = "https://standsaero.jumppace.com/api/";
   File? imageFile;
-  
-   _getFromGallery() async {
+
+  _getFromGallery() async {
     PickedFile? pickedFile = await ImagePicker().getImage(
       source: ImageSource.gallery,
       maxWidth: 2000,
@@ -46,7 +46,7 @@ class _EditprofileState extends State<Editprofile> {
     if (pickedFile != null) {
       setState(() {
         imageFile = File(pickedFile.path);
-        print("imageFile data"+imageFile.toString());
+        print("imageFile data" + imageFile.toString());
       });
       // imageProvider.addImage(imageFile);
       // imagesList[i] = imageFile;
@@ -67,7 +67,6 @@ class _EditprofileState extends State<Editprofile> {
     // email.text = usercontroller.user.email.toString();
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
-
 
     return Scaffold(
       appBar: AppBar(
@@ -118,7 +117,7 @@ class _EditprofileState extends State<Editprofile> {
         child: SafeArea(
           child: SingleChildScrollView(
             child: Form(
-            key: _formKey,
+              key: _formKey,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(18.0, 8.0, 18.0, 18.0),
                 child: Column(
@@ -130,7 +129,7 @@ class _EditprofileState extends State<Editprofile> {
                     //     //   height: 150,
                     //     )),
                     // backgroundColor: Colors.red,
-            
+
                     // Positioned(
                     //   bottom: -10,
                     //   left: 80,
@@ -145,19 +144,19 @@ class _EditprofileState extends State<Editprofile> {
                           child: imageFile == null
                               ? CircleAvatar(
                                   backgroundColor: Colors.transparent,
-                                  radius: 75,
-                                  backgroundImage: AssetImage(
-                                      'assets/slicing/Untitled-31.png'),
+                                  radius: 50,
+                                  backgroundImage: NetworkImage(
+                                      usercontroller.user.propic.toString()),
                                 )
                               : CircleAvatar(
                                   backgroundColor: Colors.transparent,
-                                  radius: 75,
+                                  radius: 50,
                                   backgroundImage: FileImage(imageFile!),
                                 ),
                         ),
                         Positioned(
-                          right: 10,
-                          bottom: 25,
+                          right: 0,
+                          bottom: 0,
                           child: CircleAvatar(
                             radius: 18,
                             child: IconButton(
@@ -209,27 +208,27 @@ class _EditprofileState extends State<Editprofile> {
                       height: res_height * 0.0125,
                     ),
                     GestureDetector(
-                      onTap: () {
+                      onTap: () async {
                         // CFA1();
                         if (_formKey.currentState!.validate()) {
-                            if (name != -1) {
-                             
-                                var data = {
-                                  "propic": imageFile,
-                                  "name": name.text,
-                                  "email": email.text,
-                                  "country": country.text,
-                                  "city": city.text,
-                                  "phone": phone.text,
-                                  "description":description.text,
-                                  // "image": ""
-                                };
-                                ApiService().updateProfile(context, data);
-                             
-                              }
+                          if (name != -1) {
+                            var data = {
+                              "photo": imageFile,
+                              "name": name.text,
+                              "email": email.text,
+                              "country": country.text,
+                              "city": city.text,
+                              "phone": phone.text,
+                              "description": description.text,
+                              // "image": ""
+                            };
+                            var res_data =
+                                await ApiService().updateProfile(context, data);
+                            if (res_data['status'] == true) {
+                              Navigator.pop(context);
                             }
-            
-            
+                          }
+                        }
                       },
                       child: Container(
                         width: res_width * 0.9,
@@ -240,7 +239,7 @@ class _EditprofileState extends State<Editprofile> {
                           padding: const EdgeInsets.all(13.0),
                           child: Center(
                             child: Text(
-                              'Safe',
+                              'Save',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
@@ -295,11 +294,7 @@ class _EditprofileState extends State<Editprofile> {
 //       request.files.add(multipartFile);
 //     }
 
-
 //     request.fields['photo'] = data['userAbout'];
-    
-
-
 
 //     print(sendData);
 //     var jsonBody = json.encode(sendData);
@@ -309,7 +304,7 @@ class _EditprofileState extends State<Editprofile> {
 //       'Content-Type': 'application/x-www-form-urlencoded',
 //       'Authorization': 'Bearer ${globaltoken}',
 //     };
-    
+
 //     http.Response response = await http.post(
 //       uri,
 //       headers: headers,
@@ -363,10 +358,10 @@ class profile_textfield extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "$hed",
-          style: TextStyle(color: Colors.black, fontSize: 15),
-        ),
+        // Text(
+        //   "$hed",
+        //   style: TextStyle(color: Colors.black, fontSize: 15),
+        // ),
         SizedBox(
           height: res_height * 0.01,
         ),
@@ -379,15 +374,20 @@ class profile_textfield extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(5),
                 border: Border.all(color: Colors.white)),
-            child: TextFormField(
-              controller: controller,
-              maxLines: maxLines,
-              decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: "$labelText",
-                  contentPadding: EdgeInsets.only(
-                      left: 10, top: maxLines != null ? 10 : 0)),
-              // controller: controller,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                controller: controller,
+                maxLines: maxLines,
+
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    // hintText: "$labelText",
+                    labelText: hed,
+                    contentPadding: EdgeInsets.only(
+                        left: 10, top: maxLines != null ? 10 : 0)),
+                // controller: controller,
+              ),
             ),
           ),
         ),
