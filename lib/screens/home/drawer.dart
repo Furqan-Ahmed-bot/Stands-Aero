@@ -14,8 +14,7 @@ import 'package:stande_aero/screens/kyc_Form/kyc_form.dart';
 import 'package:stande_aero/screens/lease%20Form/lease_form.dart';
 import 'package:stande_aero/screens/notifications/chat.dart';
 import 'package:stande_aero/screens/taxcertificate/taxcertificate.dart';
-
-
+import 'package:stande_aero/services/remote_services.dart';
 
 class NavDrawer extends StatefulWidget {
   const NavDrawer({Key? key}) : super(key: key);
@@ -26,8 +25,7 @@ class NavDrawer extends StatefulWidget {
 
 class _NavDrawerState extends State<NavDrawer> {
   final bottomctrl = Get.put(BottomController());
-  
-  
+
   @override
   Widget build(BuildContext context) {
     double res_width = MediaQuery.of(context).size.width;
@@ -471,7 +469,7 @@ class _NavDrawerState extends State<NavDrawer> {
               GestureDetector(
                 behavior: HitTestBehavior.translucent,
                 onTap: () {
-                  Get.to(() => kyc_form());
+                  ApiService().logout();
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(left: 13, right: 13),
@@ -483,12 +481,12 @@ class _NavDrawerState extends State<NavDrawer> {
                             icon: Padding(
                               padding: const EdgeInsets.all(7.0),
                               child:
-                                  Image.asset("assets/slicing/Untitled-38.png"),
+                                  Image.asset("assets/slicing/Untitled-42.png"),
                             ),
                             onPressed: () {},
                           ),
                           Text(
-                            'Kyc',
+                            'Logout',
                             style: TextStyle(fontSize: 15, color: Colors.white),
                           )
                         ],
@@ -501,39 +499,72 @@ class _NavDrawerState extends State<NavDrawer> {
                   ),
                 ),
               ),
-              GestureDetector(
-                behavior: HitTestBehavior.translucent,
-                onTap: () {
-                  Get.to(() => credit_form());
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 13, right: 13),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          IconButton(
-                            icon: Padding(
-                              padding: const EdgeInsets.all(7.0),
-                              child:
-                                  Image.asset("assets/slicing/Untitled-38.png"),
-                            ),
-                            onPressed: () {},
-                          ),
-                          Text(
-                            'creditapp',
-                            style: TextStyle(fontSize: 15, color: Colors.white),
-                          )
-                        ],
-                      ),
-                      Container(
-                        height: 1,
-                        color: Colors.grey.withOpacity(0.2),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+              // GestureDetector(
+              //   behavior: HitTestBehavior.translucent,
+              //   onTap: () {
+              //     Get.to(() => kyc_form());
+              //   },
+              //   child: Padding(
+              //     padding: const EdgeInsets.only(left: 13, right: 13),
+              //     child: Column(
+              //       children: [
+              //         Row(
+              //           children: [
+              //             IconButton(
+              //               icon: Padding(
+              //                 padding: const EdgeInsets.all(7.0),
+              //                 child:
+              //                     Image.asset("assets/slicing/Untitled-38.png"),
+              //               ),
+              //               onPressed: () {},
+              //             ),
+              //             Text(
+              //               'Kyc',
+              //               style: TextStyle(fontSize: 15, color: Colors.white),
+              //             )
+              //           ],
+              //         ),
+              //         Container(
+              //           height: 1,
+              //           color: Colors.grey.withOpacity(0.2),
+              //         )
+              //       ],
+              //     ),
+              //   ),
+              // ),
+              // GestureDetector(
+              //   behavior: HitTestBehavior.translucent,
+              //   onTap: () {
+              //     Get.to(() => credit_form());
+              //   },
+              //   child: Padding(
+              //     padding: const EdgeInsets.only(left: 13, right: 13),
+              //     child: Column(
+              //       children: [
+              //         Row(
+              //           children: [
+              //             IconButton(
+              //               icon: Padding(
+              //                 padding: const EdgeInsets.all(7.0),
+              //                 child:
+              //                     Image.asset("assets/slicing/Untitled-38.png"),
+              //               ),
+              //               onPressed: () {},
+              //             ),
+              //             Text(
+              //               'creditapp',
+              //               style: TextStyle(fontSize: 15, color: Colors.white),
+              //             )
+              //           ],
+              //         ),
+              //         Container(
+              //           height: 1,
+              //           color: Colors.grey.withOpacity(0.2),
+              //         )
+              //       ],
+              //     ),
+              //   ),
+              // ),
               // GestureDetector(
               //   behavior: HitTestBehavior.translucent,
               //   onTap: () {

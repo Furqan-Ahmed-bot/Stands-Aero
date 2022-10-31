@@ -15,8 +15,8 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:stande_aero/services/remote_services.dart';
 
 class booking extends StatefulWidget {
-  final productId;
-  const booking({Key? key, required this.productId}) : super(key: key);
+  final bookingapiresponse;
+  const booking({Key? key, required this.bookingapiresponse}) : super(key: key);
 
   @override
   State<booking> createState() => _bookingState();
@@ -26,29 +26,8 @@ class _bookingState extends State<booking> {
   var responseData;
   @override
   void initState() {
-    Future.delayed(Duration.zero, () {
-      // setState(() {
-      productDetails();
-      // });
-    });
+    responseData = widget.bookingapiresponse;
     super.initState();
-  }
-
-  productDetails() async {
-    // print("eventDetailsId "+widget.eventDetailsId);
-    var response_data = await ApiService()
-        .singleProductDetails(widget.productId)
-        .then((res_data) {
-      // log("response of product details" + res_data.toString());
-
-      if (res_data['status'] == true) {
-        responseData = res_data['data'][0];
-        // responseData = res_data['data'];
-        // print("ALL Video Links : " + res_data['data'].toString());
-
-        log("products data" + responseData.toString());
-      }
-    });
   }
 
   CalendarFormat _calendarFormat = CalendarFormat.month;
@@ -90,343 +69,222 @@ class _bookingState extends State<booking> {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
 
-    return FutureBuilder<void>(
-        future: productDetails(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            late int AVgetCurrentMonth;
-            late int AVgetCurrentYear;
-            late int AVgetCurrentDay;
-            var AVgetDate = '';
-            var AVgetcurrentDate = null;
-            late int TogetCurrentMonth;
-            late int TogetCurrentYear;
-            late int TogetCurrentDay;
-            var TogetDate = '';
-            var TogetcurrentDate = null;
-            AVgetcurrentDate =
-                DateTime.tryParse(responseData['availablity']['from']);
-            AVgetCurrentYear =
-                int.parse(DateFormat('y').format(AVgetcurrentDate));
-            AVgetCurrentMonth =
-                int.parse(DateFormat('MM').format(AVgetcurrentDate));
-            AVgetCurrentDay =
-                int.parse(DateFormat('dd').format(AVgetcurrentDate));
-            // log('responseData Year' + AVgetCurrentYear.toString());
-            // log('responseData MOnth' + AVgetCurrentMonth.toString());
-            // log('responseData Day' + AVgetCurrentDay.toString());
-            // log('responseData to' + responseData['availablity']['to']);
+    late int AVgetCurrentMonth;
+    late int AVgetCurrentYear;
+    late int AVgetCurrentDay;
+    var AVgetDate = '';
+    var AVgetcurrentDate = null;
+    late int TogetCurrentMonth;
+    late int TogetCurrentYear;
+    late int TogetCurrentDay;
+    var TogetDate = '';
+    var TogetcurrentDate = null;
+    AVgetcurrentDate = DateTime.tryParse(responseData['availablity']['from']);
+    AVgetCurrentYear = int.parse(DateFormat('y').format(AVgetcurrentDate));
+    AVgetCurrentMonth = int.parse(DateFormat('MM').format(AVgetcurrentDate));
+    AVgetCurrentDay = int.parse(DateFormat('dd').format(AVgetcurrentDate));
+    // log('responseData Year' + AVgetCurrentYear.toString());
+    // log('responseData MOnth' + AVgetCurrentMonth.toString());
+    // log('responseData Day' + AVgetCurrentDay.toString());
+    // log('responseData to' + responseData['availablity']['to']);
 
-            TogetcurrentDate =
-                DateTime.tryParse(responseData['availablity']['to']);
-            TogetCurrentYear =
-                int.parse(DateFormat('y').format(TogetcurrentDate));
-            TogetCurrentMonth =
-                int.parse(DateFormat('MM').format(TogetcurrentDate));
-            TogetCurrentDay =
-                int.parse(DateFormat('dd').format(TogetcurrentDate));
-            // log('responseData Year To' + TogetCurrentYear.toString());
-            // log('responseData MOnth To' + TogetCurrentMonth.toString());
-            // log('responseData Day To' + TogetCurrentDay.toString());
-            // log('responseData to' + responseData['availablity']['to']);
+    TogetcurrentDate = DateTime.tryParse(responseData['availablity']['to']);
+    TogetCurrentYear = int.parse(DateFormat('y').format(TogetcurrentDate));
+    TogetCurrentMonth = int.parse(DateFormat('MM').format(TogetcurrentDate));
+    TogetCurrentDay = int.parse(DateFormat('dd').format(TogetcurrentDate));
+    // log('responseData Year To' + TogetCurrentYear.toString());
+    // log('responseData MOnth To' + TogetCurrentMonth.toString());
+    // log('responseData Day To' + TogetCurrentDay.toString());
+    // log('responseData to' + responseData['availablity']['to']);
 
-            kFirstDay =
-                DateTime(AVgetCurrentYear, AVgetCurrentMonth, AVgetCurrentDay);
-            kLastDay =
-                DateTime(TogetCurrentYear, TogetCurrentMonth, TogetCurrentDay);
+    kFirstDay = DateTime(AVgetCurrentYear, AVgetCurrentMonth, AVgetCurrentDay);
+    kLastDay = DateTime(TogetCurrentYear, TogetCurrentMonth, TogetCurrentDay);
 
-            log("kFirstDay" + kFirstDay.toString());
-            log("kLastDay" + kLastDay.toString());
+    log("kFirstDay now this" + kFirstDay.toString());
+    log("kLastDay now this" + kLastDay.toString());
 
-            return Scaffold(
-              appBar: AppBar(
-                automaticallyImplyLeading: false,
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                centerTitle: true,
-                leading: GestureDetector(
-                  behavior: HitTestBehavior.translucent,
-                  onTap: () {
-                    Navigator.pop(context);
-                    // _key.currentState!.openDrawer();
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: Container(
-                        width: 25,
-                        child: Image.asset(
-                          'assets/slicing/Untitled-3.png',
-                        )),
+    return Container(
+        // future: productDetails(),
+        child: Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+        leading: GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () {
+            Navigator.pop(context);
+            // _key.currentState!.openDrawer();
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Container(
+                width: 25,
+                child: Image.asset(
+                  'assets/slicing/Untitled-3.png',
+                )),
+          ),
+        ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              responseData['sku'],
+              style: TextStyle(color: Colors.black),
+            ),
+            Container(
+                width: 40,
+                height: 40,
+                child: Image.asset('assets/slicing/Untitled-4.png',
+                    fit: BoxFit.cover)),
+          ],
+        ),
+      ),
+      extendBodyBehindAppBar: true,
+      body: Container(
+        width: double.infinity,
+        // height:  double.infinity,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/slicing/Untitled-46.jpg"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                custum_Slider(res_width: res_width),
+                Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: pad, vertical: pad / 2),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        responseData['sku'],
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 15,
+                        ),
+                      ),
+                      Text(
+                        responseData['location'],
+                        style: TextStyle(fontSize: 15, color: Colors.black),
+                      ),
+                    ],
                   ),
                 ),
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      responseData['sku'],
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    Container(
-                        width: 40,
-                        height: 40,
-                        child: Image.asset('assets/slicing/Untitled-4.png',
-                            fit: BoxFit.cover)),
-                  ],
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: pad),
+                  child: DescriptionTextWidget(
+                      text: responseData['details'].toString()),
                 ),
-                // actions: [
-                //   Padding(
-                //     padding: const EdgeInsets.all(8.0),
-                //     child: GestureDetector(
-                //       onTap: () {
-                //         Get.to(Editprofile());
-                //       },
-                //       child: Container(
-                //           width: 30,
-                //           height: 20,
-                //           child: Image.asset('assets/slicing/Untitled-45.png',
-                //               fit: BoxFit.contain)),
-                //     ),
-                //   ),
-                // ],
-              ),
-              extendBodyBehindAppBar: true,
-              body: Container(
-                width: double.infinity,
-                // height:  double.infinity,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("assets/slicing/Untitled-46.jpg"),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                child: SafeArea(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        custum_Slider(res_width: res_width),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: pad, vertical: pad / 2),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                responseData['sku'],
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 15,
-                                ),
-                              ),
-                              Text(
-                                responseData['location'],
-                                style: TextStyle(
-                                    fontSize: 15, color: Colors.black),
-                              ),
-                              // Text(
-                              //   'Miami, Florida',
-                              //   style: TextStyle(color: Colors.black),
-                              // ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: pad),
-                          child: DescriptionTextWidget(
-                              text: responseData['details'].toString()),
-                        ),
-                        // Padding(
-                        //   padding: EdgeInsets.symmetric(horizontal: pad),
-                        //   child: Text(
-                        //     "",
-                        //     style: TextStyle(fontSize: 15, color: Colors.black),
-                        //   ),
-                        // ),
-                        Padding(
-                          padding: EdgeInsets.all(pad),
-                          child: Container(
-                            decoration: BoxDecoration(color: Colors.white),
-                            child: TableCalendar(
-                                // daysOfWeekVisible: false,
+                Padding(
+                  padding: EdgeInsets.all(pad),
+                  child: Container(
+                    decoration: BoxDecoration(color: Colors.white),
+                    child: TableCalendar(
+                        // daysOfWeekVisible: false,
 
-                                calendarStyle: CalendarStyle(
-                                    todayDecoration: BoxDecoration(
-                                        color: kPrimaryColor,
-                                        borderRadius:
-                                            BorderRadius.circular(50)),
-                                    selectedDecoration:
-                                        BoxDecoration(color: kPrimaryColor)),
-                                // calendarFormat: false,
-                                headerStyle: HeaderStyle(
-                                    formatButtonVisible: false,
-                                    titleCentered: true,
-                                    leftChevronIcon: CircleAvatar(
-                                      backgroundColor: kPrimaryColor,
-                                      child: Icon(
-                                        Icons.chevron_left,
-                                        color: Colors.white,
-                                        size: 28,
-                                      ),
-                                    ),
-                                    rightChevronIcon: CircleAvatar(
-                                      backgroundColor: kPrimaryColor,
-                                      child: Icon(
-                                        Icons.chevron_right,
-                                        color: Colors.white,
-                                        size: 28,
-                                      ),
-                                    ),
-                                    decoration:
-                                        BoxDecoration(color: Colors.white)),
-                                firstDay: kFirstDay,
-                                lastDay: kLastDay,
-                                focusedDay: kFirstDay,
-                                rangeStartDay: _rangeStart,
-                                rangeEndDay: _rangeEnd,
-                                calendarFormat: _calendarFormat,
-                                rangeSelectionMode: _rangeSelectionMode,
-                                onRangeSelected: (start, end, focusedDay) {
-                                  setState(() {
-                                    _selectedDay = null;
-                                    _focusedDay = focusedDay;
-                                    _rangeStart = start;
-                                    _rangeEnd = end;
-                                    _rangeSelectionMode =
-                                        RangeSelectionMode.toggledOn;
-                                  });
-                                }),
-                          ),
-                        ),
-
-                        ///hjsdadsad
-                        // Padding(
-                        //   padding: EdgeInsets.all(pad),
-                        //   child: ClipRRect(
-                        //     borderRadius: BorderRadius.circular(13.0),
-                        //     child: Container(
-                        //       decoration: BoxDecoration(
-                        //         color: Colors.white,
-                        //       ),
-                        //       child: SfDateRangePicker(
-                        //         onSelectionChanged: _onSelectionChanged,
-                        //         selectionMode: DateRangePickerSelectionMode.range,
-                        //         // rangeTextStyle: TextStyle(color: Colors.red),
-                        //         // selectionTextStyle: TextStyle(color: Colors.red),
-
-                        //         selectionColor: kPrimaryColor,
-                        //         rangeSelectionColor: kPrimaryColor.withOpacity(0.3),
-                        //         endRangeSelectionColor: kPrimaryColor,
-                        //         startRangeSelectionColor: kPrimaryColor,
-                        //         todayHighlightColor: kPrimaryColor,
-                        //         backgroundColor: Colors.white,
-                        //         // showTodayButton: false,
-                        //         initialSelectedRange: PickerDateRange(
-                        //             DateTime.now().subtract(const Duration(days: 4)),
-                        //             DateTime.now().add(const Duration(days: 3))),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
-                        //sasjkdbajdsbadjasbdhas
-                        // Padding(
-                        //   padding: EdgeInsets.all(pad),
-                        //   child: ClipRRect(
-                        //     borderRadius: BorderRadius.circular(13.0),
-                        //     child: Container(
-                        //       decoration: BoxDecoration(
-                        //         color: Colors.white,
-                        //       ),
-                        //       // height: 200,
-                        //       child: TableCalendar(
-                        //         // daysOfWeekVisible: false,
-                        //         firstDay: kFirstDay,
-                        //         lastDay: kLastDay,
-                        //         focusedDay: _focusedDay,
-                        //         selectedDayPredicate: (day) =>
-                        //             isSameDay(_selectedDay, day),
-                        //         rangeStartDay: _rangeStart,
-                        //         rangeEndDay: _rangeEnd,
-                        //         calendarFormat: _calendarFormat,
-                        //         rangeSelectionMode: _rangeSelectionMode,
-
-                        //         calendarStyle: CalendarStyle(
-                        //             // cellPadding: EdgeInsets.all(1),
-                        //             todayDecoration: BoxDecoration(
-                        //                 color: kPrimaryColor,
-                        //                 borderRadius: BorderRadius.circular(50)),
-                        //             selectedDecoration:
-                        //                 BoxDecoration(color: kPrimaryColor)),
-
-                        //         headerStyle: HeaderStyle(
-                        //             formatButtonVisible: false,
-                        //             titleCentered: true,
-                        //             leftChevronIcon: CircleAvatar(
-                        //               backgroundColor: kPrimaryColor,
-                        //               child: Icon(
-                        //                 Icons.chevron_left,
-                        //                 color: Colors.white,
-                        //                 size: 28,
-                        //               ),
-                        //             ),
-                        //             rightChevronIcon: CircleAvatar(
-                        //               backgroundColor: kPrimaryColor,
-                        //               child: Icon(
-                        //                 Icons.chevron_right,
-                        //                 color: Colors.white,
-                        //                 size: 28,
-                        //               ),
-                        //             ),
-                        //             decoration: BoxDecoration(color: Colors.white)),
-                        //         // firstDay: DateTime.utc(2010, 10, 16),
-                        //         // lastDay: DateTime.utc(2030, 3, 14),
-                        //         // focusedDay: DateTime.now(),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
-
-                        GestureDetector(
-                          onTap: () async {
-                            Get.to(stand_booking(
-                              productId: responseData['id'],
-                              productSku: responseData['sku'],
-                              firstDay: kFirstDay,
-                              lastDay: kLastDay,
-                            ));
-                          },
-                          child: Container(
-                            width: res_width * 0.9,
-                            decoration: BoxDecoration(
-                                color: Color(0xffaf8a39),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(7))),
-                            child: Padding(
-                              padding: EdgeInsets.all(13.0),
-                              child: Center(
-                                child: Text(
-                                  'Select Booking Dates',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 17),
-                                ),
+                        calendarStyle: CalendarStyle(
+                            todayDecoration: BoxDecoration(
+                                color: kPrimaryColor,
+                                borderRadius: BorderRadius.circular(50)),
+                            selectedDecoration:
+                                BoxDecoration(color: kPrimaryColor)),
+                        // calendarFormat: false,
+                        headerStyle: HeaderStyle(
+                            formatButtonVisible: false,
+                            titleCentered: true,
+                            leftChevronIcon: CircleAvatar(
+                              backgroundColor: kPrimaryColor,
+                              child: Icon(
+                                Icons.chevron_left,
+                                color: Colors.white,
+                                size: 28,
                               ),
                             ),
-                          ),
+                            rightChevronIcon: CircleAvatar(
+                              backgroundColor: kPrimaryColor,
+                              child: Icon(
+                                Icons.chevron_right,
+                                color: Colors.white,
+                                size: 28,
+                              ),
+                            ),
+                            decoration: BoxDecoration(color: Colors.white)),
+                        firstDay: kFirstDay,
+                        lastDay: kLastDay,
+                        focusedDay: kFirstDay,
+                        rangeStartDay: _rangeStart,
+                        rangeEndDay: _rangeEnd,
+                        calendarFormat: _calendarFormat,
+                        rangeSelectionMode: _rangeSelectionMode,
+                        onRangeSelected: (start, end, focusedDay) {
+                          setState(() {
+                            _selectedDay = null;
+                            _focusedDay = focusedDay;
+                            _rangeStart = start;
+                            _rangeEnd = end;
+                            _rangeSelectionMode = RangeSelectionMode.toggledOn;
+                          });
+                        }),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () async {
+                    log("_rangeStart" + _rangeStart.toString());
+                    log("_rangeEnd" + _rangeEnd.toString());
+                    
+                    _rangeStart != null && _rangeEnd != null
+                        ? Get.to(stand_booking(
+                            productId: responseData['id'],
+                            productSku: responseData['sku'],
+                            firstDay: _rangeStart,
+                            lastDay: _rangeEnd,
+                          ))
+                        : Get.snackbar(
+                            'Error',
+                            'Select booking dates before proceeding',
+                            animationDuration: Duration(seconds: 2),
+                            snackPosition: SnackPosition.TOP,
+                          );
+                  },
+                  child: Container(
+                    width: res_width * 0.9,
+                    decoration: BoxDecoration(
+                        color: Color(0xffaf8a39),
+                        borderRadius: BorderRadius.all(Radius.circular(7))),
+                    child: Padding(
+                      padding: EdgeInsets.all(13.0),
+                      child: Center(
+                        child: Text(
+                          'Select Booking Dates',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17),
                         ),
-                        SizedBox(
-                          height: Get.height * 0.03,
-                        )
-                      ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            );
-            // Else Condition
-          } else {
-            return spinkit;
-          }
-        });
+                SizedBox(
+                  height: Get.height * 0.03,
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    ));
+    // Else Condition
+    // } else {
+    //   return spinkit;
+    // }
+    // });
   }
 }
 

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,9 +8,12 @@ import 'package:stande_aero/helper/global.dart';
 import 'package:stande_aero/screens/Profile/profile.dart';
 import 'package:stande_aero/screens/credit_Form/credit_form.dart';
 import 'package:stande_aero/screens/mainhome.dart';
+import 'package:stande_aero/services/remote_services.dart';
 
 class kyc_form extends StatefulWidget {
-  const kyc_form({Key? key}) : super(key: key);
+  final requestquoteData;
+  final requestProductId;
+  const kyc_form({Key? key, required this.requestquoteData, required this.requestProductId}) : super(key: key);
 
   @override
   State<kyc_form> createState() => _kyc_formState();
@@ -26,19 +30,27 @@ class _kyc_formState extends State<kyc_form> {
   TextEditingController contact_person = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController company_website = TextEditingController();
-  TextEditingController company_additional_member_name1 = TextEditingController();
-  TextEditingController company_additional_member_title1 = TextEditingController();
-  TextEditingController company_additional_member_name2 = TextEditingController();
-  TextEditingController company_additional_member_title2 = TextEditingController();
+  TextEditingController company_additional_member_name1 =
+      TextEditingController();
+  TextEditingController company_additional_member_title1 =
+      TextEditingController();
+  TextEditingController company_additional_member_name2 =
+      TextEditingController();
+  TextEditingController company_additional_member_title2 =
+      TextEditingController();
   TextEditingController company_prmy_bsns = TextEditingController();
   TextEditingController fund_src = TextEditingController();
   TextEditingController company_countrylist = TextEditingController();
+  List<Widget> list = [];
+  int fieldCount = 0;
 
-  String apiGlobal = "https://standsaero.jumppace.com/api/";
+  // String apiGlobal = "https://standsaero.jumppace.com/api/";
   @override
   Widget build(BuildContext context) {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
+    log("request form Data" + widget.requestquoteData);
+    FocusNode myFocusNode = new FocusNode();
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -110,25 +122,32 @@ class _kyc_formState extends State<kyc_form> {
                   SizedBox(
                     height: res_height * 0.01,
                   ),
-                  Text(
-                    'Required name of company(the "company")',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
-                  textfiel_kyc(controller: company_name, res_width: res_width),
+                  // Text(
+                  //   'Required name of company(the "company")',
+                  //   style: TextStyle(
+                  //     color: Colors.black,
+                  //     fontSize: 12,
+                  //   ),
+                  // ),
+                  textfiel_kyc(
+                      controller: company_name,
+                      hed: 'Required name of company(the "company")',
+                      res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
-                  Text(
-                    'Type of company (i.e corporation, partnership, LLC,etc )',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
-                  textfiel_kyc(controller: company_type, res_width: res_width),
+                  // Text(
+                  //   'Type of company (i.e corporation, partnership, LLC,etc )',
+                  //   style: TextStyle(
+                  //     color: Colors.black,
+                  //     fontSize: 12,
+                  //   ),
+                  // ),
+                  textfiel_kyc(
+                      controller: company_type,
+                      hed:
+                          'Type of company (i.e corporation, partnership, LLC,etc )',
+                      res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -140,79 +159,92 @@ class _kyc_formState extends State<kyc_form> {
                     ),
                   ),
                   textfiel_kyc(
-                      controller: company_state_country, res_width: res_width),
+                      controller: company_state_country,
+                      res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
-                  Text(
-                    'Company Address:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
+                  // Text(
+                  //   'Company Address:',
+                  //   style: TextStyle(
+                  //     color: Colors.black,
+                  //     fontSize: 12,
+                  //   ),
+                  // ),
                   textfiel_kyc(
                     controller: company_address,
+                    hed: 'Company Address:',
                     res_width: res_width,
                     maxLines: 4,
                   ),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
-                  Text(
-                    'Phone Number:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
-                  textfiel_kyc(controller: number, res_width: res_width),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  Text(
-                    'Fax Number:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
-                  textfiel_kyc(controller: fax, res_width: res_width),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  Text(
-                    'Contact Person:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
+                  // Text(
+                  //   'Phone Number:',
+                  //   style: TextStyle(
+                  //     color: Colors.black,
+                  //     fontSize: 12,
+                  //   ),
+                  // ),
                   textfiel_kyc(
-                      controller: contact_person, res_width: res_width),
+                      controller: number,
+                      hed: 'Phone Number:',
+                      res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
-                  Text(
-                    'Email:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
-                  textfiel_kyc(controller: email, res_width: res_width),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  Text(
-                    'Company Website:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
+                  // Text(
+                  //   'Fax Number:',
+                  //   style: TextStyle(
+                  //     color: Colors.black,
+                  //     fontSize: 12,
+                  //   ),
+                  // ),
                   textfiel_kyc(
-                      controller: company_website, res_width: res_width),
+                      controller: fax,
+                      hed: 'Fax Number:',
+                      res_width: res_width),
+                  SizedBox(
+                    height: res_height * 0.02,
+                  ),
+                  // Text(
+                  //   'Contact Person:',
+                  //   style: TextStyle(
+                  //     color: Colors.black,
+                  //     fontSize: 12,
+                  //   ),
+                  // ),
+                  textfiel_kyc(
+                      controller: contact_person,
+                      hed: 'Contact Person:',
+                      res_width: res_width),
+                  SizedBox(
+                    height: res_height * 0.02,
+                  ),
+                  // Text(
+                  //   'Email:',
+                  //   style: TextStyle(
+                  //     color: Colors.black,
+                  //     fontSize: 12,
+                  //   ),
+                  // ),
+                  textfiel_kyc(
+                      controller: email, hed: 'Email:', res_width: res_width),
+                  SizedBox(
+                    height: res_height * 0.02,
+                  ),
+                  // Text(
+                  //   'Company Website:',
+                  //   style: TextStyle(
+                  //     color: Colors.black,
+                  //     fontSize: 12,
+                  //   ),
+                  // ),
+                  textfiel_kyc(
+                      controller: company_website,
+                      hed: 'Company Website:',
+                      res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -227,27 +259,36 @@ class _kyc_formState extends State<kyc_form> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-                        height: 40,
+                        height: 50,
                         width: res_width * 0.925 / 2.1,
                         decoration: BoxDecoration(color: Colors.grey),
                         child: Padding(
                           padding: EdgeInsets.only(left: 8.0),
-                          child: TextField(
+                          child: TextFormField(
                             controller: company_additional_member_name1,
-                            decoration: InputDecoration(hintText: "Name"),
-                            keyboardType: TextInputType.datetime,
+                            decoration: InputDecoration(
+                                labelText: "Name",
+                                labelStyle: TextStyle(
+                                    color: myFocusNode.hasFocus
+                                        ? Colors.white
+                                        : Colors.black)),
                           ),
                         ),
                       ),
                       Container(
-                        height: 40,
+                        height: 50,
                         width: res_width * 0.925 / 2.1,
                         decoration: BoxDecoration(color: Colors.grey),
                         child: Padding(
                           padding: EdgeInsets.only(left: 8.0),
-                          child: TextField(
+                          child: TextFormField(
                             controller: company_additional_member_title1,
-                            decoration: InputDecoration(hintText: "Title"),
+                            decoration: InputDecoration(
+                                labelText: "Title",
+                                labelStyle: TextStyle(
+                                    color: myFocusNode.hasFocus
+                                        ? Colors.white
+                                        : Colors.black)),
                             keyboardType: TextInputType.datetime,
                           ),
                         ),
@@ -261,27 +302,37 @@ class _kyc_formState extends State<kyc_form> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-                        height: 40,
+                        height: 50,
                         width: res_width * 0.925 / 2.1,
                         decoration: BoxDecoration(color: Colors.grey),
                         child: Padding(
                           padding: EdgeInsets.only(left: 8.0),
-                          child: TextField(
+                          child: TextFormField(
                             controller: company_additional_member_name2,
-                            decoration: InputDecoration(hintText: "Name"),
+                            decoration: InputDecoration(
+                                labelText: "Name",
+                                labelStyle: TextStyle(
+                                    color: myFocusNode.hasFocus
+                                        ? Colors.white
+                                        : Colors.black)),
                             keyboardType: TextInputType.datetime,
                           ),
                         ),
                       ),
                       Container(
-                        height: 40,
+                        height: 50,
                         width: res_width * 0.925 / 2.1,
                         decoration: BoxDecoration(color: Colors.grey),
                         child: Padding(
                           padding: EdgeInsets.only(left: 8.0),
                           child: TextField(
                             controller: company_additional_member_title2,
-                            decoration: InputDecoration(hintText: "Title"),
+                            decoration: InputDecoration(
+                                labelText: "Title",
+                                labelStyle: TextStyle(
+                                    color: myFocusNode.hasFocus
+                                        ? Colors.white
+                                        : Colors.black)),
                             keyboardType: TextInputType.datetime,
                           ),
                         ),
@@ -291,46 +342,39 @@ class _kyc_formState extends State<kyc_form> {
                   SizedBox(
                     height: res_height * 0.02,
                   ),
-                  Container(
-                    width: res_width * 0.925,
-                    decoration: BoxDecoration(
-                        color: Color(0xffaf8a39),
-                        borderRadius: BorderRadius.all(Radius.circular(7))),
-                    child: Padding(
-                      padding: const EdgeInsets.all(13.0),
-                      child: Center(
-                        child: Text(
-                          'Add More',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17),
+                  GestureDetector(
+                    child: Container(
+                      width: res_width * 0.925,
+                      decoration: BoxDecoration(
+                          color: Color(0xffaf8a39),
+                          borderRadius: BorderRadius.all(Radius.circular(7))),
+                      child: Padding(
+                        padding: const EdgeInsets.all(13.0),
+                        child: Center(
+                          child: Text(
+                            'Add More',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 17),
+                          ),
                         ),
                       ),
                     ),
+                    onTap: () {
+                      setState(() {
+                        fieldCount++;
+                        list.add(buildField(fieldCount));
+                      });
+                    },
                   ),
                   SizedBox(
                     height: res_height * 0.02,
-                  ),
-                  Text(
-                    "Busniess Activity And source of Funds",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                    ),
-                  ),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  Text(
-                    "Primary busnies and type of activity engaged in by Company",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 13,
-                    ),
                   ),
                   textfiel_kyc(
-                      controller: company_prmy_bsns, res_width: res_width),
+                      controller: company_prmy_bsns,
+                      hed: "Busniess Activity And source of Funds",
+                      res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -418,61 +462,77 @@ class _kyc_formState extends State<kyc_form> {
       'contact_person': contact_person.text,
       'email': email.text,
       'company_website': company_website.text,
-      'company_additional_members':company_additional_member_name1.text + "," +company_additional_member_title1.text +","+ company_additional_member_name2.text +","+ company_additional_member_title2.text,      
+      'company_additional_members': company_additional_member_name1.text +
+          "," +
+          company_additional_member_title1.text +
+          "," +
+          company_additional_member_name2.text +
+          "," +
+          company_additional_member_title2.text,
       'company_prmy_bsns': company_prmy_bsns.text,
       'fund_src': fund_src.text,
       'company_countrylist': company_countrylist.text,
     };
-      print(sendData);
-    var jsonBody = json.encode(sendData);
 
-    final headers = {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Bearer ${globaltoken}',
-    };
+    log("sendData" + sendData.toString());
 
-    http.Response response = await http.post(
-      uri,
-      headers: headers,
-      body: jsonBody,
-    );
+    Get.to(
+          credit_form(
+              requestFormdata: widget.requestquoteData,requestProductId:widget.requestProductId, kycformData: sendData)
+        );
 
-    print(response.statusCode);
+    //   print(sendData);
+    //   var jsonBody = json.encode(sendData);
 
-    print(response.body);
-    // try {
+    //   final headers = {
+    //     'Content-Type': 'application/x-www-form-urlencoded',
+    //     'Authorization': 'Bearer ${globaltoken}',
+    //   };
+
+    //   http.Response response = await http.post(
+    //     uri,
+    //     headers: headers,
+    //     body: jsonBody,
+    //   );
+
+    //   print(response.statusCode);
+
+    //   print(response.body);
+    //   // try {
+    //   //   var res_data = json.decode(response.body);
+    //   // } catch (e) {
+    //   //   log('$e');
+    //   // }
     //   var res_data = json.decode(response.body);
-    // } catch (e) {
-    //   log('$e');
-    // }
-    var res_data = json.decode(response.body);
 
-    print(res_data);
-    if (res_data["status"] == true) {
-      Get.to(() => credit_form());
-    } else
-      Get.snackbar(
-        'Error',
-        'Wrong Credentials',
-        animationDuration: Duration(seconds: 2),
-        snackPosition: SnackPosition.BOTTOM,
-      );
+    //   print(res_data);
+    //   if (res_data["status"] == true) {
+    //     Get.to(() => credit_form());
+    //   } else
+    //     Get.snackbar(
+    //       'Error',
+    //       'Wrong Credentials',
+    //       animationDuration: Duration(seconds: 2),
+    //       snackPosition: SnackPosition.BOTTOM,
+    //     );
 
-    return res_data;
+    //   return res_data;
   }
 }
 
 class textfiel_kyc extends StatelessWidget {
-  var maxLines;
+  var maxLines, hed;
   TextEditingController? controller;
   textfiel_kyc({
     this.controller,
     Key? key,
+    this.hed,
     this.maxLines,
     required this.res_width,
   }) : super(key: key);
 
   final double res_width;
+  FocusNode myFocusNode = new FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -482,11 +542,17 @@ class textfiel_kyc extends StatelessWidget {
       decoration: BoxDecoration(
           color: Colors.grey,
           borderRadius: BorderRadius.all(Radius.circular(7))),
-      child: TextField(
-        controller: controller,
-        maxLines: maxLines,
-        decoration: InputDecoration( contentPadding: EdgeInsets.symmetric(horizontal: 10),
-          border: InputBorder.none,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 8, bottom: 0, right: 8, left: 8),
+        child: TextFormField(
+          controller: controller,
+          maxLines: maxLines,
+          focusNode: myFocusNode,
+          decoration: InputDecoration(
+              contentPadding: EdgeInsets.symmetric(horizontal: 10),
+              labelText: hed,
+              labelStyle: TextStyle(
+                  color: myFocusNode.hasFocus ? Colors.white : Colors.black)),
         ),
       ),
     );
@@ -525,4 +591,20 @@ class kyc_main_text extends StatelessWidget {
       ],
     );
   }
+}
+
+Widget buildField(int i) {
+  return ListTile(
+    leading: CircleAvatar(
+      child: Text((i + 1).toString()),
+    ),
+    title: TextFormField(
+      decoration: InputDecoration(
+        border: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8))),
+        labelText: "Itinerary ${i + 1}",
+      ),
+    ),
+    trailing: const Icon(Icons.delete_outlined, color: Colors.red),
+  );
 }

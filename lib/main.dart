@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
       defaultTransition: Transition.fadeIn,
       transitionDuration: Duration(seconds: 1),
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'National Aero Stands',
       theme: ThemeData(
         primarySwatch: _yellow700Swatch,
       ),

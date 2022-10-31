@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,7 +10,11 @@ import 'package:stande_aero/screens/kyc_Form/kyc_form.dart';
 import 'package:stande_aero/screens/mainhome.dart';
 
 class credit_from2 extends StatefulWidget {
-  const credit_from2({Key? key}) : super(key: key);
+  final requestFormdata;
+  final kycformData;
+  final creditfirstFormData;
+  final requestProductId ;
+  const credit_from2({Key? key, required this.requestFormdata, required this.kycformData, required this.creditfirstFormData, required this.requestProductId}) : super(key: key);
 
   @override
   State<credit_from2> createState() => _credit_from2State();
@@ -40,6 +45,10 @@ class _credit_from2State extends State<credit_from2> {
   Widget build(BuildContext context) {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
+    log("requestFormdata " + widget.requestFormdata.toString());
+    // var requestforvalue = widget.requestFormdata.s
+    log("kycformData " + widget.kycformData.toString());
+    log("creditfirstFormData " + widget.creditfirstFormData.toString());
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -111,84 +120,85 @@ class _credit_from2State extends State<credit_from2> {
                   SizedBox(
                     height: res_height * 0.01,
                   ),
-                  Text(
-                    'Bank Name: ',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
-                  textfiel_kyc(controller: bank_name, res_width: res_width),
+                  // Text(
+                  //   'Bank Name: ',
+                  //   style: TextStyle(
+                  //     color: Colors.black,
+                  //     fontSize: 12,
+                  //   ),
+                  // ),
+                  textfiel_kyc(controller: bank_name,head:'Bank Name: ', res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
-                  Text(
-                    'Bank Address: ',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
-                  textfiel_kyc(controller: bank_address, res_width: res_width),
+                  // Text(
+                  //   'Bank Address: ',
+                  //   style: TextStyle(
+                  //     color: Colors.black,
+                  //     fontSize: 12,
+                  //   ),
+                  // ),
+                  textfiel_kyc(controller: bank_address,head:'Bank Address: ', res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
-                  Text(
-                    'City:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
-                  textfiel_kyc(controller: bank_city, res_width: res_width),
+                  // Text(
+                  //   'City:',
+                  //   style: TextStyle(
+                  //     color: Colors.black,
+                  //     fontSize: 12,
+                  //   ),
+                  // ),
+                  textfiel_kyc(controller: bank_city,head:'City:', res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
-                  Text(
-                    'Contact Name:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
+                  // Text(
+                  //   'Contact Name:',
+                  //   style: TextStyle(
+                  //     color: Colors.black,
+                  //     fontSize: 12,
+                  //   ),
+                  // ),
                   textfiel_kyc(
                     controller: bank_contact_name,
                     res_width: res_width,
+                    head:'Contact Name:'
                     // maxLines: 4,
                   ),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
-                  Text(
-                    'State:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
-                  textfiel_kyc(controller: bank_state, res_width: res_width),
+                  // Text(
+                  //   'State:',
+                  //   style: TextStyle(
+                  //     color: Colors.black,
+                  //     fontSize: 12,
+                  //   ),
+                  // ),
+                  textfiel_kyc(controller: bank_state,head:'State:', res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
-                  Text(
-                    'Zip:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
-                  textfiel_kyc(controller: bank_zip, res_width: res_width),
+                  // Text(
+                  //   'Zip:',
+                  //   style: TextStyle(
+                  //     color: Colors.black,
+                  //     fontSize: 12,
+                  //   ),
+                  // ),
+                  textfiel_kyc(controller: bank_zip,head:'Zip:', res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
-                  Text(
-                    'Phone:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
-                  textfiel_kyc(controller: bank_phone, res_width: res_width),
+                  // Text(
+                  //   'Phone:',
+                  //   style: TextStyle(
+                  //     color: Colors.black,
+                  //     fontSize: 12,
+                  //   ),
+                  // ),
+                  textfiel_kyc(controller: bank_phone,head:'Phone:', res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -226,77 +236,78 @@ class _credit_from2State extends State<credit_from2> {
                   SizedBox(
                     height: res_height * 0.02,
                   ),
-                  Text(
-                    'Company Name:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
+                  // Text(
+                  //   'Company Name:',
+                  //   style: TextStyle(
+                  //     color: Colors.black,
+                  //     fontSize: 12,
+                  //   ),
+                  // ),
                   textfiel_kyc(
-                      controller: bsns_trde_company_name, res_width: res_width),
+                      controller: bsns_trde_company_name,head:'Company Name:', res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
-                  Text(
-                    'Company Address:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
+                  // Text(
+                  //   'Company Address:',
+                  //   style: TextStyle(
+                  //     color: Colors.black,
+                  //     fontSize: 12,
+                  //   ),
+                  // ),
                   textfiel_kyc(
                       controller: bsns_trde_company_address,
+                      head:'Company Address:',
                       res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
-                  Text(
-                    'City:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
+                  // Text(
+                  //   'City:',
+                  //   style: TextStyle(
+                  //     color: Colors.black,
+                  //     fontSize: 12,
+                  //   ),
+                  // ),
                   textfiel_kyc(
-                      controller: bsns_trde_city, res_width: res_width),
+                      controller: bsns_trde_city,head:'City:', res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
-                  Text(
-                    'State:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
+                  // Text(
+                  //   'State:',
+                  //   style: TextStyle(
+                  //     color: Colors.black,
+                  //     fontSize: 12,
+                  //   ),
+                  // ),
                   textfiel_kyc(
-                      controller: bsns_trde_state, res_width: res_width),
+                      controller: bsns_trde_state,head:'State:', res_width: res_width),
 
                   SizedBox(
                     height: res_height * 0.02,
                   ),
-                  Text(
-                    'Zip:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
-                  textfiel_kyc(controller: bsns_trde_zip, res_width: res_width),
+                  // Text(
+                  //   'Zip:',
+                  //   style: TextStyle(
+                  //     color: Colors.black,
+                  //     fontSize: 12,
+                  //   ),
+                  // ),
+                  textfiel_kyc(controller: bsns_trde_zip,head:'Zip:', res_width: res_width),
 
                   SizedBox(
                     height: res_height * 0.02,
                   ),
-                  Text(
-                    'Phone:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
+                  // Text(
+                  //   'Phone:',
+                  //   style: TextStyle(
+                  //     color: Colors.black,
+                  //     fontSize: 12,
+                  //   ),
+                  // ),
                   textfiel_kyc(
-                      controller: bsns_trde_phone, res_width: res_width),
+                      controller: bsns_trde_phone,head:'Phone:', res_width: res_width),
 
                   SizedBox(
                     height: res_height * 0.02,
@@ -308,20 +319,20 @@ class _credit_from2State extends State<credit_from2> {
                       fontSize: 12,
                     ),
                   ),
-                  textfiel_kyc(controller: bsns_trde_fax, res_width: res_width),
+                  textfiel_kyc(controller: bsns_trde_fax,head:'Fax:', res_width: res_width),
 
                   SizedBox(
                     height: res_height * 0.02,
                   ),
-                  Text(
-                    'Email:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
+                  // Text(
+                  //   'Email:',
+                  //   style: TextStyle(
+                  //     color: Colors.black,
+                  //     fontSize: 12,
+                  //   ),
+                  // ),
                   textfiel_kyc(
-                      controller: bsns_trde_email, res_width: res_width),
+                      controller: bsns_trde_email,head:'Email:', res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -431,80 +442,122 @@ class _credit_from2State extends State<credit_from2> {
   }
 
   CFA2() async {
-    final uri = Uri.parse(
-        '${apiGlobal}/user/credit-application-submit');
+    // final uri = Uri.parse(
+    //     '${apiGlobal}/user/credit-application-submit');
+    // log("Osama");
+    // var getrequestedDatavar= json.encode(widget.requestFormdata);
+    // log( widget.requestFormdata['product_id']);
 
-    print(uri);
+    // print("widget.requestFormdata['product_id'].toString()"+ int.tryParse(widget.requestFormdata['product_id']).toString());
 
     var sendData = {
-      'bank_name': bank_name.text,
-      'bank_address': bank_address.text,
-      'bank_city': bank_city.text,
-      'bank_contact_name': bank_contact_name.text,
-      'bank_state': bank_state.text,
-      'bank_zip': bank_zip.text,
-      'bank_phone': bank_phone.text,
-      'bsns_trde_company_name': bsns_trde_company_name.text,
-      'bsns_trde_company_address': bsns_trde_company_address.text,
-      'bsns_trde_city': bsns_trde_city.text,
-      'bsns_trde_state': bsns_trde_state.text,
-      'bsns_trde_zip': bsns_trde_zip.text,
-      'bsns_trde_phone': bsns_trde_phone.text,
-      'bsns_trde_fax': bsns_trde_fax.text,
-      'bsns_trde_email': bsns_trde_email.text,
-      'sig_name_title': sig_name_title.text,
-      'sig_date': sig_date.text,
+      'crd_bank_name': bank_name.text.toString(),
+      'crd_bank_address': bank_address.text.toString(),
+      'crd_bank_city': bank_city.text.toString(),
+      'crd_bank_contact_name': bank_contact_name.text.toString(),
+      'crd_bank_state': bank_state.text.toString(),
+      'crd_bank_zip': bank_zip.text.toString(),
+      'crd_bank_phone': bank_phone.text.toString(),
+      'crd_bsns_trde_company_name': bsns_trde_company_name.text.toString(),
+      'crd_bsns_trde_company_address': bsns_trde_company_address.text.toString(),
+      'crd_bsns_trde_city': bsns_trde_city.text.toString(),
+      'crd_bsns_trde_state': bsns_trde_state.text.toString(),
+      'crd_bsns_trde_zip': bsns_trde_zip.text.toString(),
+      'crd_bsns_trde_phone': bsns_trde_phone.text.toString(),
+      'crd_bsns_trde_fax': bsns_trde_fax.text.toString(),
+      'crd_bsns_trde_email': bsns_trde_email.text.toString(),
+      'crd_sig_name_title': sig_name_title.text.toString(),
+      'crd_sig_date': sig_date.text.toString(),
+      'product_id' : widget.requestFormdata['product_id'].toString(),
+      'location': widget.requestFormdata['location'].toString(),
+      'date_from' : widget.requestFormdata['firstDay'].toString(),
+      'date_to' : widget.requestFormdata['lastDay'].toString(),
+      'kyc_client_id': widget.kycformData['client_id'].toString(),
+      'kyc_company_name': widget.kycformData['company_name'].toString(),
+      'kyc_company_type': widget.kycformData['company_type'].toString(),
+      'kyc_company_state_country': widget.kycformData['company_state_country'].toString(),
+      'kyc_company_address': widget.kycformData['company_address'].toString(),
+      'kyc_number': widget.kycformData['number'].toString(),
+      'kyc_fax': widget.kycformData['fax'].toString(),
+      'kyc_contact_person': widget.kycformData['contact_person'].toString(),
+      'kyc_email': widget.kycformData['email'].toString(),
+      'kyc_company_website': widget.kycformData['company_website'].toString(),
+      'kyc_company_additional_members': widget.kycformData['company_additional_members'].toString(),
+      'kyc_company_prmy_bsns': widget.kycformData['company_prmy_bsns'].toString(),
+      'kyc_fund_src': widget.kycformData['fund_src'].toString(),
+      'kyc_company_countrylist': widget.kycformData['company_countrylist.tex'].toString(),
+      'crd_company_name': widget.creditfirstFormData['company_name'].toString(),
+      'crd_company_address': widget.creditfirstFormData['company_address'].toString(),
+      'crd_city': widget.creditfirstFormData['city'].toString(),
+      'crd_contact_name': widget.creditfirstFormData['contact_name'].toString(),
+      'crd_phone': widget.creditfirstFormData['phone'].toString(),
+      'crd_sole_proprietorship': widget.creditfirstFormData['sole_proprietorship'].toString(),
+      'crd_corporation': widget.creditfirstFormData['corporation'].toString(),
+      'crd_other': widget.creditfirstFormData['other'].toString(),
+      'crd_date_business_stared': widget.creditfirstFormData['date_business_stared'].toString(),
+      'crd_federal_id': widget.creditfirstFormData['federal_id'].toString(),
+      'crd_state': widget.creditfirstFormData['state'].toString(),
+      'crd_fax': widget.creditfirstFormData['fax'].toString(),
+      'crd_zip': widget.creditfirstFormData['zip'].toString(),
+      'crd_email': widget.creditfirstFormData['email'].toString(),
+      'crd_type_of_business': widget.creditfirstFormData['type_of_business'].toString(),
+      'crd_d_and_b': widget.creditfirstFormData['d_and_b'].toString(),
     };
+    // sendData.addAll(widget.requestFormdata);
+    // sendData.addAll(widget.kycformData);
+    // sendData.addAll(widget.creditfirstFormData);
 
-    var jsonBody = json.encode(sendData);
+    log("send data all value" + sendData.toString());
+    // var jsonBody = json.encode(sendData);
 
-    final headers = {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Bearer ${globaltoken}',
-    };
+    var res_data= await ApiService().getQuoteRequest(context,widget.requestProductId,sendData);
 
-    http.Response response = await http.post(
-      uri,
-      headers: headers,
-      body: jsonBody,
-    );
+    
+    // final headers = {
+    //   'Content-Type': 'application/x-www-form-urlencoded',
+    //   'Authorization': 'Bearer ${globaltoken}',
+    // };
 
-    print(response.statusCode);
+    // http.Response response = await http.post(
+    //   uri,
+    //   headers: headers,
+    //   body: jsonBody,
+    // );
 
-    print(response.body);
-    // try {
-    //   var res_data = json.decode(response.body);
-    // } catch (e) {
-    //   log('$e');
-    // }
-    var res_data = json.decode(response.body);
+    // print(response.statusCode);
 
-    print(res_data);
-    if (res_data["status"] == true) {
-      Get.to(() => MainScreen());
-    } else
-      Get.snackbar(
-        'Error',
-        'Wrong Credentials',
-        animationDuration: Duration(seconds: 2),
-        snackPosition: SnackPosition.BOTTOM,
-      );
+    // print(response.body);
+    
+    // var res_data = json.decode(response.body);
 
-    return res_data;
+    // print(res_data);
+    // if (res_data["status"] == true) {
+    //   Get.to(() => MainScreen());
+    // } else
+    //   Get.snackbar(
+    //     'Error',
+    //     'Wrong Credentials',
+    //     animationDuration: Duration(seconds: 2),
+    //     snackPosition: SnackPosition.BOTTOM,
+    //   );
+
+    // return res_data;
   }
 }
 
 class textfiel_kyc extends StatelessWidget {
-  var maxLines;
-
+  var maxLines,head;
+  TextEditingController? controller;
   textfiel_kyc({
-    TextEditingController? controller,
     Key? key,
+    this.head,
+    this.controller,
     this.maxLines,
     required this.res_width,
   }) : super(key: key);
 
   final double res_width;
+  FocusNode myFocusNode = new FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -518,9 +571,16 @@ class textfiel_kyc extends StatelessWidget {
           decoration: BoxDecoration(
               color: Colors.grey,
               borderRadius: BorderRadius.all(Radius.circular(7))),
-          child: TextField(
+          child: TextFormField(
+            controller: controller,
             maxLines: maxLines,
-            decoration: InputDecoration(border: InputBorder.none),
+            focusNode: myFocusNode,            
+           decoration: InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                labelText: head,
+                labelStyle: TextStyle(
+                    color: myFocusNode.hasFocus ? Colors.white : Colors.black)),
           ),
         ),
       ],

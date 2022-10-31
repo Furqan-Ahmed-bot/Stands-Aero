@@ -466,11 +466,23 @@ Future<void> getProducts() async{
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
     return GestureDetector(
-      onTap: () {
+      onTap: () async{
+        var responseData;
         // print(productController.Product1.name);
+        var response_data = await ApiService().singleProductDetails(id).then((res_data) {
+      // log("response of product details" + res_data.toString());
+
+      if (res_data['status'] == true) {
+        responseData = res_data['data'][0];
+        
+        // print("responseData from home : " + res_data['data'].toString());
+
+        log("products data" + responseData.toString());
+      }
         Get.to(booking(
-          productId:id
+          bookingapiresponse:responseData
         ));
+        });
       },
       child: Container(
         width: res_width * 0.475,
