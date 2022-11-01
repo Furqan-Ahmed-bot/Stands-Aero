@@ -8,11 +8,9 @@ import 'package:stande_aero/helper/global.dart';
 import 'package:stande_aero/services/remote_services.dart';
 
 class credit_form extends StatefulWidget {
-  final requestFormdata;
   final kycformData;
-  final requestProductId;
   const credit_form(
-      {Key? key, required this.requestFormdata, required this.kycformData,required this.requestProductId})
+      {Key? key, required this.kycformData})
       : super(key: key);
 
   @override
@@ -42,7 +40,7 @@ class _credit_formState extends State<credit_form> {
   Widget build(BuildContext context) {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
-    log("request form data " + widget.requestFormdata.toString());
+    log("requestFormdatafromQuote form data " + requestFormdatafromQuote.toString());
     log("Kyc Form Data " + widget.kycformData.toString());
     return Scaffold(
       appBar: AppBar(
@@ -372,16 +370,12 @@ class _credit_formState extends State<credit_form> {
                         'd_and_b': d_and_b.text,
                       };
 
-                      log("request send data" + widget.requestFormdata.toString());
+                      log("requestFormdatafromQuote send data" + requestFormdatafromQuote.toString());
                       log("kyc send data" + widget.kycformData.toString());
                       log("send data" + sendData.toString());
-                    
-                      Get.to(credit_from2(
-                        requestFormdata:widget.requestFormdata,
-                        requestProductId:widget.requestProductId,
-                        kycformData:widget.kycformData,
-                        creditfirstFormData : sendData
-                      ));
+                      creditfirstFormData = sendData;
+                      Get.to(() => 
+                      credit_from2());
                       
                     },
                     child: Container(

@@ -11,9 +11,8 @@ import 'package:stande_aero/screens/mainhome.dart';
 import 'package:stande_aero/services/remote_services.dart';
 
 class kyc_form extends StatefulWidget {
-  final requestquoteData;
-  final requestProductId;
-  const kyc_form({Key? key, required this.requestquoteData, required this.requestProductId}) : super(key: key);
+  
+  const kyc_form({Key? key}) : super(key: key);
 
   @override
   State<kyc_form> createState() => _kyc_formState();
@@ -49,7 +48,8 @@ class _kyc_formState extends State<kyc_form> {
   Widget build(BuildContext context) {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
-    log("request form Data" + widget.requestquoteData);
+    log("requestFormdatafromQuote form Data" + requestFormdatafromQuote.toString());
+    
     FocusNode myFocusNode = new FocusNode();
     return Scaffold(
       appBar: AppBar(
@@ -475,10 +475,10 @@ class _kyc_formState extends State<kyc_form> {
     };
 
     log("sendData" + sendData.toString());
-
+    kycrequestFormdatafromQuote = sendData;
     Get.to(
           credit_form(
-              requestFormdata: widget.requestquoteData,requestProductId:widget.requestProductId, kycformData: sendData)
+              kycformData: kycrequestFormdatafromQuote)
         );
 
     //   print(sendData);

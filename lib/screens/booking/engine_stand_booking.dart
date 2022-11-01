@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stande_aero/helper/colors.dart';
+import 'package:stande_aero/helper/global.dart';
 import 'package:stande_aero/screens/auth/mainlogin.dart';
 import 'package:stande_aero/screens/kyc_Form/kyc_form.dart';
 import 'package:stande_aero/services/remote_services.dart';
@@ -336,28 +337,27 @@ class _stand_bookingState extends State<stand_booking> {
                   height: 20,
                 ),
                 GestureDetector(
-                  onTap: () {
+                  onTap: () async{
                     // Get.to(() => MainLoginScreen());
-                    if (location.text == "") {
-                      Get.snackbar(
-                        'Error',
-                        'Please enter location',
-                        animationDuration: Duration(seconds: 2),
-                        snackPosition: SnackPosition.BOTTOM,
-                      );
-                    } else {
-                      var sendData = {
+                    // if (location.text == "") {
+                    //   Get.snackbar(
+                    //     'Error',
+                    //     'Please enter location',
+                    //     animationDuration: Duration(seconds: 2),
+                    //     snackPosition: SnackPosition.BOTTOM,
+                    //   );
+                    // } else {
+                      var sendData = await {
                         'product_id': widget.productId,
                         'location': location.text,
                         'date_from': firstDay.text,
                         'date_to': lastDay.text
                       };
-                      log("sendData" + sendData.toString());
-
-                      Get.to(kyc_form(
-                          requestquoteData: sendData,
-                          requestProductId: widget.productId));
-                    }
+                      // log("sendData" + sendData);
+                      requestFormdatafromQuote = sendData;
+                      log("requestFormdatafromQuote" + requestFormdatafromQuote.toString());
+                      Get.to(kyc_form());
+                    // }
 
                     // var res_data= ApiService().quoteRequest(context,sendData,widget.productId);
                     // if(res_data['status'] ==true){

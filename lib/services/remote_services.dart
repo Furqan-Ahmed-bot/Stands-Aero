@@ -477,87 +477,32 @@ class ApiService {
     return res_data;
   }
 
-  getQuoteRequest(context, requestProductId, sendData) async {
-    final uri = Uri.parse('${apiGlobal}/api/user/getaquote/${requestProductId}');
+  getQuoteRequest(context, sendData) async {
+    var jsonBody = jsonEncode(sendData);
+    
+    log("jsonBody['product_id']" + jsonBody.toString());
+    var getId= sendData['product_id'];
+    log("received id "+ getId.toString());
+    final uri = Uri.parse('${apiGlobal}/api/user/getaquote/${getId}');
 
-    print("getQuoteRequest" + uri.toString());
-
+    print("getQuoteRequest " + uri.toString());
+    log("globaltoken " + globaltoken.toString());
     final headers = {
       // 'Content-Type': 'application/json',
       'Authorization': 'Bearer ${globaltoken}',
     };
 
-    // var abc = {
-    //   'product_id': '1',
-    //   'location': 'Ny',
-    //   'date_from': '2023-09-23',
-    //   'date_to': '2023-09-26',
-    //   'kyc_client_id': '29',
-    //   'kyc_company_name': 'StandsCompany',
-    //   'kyc_company_type': 'IT',
-    //   'kyc_company_state_country': 'sindh',
-    //   'kyc_company_address': '--',
-    //   'kyc_number': '656456456456456',
-    //   'kyc_fax': '4565',
-    //   'kyc_contact_person': 'taimoor',
-    //   'kyc_email': 'taimoorhussain@gmail.com',
-    //   'kyc_company_website': 'StandsCompany.com',
-    //   'kyc_company_additional_members': 'mohsin, bilal',
-    //   'kyc_company_prmy_bsns': 'Design services',
-    //   'kyc_fund_src': 'Pakistan',
-    //   'kyc_company_countrylist': 'Pakistan, UAE, USA',
-    //   'kyc_company2_name': 'company test 2',
-    //   'kyc_by': 'ssdasd',
-    //   'kyc_title': 'asdasdasd',
-    //   'kyc_date': '2022-02-02',
-    //   'crd_client_id': '29',
-    //   'crd_company_name': 'test company',
-    //   'crd_company_address': 'abc address',
-    //   'crd_city': 'california',
-    //   'crd_contact_name': 'george',
-    //   'crd_phone': '+1321654987',
-    //   'crd_sole_proprietorship': 'test sole proprietorship',
-    //   'crd_corporation': 'block box',
-    //   'crd_other': 'other details',
-    //   'crd_date_business_stared': '2022-06-06',
-    //   'crd_federal_id': '56456',
-    //   'crd_state': 'las vegas',
-    //   'crd_fax': '3234234',
-    //   'crd_zip': '022985',
-    //   'crd_email': 'saasd@qwqw.com',
-    //   'crd_partnership': 'asdsd',
-    //   'crd_type_of_business': 'dasd',
-    //   'crd_d_and_b': 'asdasd',
-    //   'crd_bank_name': 'sdasd',
-    //   'crd_bank_address': 'asdas',
-    //   'crd_bank_city': 'as',
-    //   'crd_bank_contact_name': 'asdasd',
-    //   'crd_bank_state': 'asds',
-    //   'crd_bank_zip': '32154',
-    //   'crd_bank_phone': 'asdadasdsa',
-    //   'crd_bsns_trde_company_name': 'asasd',
-    //   'crd_bsns_trde_company_address': 'asdsda',
-    //   'crd_bsns_trde_city': 'assdasd',
-    //   'crd_bsns_trde_state': 'asdas',
-    //   'crd_bsns_trde_zip': '2565',
-    //   'crd_bsns_trde_phone': 'asdasd',
-    //   'crd_bsns_trde_fax': 'asdasd',
-    //   'crd_bsns_trde_email': 'asdsad',
-    //   'crd_sig_name_title': 'asdasd',
-    //   'crd_sig_date': '2022-05-05'
-    // };
-
-    // var jsonBodya = jsonEncode(abc);
-
+    var jsonBodya = jsonEncode(sendData);
+    log("sendData data value " + sendData.toString());
     http.Response response = await http.post(
       uri,
       headers: headers,
-      body: sendData,
+      body: jsonBodya,
     );
 
     var res_data = json.decode(response.body.toString());
 
-    print(response.body);
+    print("response.body res_data" + response.body.toString());
 
     print(res_data);
     if (res_data["status"] == true) {
