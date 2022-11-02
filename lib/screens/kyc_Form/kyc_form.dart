@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,9 +10,9 @@ import 'package:stande_aero/screens/Profile/profile.dart';
 import 'package:stande_aero/screens/credit_Form/credit_form.dart';
 import 'package:stande_aero/screens/mainhome.dart';
 import 'package:stande_aero/services/remote_services.dart';
+import 'package:email_validator/email_validator.dart';
 
 class kyc_form extends StatefulWidget {
-  
   const kyc_form({Key? key}) : super(key: key);
 
   @override
@@ -48,8 +49,9 @@ class _kyc_formState extends State<kyc_form> {
   Widget build(BuildContext context) {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
-    log("requestFormdatafromQuote form Data" + requestFormdatafromQuote.toString());
-    
+    log("requestFormdatafromQuote form Data" +
+        requestFormdatafromQuote.toString());
+
     FocusNode myFocusNode = new FocusNode();
     return Scaffold(
       appBar: AppBar(
@@ -159,8 +161,7 @@ class _kyc_formState extends State<kyc_form> {
                     ),
                   ),
                   textfiel_kyc(
-                      controller: company_state_country,
-                      res_width: res_width),
+                      controller: company_state_country, res_width: res_width),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -187,10 +188,32 @@ class _kyc_formState extends State<kyc_form> {
                   //     fontSize: 12,
                   //   ),
                   // ),
-                  textfiel_kyc(
-                      controller: number,
-                      hed: 'Phone Number:',
-                      res_width: res_width),
+                  Container(
+                    width: res_width * 0.925,
+                    decoration: BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.all(Radius.circular(7))),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          top: 8, bottom: 0, right: 8, left: 8),
+                      child: TextFormField(
+                        controller: number,
+                        focusNode: myFocusNode,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        decoration: InputDecoration(
+                            contentPadding:
+                                EdgeInsets.symmetric(horizontal: 10),
+                            labelText: 'Phone Number:',
+                            labelStyle: TextStyle(
+                                color: myFocusNode.hasFocus
+                                    ? Colors.white
+                                    : Colors.black)),
+                      ),
+                    ),
+                  ),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -201,10 +224,31 @@ class _kyc_formState extends State<kyc_form> {
                   //     fontSize: 12,
                   //   ),
                   // ),
-                  textfiel_kyc(
-                      controller: fax,
-                      hed: 'Fax Number:',
-                      res_width: res_width),
+                  Container(
+                    width: res_width * 0.925,
+                    decoration: BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.all(Radius.circular(7))),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          top: 8, bottom: 0, right: 8, left: 8),
+                      child: TextFormField(
+                        controller: fax,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        decoration: InputDecoration(
+                            contentPadding:
+                                EdgeInsets.symmetric(horizontal: 10),
+                            labelText: 'Fax Number:',
+                            labelStyle: TextStyle(
+                                color: myFocusNode.hasFocus
+                                    ? Colors.white
+                                    : Colors.black)),
+                      ),
+                    ),
+                  ),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -229,8 +273,32 @@ class _kyc_formState extends State<kyc_form> {
                   //     fontSize: 12,
                   //   ),
                   // ),
-                  textfiel_kyc(
-                      controller: email, hed: 'Email:', res_width: res_width),
+                  Container(
+                    width: res_width * 0.925,
+                    decoration: BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.all(Radius.circular(7))),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          top: 8, bottom: 0, right: 8, left: 8),
+                      child: TextFormField(
+                        controller: email,
+                        keyboardType: TextInputType.number,
+                        validator: (text) =>
+                            EmailValidator.validate(text.toString())
+                                ? null
+                                : "Please enter a valid email",
+                        decoration: InputDecoration(
+                            contentPadding:
+                                EdgeInsets.symmetric(horizontal: 10),
+                            labelText: 'Email:',
+                            labelStyle: TextStyle(
+                                color: myFocusNode.hasFocus
+                                    ? Colors.white
+                                    : Colors.black)),
+                      ),
+                    ),
+                  ),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -339,35 +407,35 @@ class _kyc_formState extends State<kyc_form> {
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  GestureDetector(
-                    child: Container(
-                      width: res_width * 0.925,
-                      decoration: BoxDecoration(
-                          color: Color(0xffaf8a39),
-                          borderRadius: BorderRadius.all(Radius.circular(7))),
-                      child: Padding(
-                        padding: const EdgeInsets.all(13.0),
-                        child: Center(
-                          child: Text(
-                            'Add More',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 17),
-                          ),
-                        ),
-                      ),
-                    ),
-                    onTap: () {
-                      setState(() {
-                        fieldCount++;
-                        list.add(buildField(fieldCount));
-                      });
-                    },
-                  ),
+                  // SizedBox(
+                  //   height: res_height * 0.02,
+                  // ),
+                  // GestureDetector(
+                  //   child: Container(
+                  //     width: res_width * 0.925,
+                  //     decoration: BoxDecoration(
+                  //         color: Color(0xffaf8a39),
+                  //         borderRadius: BorderRadius.all(Radius.circular(7))),
+                  //     child: Padding(
+                  //       padding: const EdgeInsets.all(13.0),
+                  //       child: Center(
+                  //         child: Text(
+                  //           'Add More',
+                  //           style: TextStyle(
+                  //               color: Colors.white,
+                  //               fontWeight: FontWeight.bold,
+                  //               fontSize: 17),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  //   onTap: () {
+                  //     setState(() {
+                  //       fieldCount++;
+                  //       list.add(buildField(fieldCount));
+                  //     });
+                  //   },
+                  // ),
                   SizedBox(
                     height: res_height * 0.02,
                   ),
@@ -476,10 +544,7 @@ class _kyc_formState extends State<kyc_form> {
 
     log("sendData" + sendData.toString());
     kycrequestFormdatafromQuote = sendData;
-    Get.to(
-          credit_form(
-              kycformData: kycrequestFormdatafromQuote)
-        );
+    Get.to(credit_form(kycformData: kycrequestFormdatafromQuote));
 
     //   print(sendData);
     //   var jsonBody = json.encode(sendData);
@@ -546,6 +611,12 @@ class textfiel_kyc extends StatelessWidget {
         padding: const EdgeInsets.only(top: 8, bottom: 0, right: 8, left: 8),
         child: TextFormField(
           controller: controller,
+          validator: (text) {
+            if (text == null || text.isEmpty) {
+              return '${hed} is empty';
+            }
+            return null;
+          },
           maxLines: maxLines,
           focusNode: myFocusNode,
           decoration: InputDecoration(

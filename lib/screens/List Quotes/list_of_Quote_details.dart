@@ -19,6 +19,8 @@ class quotes_details extends StatefulWidget {
 
 class _quotes_detailsState extends State<quotes_details> {
   var responseData ;
+  String? filePath;
+  String? fileType;
   @override
   void initState() {
     Future.delayed(Duration.zero, () {
@@ -35,6 +37,7 @@ class _quotes_detailsState extends State<quotes_details> {
       // log("response of single quotation console");
       if (res_data['status'] == true) {
         log("response of single quotation console : " + res_data['data'].toString());
+        log("response of status : " + res_data['data'][0]['status'].toString());
         setState(() {
           responseData = res_data['data'];
         });
@@ -49,6 +52,7 @@ class _quotes_detailsState extends State<quotes_details> {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
     double pad = 23.0;
+    
 
     return Container(
       width: double.infinity,
@@ -90,7 +94,7 @@ class _quotes_detailsState extends State<quotes_details> {
               Container(
                 width: 40,
                 height: 40,
-                child: Image.asset('assets/slicing/Untitled-3.png'),
+                child: Image.asset('assets/slicing/Untitled-4.png'),
               )
             ],
           ),
@@ -107,7 +111,7 @@ class _quotes_detailsState extends State<quotes_details> {
                 children: [
                   Quotess_Card(
                       id: responseData[0]['quote_id'],
-                      status: "Approved",
+                      status: responseData[0]['status'],
                       name: responseData[0]['product_name'],
                       location: responseData[0]['product_location']==null ?  "abc" : responseData[0]['product_location'],
                       description: responseData[0]['details'],
@@ -147,25 +151,41 @@ class _quotes_detailsState extends State<quotes_details> {
                             ),
                           ),
                         ),
-                        Container(
-                          width: res_width * 0.6,
-                          decoration: BoxDecoration(
-                              color: Color(0xffaf8a39),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(7))),
-                          child: Padding(
-                            padding: const EdgeInsets.all(13.0),
-                            child: Center(
-                              child: Text(
-                                'Upload Your Tax Certificate',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 17),
+                        GestureDetector(
+                          onTap:() async{
+                            FilePickerResult? resultvar = await FilePicker.platform.pickFiles(type: FileType.custom,allowedExtensions: ['jpg', 'pdf', 'doc','docx','png'],);
+                            if (resultvar != null) {
+                             String? filevar = resultvar.files.single.path;
+                             filePath = filevar;
+                             fileType = resultvar.files.single.extension;
+                              log("filevar" + filevar.toString());
+                              log("filevar type" + resultvar.files.single.extension.toString());
+                            } else {
+                              // User canceled the picker
+                            }
+                          },
+
+                          child: Container(
+                            width: res_width * 0.6,
+                            decoration: BoxDecoration(
+                                color: Color(0xffaf8a39),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(7))),
+                            child: Padding(
+                              padding: const EdgeInsets.all(13.0),
+                              child: Center(
+                                child: Text(
+                                  'Upload Your Tax Certificate',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17),
+                                ),
                               ),
                             ),
                           ),
                         ),
+                        
                       ],
                     ),
                   ),
@@ -308,9 +328,19 @@ class _quotes_detailsState extends State<quotes_details> {
                   SizedBox(
                     height: res_height * 0.02,
                   ),
+                  responseData[0]['status'] == "Approved" ?
                   GestureDetector(
                     onTap: () {
-                      Get.to(() => payment());
+                      // Get.to(() => payment());
+                      var sendData={
+                          'tax_file' : filePath,
+                          'quote_id' : widget.quoteId,
+                          'fileType': fileType
+                      };
+                      // var res_data= ApiService().placeOrder(context,sendData);
+                      // if(res_data=['status'] == true){
+
+                      // }
                     },
                     child: Container(
                       width: res_width * 0.95,
@@ -330,7 +360,7 @@ class _quotes_detailsState extends State<quotes_details> {
                         ),
                       ),
                     ),
-                  ),
+                  ) : Container(),
                   SizedBox(
                     height: res_height * 0.01,
                   ),

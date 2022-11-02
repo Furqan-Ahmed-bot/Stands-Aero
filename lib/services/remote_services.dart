@@ -341,9 +341,7 @@ class ApiService {
           description: res_data['description'],
         ),
       );
-      Get.to(
-        Editprofile()
-      );
+      Get.to(Editprofile());
       Get.snackbar(
         'Success',
         'Profile updated successfully',
@@ -552,5 +550,36 @@ class ApiService {
     }
 
     return res_data;
+  }
+
+  placeOrder(context, sendData) async{
+    // var jsonBody = jsonEncode(sendData);
+
+    // log("place order jsonbody" + jsonBody.toString());
+    var getId = sendData['quote_id'];
+    log("place order get quote id ${getId}" );
+
+    final uri = Uri.parse('${apiGlobal}/api/user/getaquote/${getId}');
+    var request = http.MultipartRequest('POST', uri);
+
+    var headers = {'Authorization': "Bearer " + globaltoken};
+
+    if (sendData['tax_file'] != null) {
+          print(sendData['tax_file'].toString());
+          print(sendData['tax_file'].path.toString());
+          var multipartFile = await http.MultipartFile.fromPath(
+              'tax_file', sendData['tax_file']!.path,
+              filename: sendData['tax_file'].path.split('/').last,
+              contentType: MediaType("image", "jpg"));
+          request.files.add(multipartFile);
+        }
+        String jsonBody = json.encode(request.fields);
+        log("Request " + jsonBody.toString());
+        request.headers.addAll(headers);
+        log("request" + request.toString());
+        var response = await request.send();
+
+
+
   }
 }
