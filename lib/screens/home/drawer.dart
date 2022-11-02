@@ -54,10 +54,13 @@ class _NavDrawerState extends State<NavDrawer> {
                     children: [
                       Row(
                         children: [
+                          userController.user.propic != null ?
                           Image.network(
                             userController.user.propic.toString(),
                             width: 80,
-                          ),
+                          ) :
+                          Image.asset("assets/slicing/1567655174profile.jpg")
+                          ,
                           SizedBox(
                             width: 10,
                           ),

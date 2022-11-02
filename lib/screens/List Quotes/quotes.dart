@@ -18,7 +18,7 @@ class _quotesState extends State<quotes> with TickerProviderStateMixin {
   late AnimationController animation;
   late Animation<double> _fadeInFadeOut;
   bool Quotes_Card = true;
-  dynamic quotations_data;
+  var quotations_data;
   @override
   void initState() {
     Future.delayed(Duration.zero, () {
@@ -45,7 +45,7 @@ class _quotesState extends State<quotes> with TickerProviderStateMixin {
 
   Future<void> quotation_list() async {
     quotations_data = await ApiService().quotation_list();
-    // log("quotation_list"+quotations_data['data'].toString());
+    log("quotation_list" + quotations_data['data'].toString());
   }
 
   final GlobalKey<ScaffoldState> _key = GlobalKey();
@@ -98,7 +98,7 @@ class _quotesState extends State<quotes> with TickerProviderStateMixin {
             ],
           ),
         ),
-        body: quotations_data !=null ? Padding(
+        body: Padding(
           padding: const EdgeInsets.all(12.0),
           child: FutureBuilder<void>(
               future: quotation_list(),
@@ -149,7 +149,7 @@ class _quotesState extends State<quotes> with TickerProviderStateMixin {
                   return spinkit;
                 }
               }),
-        ): spinkit,
+        ),
       ),
     );
   }
@@ -180,7 +180,7 @@ class Quotess_Card extends StatelessWidget {
         GestureDetector(
           onTap: () async {
             log("onclic id" + id);
-            
+
             if (id != null) {
               Get.to(() => quotes_details(quoteId: id));
             }

@@ -13,6 +13,7 @@ import '../helper/ProductModel.dart';
 import '../helper/global.dart';
 import '../helper/loader.dart';
 import '../helper/model.dart';
+import '../screens/List Quotes/quoteRecieved.dart';
 import '../screens/auth/mainlogin.dart';
 import '../screens/mainhome.dart';
 
@@ -480,33 +481,33 @@ class ApiService {
   getQuoteRequest(context, sendData) async {
     var jsonBody = jsonEncode(sendData);
     
-    log("jsonBody['product_id']" + jsonBody.toString());
+    // log("jsonBody['product_id']" + jsonBody.toString());
     var getId= sendData['product_id'];
-    log("received id "+ getId.toString());
-    final uri = Uri.parse('${apiGlobal}/api/user/getaquote/${getId}');
+    // log("received id "+ getId.toString());
+    final uriget = Uri.parse('${apiGlobal}/api/user/getaquote/${getId}');
 
-    print("getQuoteRequest " + uri.toString());
-    log("globaltoken " + globaltoken.toString());
+    // print("getQuoteRequest " + uri.toString());
+    // log("globaltoken " + globaltoken.toString());
     final headers = {
       // 'Content-Type': 'application/json',
       'Authorization': 'Bearer ${globaltoken}',
     };
 
-    var jsonBodya = jsonEncode(sendData);
-    log("sendData data value " + sendData.toString());
+    // var jsonBodya = jsonEncode(sendData);
+    // log("sendData data value " + jsonBodya.toString());
     http.Response response = await http.post(
-      uri,
+      uriget,
       headers: headers,
-      body: jsonBodya,
+      body: sendData,
     );
 
-    var res_data = json.decode(response.body.toString());
+    var res_data = json.decode(response.body);
 
     print("response.body res_data" + response.body.toString());
 
     print(res_data);
     if (res_data["status"] == true) {
-      Get.to(PaymentRecieved());
+      Get.to(QuoteRecieved());
       Get.snackbar(
         'Success',
         'Your Request has been sent',
@@ -517,12 +518,5 @@ class ApiService {
 
     return res_data;
   }
-
-  // quoteRequest(context,sendData,id) {
-
-  //   final uri = Uri.parse('${apiGlobal}/api/user/product/${id}/quotation-request');
-  //   print(uri);
-
-  // }
 
 }
