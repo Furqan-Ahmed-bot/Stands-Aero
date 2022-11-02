@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -19,15 +21,15 @@ class ForgotPasswordEnterEmail extends StatefulWidget {
   const ForgotPasswordEnterEmail({Key? key}) : super(key: key);
 
   @override
-  State<ForgotPasswordEnterEmail> createState() => _ForgotPasswordEnterEmailState();
+  State<ForgotPasswordEnterEmail> createState() =>
+      _ForgotPasswordEnterEmailState();
 }
 
 class _ForgotPasswordEnterEmailState extends State<ForgotPasswordEnterEmail> {
   final _formKey = GlobalKey<FormState>();
   bool _passwordVisible = false;
-  
+
   TextEditingController email = TextEditingController();
-   
 
   var user = UserModel();
   @override
@@ -60,7 +62,7 @@ class _ForgotPasswordEnterEmailState extends State<ForgotPasswordEnterEmail> {
                   height: res_height * 0.1,
                 ),
                 Text(
-                  'Forgot Email',
+                  'Forgot Password',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
@@ -108,12 +110,28 @@ class _ForgotPasswordEnterEmailState extends State<ForgotPasswordEnterEmail> {
                   height: res_height * 0.01,
                 ),
                 GestureDetector(
-                  onTap: () {
-                    print("login");
-                    Get.to(() => ForgotPasswordScreen());
+                  onTap: () async {
+                    print(email.text);
+                    if (email.text.length==0) {
+                      Get.snackbar(
+                        'Error',
+                        "Invalid Email Address",
+                        snackPosition: SnackPosition.BOTTOM,
+                        backgroundColor: Colors.white,
+                      );
+                    } else {
+                      var data = {
+                        "email": email.text,
+                      };
+
+                      print("login");
+                      await ApiService().setNewPassword(context, data);
+                    }
+
+                    // Get.to(() => ForgotPasswordScreen());
                     // var sendData = {
                     //     "email": email.text,
-                       
+
                     //     "device_token": "123654"
                     //   };
 
@@ -143,13 +161,13 @@ class _ForgotPasswordEnterEmailState extends State<ForgotPasswordEnterEmail> {
                 ),
                 SizedBox(
                   height: res_height * 0.035,
-                ),                
+                ),
                 SizedBox(
                   height: res_height * 0.13,
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.to(() => ForgotPasswordScreen());
+                    Get.to(() => RegisterScreen());
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -181,6 +199,4 @@ class _ForgotPasswordEnterEmailState extends State<ForgotPasswordEnterEmail> {
       ),
     );
   }
-
-  
 }
