@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stande_aero/screens/auth/mainlogin.dart';
 import 'package:stande_aero/services/remote_services.dart';
 import 'package:stande_aero/helper/colors.dart';
 import 'package:stande_aero/screens/home/home.dart';
@@ -24,13 +25,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController phone = TextEditingController();
   TextEditingController password_confirmation = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+   bool _passwordVisible = false;
+   bool _passwordVisible1 = false;
 
   late String _selectedValue1;
   @override
   Widget build(BuildContext context) {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
-
+   
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -220,6 +223,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   width: MediaQuery.of(context).size.width * 0.9,
                   child: TextFormField(
                     controller: password,
+                    obscureText: !_passwordVisible,
                     decoration: new InputDecoration(
                       hintText: 'Password',
                       border: OutlineInputBorder(
@@ -228,6 +232,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             color: Colors.transparent,
                           )),
                       hintStyle: TextStyle(),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          // Based on passwordVisible state choose the icon
+                          _passwordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          color: Colors.black,
+                        ),
+                        onPressed: () {
+                          // Update the state i.e. toogle the state of passwordVisible variable
+                          setState(() {
+                            _passwordVisible = !_passwordVisible;
+                          });
+                        },
+                      ),
                       contentPadding: EdgeInsets.only(top: 16, left: 16),
                       fillColor: Colors.white,
                       filled: true,
@@ -247,6 +266,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   width: MediaQuery.of(context).size.width * 0.9,
                   child: TextFormField(
                     controller: password_confirmation,
+                    obscureText: !_passwordVisible1,
                     decoration: new InputDecoration(
                       hintText: 'Confirm Password',
                       border: OutlineInputBorder(
@@ -255,6 +275,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             color: Colors.transparent,
                           )),
                       hintStyle: TextStyle(),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          // Based on passwordVisible state choose the icon
+                          _passwordVisible1
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          color: Colors.black,
+                        ),
+                        onPressed: () {
+                          // Update the state i.e. toogle the state of passwordVisible variable
+                          setState(() {
+                            _passwordVisible1 = !_passwordVisible1;
+                          });
+                        },
+                      ),
                       contentPadding: EdgeInsets.only(top: 16, left: 16),
                       fillColor: Colors.white,
                       filled: true,
@@ -272,24 +307,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-
-                        var sendData = {
-                            'fullname': fullname.text,
-                            'email': email.text,
-                            'city': city.text,
-                            'phone': phone.text,
-                            'password': password.text,
-                            'password_confirmation': password_confirmation.text,
-                            // "fullname": fullname.text,
-                            // "email": email.text,
-                            // "city": city.text,
-                            // "phone": phone.text,
-                            // "password": password.text,
-                            // "password_confirmation": password_confirmation,
-                          };
-                              if (_formKey.currentState!.validate()) {
-                                 ApiService().register(sendData);
-                              }
+                    var sendData = {
+                      'fullname': fullname.text,
+                      'email': email.text,
+                      'city': city.text,
+                      'phone': phone.text,
+                      'password': password.text,
+                      'password_confirmation': password_confirmation.text,
+                      // "fullname": fullname.text,
+                      // "email": email.text,
+                      // "city": city.text,
+                      // "phone": phone.text,
+                      // "password": password.text,
+                      // "password_confirmation": password_confirmation,
+                    };
+                    if (_formKey.currentState!.validate()) {
+                      ApiService().register(context,sendData);
+                    }
                   },
                   child: Container(
                     width: res_width * 0.9,
@@ -324,13 +358,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         fontSize: 17,
                       ),
                     ),
-                    Text(
-                      'Login',
-                      style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        fontWeight: FontWeight.w500,
-                        color: kPrimaryColor,
-                        fontSize: 17,
+                    GestureDetector(
+                      onTap: (){
+                        Get.to(
+                            MainLoginScreen()
+                        );
+                      },
+                      child: Text(
+                        'Login',
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          fontWeight: FontWeight.w500,
+                          color: kPrimaryColor,
+                          fontSize: 17,
+                        ),
                       ),
                     ),
                   ],
@@ -345,5 +386,4 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
-
 }

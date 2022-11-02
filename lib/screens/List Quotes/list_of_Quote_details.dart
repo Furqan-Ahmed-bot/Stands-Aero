@@ -7,6 +7,7 @@ import 'package:stande_aero/screens/home/orderhistory.dart';
 import 'package:stande_aero/screens/payment/payment.dart';
 import 'package:stande_aero/services/remote_services.dart';
 import 'package:stande_aero/helper/loader.dart';
+import 'package:file_picker/file_picker.dart';
 
 class quotes_details extends StatefulWidget {
   final quoteId;
@@ -156,7 +157,7 @@ class _quotes_detailsState extends State<quotes_details> {
                             padding: const EdgeInsets.all(13.0),
                             child: Center(
                               child: Text(
-                                'Safe',
+                                'Upload Your Tax Certificate',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,

@@ -213,7 +213,7 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
                           ),
                           GestureDetector(
                             onTap: () {
-                              ApiService().logout();
+                              ApiService().logout(context);
                             },
                             child: Container(
                               width: res_width * 0.9,
@@ -237,6 +237,33 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
                           ),
                           SizedBox(
                             height: res_height * 0.015,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              // ApiService().logout(context);
+                            },
+                            child: Container(
+                              width: res_width * 0.9,
+                              decoration: BoxDecoration(
+                                  color: Color.fromARGB(255, 238, 0, 0),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(7))),
+                              child: Padding(
+                                padding: const EdgeInsets.all(13.0),
+                                child: Center(
+                                  child: Text(
+                                    'Delete my account',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 17),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: res_height * 0.030,
                           ),
                         ],
                       ),

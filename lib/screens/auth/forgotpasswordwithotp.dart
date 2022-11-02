@@ -13,22 +13,19 @@ import 'package:stande_aero/screens/mainhome.dart';
 import 'package:stande_aero/screens/payment/awaiting.dart';
 import 'package:http/http.dart' as http;
 
-import 'forgot.dart';
-
-class EmailLoginScreen extends StatefulWidget {
-  const EmailLoginScreen({Key? key}) : super(key: key);
+class ForgotPasswordScreen extends StatefulWidget {
+  const ForgotPasswordScreen({Key? key}) : super(key: key);
 
   @override
-  State<EmailLoginScreen> createState() => _EmailLoginScreenState();
+  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
 }
 
-class _EmailLoginScreenState extends State<EmailLoginScreen> {
+class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _passwordVisible = false;
-  
+
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
-   
 
   var user = UserModel();
   @override
@@ -61,7 +58,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                   height: res_height * 0.1,
                 ),
                 Text(
-                  'Login',
+                  'Forgot Password',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
@@ -75,7 +72,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                   child: TextFormField(
                     controller: email,
                     decoration: new InputDecoration(
-                      hintText: 'Email Address',
+                      hintText: 'Enter OTP',
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(7.0),
                           borderSide: BorderSide(
@@ -83,14 +80,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                           )),
                       hintStyle: TextStyle(),
                       contentPadding: EdgeInsets.only(top: 16, left: 16),
-                      prefixIcon: Padding(
-                        padding: const EdgeInsets.all(13.0),
-                        child: ImageIcon(
-                          AssetImage("assets/slicing/Untitled-23.png"),
-                          color: kPrimaryColor,
-                          //  size: 20,
-                        ),
-                      ),
+                      
                       fillColor: Colors.white,
                       filled: true,
                     ),
@@ -159,17 +149,68 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                 SizedBox(
                   height: res_height * 0.01,
                 ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: TextFormField(
+                    controller: password,
+                    obscureText: !_passwordVisible,
+                    decoration: new InputDecoration(
+                      hintText: 'Password',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(7.0),
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                          )),
+                      hintStyle: TextStyle(),
+                      contentPadding: EdgeInsets.only(top: 16, left: 16),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          // Based on passwordVisible state choose the icon
+                          _passwordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          color: Colors.black,
+                        ),
+                        onPressed: () {
+                          // Update the state i.e. toogle the state of passwordVisible variable
+                          setState(() {
+                            _passwordVisible = !_passwordVisible;
+                          });
+                        },
+                      ),
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.all(13.0),
+                        child: ImageIcon(
+                          AssetImage("assets/slicing/Untitled-24.png"),
+                          color: kPrimaryColor,
+                          //  size: 20,
+                        ),
+                      ),
+                      fillColor: Colors.white,
+                      filled: true,
+                    ),
+                    validator: (text) {
+                      if (text == null || text.isEmpty) {
+                        return 'Enter Valid Password !';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: res_height * 0.01,
+                ),
                 GestureDetector(
                   onTap: () {
                     print("login");
                     var sendData = {
-                        "email": email.text,
-                        "password": password.text,
-                        "device_token": "123654"
-                      };
+                      "email": email.text,
+                      "password": password.text,
+                      "device_token": "123654"
+                    };
 
                     if (_formKey.currentState!.validate()) {
-                      ApiService().login(context,sendData);
+                      ApiService().login(context, sendData);
                     }
                     // Get.to(() => MainScreen());
                   },
@@ -182,7 +223,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                       padding: const EdgeInsets.all(13.0),
                       child: Center(
                         child: Text(
-                          'Login',
+                          'Submit',
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -194,53 +235,11 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                 ),
                 SizedBox(
                   height: res_height * 0.035,
-                ),
-                GestureDetector(
-                  onTap: (){
-                    Get.to(
-                      ForgotPasswordEnterEmail()
-                    );
-                  },
-                  child: Text(
-                    'Forgot Password?',
-                    style: TextStyle(
-                      decoration: TextDecoration.underline,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white,
-                      fontSize: 17,
-                    ),
-                  ),
-                ),
+                ),                
                 SizedBox(
                   height: res_height * 0.13,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    Get.to(() => RegisterScreen());
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Don't have an account? ",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
-                          fontSize: 17,
-                        ),
-                      ),
-                      Text(
-                        'Signup',
-                        style: TextStyle(
-                          decoration: TextDecoration.underline,
-                          fontWeight: FontWeight.w500,
-                          color: kPrimaryColor,
-                          fontSize: 17,
-                        ),
-                      ),
-                    ],
-                  ),
-                )
+                
               ],
             ),
           ),
@@ -248,6 +247,4 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
       ),
     );
   }
-
-  
 }
