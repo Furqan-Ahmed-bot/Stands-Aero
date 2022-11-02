@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:http/http.dart' as http;
+import 'package:stande_aero/screens/Profile/editprofile.dart';
+import 'package:stande_aero/screens/Profile/profile.dart';
 import 'package:stande_aero/screens/payment/paymentrecieved.dart';
 import 'dart:developer';
 
@@ -22,8 +24,14 @@ String apiGlobal = "https://standsaero.jumppace.com";
 // String apiGlobal = "https://standsaeroapi.jumppace.com";
 
 class ApiService {
-  register(data) async {
+  register(context, data) async {
     final uri = Uri.parse('${apiGlobal}/api/user/registration');
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return spinkit;
+        });
     String jsonBody = json.encode(data);
     final headers = {'Content-Type': 'application/json'};
     http.Response response = await http.post(
@@ -43,34 +51,42 @@ class ApiService {
       final userController = Get.put(UserController());
       userController.addUser(
         UserModel(
-          id: res_data['data']['id'],
-          fullName: res_data['data']['full_name'],
-          phone: res_data['data']['phone'],
-          email: res_data['data']['email'],
-          propic: res_data['data']['propic'],
-          city: res_data['data']['city'],
-          country: res_data['data']['country'],
-          description: res_data['data']['description'],
+          id: res_data['data']['user']['id'],
+          fullName: res_data['data']['user']['full_name'],
+          phone: res_data['data']['user']['phone'],
+          email: res_data['data']['user']['email'],
+          propic: res_data['data']['user']['propic'],
+          city: res_data['data']['user']['city'],
+          country: res_data['data']['user']['country'],
+          description: res_data['data']['user']['description'],
         ),
       );
 
       globaltoken = res_data["data"]["token"];
       userid = res_data['data']['user']['id'].toString();
-
+      Navigator.pop(context);
       Get.to(() => MainScreen());
-    } else
+    } else {
       Get.snackbar(
         'Error',
         'Wrong Credentials',
         animationDuration: Duration(seconds: 2),
         snackPosition: SnackPosition.BOTTOM,
       );
+      Navigator.pop(context);
+    }
 
     return res_data;
   }
 
-  login(data) async {
+  login(context, data) async {
     final uri = Uri.parse('${apiGlobal}/api/user/login');
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return spinkit;
+        });
 
     print(uri);
     String jsonBody = json.encode(data);
@@ -105,14 +121,18 @@ class ApiService {
       // userid = res_data['data']['user']['id'].toString();
       print("USER MODEL" + userController.user.id.toString());
       print("nameee :  " + userController.user.propic.toString());
+
+      Navigator.pop(context);
       Get.to(() => MainScreen());
-    } else
+    } else {
       Get.snackbar(
         'Error',
         'Wrong Credentials',
         animationDuration: Duration(seconds: 2),
         snackPosition: SnackPosition.BOTTOM,
       );
+      Navigator.pop(context);
+    }
 
     return res_data;
   }
@@ -321,6 +341,16 @@ class ApiService {
           description: res_data['description'],
         ),
       );
+      Get.to(
+        Editprofile()
+      );
+      Get.snackbar(
+        'Success',
+        'Profile updated successfully',
+        animationDuration: Duration(seconds: 2),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      Navigator.pop(context);
     }
 
     return res_data;
@@ -410,11 +440,16 @@ class ApiService {
     return res_data;
   }
 
-  logout() async {
+  logout(context) async {
     final uri = Uri.parse('${apiGlobal}/api/user/logout');
 
     print(uri);
-
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return spinkit;
+        });
     final headers = {'Authorization': 'Bearer ${globaltoken}'};
 
     http.Response response = await http.get(
@@ -480,9 +515,9 @@ class ApiService {
 
   getQuoteRequest(context, sendData) async {
     var jsonBody = jsonEncode(sendData);
-    
+
     // log("jsonBody['product_id']" + jsonBody.toString());
-    var getId= sendData['product_id'];
+    var getId = sendData['product_id'];
     // log("received id "+ getId.toString());
     final uriget = Uri.parse('${apiGlobal}/api/user/getaquote/${getId}');
 
@@ -518,5 +553,4 @@ class ApiService {
 
     return res_data;
   }
-
 }

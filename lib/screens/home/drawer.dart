@@ -58,8 +58,10 @@ class _NavDrawerState extends State<NavDrawer> {
                           Image.network(
                             userController.user.propic.toString(),
                             width: 80,
-                          ) :
-                          Image.asset("assets/slicing/1567655174profile.jpg")
+                          ) :                        
+                          Image.asset("assets/slicing/1567655174profile.jpg",
+                          width:80,height:80
+                          )
                           ,
                           SizedBox(
                             width: 10,
@@ -68,7 +70,7 @@ class _NavDrawerState extends State<NavDrawer> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                userController.user.fullName.toString(),
+                                userController.user.fullName !=null ? userController.user.fullName.toString() : 'No Name',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
@@ -472,7 +474,7 @@ class _NavDrawerState extends State<NavDrawer> {
               GestureDetector(
                 behavior: HitTestBehavior.translucent,
                 onTap: () {
-                  ApiService().logout();
+                  ApiService().logout(context);
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(left: 13, right: 13),
