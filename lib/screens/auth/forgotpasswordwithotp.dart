@@ -14,7 +14,12 @@ import 'package:stande_aero/screens/payment/awaiting.dart';
 import 'package:http/http.dart' as http;
 
 class ForgotPasswordScreen extends StatefulWidget {
-  const ForgotPasswordScreen({Key? key}) : super(key: key);
+  final userId;
+  final email;
+  final otp;
+  const ForgotPasswordScreen(
+      {Key? key, required this.userId, required this.email, required this.otp})
+      : super(key: key);
 
   @override
   State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
@@ -23,9 +28,11 @@ class ForgotPasswordScreen extends StatefulWidget {
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _passwordVisible = false;
+  bool _passwordVisible1 = false;
 
-  TextEditingController email = TextEditingController();
+  TextEditingController otp = TextEditingController();
   TextEditingController password = TextEditingController();
+  TextEditingController confirmpassword = TextEditingController();
 
   var user = UserModel();
   @override
@@ -70,7 +77,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 Container(
                   width: MediaQuery.of(context).size.width * 0.9,
                   child: TextFormField(
-                    controller: email,
+                    controller: otp,
                     decoration: new InputDecoration(
                       hintText: 'Enter OTP',
                       border: OutlineInputBorder(
@@ -80,15 +87,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           )),
                       hintStyle: TextStyle(),
                       contentPadding: EdgeInsets.only(top: 16, left: 16),
-                      
                       fillColor: Colors.white,
                       filled: true,
                     ),
                     validator: (text) {
-                      if (text == null ||
-                          text.isEmpty ||
-                          text.length < 5 ||
-                          !text.contains("@")) {
+                      if (text == null || text.isEmpty) {
                         return 'Enter Valid Email !';
                       }
                       return null;
@@ -152,10 +155,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 Container(
                   width: MediaQuery.of(context).size.width * 0.9,
                   child: TextFormField(
-                    controller: password,
-                    obscureText: !_passwordVisible,
+                    controller: confirmpassword,
+                    obscureText: !_passwordVisible1,
                     decoration: new InputDecoration(
-                      hintText: 'Password',
+                      hintText: 'Confirm Password',
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(7.0),
                           borderSide: BorderSide(
@@ -166,7 +169,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       suffixIcon: IconButton(
                         icon: Icon(
                           // Based on passwordVisible state choose the icon
-                          _passwordVisible
+                          _passwordVisible1
                               ? Icons.visibility
                               : Icons.visibility_off,
                           color: Colors.black,
@@ -174,7 +177,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         onPressed: () {
                           // Update the state i.e. toogle the state of passwordVisible variable
                           setState(() {
-                            _passwordVisible = !_passwordVisible;
+                            _passwordVisible1 = !_passwordVisible1;
                           });
                         },
                       ),
@@ -201,17 +204,26 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   height: res_height * 0.01,
                 ),
                 GestureDetector(
-                  onTap: () {
-                    print("login");
-                    var sendData = {
-                      "email": email.text,
-                      "password": password.text,
-                      "device_token": "123654"
-                    };
+                  onTap: () async {
+                    if (password.text == confirmpassword.text) {
+                      var sendData = {
+                        "new_password": password.text,
+                        "confirm_password": confirmpassword.text,
+                        "reset_token": otp.text,
+                        "user_id": widget.userId
+                      };
+                    await  ApiService().setNewForgotPassword(context, sendData);
+                    } else {
+                      Get.back();
 
-                    if (_formKey.currentState!.validate()) {
-                      ApiService().login(context, sendData);
+                      Get.snackbar(
+                        'Error',
+                        "Password Not Matched",
+                        snackPosition: SnackPosition.BOTTOM,
+                        backgroundColor: Colors.white,
+                      );
                     }
+
                     // Get.to(() => MainScreen());
                   },
                   child: Container(
@@ -235,11 +247,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 ),
                 SizedBox(
                   height: res_height * 0.035,
-                ),                
+                ),
                 SizedBox(
                   height: res_height * 0.13,
                 ),
-                
               ],
             ),
           ),

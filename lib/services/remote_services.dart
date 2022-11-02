@@ -6,6 +6,7 @@ import 'package:http_parser/http_parser.dart';
 import 'package:http/http.dart' as http;
 import 'package:stande_aero/screens/Profile/editprofile.dart';
 import 'package:stande_aero/screens/Profile/profile.dart';
+import 'package:stande_aero/screens/auth/emaillogin.dart';
 import 'package:stande_aero/screens/payment/paymentrecieved.dart';
 import 'dart:developer';
 
@@ -16,6 +17,7 @@ import '../helper/global.dart';
 import '../helper/loader.dart';
 import '../helper/model.dart';
 import '../screens/List Quotes/quoteRecieved.dart';
+import '../screens/auth/forgotpasswordwithotp.dart';
 import '../screens/auth/mainlogin.dart';
 import '../screens/mainhome.dart';
 
@@ -341,9 +343,7 @@ class ApiService {
           description: res_data['description'],
         ),
       );
-      Get.to(
-        Editprofile()
-      );
+      Get.to(Editprofile());
       Get.snackbar(
         'Success',
         'Profile updated successfully',
@@ -552,5 +552,97 @@ class ApiService {
     }
 
     return res_data;
+  }
+
+  setNewPassword(context, data) async {
+    print(data);
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return spinkit;
+        });
+
+    //print('${apiGlobal}/auth/register');
+    final uri = Uri.parse('${apiGlobal}/api/user/forgot');
+    final headers = {'Content-Type': 'application/json'};  
+    String jsonBody = json.encode(data);
+
+    http.Response response = await http.post(
+      uri,
+      headers: headers,
+      body: jsonBody,
+    );
+    //print(response.statusCode);
+
+    var res_data = json.decode(response.body.toString());
+    print("email " + res_data.toString());
+    if (res_data['status'] == true) {
+      Get.snackbar(
+        'Success',
+        "Check Email for OTP Code",
+        snackPosition: SnackPosition.TOP,
+      );
+
+      Get.to(() => ForgotPasswordScreen(
+            userId: res_data['data']['user_id'],
+            email: data["email"],
+            otp: res_data['data']['reset_token'],
+          ));
+    } else  {
+      Get.back();
+
+      Get.snackbar(
+        'Error',
+        "Invalid Email Address",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.white,
+      );
+    }
+  }
+
+    setNewForgotPassword(context, data) async {
+    print(data);
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return spinkit;
+        });
+
+    //print('${apiGlobal}/auth/register');
+    final uri = Uri.parse('${apiGlobal}/api/user/forgot/submit');
+    final headers = {'Content-Type': 'application/json'};  
+    String jsonBody = json.encode(data);
+
+    http.Response response = await http.post(
+      uri,
+      headers: headers,
+      body: jsonBody,
+    );
+    //print(response.statusCode);
+
+    var res_data = json.decode(response.body.toString());
+    print("email " + res_data.toString());
+    if (res_data['status'] == true) {
+      Get.snackbar(
+        'Success',
+        "Password Changed Successfully",
+        snackPosition: SnackPosition.TOP,
+      );
+
+      Get.to(() => EmailLoginScreen(
+        
+          ));
+    } else  {
+      Get.back();
+
+      Get.snackbar(
+        'Error',
+        "Invalid Email Address",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.white,
+      );
+    }
   }
 }
