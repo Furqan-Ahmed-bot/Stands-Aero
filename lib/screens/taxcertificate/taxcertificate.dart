@@ -1,5 +1,8 @@
+import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -7,17 +10,21 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:stande_aero/screens/mainhome.dart';
 import 'package:stande_aero/services/remote_services.dart';
+import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:path_provider/path_provider.dart';
+
+import '../../helper/loader.dart';
 
 class TexCertificateScreen extends StatefulWidget {
   const TexCertificateScreen({Key? key}) : super(key: key);
 
   @override
   State<TexCertificateScreen> createState() => _TexCertificateScreenState();
-  
 }
 
 class _TexCertificateScreenState extends State<TexCertificateScreen> {
   dynamic taxCertificates;
+  String remotePDFpath = "";
   @override
   void initState() {
     Future.delayed(Duration.zero, () {
@@ -25,18 +32,46 @@ class _TexCertificateScreenState extends State<TexCertificateScreen> {
         taxCertificateList();
       });
     });
-    
+
     super.initState();
-  }
- 
-Future<void> taxCertificateList() async{
-      taxCertificates =await ApiService().TaxCertificates_list();
-      
-      log("taxCertificates"+taxCertificates['data'].toString());
 
-
+    createFileOfPdfUrl().then((f) {
+      setState(() {
+        remotePDFpath = f.path;
+      });
+    });
   }
 
+  Future<File> createFileOfPdfUrl() async {
+    Completer<File> completer = Completer();
+    print("Start download file from internet!");
+    try {
+      // "https://berlin2017.droidcon.cod.newthinking.net/sites/global.droidcon.cod.newthinking.net/files/media/documents/Flutter%20-%2060FPS%20UI%20of%20the%20future%20%20-%20DroidconDE%2017.pdf";
+      // final url = "https://pdfkit.org/docs/guide.pdf";
+      final url = "http://www.pdf995.com/samples/pdf.pdf";
+      final filename = url.substring(url.lastIndexOf("/") + 1);
+      var request = await HttpClient().getUrl(Uri.parse(url));
+      var response = await request.close();
+      var bytes = await consolidateHttpClientResponseBytes(response);
+      var dir = await getApplicationDocumentsDirectory();
+      print("Download files");
+      print("${dir.path}/$filename");
+      File file = File("${dir.path}/$filename");
+
+      await file.writeAsBytes(bytes, flush: true);
+      completer.complete(file);
+    } catch (e) {
+      throw Exception('Error parsing asset file!');
+    }
+
+    return completer.future;
+  }
+
+  Future<void> taxCertificateList() async {
+    taxCertificates = await ApiService().TaxCertificates_list();
+
+    log("taxCertificates" + taxCertificates['data'].toString());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,33 +123,52 @@ Future<void> taxCertificateList() async{
             ],
           ),
         ),
-        body: Container(
-          width: double.infinity,
-          child: Column(
-            children: [
-              SizedBox(
-                height: res_height * 0.02,
-              ),
-              NotBox("CF34-10 DAE", "Miami, Florida"),
-              SizedBox(
-                height: res_height * 0.01,
-              ),
-              NotBox("CF34-10 DAE", "Miami, Florida"),
-              SizedBox(
-                height: res_height * 0.01,
-              ),
-              NotBox("CF34-10 DAE", "Miami, Florida"),
-              SizedBox(
-                height: res_height * 0.01,
-              ),
-            ],
-          ),
+        body: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: FutureBuilder<void>(
+              future: taxCertificateList(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  log("taxCertificates['data'][0].length" + taxCertificates['data'][0].length.toString());
+                  return Container(
+                    width: double.infinity,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          SingleChildScrollView(
+                            child: ListView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                scrollDirection: Axis.vertical,
+                                itemCount: taxCertificates['data'].length,
+                                itemBuilder: (Context, snapshot) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(bottom: 8.0),
+                                    child: NotBox(
+                                        taxCertificates['data'][snapshot]['name']
+                                            .toString(),
+                                        taxCertificates['data'][snapshot]['location']
+                                            .toString(),
+                                        taxCertificates['data'][snapshot]['id'],
+                                        taxCertificates['data'][snapshot]
+                                            ['cstm_tax_certificate']),
+                                  );
+                                }),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                } else{
+                  return spinkit;
+                }
+              }),
         ),
       ),
     );
   }
 
-  Widget NotBox(MODEL, location) {
+  Widget NotBox(MODEL, location, id, cstm_tax_certificate) {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
 
@@ -157,7 +211,7 @@ Future<void> taxCertificateList() async{
                   Container(
                     width: res_width * 0.35,
                     child: Text(
-                      "Lorem ipsum dolor sit amet, consecteturadipiscing elit.",
+                      "$cstm_tax_certificate",
                       style: TextStyle(fontSize: 10),
                     ),
                   ),
@@ -166,18 +220,138 @@ Future<void> taxCertificateList() async{
               // SizedBox(
               //   width: res_width * 0.05,
               // ),
-              Container(
-                  width: res_width * 0.35,
-                  height: res_height * 0.17,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(7))),
-                  child: Image.asset(
-                    "assets/slicing/Untitled-68.png",
-                    fit: BoxFit.cover,
-                  ))
+              GestureDetector(
+                onTap: () async {
+                  var res_data = await ApiService().previewPDF(context, id);
+                  if (remotePDFpath.isNotEmpty) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PDFScreen(path: remotePDFpath),
+                        ),
+                      );
+                    }
+                  
+                  log("pdf preview" + res_data.toString());
+
+                  
+                },
+                child: Container(
+                    width: res_width * 0.35,
+                    height: res_height * 0.17,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(7))),
+                    child: Image.asset(
+                      "assets/slicing/Untitled-68.png",
+                      fit: BoxFit.cover,
+                    )),
+              )
             ],
           ),
         ),
+      ),
+    );
+  }
+
+}
+
+class PDFScreen extends StatefulWidget {
+  final String? path;
+
+  PDFScreen({Key? key, this.path}) : super(key: key);
+
+  _PDFScreenState createState() => _PDFScreenState();
+}
+
+class _PDFScreenState extends State<PDFScreen> with WidgetsBindingObserver {
+  final Completer<PDFViewController> _controller =
+      Completer<PDFViewController>();
+  int? pages = 0;
+  int? currentPage = 0;
+  bool isReady = false;
+  String errorMessage = '';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Document"),
+        // actions: <Widget>[
+        //   IconButton(
+        //     icon: Icon(Icons.share),
+        //     onPressed: () {},
+        //   ),
+        // ],
+      ),
+      body: Stack(
+        children: <Widget>[
+          PDFView(
+            filePath: widget.path,
+            enableSwipe: true,
+            swipeHorizontal: true,
+            autoSpacing: false,
+            pageFling: true,
+            pageSnap: true,
+            defaultPage: currentPage!,
+            fitPolicy: FitPolicy.BOTH,
+            preventLinkNavigation:
+                false, // if set to true the link is handled in flutter
+            onRender: (_pages) {
+              setState(() {
+                pages = _pages;
+                isReady = true;
+              });
+            },
+            onError: (error) {
+              setState(() {
+                errorMessage = error.toString();
+              });
+              print(error.toString());
+            },
+            onPageError: (page, error) {
+              setState(() {
+                errorMessage = '$page: ${error.toString()}';
+              });
+              print('$page: ${error.toString()}');
+            },
+            onViewCreated: (PDFViewController pdfViewController) {
+              _controller.complete(pdfViewController);
+            },
+            onLinkHandler: (String? uri) {
+              print('goto uri: $uri');
+            },
+            onPageChanged: (int? page, int? total) {
+              print('page change: $page/$total');
+              setState(() {
+                currentPage = page;
+              });
+            },
+          ),
+          errorMessage.isEmpty
+              ? !isReady
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Container()
+              : Center(
+                  child: Text(errorMessage),
+                )
+        ],
+      ),
+      floatingActionButton: FutureBuilder<PDFViewController>(
+        future: _controller.future,
+        builder: (context, AsyncSnapshot<PDFViewController> snapshot) {
+          // if (snapshot.hasData) {
+          //   return FloatingActionButton.extended(
+          //     label: Text("Go to ${pages! ~/ 2}"),
+          //     onPressed: () async {
+          //       await snapshot.data!.setPage(pages! ~/ 2);
+          //     },
+          //   );
+          // }
+
+          return Container();
+        },
       ),
     );
   }
