@@ -43,6 +43,7 @@ class _bookingState extends State<booking> {
   String _rangeCount = '';
 
   final kToday = DateTime.now();
+
   var kFirstDay = DateTime(
       DateTime.now().year, DateTime.now().month - 3, DateTime.now().day);
   var kLastDay = DateTime(
@@ -63,13 +64,8 @@ class _bookingState extends State<booking> {
       }
     });
   }
-
-  @override
-  Widget build(BuildContext context) {
-    double res_width = MediaQuery.of(context).size.width;
-    double res_height = MediaQuery.of(context).size.height;
-
-    late int AVgetCurrentMonth;
+  int counter = 0;
+  late int AVgetCurrentMonth;
     late int AVgetCurrentYear;
     late int AVgetCurrentDay;
     var AVgetDate = '';
@@ -79,6 +75,15 @@ class _bookingState extends State<booking> {
     late int TogetCurrentDay;
     var TogetDate = '';
     var TogetcurrentDate = null;
+  @override
+  Widget build(BuildContext context) {
+
+    double res_width = MediaQuery.of(context).size.width;
+    double res_height = MediaQuery.of(context).size.height;
+
+if(counter ==0)
+{
+
     AVgetcurrentDate = DateTime.tryParse(responseData['availablity']['from']);
     AVgetCurrentYear = int.parse(DateFormat('y').format(AVgetcurrentDate));
     AVgetCurrentMonth = int.parse(DateFormat('MM').format(AVgetcurrentDate));
@@ -97,7 +102,23 @@ class _bookingState extends State<booking> {
     // log('responseData Day To' + TogetCurrentDay.toString());
     // log('responseData to' + responseData['availablity']['to']);
 
-    kFirstDay = DateTime(AVgetCurrentYear, AVgetCurrentMonth, AVgetCurrentDay);
+  
+
+    if (AVgetcurrentDate.compareTo(DateTime.now()) <= 0) {
+    kFirstDay = DateTime.now().add(Duration(
+      days: 1
+    ));
+    }
+    else
+    {
+       kFirstDay = DateTime(AVgetCurrentYear, AVgetCurrentMonth, AVgetCurrentDay);
+    }
+    counter++;
+}
+    
+
+  
+  
     kLastDay = DateTime(TogetCurrentYear, TogetCurrentMonth, TogetCurrentDay);
 
     log("kFirstDay now this" + kFirstDay.toString());
@@ -189,8 +210,10 @@ class _bookingState extends State<booking> {
                         // daysOfWeekVisible: false,
 
                         calendarStyle: CalendarStyle(
+                
                             todayDecoration: BoxDecoration(
                                 color: kPrimaryColor,
+                                  shape: BoxShape.rectangle,
                                 borderRadius: BorderRadius.circular(50)),
                             selectedDecoration:
                                 BoxDecoration(color: kPrimaryColor)),
@@ -214,7 +237,9 @@ class _bookingState extends State<booking> {
                                 size: 28,
                               ),
                             ),
-                            decoration: BoxDecoration(color: Colors.white)),
+                            decoration: BoxDecoration(
+                            
+                              color: Colors.white)),
                         firstDay: kFirstDay,
                         lastDay: kLastDay,
                         focusedDay: kFirstDay,
@@ -225,7 +250,7 @@ class _bookingState extends State<booking> {
                         onRangeSelected: (start, end, focusedDay) {
                           setState(() {
                             _selectedDay = null;
-                            _focusedDay = focusedDay;
+                            // _focusedDay = focusedDay;
                             _rangeStart = start;
                             _rangeEnd = end;
                             _rangeSelectionMode = RangeSelectionMode.toggledOn;
