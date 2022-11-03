@@ -646,23 +646,35 @@ class ApiService {
 
   placeOrder(context, sendData) async {
     // var jsonBody = jsonEncode(sendData);
-
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return spinkit;
+        });
     // log("place order jsonbody" + jsonBody.toString());
     var getId = sendData['quote_id'];
     log("place order get quote id ${getId}");
-
-    final uri = Uri.parse('${apiGlobal}/api/user/getaquote/${getId}');
+    var currentFileType = sendData['fileType'];
+    var attachmentType = '';
+    final uri = Uri.parse('${apiGlobal}/api/user/create-order/${getId}');
     var request = http.MultipartRequest('POST', uri);
 
     var headers = {'Authorization': "Bearer " + globaltoken};
 
     if (sendData['tax_file'] != null) {
       print(sendData['tax_file'].toString());
-      print(sendData['tax_file'].path.toString());
+      // print(sendData['tax_file'].path.toString());
+      // 'jpg', 'pdf', 'doc','docx','png'
+      if (currentFileType == 'jpg' || currentFileType == 'png') {
+        attachmentType = 'image';
+      } else {
+        attachmentType = 'application';
+      }
       var multipartFile = await http.MultipartFile.fromPath(
-          'tax_file', sendData['tax_file']!.path,
-          filename: sendData['tax_file'].path.split('/').last,
-          contentType: MediaType("image", "jpg"));
+          'tax_file', sendData['tax_file'],
+          filename: sendData['tax_file'].split('/').last,
+          contentType: MediaType(attachmentType, currentFileType));
       request.files.add(multipartFile);
     }
     String jsonBody = json.encode(request.fields);
@@ -670,5 +682,45 @@ class ApiService {
     request.headers.addAll(headers);
     log("request" + request.toString());
     var response = await request.send();
+    final res = await http.Response.fromStream(response);
+    log("res print" + res.body.toString());
+    var res_data = json.decode(res.body.toString());
+
+    if (res_data['status'] == true) {
+      Navigator.pop(context);
+      log("res print" + res.body.toString());
+    }
+  }
+
+  previewPDF(context, id) async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return spinkit;
+        });
+
+    final uri = Uri.parse('${apiGlobal}/api/user/tax-cert-show/${id}');
+
+    print(uri);
+    final headers = {
+      'Authorization': 'Bearer ${globaltoken}',
+    };
+    http.Response response = await http.get(
+      uri,
+      headers: headers,
+      // body: jsonBody,
+    );
+
+    print("response.body" + response.body);
+    // var res_data = json.decode(response.body);
+    // print(res_data);
+    // if (res_data["status"] == true) {
+    // } else{
+      
+    // }
+      
+    Navigator.pop(context);
+    return  response.body;
   }
 }
