@@ -12,8 +12,9 @@ import 'package:stande_aero/screens/mainhome.dart';
 import 'package:stande_aero/services/remote_services.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:path_provider/path_provider.dart';
-
+import 'package:permission_handler/permission_handler.dart';
 import '../../helper/loader.dart';
+
 
 class TexCertificateScreen extends StatefulWidget {
   const TexCertificateScreen({Key? key}) : super(key: key);
@@ -24,7 +25,12 @@ class TexCertificateScreen extends StatefulWidget {
 
 class _TexCertificateScreenState extends State<TexCertificateScreen> {
   dynamic taxCertificates;
+  dynamic taxCertificatesPDF;
   String remotePDFpath = "";
+  var url;
+  bool _isLoading = true;
+  
+
   @override
   void initState() {
     Future.delayed(Duration.zero, () {
@@ -34,7 +40,6 @@ class _TexCertificateScreenState extends State<TexCertificateScreen> {
     });
 
     super.initState();
-
     createFileOfPdfUrl().then((f) {
       setState(() {
         remotePDFpath = f.path;
@@ -69,6 +74,15 @@ class _TexCertificateScreenState extends State<TexCertificateScreen> {
 
   Future<void> taxCertificateList() async {
     taxCertificates = await ApiService().TaxCertificates_list();
+
+    log("taxCertificates" + taxCertificates['data'].toString());
+    taxCertificateListPDF();
+  }
+
+  Future<void> taxCertificateListPDF() async {
+    var getLength = taxCertificates['data'][0];
+    log('getLength' + getLength.toString());
+    // taxCertificatesPDF = await ApiService().TaxCertificates_listSyncPDF(context,taxCertificates['data']['id']);
 
     log("taxCertificates" + taxCertificates['data'].toString());
   }
@@ -129,7 +143,8 @@ class _TexCertificateScreenState extends State<TexCertificateScreen> {
               future: taxCertificateList(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
-                  log("taxCertificates['data'][0].length" + taxCertificates['data'][0].length.toString());
+                  log("taxCertificates['data'][0].length" +
+                      taxCertificates['data'][0].length.toString());
                   return Container(
                     width: double.infinity,
                     child: SingleChildScrollView(
@@ -145,9 +160,11 @@ class _TexCertificateScreenState extends State<TexCertificateScreen> {
                                   return Padding(
                                     padding: const EdgeInsets.only(bottom: 8.0),
                                     child: NotBox(
-                                        taxCertificates['data'][snapshot]['name']
+                                        taxCertificates['data'][snapshot]
+                                                ['name']
                                             .toString(),
-                                        taxCertificates['data'][snapshot]['location']
+                                        taxCertificates['data'][snapshot]
+                                                ['location']
                                             .toString(),
                                         taxCertificates['data'][snapshot]['id'],
                                         taxCertificates['data'][snapshot]
@@ -159,7 +176,7 @@ class _TexCertificateScreenState extends State<TexCertificateScreen> {
                       ),
                     ),
                   );
-                } else{
+                } else {
                   return spinkit;
                 }
               }),
@@ -223,18 +240,9 @@ class _TexCertificateScreenState extends State<TexCertificateScreen> {
               GestureDetector(
                 onTap: () async {
                   var res_data = await ApiService().previewPDF(context, id);
-                  if (remotePDFpath.isNotEmpty) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PDFScreen(path: remotePDFpath),
-                        ),
-                      );
-                    }
-                  
-                  log("pdf preview" + res_data.toString());
-
-                  
+                  // remotePDFpath= res_data['data']['path'].toString();
+                  log("pdf preview" + res_data['data']['path'].toString());
+                  url = res_data['data']['path'];
                 },
                 child: Container(
                     width: res_width * 0.35,
@@ -252,7 +260,6 @@ class _TexCertificateScreenState extends State<TexCertificateScreen> {
       ),
     );
   }
-
 }
 
 class PDFScreen extends StatefulWidget {

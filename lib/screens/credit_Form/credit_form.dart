@@ -18,6 +18,7 @@ class credit_form extends StatefulWidget {
 }
 
 class _credit_formState extends State<credit_form> {
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController company_name = TextEditingController();
   TextEditingController company_address = TextEditingController();
   TextEditingController city = TextEditingController();

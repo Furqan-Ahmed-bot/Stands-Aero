@@ -14,12 +14,14 @@ import 'package:email_validator/email_validator.dart';
 
 class kyc_form extends StatefulWidget {
   const kyc_form({Key? key}) : super(key: key);
+  
 
   @override
   State<kyc_form> createState() => _kyc_formState();
 }
 
 class _kyc_formState extends State<kyc_form> {
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController client_id = TextEditingController();
   TextEditingController company_name = TextEditingController();
   TextEditingController company_type = TextEditingController();
@@ -51,7 +53,7 @@ class _kyc_formState extends State<kyc_form> {
     double res_height = MediaQuery.of(context).size.height;
     log("requestFormdatafromQuote form Data" +
         requestFormdatafromQuote.toString());
-
+    
     FocusNode myFocusNode = new FocusNode();
     return Scaffold(
       appBar: AppBar(
@@ -102,410 +104,642 @@ class _kyc_formState extends State<kyc_form> {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: res_width * 0.04),
             child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  kyc_main_text(
-                      text:
-                          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,"),
-                  kyc_main_text(
-                      text:
-                          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,"),
-                  SizedBox(
-                    height: res_height * 0.01,
-                  ),
-                  Text(
-                    'Company information',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
+              child: Form(
+                key: formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    kyc_main_text(
+                        text:
+                            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,"),
+                    kyc_main_text(
+                        text:
+                            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,"),
+                    SizedBox(
+                      height: res_height * 0.01,
                     ),
-                  ),
-                  SizedBox(
-                    height: res_height * 0.01,
-                  ),
-                  // Text(
-                  //   'Required name of company(the "company")',
-                  //   style: TextStyle(
-                  //     color: Colors.black,
-                  //     fontSize: 12,
-                  //   ),
-                  // ),
-                  textfiel_kyc(
-                      controller: company_name,
-                      hed: 'Required name of company(the "company")',
-                      res_width: res_width),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  // Text(
-                  //   'Type of company (i.e corporation, partnership, LLC,etc )',
-                  //   style: TextStyle(
-                  //     color: Colors.black,
-                  //     fontSize: 12,
-                  //   ),
-                  // ),
-                  textfiel_kyc(
-                      controller: company_type,
-                      hed:
-                          'Type of company (i.e corporation, partnership, LLC,etc )',
-                      res_width: res_width),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  Text(
-                    'State of Company Formation. Country of company Formation (if other U.S.)',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
-                  textfiel_kyc(
-                      controller: company_state_country, res_width: res_width),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  // Text(
-                  //   'Company Address:',
-                  //   style: TextStyle(
-                  //     color: Colors.black,
-                  //     fontSize: 12,
-                  //   ),
-                  // ),
-                  textfiel_kyc(
-                    controller: company_address,
-                    hed: 'Company Address:',
-                    res_width: res_width,
-                    maxLines: 4,
-                  ),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  // Text(
-                  //   'Phone Number:',
-                  //   style: TextStyle(
-                  //     color: Colors.black,
-                  //     fontSize: 12,
-                  //   ),
-                  // ),
-                  Container(
-                    width: res_width * 0.925,
-                    decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.all(Radius.circular(7))),
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          top: 8, bottom: 0, right: 8, left: 8),
-                      child: TextFormField(
-                        controller: number,
-                        focusNode: myFocusNode,
-                        keyboardType: TextInputType.number,
-                        inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly
-                        ],
-                        decoration: InputDecoration(
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: 10),
-                            labelText: 'Phone Number:',
-                            labelStyle: TextStyle(
-                                color: myFocusNode.hasFocus
-                                    ? Colors.white
-                                    : Colors.black)),
+                    Text(
+                      'Company information',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  // Text(
-                  //   'Fax Number:',
-                  //   style: TextStyle(
-                  //     color: Colors.black,
-                  //     fontSize: 12,
-                  //   ),
-                  // ),
-                  Container(
-                    width: res_width * 0.925,
-                    decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.all(Radius.circular(7))),
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          top: 8, bottom: 0, right: 8, left: 8),
-                      child: TextFormField(
-                        controller: fax,
-                        keyboardType: TextInputType.number,
-                        inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly
-                        ],
-                        decoration: InputDecoration(
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: 10),
-                            labelText: 'Fax Number:',
-                            labelStyle: TextStyle(
-                                color: myFocusNode.hasFocus
-                                    ? Colors.white
-                                    : Colors.black)),
-                      ),
+                    SizedBox(
+                      height: res_height * 0.01,
                     ),
-                  ),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  // Text(
-                  //   'Contact Person:',
-                  //   style: TextStyle(
-                  //     color: Colors.black,
-                  //     fontSize: 12,
-                  //   ),
-                  // ),
-                  textfiel_kyc(
-                      controller: contact_person,
-                      hed: 'Contact Person:',
-                      res_width: res_width),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  // Text(
-                  //   'Email:',
-                  //   style: TextStyle(
-                  //     color: Colors.black,
-                  //     fontSize: 12,
-                  //   ),
-                  // ),
-                  Container(
-                    width: res_width * 0.925,
-                    decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.all(Radius.circular(7))),
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          top: 8, bottom: 0, right: 8, left: 8),
-                      child: TextFormField(
-                        controller: email,
-                        keyboardType: TextInputType.number,
-                        validator: (text) =>
-                            EmailValidator.validate(text.toString())
-                                ? null
-                                : "Please enter a valid email",
-                        decoration: InputDecoration(
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: 10),
-                            labelText: 'Email:',
-                            labelStyle: TextStyle(
-                                color: myFocusNode.hasFocus
-                                    ? Colors.white
-                                    : Colors.black)),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  // Text(
-                  //   'Company Website:',
-                  //   style: TextStyle(
-                  //     color: Colors.black,
-                  //     fontSize: 12,
-                  //   ),
-                  // ),
-                  textfiel_kyc(
-                      controller: company_website,
-                      hed: 'Company Website:',
-                      res_width: res_width),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  Text(
-                    'List Of Officer, Direction And/or Principles Of The Company',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        height: 50,
-                        width: res_width * 0.925 / 2.1,
-                        decoration: BoxDecoration(color: Colors.grey),
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 8.0),
-                          child: TextFormField(
-                            controller: company_additional_member_name1,
-                            decoration: InputDecoration(
-                                labelText: "Name",
-                                labelStyle: TextStyle(
-                                    color: myFocusNode.hasFocus
-                                        ? Colors.white
-                                        : Colors.black)),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        height: 50,
-                        width: res_width * 0.925 / 2.1,
-                        decoration: BoxDecoration(color: Colors.grey),
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 8.0),
-                          child: TextFormField(
-                            controller: company_additional_member_title1,
-                            decoration: InputDecoration(
-                                labelText: "Title",
-                                labelStyle: TextStyle(
-                                    color: myFocusNode.hasFocus
-                                        ? Colors.white
-                                        : Colors.black)),
-                            keyboardType: TextInputType.datetime,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        height: 50,
-                        width: res_width * 0.925 / 2.1,
-                        decoration: BoxDecoration(color: Colors.grey),
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 8.0),
-                          child: TextFormField(
-                            controller: company_additional_member_name2,
-                            decoration: InputDecoration(
-                                labelText: "Name",
-                                labelStyle: TextStyle(
-                                    color: myFocusNode.hasFocus
-                                        ? Colors.white
-                                        : Colors.black)),
-                            keyboardType: TextInputType.datetime,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        height: 50,
-                        width: res_width * 0.925 / 2.1,
-                        decoration: BoxDecoration(color: Colors.grey),
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 8.0),
-                          child: TextField(
-                            controller: company_additional_member_title2,
-                            decoration: InputDecoration(
-                                labelText: "Title",
-                                labelStyle: TextStyle(
-                                    color: myFocusNode.hasFocus
-                                        ? Colors.white
-                                        : Colors.black)),
-                            keyboardType: TextInputType.datetime,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  // SizedBox(
-                  //   height: res_height * 0.02,
-                  // ),
-                  // GestureDetector(
-                  //   child: Container(
-                  //     width: res_width * 0.925,
-                  //     decoration: BoxDecoration(
-                  //         color: Color(0xffaf8a39),
-                  //         borderRadius: BorderRadius.all(Radius.circular(7))),
-                  //     child: Padding(
-                  //       padding: const EdgeInsets.all(13.0),
-                  //       child: Center(
-                  //         child: Text(
-                  //           'Add More',
-                  //           style: TextStyle(
-                  //               color: Colors.white,
-                  //               fontWeight: FontWeight.bold,
-                  //               fontSize: 17),
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ),
-                  //   onTap: () {
-                  //     setState(() {
-                  //       fieldCount++;
-                  //       list.add(buildField(fieldCount));
-                  //     });
-                  //   },
-                  // ),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  textfiel_kyc(
-                      controller: company_prmy_bsns,
-                      hed: "Busniess Activity And source of Funds",
-                      res_width: res_width),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  Text(
-                    "Service Fund To Be Paid",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 14,
-                    ),
-                  ),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  Text(
-                    'Approximate Lease Lenth (The minimum lease requirement is 1 day, we invoice in 30 day increaments but only charge for the actual days the stand is out on lease. The lease begins the day the stand leaves our facilty and ends the day it is returned to our facility complete, in the same condition that it left).',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 10,
-                    ),
-                  ),
-                  textfiel_kyc(controller: fund_src, res_width: res_width),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  Text(
-                    'If Your busnies is international, list of countries in which you do busniess and the address in each country',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
-                  textfiel_kyc(
-                      controller: company_countrylist, res_width: res_width),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      KYC();
-                    },
-                    child: Container(
+                    // Text(
+                    //   'Required name of company(the "company")',
+                    //   style: TextStyle(
+                    //     color: Colors.black,
+                    //     fontSize: 12,
+                    //   ),
+                    // ),
+                    // textfiel_kyc(
+                    //     controller: company_name,
+                    //     hed: 'Required name of company(the "company")',
+                    //     res_width: res_width),
+                    Container(
                       width: res_width * 0.925,
                       decoration: BoxDecoration(
-                          color: Color(0xffaf8a39),
+                          color: Colors.grey,
                           borderRadius: BorderRadius.all(Radius.circular(7))),
                       child: Padding(
-                        padding: const EdgeInsets.all(13.0),
-                        child: Center(
-                          child: Text(
-                            'Continue',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 17),
+                        padding: const EdgeInsets.only(
+                            top: 8, bottom: 0, right: 8, left: 8),
+                        child: TextFormField(
+                          controller: company_name,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 10),
+                              labelText:
+                                  'Required name of company(the "company")',
+                              labelStyle: TextStyle(
+                                  color: myFocusNode.hasFocus
+                                      ? Colors.white
+                                      : Colors.black)),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+                    // Text(
+                    //   'Type of company (i.e corporation, partnership, LLC,etc )',
+                    //   style: TextStyle(
+                    //     color: Colors.black,
+                    //     fontSize: 12,
+                    //   ),
+                    // ),
+
+                    Container(
+                      width: res_width * 0.925,
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(7))),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8, bottom: 0, right: 8, left: 8),
+                        child: TextFormField(
+                          controller: company_type,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 10),
+                              labelText:
+                                  'Type of company (i.e corporation, partnership, LLC,etc )',
+                              labelStyle: TextStyle(
+                                  color: myFocusNode.hasFocus
+                                      ? Colors.white
+                                      : Colors.black)),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+                    Text(
+                      'State of Company Formation. Country of company Formation (if other U.S.)',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 12,
+                      ),
+                    ),
+
+                    Container(
+                      width: res_width * 0.925,
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(7))),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8, bottom: 0, right: 8, left: 8),
+                        child: TextFormField(
+                          controller: company_state_country,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 10),
+                              labelStyle: TextStyle(
+                                  color: myFocusNode.hasFocus
+                                      ? Colors.white
+                                      : Colors.black)),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+                    // Text(
+                    //   'Company Address:',
+                    //   style: TextStyle(
+                    //     color: Colors.black,
+                    //     fontSize: 12,
+                    //   ),
+                    // ),
+                    // textfiel_kyc(
+                    //   controller: company_address,
+                    //   hed: 'Company Address:',
+                    //   res_width: res_width,
+                    //   maxLines: 4,
+
+                    // ),
+                    Container(
+                      width: res_width * 0.925,
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(7))),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8, bottom: 0, right: 8, left: 8),
+                        child: TextFormField(
+                          controller: company_address,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter company address';
+                            }
+                            return null;
+                          },
+                          maxLines: 4,
+                          decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 10),
+                              labelText: 'Company Address:',
+                              labelStyle: TextStyle(
+                                  color: myFocusNode.hasFocus
+                                      ? Colors.white
+                                      : Colors.black)),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+                    // Text(
+                    //   'Phone Number:',
+                    //   style: TextStyle(
+                    //     color: Colors.black,
+                    //     fontSize: 12,
+                    //   ),
+                    // ),
+                    Container(
+                      width: res_width * 0.925,
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(7))),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8, bottom: 0, right: 8, left: 8),
+                        child: TextFormField(
+                          controller: number,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter phone number';
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
+                          decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 10),
+                              labelText: 'Phone Number:',
+                              labelStyle: TextStyle(
+                                  color: myFocusNode.hasFocus
+                                      ? Colors.white
+                                      : Colors.black)),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+                    // Text(
+                    //   'Fax Number:',
+                    //   style: TextStyle(
+                    //     color: Colors.black,
+                    //     fontSize: 12,
+                    //   ),
+                    // ),
+                    Container(
+                      width: res_width * 0.925,
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(7))),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8, bottom: 0, right: 8, left: 8),
+                        child: TextFormField(
+                          controller: fax,
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
+                          decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 10),
+                              labelText: 'Fax Number:',
+                              labelStyle: TextStyle(
+                                  color: myFocusNode.hasFocus
+                                      ? Colors.white
+                                      : Colors.black)),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+                    // Text(
+                    //   'Contact Person:',
+                    //   style: TextStyle(
+                    //     color: Colors.black,
+                    //     fontSize: 12,
+                    //   ),
+                    // ),
+
+                    Container(
+                      width: res_width * 0.925,
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(7))),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8, bottom: 0, right: 8, left: 8),
+                        child: TextFormField(
+                          controller: contact_person,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter contact person';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 10),
+                              labelText: 'Contact Person:',
+                              labelStyle: TextStyle(
+                                  color: myFocusNode.hasFocus
+                                      ? Colors.white
+                                      : Colors.black)),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+                    // Text(
+                    //   'Email:',
+                    //   style: TextStyle(
+                    //     color: Colors.black,
+                    //     fontSize: 12,
+                    //   ),
+                    // ),
+                    Container(
+                      width: res_width * 0.925,
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(7))),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8, bottom: 0, right: 8, left: 8),
+                        child: TextFormField(
+                          controller: email,
+                          keyboardType: TextInputType.number,
+                          validator: (text) =>
+                              EmailValidator.validate(text.toString())
+                                  ? null
+                                  : "Please enter a valid email",
+                          decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 10),
+                              labelText: 'Email:',
+                              labelStyle: TextStyle(
+                                  color: myFocusNode.hasFocus
+                                      ? Colors.white
+                                      : Colors.black)),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+                    // Text(
+                    //   'Company Website:',
+                    //   style: TextStyle(
+                    //     color: Colors.black,
+                    //     fontSize: 12,
+                    //   ),
+                    // ),
+                    Container(
+                      width: res_width * 0.925,
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(7))),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8, bottom: 0, right: 8, left: 8),
+                        child: TextFormField(
+                          controller: company_website,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 10),
+                              labelText: 'Company Website:',
+                              labelStyle: TextStyle(
+                                  color: myFocusNode.hasFocus
+                                      ? Colors.white
+                                      : Colors.black)),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+                    Text(
+                      'List Of Officer, Direction And/or Principles Of The Company',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 12,
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          height: 50,
+                          width: res_width * 0.925 / 2.1,
+                          decoration: BoxDecoration(color: Colors.grey),
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 8.0),
+                            child: TextFormField(
+                              controller: company_additional_member_name1,
+                              decoration: InputDecoration(
+                                  labelText: "Name",
+                                  labelStyle: TextStyle(
+                                      color: myFocusNode.hasFocus
+                                          ? Colors.white
+                                          : Colors.black)),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          height: 50,
+                          width: res_width * 0.925 / 2.1,
+                          decoration: BoxDecoration(color: Colors.grey),
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 8.0),
+                            child: TextFormField(
+                              controller: company_additional_member_title1,
+                              decoration: InputDecoration(
+                                  labelText: "Title",
+                                  labelStyle: TextStyle(
+                                      color: myFocusNode.hasFocus
+                                          ? Colors.white
+                                          : Colors.black)),
+                              keyboardType: TextInputType.datetime,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          height: 50,
+                          width: res_width * 0.925 / 2.1,
+                          decoration: BoxDecoration(color: Colors.grey),
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 8.0),
+                            child: TextFormField(
+                              controller: company_additional_member_name2,
+                              decoration: InputDecoration(
+                                  labelText: "Name",
+                                  labelStyle: TextStyle(
+                                      color: myFocusNode.hasFocus
+                                          ? Colors.white
+                                          : Colors.black)),
+                              keyboardType: TextInputType.datetime,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          height: 50,
+                          width: res_width * 0.925 / 2.1,
+                          decoration: BoxDecoration(color: Colors.grey),
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 8.0),
+                            child: TextField(
+                              controller: company_additional_member_title2,
+                              decoration: InputDecoration(
+                                  labelText: "Title",
+                                  labelStyle: TextStyle(
+                                      color: myFocusNode.hasFocus
+                                          ? Colors.white
+                                          : Colors.black)),
+                              keyboardType: TextInputType.datetime,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    // SizedBox(
+                    //   height: res_height * 0.02,
+                    // ),
+                    // GestureDetector(
+                    //   child: Container(
+                    //     width: res_width * 0.925,
+                    //     decoration: BoxDecoration(
+                    //         color: Color(0xffaf8a39),
+                    //         borderRadius: BorderRadius.all(Radius.circular(7))),
+                    //     child: Padding(
+                    //       padding: const EdgeInsets.all(13.0),
+                    //       child: Center(
+                    //         child: Text(
+                    //           'Add More',
+                    //           style: TextStyle(
+                    //               color: Colors.white,
+                    //               fontWeight: FontWeight.bold,
+                    //               fontSize: 17),
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ),
+                    //   onTap: () {
+                    //     setState(() {
+                    //       fieldCount++;
+                    //       list.add(buildField(fieldCount));
+                    //     });
+                    //   },
+                    // ),
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+                    Container(
+                      width: res_width * 0.925,
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(7))),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8, bottom: 0, right: 8, left: 8),
+                        child: TextFormField(
+                          controller: company_prmy_bsns,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
+                          focusNode: myFocusNode,
+                          decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 10),
+                              labelText:
+                                  "Busniess Activity And source of Funds",
+                              labelStyle: TextStyle(
+                                  color: myFocusNode.hasFocus
+                                      ? Colors.white
+                                      : Colors.black)),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+                    Text(
+                      "Service Fund To Be Paid",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                      ),
+                    ),
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+                    Text(
+                      'Approximate Lease Lenth (The minimum lease requirement is 1 day, we invoice in 30 day increaments but only charge for the actual days the stand is out on lease. The lease begins the day the stand leaves our facilty and ends the day it is returned to our facility complete, in the same condition that it left).',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 10,
+                      ),
+                    ),
+                    Container(
+                        width: res_width * 0.925,
+                        decoration: BoxDecoration(
+                            color: Colors.grey,
+                            borderRadius: BorderRadius.all(Radius.circular(7))),
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 8, bottom: 0, right: 8, left: 8),
+                          child: TextFormField(
+                            controller: fund_src,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter some text';
+                              }
+                              return null;
+                            },
+                            focusNode: myFocusNode,
+                            decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 10),
+                            ),
+                          ),
+                        )),
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+                    Text(
+                      'If Your busnies is international, list of countries in which you do busniess and the address in each country',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 12,
+                      ),
+                    ),
+
+                    Container(
+                        width: res_width * 0.925,
+                        decoration: BoxDecoration(
+                            color: Colors.grey,
+                            borderRadius: BorderRadius.all(Radius.circular(7))),
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 8, bottom: 0, right: 8, left: 8),
+                          child: TextFormField(
+                            controller: company_countrylist,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter some text';
+                              }
+                              return null;
+                            },
+                            focusNode: myFocusNode,
+                            decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 10),
+                            ),
+                          ),
+                        )),
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        if (formKey.currentState!.validate()) {
+                        KYC();
+                        }
+                      },
+                      child: Container(
+                        width: res_width * 0.925,
+                        decoration: BoxDecoration(
+                            color: Color(0xffaf8a39),
+                            borderRadius: BorderRadius.all(Radius.circular(7))),
+                        child: Padding(
+                          padding: const EdgeInsets.all(13.0),
+                          child: Center(
+                            child: Text(
+                              'Continue',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 17),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                ],
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -518,6 +752,7 @@ class _kyc_formState extends State<kyc_form> {
     final uri = Uri.parse('${apiGlobal}user/kyc-submit');
 
     print(uri);
+    if (client_id.text == "") {}
 
     var sendData = {
       'client_id': client_id.text,
@@ -597,33 +832,37 @@ class textfiel_kyc extends StatelessWidget {
   }) : super(key: key);
 
   final double res_width;
+  final formKey = GlobalKey<FormState>();
   FocusNode myFocusNode = new FocusNode();
 
   @override
   Widget build(BuildContext context) {
     // var controller;
-    return Container(
-      width: res_width * 0.925,
-      decoration: BoxDecoration(
-          color: Colors.grey,
-          borderRadius: BorderRadius.all(Radius.circular(7))),
-      child: Padding(
-        padding: const EdgeInsets.only(top: 8, bottom: 0, right: 8, left: 8),
-        child: TextFormField(
-          controller: controller,
-          validator: (text) {
-            if (text == null || text.isEmpty) {
-              return '${hed} is empty';
-            }
-            return null;
-          },
-          maxLines: maxLines,
-          focusNode: myFocusNode,
-          decoration: InputDecoration(
-              contentPadding: EdgeInsets.symmetric(horizontal: 10),
-              labelText: hed,
-              labelStyle: TextStyle(
-                  color: myFocusNode.hasFocus ? Colors.white : Colors.black)),
+    return Form(
+      key: formKey,
+      child: Container(
+        width: res_width * 0.925,
+        decoration: BoxDecoration(
+            color: Colors.grey,
+            borderRadius: BorderRadius.all(Radius.circular(7))),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 8, bottom: 0, right: 8, left: 8),
+          child: TextFormField(
+            controller: controller,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
+            maxLines: maxLines,
+            focusNode: myFocusNode,
+            decoration: InputDecoration(
+                contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                labelText: hed,
+                labelStyle: TextStyle(
+                    color: myFocusNode.hasFocus ? Colors.white : Colors.black)),
+          ),
         ),
       ),
     );

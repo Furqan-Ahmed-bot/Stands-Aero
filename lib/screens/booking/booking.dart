@@ -120,9 +120,13 @@ if(counter ==0)
   
   
     kLastDay = DateTime(TogetCurrentYear, TogetCurrentMonth, TogetCurrentDay);
+    var TodaysDateTIme = DateTime.now();
 
-    log("kFirstDay now this" + kFirstDay.toString());
-    log("kLastDay now this" + kLastDay.toString());
+    if (kFirstDay.compareTo(DateTime.now()) > 0) {
+      log("kFirstDay now this" + kFirstDay.toString());
+      log("kLastDay now this" + kLastDay.toString());
+      log("Datetime now this" + DateTime.now().toString());
+    }
 
     return Container(
         // future: productDetails(),
@@ -262,7 +266,7 @@ if(counter ==0)
                   onTap: () async {
                     log("_rangeStart" + _rangeStart.toString());
                     log("_rangeEnd" + _rangeEnd.toString());
-                    
+
                     _rangeStart != null && _rangeEnd != null
                         ? Get.to(stand_booking(
                             productId: responseData['id'],
