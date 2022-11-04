@@ -1,24 +1,13 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:stande_aero/services/remote_services.dart';
 import 'package:stande_aero/controller/ProductController.dart';
 import 'package:stande_aero/helper/ProductModel.dart';
 import 'package:stande_aero/helper/colors.dart';
-import 'package:stande_aero/helper/global.dart';
-import 'package:stande_aero/helper/model.dart';
-import 'package:stande_aero/screens/Profile/profile.dart';
 import 'package:stande_aero/screens/booking/booking.dart';
-import 'package:stande_aero/screens/credit_Form/credit_form.dart';
 import 'package:stande_aero/screens/home/drawer.dart';
-import 'package:stande_aero/screens/kyc_Form/kyc_form.dart';
-import 'package:stande_aero/screens/lease%20Form/lease_form.dart';
-import 'package:stande_aero/screens/lease%20Form/lease_form2.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 // import 'package:stande_aero/screens/home/Profile/editprofile.dart';
 // import 'package:stande_aero/screens/home/Profile/profile.dart';
 
@@ -27,25 +16,28 @@ class HomeScreen extends StatefulWidget {
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
-}
+}TextEditingController searchController=  TextEditingController() ;
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   late AnimationController animation;
   late Animation<double> _fadeInFadeOut;
   final productController = Get.put(ProductController());
   dynamic getPorductResponse;
+  String searchQuery = "";
+  bool dynamicContent = true;
+  List<product> filteredProducts = [];
+   final formKey = GlobalKey<FormState>();
+final GlobalKey<ScaffoldState> _key = GlobalKey();
+
+   
+
   @override
-  void initState() {
+  void initState() { 
     super.initState();
+
     Future.delayed(Duration.zero, () {
-      setState(() {
-        getProducts();
-      });
-      
-    }
-   
-    );
-   
+      getProducts();
+    });
 
     // print("getPorductResponse"+getPorductResponse['data'].toString());
     animation = AnimationController(
@@ -64,38 +56,55 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     animation.forward();
   }
 
-
-
-Future<void> getProducts() async{
-  getPorductResponse=await ApiService().homeApi();
-  // log("getPorductResponse"+getPorductResponse.toString());
-  getPorductResponse['data'].forEach((element) => {
-        // log("Element"+ element.toString());
-        setState(() {
-           productController.addProduct(
+  Future<void> getProducts() async {
+    productController.productList.clear();
+    getPorductResponse = await ApiService().homeApi();
+    print("getPorductResponse" + getPorductResponse.toString());
+    getPorductResponse['data'].forEach((element) => {
+          // log("Element"+ element.toString());
+          setState(() {
+            productController.addProduct(
               product(
-                id: element['id'],
-                name: element['name'],
-                sku: element['sku'],
-                thumbnail: element['thumbnail'],
-                location: element['location'].toString(),
-                desc: element['desc'].toString(),
-                createdAt: element['created_at'],
-                updatedAt: element['updated_at']
-              ),
+                  id: element['id'],
+                  name: element['name'],
+                  sku: element['sku'],
+                  thumbnail: element['thumbnail'],
+                  location: element['location'].toString(),
+                  desc: element['desc'].toString(),
+                  createdAt: element['created_at'],
+                  updatedAt: element['updated_at']),
             );
           })
         });
-           
+    searchProduct(searchQuery);
+  }
 
+   Future<List<product>> searchProduct(String query) async {
+    print("Called Search " + query);
+    setState(() {
+        // filteredProducts = [];
+    // setState(() {
+    filteredProducts = productController.productList
+        .where((element) => element.name.contains(query))
+        .toList();
+    });
+    print(filteredProducts.length.toString());
+  return filteredProducts;
+    //  print(filteredProducts[0].name.toString());
+    // });
+  }
+  bool klr=false;
 
-}
   @override
   Widget build(BuildContext context) {
+
+
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
-    final GlobalKey<ScaffoldState> _key = GlobalKey();
     
+    // List<product> filteredProducts = productController.productList.where((element) => element.name.contains("")).toList();
+    // print(abc[0].name.toString());
+    // print("Search "+productController.productList.where((element) => element.name.contains("")).toList().toString());
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -153,6 +162,8 @@ Future<void> getProducts() async{
                   SizedBox(
                     height: res_height * 0.01,
                   ),
+
+              
                   Padding(
                     padding: const EdgeInsets.only(left: 13, right: 13),
                     child: Container(
@@ -161,6 +172,19 @@ Future<void> getProducts() async{
                           // border: Border.all(color: Colors.grey),
                           ),
                       child: TextField(
+                        controller: searchController,
+                        onChanged: (value) {
+                            searchProduct(value);
+                        },
+                 
+                        onEditingComplete: () {
+                          searchProduct(searchController.text);
+                        },
+                        onSubmitted:(value) {
+                           searchProduct(value);
+                           FocusManager.instance.primaryFocus?.unfocus();
+
+                        },
                         decoration: new InputDecoration(
                           border: OutlineInputBorder(
                               borderSide: const BorderSide(
@@ -194,9 +218,10 @@ Future<void> getProducts() async{
                         children: [
                           GestureDetector(
                             onTap: () {
-                              // setState(() {
-                              //   catvalue;
-                              // });
+                              setState(() {
+                                // catvalue;
+                                klr=true;
+                              });
                               filterpopup([
                                 'Engine Stands 1',
                                 'Engine Stands 2',
@@ -207,7 +232,7 @@ Future<void> getProducts() async{
                             child: Container(
                               width: MediaQuery.of(context).size.width * 0.35,
                               decoration: BoxDecoration(
-                                  color: kPrimaryColor,
+                                  color: klr==true? kPrimaryColor:Color(0xffa1a1a1),
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5))),
                               child: Padding(
@@ -223,11 +248,11 @@ Future<void> getProducts() async{
                                             : 'Engine Stands',
                                         style: TextStyle(
                                           fontSize: 13,
-                                          color: Colors.white,
+                                          color:klr==true?Colors.white: Colors.black,
                                         )),
                                     Icon(
                                       Icons.arrow_drop_down,
-                                      color: Colors.white,
+                                     color:klr==true?Colors.white: Colors.black,
                                     )
                                   ],
                                 ),
@@ -239,6 +264,10 @@ Future<void> getProducts() async{
                           ),
                           GestureDetector(
                             onTap: () {
+                              setState(() {
+                                // catvalue;
+                                klr=false;
+                              });
                               // print();
                               filterpopup([
                                 'Manufacture 1',
@@ -250,7 +279,7 @@ Future<void> getProducts() async{
                             child: Container(
                               width: MediaQuery.of(context).size.width * 0.35,
                               decoration: BoxDecoration(
-                                  color: Color(0xffa1a1a1),
+                                   color: klr==false? kPrimaryColor:Color(0xffa1a1a1),
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5))),
                               child: Padding(
@@ -265,11 +294,11 @@ Future<void> getProducts() async{
                                             : 'Manufactures',
                                         style: TextStyle(
                                           fontSize: 13,
-                                          color: Colors.black,
+                                           color:klr==false?Colors.white: Colors.black,
                                         )),
                                     Icon(
                                       Icons.arrow_drop_down,
-                                      color: Colors.black,
+                                      color:klr==false?Colors.white: Colors.black,
                                     )
                                   ],
                                 ),
@@ -279,48 +308,48 @@ Future<void> getProducts() async{
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.015,
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              // print();
-                              filterpopup([
-                                'Manufacture 1',
-                                'Manufacture 2',
-                                'Manufacture 3',
-                                'Manufacture 4',
-                              ], "rad");
-                            },
-                            child: Container(
-                              width: MediaQuery.of(context).size.width * 0.35,
-                              decoration: BoxDecoration(
-                                  color: Color(0xffa1a1a1),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                        radvalue2 != null
-                                            ? radvalue2.toString()
-                                            : 'Bootstrao Kit',
-                                        style: TextStyle(
-                                          fontSize: 13,
-                                          color: Colors.black,
-                                        )),
-                                    Icon(
-                                      Icons.arrow_drop_down,
-                                      color: Colors.black,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.015,
-                          ),
+                          // GestureDetector(
+                          //   onTap: () {
+                          //     // print();
+                          //     filterpopup([
+                          //       'Manufacture 1',
+                          //       'Manufacture 2',
+                          //       'Manufacture 3',
+                          //       'Manufacture 4',
+                          //     ], "rad");
+                          //   },
+                          //   child: Container(
+                          //     width: MediaQuery.of(context).size.width * 0.35,
+                          //     decoration: BoxDecoration(
+                          //         color: Color(0xffa1a1a1),
+                          //         borderRadius:
+                          //             BorderRadius.all(Radius.circular(5))),
+                          //     child: Padding(
+                          //       padding: const EdgeInsets.all(10.0),
+                          //       child: Row(
+                          //         mainAxisAlignment:
+                          //             MainAxisAlignment.spaceBetween,
+                          //         children: [
+                          //           Text(
+                          //               radvalue2 != null
+                          //                   ? radvalue2.toString()
+                          //                   : 'Bootstrao Kit',
+                          //               style: TextStyle(
+                          //                 fontSize: 13,
+                          //                 color: Colors.black,
+                          //               )),
+                          //           Icon(
+                          //             Icons.arrow_drop_down,
+                          //             color: Colors.black,
+                          //           )
+                          //         ],
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
+                          // SizedBox(
+                          //   width: MediaQuery.of(context).size.width * 0.015,
+                          // ),
                         ],
                       ),
                     ),
@@ -356,29 +385,41 @@ Future<void> getProducts() async{
                   //     ),
                   //   ),
                   // ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 13),
-                    child: Container(
-                      height: Get.height * 0.35,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: productController.productList.length,
-                        itemBuilder: (context, i) {
-                          return Padding(
-                            padding: const EdgeInsets.only(
-                                top: 5, left: 5, right: 5, bottom: 5),
-                            child: StandsBox(
-                              context,
-                              productController.productList[i].thumbnail,
-                              productController.productList[i].name,
-                              productController.productList[i].location,
-                              productController.productList[i].desc,
-                              productController.productList[i].id,
+                  FutureBuilder<List<product>>(
+                    future: searchProduct(searchController.text),
+                    builder: (context, snapshot) {
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 13),
+                        child: Container(
+                          height: Get.height * 0.7,
+                          child: GridView.builder(
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              childAspectRatio: 0.6,
+                              crossAxisSpacing: 1,
+                              mainAxisSpacing: 5,
                             ),
-                          );
-                        },
-                      ),
-                    ),
+                            scrollDirection: Axis.vertical,
+                            itemCount: filteredProducts.length,
+                            itemBuilder: (context, i) {
+                  
+                              return Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 5, left: 5, right: 5, bottom: 5),
+                                child: StandsBox(
+                                  context,
+                                  filteredProducts[i].thumbnail,
+                                  filteredProducts[i].name,
+                                  filteredProducts[i].location,
+                                  filteredProducts[i].desc,
+                                  filteredProducts[i].id,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      );
+                    }
                   ),
                   // SizedBox(
                   //   height: res_height * 0.025,
@@ -419,30 +460,30 @@ Future<void> getProducts() async{
                   //       // ),
                   //       ),
                   // ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 13),
-                    child: Container(
-                      height: Get.height * 0.35,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: productController.productList.length,
-                        itemBuilder: (context, i) {
-                          return Padding(
-                            padding: const EdgeInsets.only(
-                                top: 5, left: 5, right: 5, bottom: 5),
-                            child: StandsBox(
-                              context,
-                              productController.productList[i].thumbnail,
-                              productController.productList[i].name,
-                              productController.productList[i].location,
-                              productController.productList[i].desc,
-                              productController.productList[i].id
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(left: 13),
+                  //   child: Container(
+                  //     height: Get.height * 0.35,
+                  //     child: ListView.builder(
+                  //       scrollDirection: Axis.horizontal,
+                  //       itemCount: productController.productList.length,
+                  //       itemBuilder: (context, i) {
+                  //         return Padding(
+                  //           padding: const EdgeInsets.only(
+                  //               top: 5, left: 5, right: 5, bottom: 5),
+                  //           child: StandsBox(
+                  //             context,
+                  //             productController.productList[i].thumbnail,
+                  //             productController.productList[i].name,
+                  //             productController.productList[i].location,
+                  //             productController.productList[i].desc,
+                  //             productController.productList[i].id
+                  //           ),
+                  //         );
+                  //       },
+                  //     ),
+                  //   ),
+                  // ),
                   SizedBox(
                     height: res_height * 0.025,
                   ),
@@ -455,43 +496,36 @@ Future<void> getProducts() async{
     );
   }
 
-  Widget StandsBox(
-    context,
-    image,
-    name,
-    location,
-    description,
-    id
-  ) {
+  Widget StandsBox(context, image, name, location, description, id) {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
     return GestureDetector(
-      onTap: () async{
+      onTap: () async {
         var responseData;
         // print(productController.Product1.name);
-        var response_data = await ApiService().singleProductDetails(id).then((res_data) {
-      // log("response of product details" + res_data.toString());
+        var response_data =
+            await ApiService().singleProductDetails(id).then((res_data) {
+          // log("response of product details" + res_data.toString());
 
-      if (res_data['status'] == true) {
-        responseData = res_data['data'][0];
-        
-        // print("responseData from home : " + res_data['data'].toString());
+          if (res_data['status'] == true) {
+            responseData = res_data['data'][0];
 
-        log("products data" + responseData.toString());
-      }
-        Get.to(booking(
-          bookingapiresponse:responseData
-        ));
+            // print("responseData from home : " + res_data['data'].toString());
+
+            log("products data" + responseData.toString());
+          }
+          Get.to(booking(bookingapiresponse: responseData));
         });
       },
-      child: Container(
+      child:  Container(
         width: res_width * 0.475,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(child: 
-            // Image.asset(image, fit: BoxFit.cover)),
-            Image.network(image)),
+            Container(
+                child:
+                    // Image.asset(image, fit: BoxFit.cover)),
+                    Image.network(image)),
             SizedBox(
               height: res_height * 0.01,
             ),
@@ -519,7 +553,7 @@ Future<void> getProducts() async{
             )
           ],
         ),
-      ),
+      ) ,
     );
   }
 
