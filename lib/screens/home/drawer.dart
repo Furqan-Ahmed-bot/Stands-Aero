@@ -59,7 +59,7 @@ class _NavDrawerState extends State<NavDrawer> {
                             userController.user.propic.toString(),
                             width: 80,
                           ) :                        
-                          Image.asset("assets/slicing/1567655174profile.jpg",
+                          Image.asset("assets/slicing/NoPath.png",
                           width:80,height:80
                           )
                           ,
@@ -76,8 +76,10 @@ class _NavDrawerState extends State<NavDrawer> {
                                     fontSize: 20,
                                     color: Colors.white),
                               ),
-                              Text(userController.user.email.toString(),
-                                  style: TextStyle(color: Colors.white))
+                              Container(width: res_width*0.4,
+                                child: Text(userController.user.email.toString(),
+                                    style: TextStyle(color: Colors.white,fontSize: 12)),
+                              )
                             ],
                           ),
                         ],

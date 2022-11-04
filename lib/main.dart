@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:stande_aero/screens/List%20Quotes/quotes.dart';
 import 'package:stande_aero/screens/auth/emaillogin.dart';
 import 'package:stande_aero/screens/booking/booking.dart';
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
       transitionDuration: Duration(seconds: 1),
       debugShowCheckedModeBanner: false,
       title: 'National Aero Stands',
-      theme: ThemeData(
+      theme: ThemeData(textTheme: GoogleFonts.openSansTextTheme(),
         primarySwatch: _yellow700Swatch,
       ),
       home: SplashScreen(),
