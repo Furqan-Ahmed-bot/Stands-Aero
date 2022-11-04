@@ -160,7 +160,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       isExpanded: true,
                       items:
-                          <String>['NewYork', 'NewJersy'].map((String value) {
+                          <String>['New York', 'New Jersey'].map((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),

@@ -68,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
 Future<void> getProducts() async{
   getPorductResponse=await ApiService().homeApi();
-  // log("getPorductResponse"+getPorductResponse.toString());
+  log("getPorductResponse"+getPorductResponse.toString());
   getPorductResponse['data'].forEach((element) => {
         // log("Element"+ element.toString());
         setState(() {
