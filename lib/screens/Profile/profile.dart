@@ -187,11 +187,11 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
                             hed: "Email",
                             labelText: userController.user.email,
                           ),
-                          profile_textfield(
-                            controller: country,
-                            hed: "Country",
-                            labelText: userController.user.country,
-                          ),
+                          // profile_textfield(
+                          //   controller: country,
+                          //   hed: "Country",
+                          //   labelText: userController.user.country,
+                          // ),
                           profile_textfield(
                             controller: city,
                             hed: "City",

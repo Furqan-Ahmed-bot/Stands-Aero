@@ -1,17 +1,18 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:email_validator/email_validator.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stande_aero/screens/credit_Form/credit_form2.dart';
 import 'package:stande_aero/helper/global.dart';
 import 'package:stande_aero/services/remote_services.dart';
+import 'package:intl/intl.dart';
 
 class credit_form extends StatefulWidget {
   final kycformData;
-  const credit_form(
-      {Key? key, required this.kycformData})
-      : super(key: key);
+  const credit_form({Key? key, required this.kycformData}) : super(key: key);
 
   @override
   State<credit_form> createState() => _credit_formState();
@@ -41,8 +42,11 @@ class _credit_formState extends State<credit_form> {
   Widget build(BuildContext context) {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
-    log("requestFormdatafromQuote form data " + requestFormdatafromQuote.toString());
+    log("requestFormdatafromQuote form data " +
+        requestFormdatafromQuote.toString());
     log("Kyc Form Data " + widget.kycformData.toString());
+
+    FocusNode myFocusNode = new FocusNode();
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -92,316 +96,801 @@ class _credit_formState extends State<credit_form> {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: res_width * 0.04),
             child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // kyc_main_text(
-                  //     text:
-                  //         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,"),
-                  // kyc_main_text(
-                  //     text:
-                  //         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,"),
-                  SizedBox(
-                    height: res_height * 0.01,
-                  ),
-                  Text(
-                    'Busniess and contact information',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
+              child: Form(
+                key: formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // kyc_main_text(
+                    //     text:
+                    //         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,"),
+                    // kyc_main_text(
+                    //     text:
+                    //         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,"),
+                    SizedBox(
+                      height: res_height * 0.01,
                     ),
-                  ),
-                  SizedBox(
-                    height: res_height * 0.01,
-                  ),
-                  Text(
-                    'Company Name: ',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
+                    Text(
+                      'Busniess and contact information',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                      ),
                     ),
-                  ),
-                  textfiel_kyc(
-                      controller: company_name,
-                      hed: 'Company Name: ',
-                      res_width: res_width),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  Text(
-                    'Company Address: ',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
+                    SizedBox(
+                      height: res_height * 0.01,
                     ),
-                  ),
-                  textfiel_kyc(
-                      controller: company_address,
-                      hed: 'Company Address: ',
-                      res_width: res_width),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  Text(
-                    'City:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
-                  textfiel_kyc(
-                      controller: city, hed: 'City:', res_width: res_width),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  Text(
-                    'Contact Name:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
-                  textfiel_kyc(
-                    controller: contact_name,
-                    res_width: res_width,
-                    hed: 'Contact Name:',
-                    maxLines: 4,
-                  ),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  Text(
-                    'Phone Number:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
-                  textfiel_kyc(
-                      controller: phone,
-                      hed: 'Phone Number:',
-                      res_width: res_width),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  Text(
-                    'Sole Proprietorship:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
-                  textfiel_kyc(
-                      controller: sole_proprietorship,
-                      hed: 'Sole Proprietorship:',
-                      res_width: res_width),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  Text(
-                    'Corporation:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
-                  textfiel_kyc(
-                      controller: corporation,
-                      hed: 'Corporation:',
-                      res_width: res_width),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  Text(
-                    'Other:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
-                  textfiel_kyc(
-                      controller: other, hed: 'Other:', res_width: res_width),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  Text(
-                    'Date Busniess Started:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
-                  textfiel_kyc(
-                      controller: date_business_stared,
-                      hed: 'Date Busniess Started:',
-                      res_width: res_width),
-
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  Text(
-                    'Fedral ID:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
-                  textfiel_kyc(
-                      controller: federal_id,
-                      hed: 'Fedral ID:',
-                      res_width: res_width),
-
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  Text(
-                    'State:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
-                  textfiel_kyc(
-                      controller: state, hed: 'State:', res_width: res_width),
-
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  Text(
-                    'Fax:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
-                  textfiel_kyc(
-                      controller: fax, hed: 'Fax:', res_width: res_width),
-
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  Text(
-                    'Zip:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
-                  textfiel_kyc(
-                      controller: zip, hed: 'Zip:', res_width: res_width),
-
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  Text(
-                    'Email:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
-                  textfiel_kyc(
-                      controller: email, hed: 'Email:', res_width: res_width),
-
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  Text(
-                    'Partnership:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
-                  textfiel_kyc(
-                      controller: partnership,
-                      hed: 'Partnership:',
-                      res_width: res_width),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  Text(
-                    'Type Of Busniess:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
-                  textfiel_kyc(
-                      controller: type_of_business,
-                      hed: 'Type Of Busniess:',
-                      res_width: res_width),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                  Text(
-                    'D&B#:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                  ),
-                  textfiel_kyc(
-                      controller: d_and_b, hed: 'D&B#:', res_width: res_width),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-
-                  GestureDetector(
-                    onTap: () async {
-                      // print(Response);
-                      // CFA();
-
-                      var sendData = {
-                        'company_name': company_name.text,
-                        'company_address': company_address.text,
-                        'city': city.text,
-                        'contact_name': contact_name.text,
-                        'phone': phone.text,
-                        'sole_proprietorship': sole_proprietorship.text,
-                        'corporation': corporation.text,
-                        'other': other.text,
-                        'date_business_stared': date_business_stared.text,
-                        'federal_id': federal_id.text,
-                        'state': state.text,
-                        'fax': fax.text,
-                        'zip': zip.text,
-                        'email': email.text,
-                        'type_of_business': type_of_business.text,
-                        'd_and_b': d_and_b.text,
-                      };
-
-                      log("requestFormdatafromQuote send data" + requestFormdatafromQuote.toString());
-                      log("kyc send data" + widget.kycformData.toString());
-                      log("send data" + sendData.toString());
-                      creditfirstFormData = sendData;
-                      Get.to(() => 
-                      credit_from2());
-                      
-                    },
-                    child: Container(
+                    // Text(
+                    //   'Company Name: ',
+                    //   style: TextStyle(
+                    //     color: Colors.black,
+                    //     fontSize: 12,
+                    //   ),
+                    // ),
+                    // textfiel_kyc(
+                    //     controller: company_name,
+                    //     hed: 'Company Name: ',
+                    //     res_width: res_width),
+                    Container(
                       width: res_width * 0.925,
                       decoration: BoxDecoration(
-                          color: Color(0xffaf8a39),
+                          color: Colors.grey,
                           borderRadius: BorderRadius.all(Radius.circular(7))),
                       child: Padding(
-                        padding: const EdgeInsets.all(13.0),
-                        child: Center(
-                          child: Text(
-                            'Continue',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 17),
+                        padding: const EdgeInsets.only(
+                            top: 8, bottom: 0, right: 8, left: 8),
+                        child: TextFormField(
+                          controller: company_name,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter Company Name ';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 10),
+                              labelText: "Company Name",
+                              labelStyle: TextStyle(
+                                  color: myFocusNode.hasFocus
+                                      ? Colors.white
+                                      : Colors.black)),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+                    // Text(
+                    //   'Company Address: ',
+                    //   style: TextStyle(
+                    //     color: Colors.black,
+                    //     fontSize: 12,
+                    //   ),
+                    // ),
+                    // textfiel_kyc(
+                    //     controller: company_address,
+                    //     hed: 'Company Address: ',
+                    //     res_width: res_width),
+                    Container(
+                      width: res_width * 0.925,
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(7))),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8, bottom: 0, right: 8, left: 8),
+                        child: TextFormField(
+                          controller: company_address,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter Company address ';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 10),
+                              labelText: "Company Address",
+                              labelStyle: TextStyle(
+                                  color: myFocusNode.hasFocus
+                                      ? Colors.white
+                                      : Colors.black)),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+                    // Text(
+                    //   'City:',
+                    //   style: TextStyle(
+                    //     color: Colors.black,
+                    //     fontSize: 12,
+                    //   ),
+                    // ),
+                    // textfiel_kyc(
+                    //     controller: city, hed: 'City:', res_width: res_width),
+                    Container(
+                      width: res_width * 0.925,
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(7))),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8, bottom: 0, right: 8, left: 8),
+                        child: TextFormField(
+                          controller: city,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter city ';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 10),
+                              labelText: "City",
+                              labelStyle: TextStyle(
+                                  color: myFocusNode.hasFocus
+                                      ? Colors.white
+                                      : Colors.black)),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+                    // Text(
+                    //   'Contact Name:',
+                    //   style: TextStyle(
+                    //     color: Colors.black,
+                    //     fontSize: 12,
+                    //   ),
+                    // ),
+                    // textfiel_kyc(
+                    //   controller: contact_name,
+                    //   res_width: res_width,
+                    //   hed: 'Contact Name:',
+                    //   maxLines: 4,
+                    // ),
+                    Container(
+                      width: res_width * 0.925,
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(7))),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8, bottom: 0, right: 8, left: 8),
+                        child: TextFormField(
+                          controller: contact_name,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter contact name ';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 10),
+                              labelText: "Contact Name",
+                              labelStyle: TextStyle(
+                                  color: myFocusNode.hasFocus
+                                      ? Colors.white
+                                      : Colors.black)),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+                    // Text(
+                    //   'Phone Number:',
+                    //   style: TextStyle(
+                    //     color: Colors.black,
+                    //     fontSize: 12,
+                    //   ),
+                    // ),
+                    // textfiel_kyc(
+                    //     controller: phone,
+                    //     hed: 'Phone Number:',
+                    //     res_width: res_width),
+
+                    Container(
+                      width: res_width * 0.925,
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(7))),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8, bottom: 0, right: 8, left: 8),
+                        child: TextFormField(
+                          controller: phone,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter phone number';
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
+                          decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 10),
+                              labelText: 'Phone Number',
+                              labelStyle: TextStyle(
+                                  color: myFocusNode.hasFocus
+                                      ? Colors.white
+                                      : Colors.black)),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+                    // Text(
+                    //   'Sole Proprietorship:',
+                    //   style: TextStyle(
+                    //     color: Colors.black,
+                    //     fontSize: 12,
+                    //   ),
+                    // ),
+                    // textfiel_kyc(
+                    //     controller: sole_proprietorship,
+                    //     hed: 'Sole Proprietorship:',
+                    //     res_width: res_width),
+                    Container(
+                      width: res_width * 0.925,
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(7))),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8, bottom: 0, right: 8, left: 8),
+                        child: TextFormField(
+                          controller: sole_proprietorship,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter sole proprietorship ';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 10),
+                              labelText: "Sole Proprietorship",
+                              labelStyle: TextStyle(
+                                  color: myFocusNode.hasFocus
+                                      ? Colors.white
+                                      : Colors.black)),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+                    // Text(
+                    //   'Corporation:',
+                    //   style: TextStyle(
+                    //     color: Colors.black,
+                    //     fontSize: 12,
+                    //   ),
+                    // ),
+                    // textfiel_kyc(
+                    //     controller: corporation,
+                    //     hed: 'Corporation:',
+                    //     res_width: res_width),
+                    Container(
+                      width: res_width * 0.925,
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(7))),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8, bottom: 0, right: 8, left: 8),
+                        child: TextFormField(
+                          controller: corporation,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter corporation';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 10),
+                              labelText: "Corporation",
+                              labelStyle: TextStyle(
+                                  color: myFocusNode.hasFocus
+                                      ? Colors.white
+                                      : Colors.black)),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+                    // Text(
+                    //   'Other:',
+                    //   style: TextStyle(
+                    //     color: Colors.black,
+                    //     fontSize: 12,
+                    //   ),
+                    // ),
+                    // textfiel_kyc(
+                    //     controller: other, hed: 'Other:', res_width: res_width),
+
+                    Container(
+                      width: res_width * 0.925,
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(7))),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8, bottom: 0, right: 8, left: 8),
+                        child: TextFormField(
+                          controller: other,
+                          decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 10),
+                              labelText: "Other",
+                              labelStyle: TextStyle(
+                                  color: myFocusNode.hasFocus
+                                      ? Colors.white
+                                      : Colors.black)),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+                    // Text(
+                    //   'Date Busniess Started:',
+                    //   style: TextStyle(
+                    //     color: Colors.black,
+                    //     fontSize: 12,
+                    //   ),
+                    // ),
+                    // textfiel_kyc(
+                    //     controller: date_business_stared,
+                    //     hed: 'Date Busniess Started:',
+                    //     res_width: res_width),
+
+                    Container(
+                      width: res_width * 0.925,
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(7))),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8, bottom: 0, right: 8, left: 8),
+                        child: TextFormField(
+                          controller: date_business_stared,
+                          readOnly: true,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter Date Busniess Started';
+                            }
+                            return null;
+                          },
+                          onTap: () async {
+                            DateTime? pickedDate = await showDatePicker(
+                                context: context, //context of current state
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(
+                                    2000), //DateTime.now() - not to allow to choose before today.
+                                lastDate: DateTime(2101));
+
+                            if (pickedDate != null) {
+                              print(
+                                  pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                              String formattedDate =
+                                  DateFormat('yyyy-MM-dd').format(pickedDate);
+                              print(formattedDate);
+                              setState(() {
+                                date_business_stared.text =
+                                    formattedDate; //set output date to TextField value.
+                              }); //formatted date output using intl package =>  2021-03-16
+                            } else {
+                              print("Date is not selected");
+                            }
+                          },
+                          decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 10),
+                              labelText: "Date Busniess Started",
+                              labelStyle: TextStyle(
+                                  color: myFocusNode.hasFocus
+                                      ? Colors.white
+                                      : Colors.black)),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+                    // Text(
+                    //   'Fedral ID:',
+                    //   style: TextStyle(
+                    //     color: Colors.black,
+                    //     fontSize: 12,
+                    //   ),
+                    // ),
+                    // textfiel_kyc(
+                    //     controller: federal_id,
+                    //     hed: 'Fedral ID:',
+                    //     res_width: res_width),
+
+                    Container(
+                      width: res_width * 0.925,
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(7))),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8, bottom: 0, right: 8, left: 8),
+                        child: TextFormField(
+                          controller: federal_id,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter federal ID';
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
+                          decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 10),
+                              labelText: 'Federal ID',
+                              labelStyle: TextStyle(
+                                  color: myFocusNode.hasFocus
+                                      ? Colors.white
+                                      : Colors.black)),
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+                    // Text(
+                    //   'State:',
+                    //   style: TextStyle(
+                    //     color: Colors.black,
+                    //     fontSize: 12,
+                    //   ),
+                    // ),
+                    // textfiel_kyc(
+                    //     controller: state, hed: 'State:', res_width: res_width),
+
+                    Container(
+                      width: res_width * 0.925,
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(7))),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8, bottom: 0, right: 8, left: 8),
+                        child: TextFormField(
+                          controller: state,
+                          decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 10),
+                              labelText: "State",
+                              labelStyle: TextStyle(
+                                  color: myFocusNode.hasFocus
+                                      ? Colors.white
+                                      : Colors.black)),
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+                    // Text(
+                    //   'Fax:',
+                    //   style: TextStyle(
+                    //     color: Colors.black,
+                    //     fontSize: 12,
+                    //   ),
+                    // ),
+                    // textfiel_kyc(
+                    //     controller: fax, hed: 'Fax:', res_width: res_width),
+                    Container(
+                      width: res_width * 0.925,
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(7))),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8, bottom: 0, right: 8, left: 8),
+                        child: TextFormField(
+                          controller: fax,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter fax';
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
+                          decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 10),
+                              labelText: 'Fax',
+                              labelStyle: TextStyle(
+                                  color: myFocusNode.hasFocus
+                                      ? Colors.white
+                                      : Colors.black)),
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+                    // Text(
+                    //   'Zip:',
+                    //   style: TextStyle(
+                    //     color: Colors.black,
+                    //     fontSize: 12,
+                    //   ),
+                    // ),
+                    // textfiel_kyc(
+                    //     controller: zip, hed: 'Zip:', res_width: res_width),
+                    Container(
+                      width: res_width * 0.925,
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(7))),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8, bottom: 0, right: 8, left: 8),
+                        child: TextFormField(
+                          controller: zip,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter zip';
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
+                          decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 10),
+                              labelText: 'Zip',
+                              labelStyle: TextStyle(
+                                  color: myFocusNode.hasFocus
+                                      ? Colors.white
+                                      : Colors.black)),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+                    // Text(
+                    //   'Email:',
+                    //   style: TextStyle(
+                    //     color: Colors.black,
+                    //     fontSize: 12,
+                    //   ),
+                    // ),
+                    // textfiel_kyc(
+                    //     controller: email, hed: 'Email:', res_width: res_width),
+
+                    Container(
+                      width: res_width * 0.925,
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(7))),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8, bottom: 0, right: 8, left: 8),
+                        child: TextFormField(
+                          controller: email,
+                          validator: (text) =>
+                              EmailValidator.validate(text.toString())
+                                  ? null
+                                  : "Please enter a valid email",
+                          decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 10),
+                              labelText: 'Email:',
+                              labelStyle: TextStyle(
+                                  color: myFocusNode.hasFocus
+                                      ? Colors.white
+                                      : Colors.black)),
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+                    // Text(
+                    //   'Partnership:',
+                    //   style: TextStyle(
+                    //     color: Colors.black,
+                    //     fontSize: 12,
+                    //   ),
+                    // ),
+                    // textfiel_kyc(
+                    //     controller: partnership,
+                    //     hed: 'Partnership:',
+                    //     res_width: res_width),
+                    Container(
+                      width: res_width * 0.925,
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(7))),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8, bottom: 0, right: 8, left: 8),
+                        child: TextFormField(
+                          controller: partnership,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter partnership';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 10),
+                              labelText: "Partnership",
+                              labelStyle: TextStyle(
+                                  color: myFocusNode.hasFocus
+                                      ? Colors.white
+                                      : Colors.black)),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+                    // Text(
+                    //   'Type Of Busniess:',
+                    //   style: TextStyle(
+                    //     color: Colors.black,
+                    //     fontSize: 12,
+                    //   ),
+                    // ),
+                    // textfiel_kyc(
+                    //     controller: type_of_business,
+                    //     hed: 'Type Of Busniess:',
+                    //     res_width: res_width),
+                    Container(
+                      width: res_width * 0.925,
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(7))),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8, bottom: 0, right: 8, left: 8),
+                        child: TextFormField(
+                          controller: type_of_business,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter partnership';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 10),
+                              labelText: "Type Of Busniess",
+                              labelStyle: TextStyle(
+                                  color: myFocusNode.hasFocus
+                                      ? Colors.white
+                                      : Colors.black)),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+                    // Text(
+                    //   'D&B#:',
+                    //   style: TextStyle(
+                    //     color: Colors.black,
+                    //     fontSize: 12,
+                    //   ),
+                    // ),
+                    // textfiel_kyc(
+                    //     controller: d_and_b, hed: 'D&B#:', res_width: res_width),
+                    Container(
+                      width: res_width * 0.925,
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(7))),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8, bottom: 0, right: 8, left: 8),
+                        child: TextFormField(
+                          controller: d_and_b,
+                          decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 10),
+                              labelText: "D&B#",
+                              labelStyle: TextStyle(
+                                  color: myFocusNode.hasFocus
+                                      ? Colors.white
+                                      : Colors.black)),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+
+                    GestureDetector(
+                      onTap: () async {
+                        // print(Response);
+                        // CFA();
+                        if (formKey.currentState!.validate()) {
+                          var sendData = {
+                            'company_name': company_name.text,
+                            'company_address': company_address.text,
+                            'city': city.text,
+                            'contact_name': contact_name.text,
+                            'phone': phone.text,
+                            'sole_proprietorship': sole_proprietorship.text,
+                            'corporation': corporation.text,
+                            'other': other.text,
+                            'date_business_stared': date_business_stared.text,
+                            'federal_id': federal_id.text,
+                            'state': state.text,
+                            'fax': fax.text,
+                            'zip': zip.text,
+                            'email': email.text,
+                            'type_of_business': type_of_business.text,
+                            'd_and_b': d_and_b.text,
+                          };
+
+                          log("requestFormdatafromQuote send data" +
+                              requestFormdatafromQuote.toString());
+                          log("kyc send data" + widget.kycformData.toString());
+                          log("send data" + sendData.toString());
+                          creditfirstFormData = sendData;
+                          Get.to(() => credit_from2());
+                        }
+                      },
+                      child: Container(
+                        width: res_width * 0.925,
+                        decoration: BoxDecoration(
+                            color: Color(0xffaf8a39),
+                            borderRadius: BorderRadius.all(Radius.circular(7))),
+                        child: Padding(
+                          padding: const EdgeInsets.all(13.0),
+                          child: Center(
+                            child: Text(
+                              'Continue',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 17),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: res_height * 0.02,
-                  ),
-                ],
+                    SizedBox(
+                      height: res_height * 0.02,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -530,7 +1019,7 @@ class textfiel_kyc extends StatelessWidget {
         ),
         Container(
           width: res_width * 0.925,
-          height:55,
+          height: 55,
           decoration: BoxDecoration(
               color: Colors.grey,
               borderRadius: BorderRadius.all(Radius.circular(7))),

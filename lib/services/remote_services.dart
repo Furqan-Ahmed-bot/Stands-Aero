@@ -330,8 +330,8 @@ class ApiService {
 
     var res_data = json.decode(res.body.toString());
     if (res_data['status'] == true) {
-      UserController userController = UserController();
-      userController.addUser(
+      UserController userController = Get.put(UserController());
+      userController.editUser(
         UserModel(
           id: res_data['id'],
           fullName: res_data['full_name'],

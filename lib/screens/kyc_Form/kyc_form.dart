@@ -14,7 +14,6 @@ import 'package:email_validator/email_validator.dart';
 
 class kyc_form extends StatefulWidget {
   const kyc_form({Key? key}) : super(key: key);
-  
 
   @override
   State<kyc_form> createState() => _kyc_formState();
@@ -53,7 +52,7 @@ class _kyc_formState extends State<kyc_form> {
     double res_height = MediaQuery.of(context).size.height;
     log("requestFormdatafromQuote form Data" +
         requestFormdatafromQuote.toString());
-    
+
     FocusNode myFocusNode = new FocusNode();
     return Scaffold(
       appBar: AppBar(
@@ -151,7 +150,7 @@ class _kyc_formState extends State<kyc_form> {
                           controller: company_name,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
+                              return 'Please enter name of company';
                             }
                             return null;
                           },
@@ -190,7 +189,7 @@ class _kyc_formState extends State<kyc_form> {
                           controller: company_type,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
+                              return 'Please enter Type of company ';
                             }
                             return null;
                           },
@@ -229,7 +228,7 @@ class _kyc_formState extends State<kyc_form> {
                           controller: company_state_country,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
+                              return 'Please enter state of company formation';
                             }
                             return null;
                           },
@@ -280,7 +279,7 @@ class _kyc_formState extends State<kyc_form> {
                           decoration: InputDecoration(
                               contentPadding:
                                   EdgeInsets.symmetric(horizontal: 10),
-                              labelText: 'Company Address:',
+                              labelText: 'Company Address',
                               labelStyle: TextStyle(
                                   color: myFocusNode.hasFocus
                                       ? Colors.white
@@ -321,7 +320,7 @@ class _kyc_formState extends State<kyc_form> {
                           decoration: InputDecoration(
                               contentPadding:
                                   EdgeInsets.symmetric(horizontal: 10),
-                              labelText: 'Phone Number:',
+                              labelText: 'Phone Number',
                               labelStyle: TextStyle(
                                   color: myFocusNode.hasFocus
                                       ? Colors.white
@@ -350,13 +349,19 @@ class _kyc_formState extends State<kyc_form> {
                         child: TextFormField(
                           controller: fax,
                           keyboardType: TextInputType.number,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter fax number';
+                            }
+                            return null;
+                          },
                           inputFormatters: <TextInputFormatter>[
                             FilteringTextInputFormatter.digitsOnly
                           ],
                           decoration: InputDecoration(
                               contentPadding:
                                   EdgeInsets.symmetric(horizontal: 10),
-                              labelText: 'Fax Number:',
+                              labelText: 'Fax Number',
                               labelStyle: TextStyle(
                                   color: myFocusNode.hasFocus
                                       ? Colors.white
@@ -422,7 +427,6 @@ class _kyc_formState extends State<kyc_form> {
                             top: 8, bottom: 0, right: 8, left: 8),
                         child: TextFormField(
                           controller: email,
-                          keyboardType: TextInputType.number,
                           validator: (text) =>
                               EmailValidator.validate(text.toString())
                                   ? null
@@ -460,7 +464,7 @@ class _kyc_formState extends State<kyc_form> {
                           controller: company_website,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
+                              return 'Please enter company website';
                             }
                             return null;
                           },
@@ -496,6 +500,12 @@ class _kyc_formState extends State<kyc_form> {
                             padding: EdgeInsets.only(left: 8.0),
                             child: TextFormField(
                               controller: company_additional_member_name1,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter name';
+                                }
+                                return null;
+                              },
                               decoration: InputDecoration(
                                   labelText: "Name",
                                   labelStyle: TextStyle(
@@ -513,6 +523,12 @@ class _kyc_formState extends State<kyc_form> {
                             padding: EdgeInsets.only(left: 8.0),
                             child: TextFormField(
                               controller: company_additional_member_title1,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter title';
+                                }
+                                return null;
+                              },
                               decoration: InputDecoration(
                                   labelText: "Title",
                                   labelStyle: TextStyle(
@@ -539,6 +555,12 @@ class _kyc_formState extends State<kyc_form> {
                             padding: EdgeInsets.only(left: 8.0),
                             child: TextFormField(
                               controller: company_additional_member_name2,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter name';
+                                }
+                                return null;
+                              },
                               decoration: InputDecoration(
                                   labelText: "Name",
                                   labelStyle: TextStyle(
@@ -555,8 +577,14 @@ class _kyc_formState extends State<kyc_form> {
                           decoration: BoxDecoration(color: Colors.grey),
                           child: Padding(
                             padding: EdgeInsets.only(left: 8.0),
-                            child: TextField(
+                            child: TextFormField(
                               controller: company_additional_member_title2,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter title';
+                                }
+                                return null;
+                              },
                               decoration: InputDecoration(
                                   labelText: "Title",
                                   labelStyle: TextStyle(
@@ -604,7 +632,7 @@ class _kyc_formState extends State<kyc_form> {
                     Container(
                       width: res_width * 0.925,
                       decoration: BoxDecoration(
-                          color: Colors.grey,
+                          color: Colors.grey,   
                           borderRadius: BorderRadius.all(Radius.circular(7))),
                       child: Padding(
                         padding: const EdgeInsets.only(
@@ -613,7 +641,7 @@ class _kyc_formState extends State<kyc_form> {
                           controller: company_prmy_bsns,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
+                              return 'Please enter busniess activity ';
                             }
                             return null;
                           },
@@ -662,7 +690,7 @@ class _kyc_formState extends State<kyc_form> {
                             controller: fund_src,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Please enter some text';
+                                return 'Please enter service fund to be paid';
                               }
                               return null;
                             },
@@ -696,7 +724,7 @@ class _kyc_formState extends State<kyc_form> {
                             controller: company_countrylist,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Please enter some text';
+                                return 'Please enter list of countries';
                               }
                               return null;
                             },
@@ -713,7 +741,7 @@ class _kyc_formState extends State<kyc_form> {
                     GestureDetector(
                       onTap: () {
                         if (formKey.currentState!.validate()) {
-                        KYC();
+                          KYC();
                         }
                       },
                       child: Container(
