@@ -199,48 +199,53 @@ class _EditprofileState extends State<Editprofile> {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(5),
                       ),
-                      child: DropdownButtonFormField<String>(
-                          decoration: InputDecoration(
-                              fillColor: Colors.white,
-                              contentPadding: EdgeInsets.all(12)),
-                          hint: Text(
-                            'City',
-                            style: TextStyle(fontSize: 18, color: Colors.black),
-                          ),
-                          isExpanded: true,
-                          value: _selectedValue1,
-                          items: <String>['New York', 'New Jersey']
-                              .map((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            setState(() {
-                              _selectedValue1 = value!;
-                              city.text = _selectedValue1;
-                              print("selected value" +
-                                  _selectedValue1.toString());
-                              print("selected city" + city.text);
-                              // city = _selectedValue1 as TextEditingController;
-                            });
-                          },
-                          style: TextStyle(color: Colors.grey),
-                          // icon: Icon(
-                          //   Icons.arrow_forward_ios,
-                          //   color: kPrimaryColor,
-                          //   size: 20,
-                          // ),
-                          // iconSize: 20,
-                          validator: (text) {
-                            if (text == null ||
-                                text.isEmpty ||
-                                text.length < 5) {
-                              return 'Select City !';
-                            }
-                            return null;
-                          }),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButtonFormField<String>(
+                            decoration: InputDecoration(
+                                fillColor: Colors.white,
+                                contentPadding: EdgeInsets.all(12),
+                                isCollapsed: true,
+                                enabledBorder: InputBorder.none),
+                            hint: Text(
+                              'City',
+                              style:
+                                  TextStyle(fontSize: 18, color: Colors.black),
+                            ),
+                            isExpanded: true,
+                            value: _selectedValue1,
+                            items: <String>['New York', 'New Jersey']
+                                .map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedValue1 = value!;
+                                city.text = _selectedValue1;
+                                print("selected value" +
+                                    _selectedValue1.toString());
+                                print("selected city" + city.text);
+                                // city = _selectedValue1 as TextEditingController;
+                              });
+                            },
+                            style: TextStyle(color: Colors.grey),
+                            // icon: Icon(
+                            //   Icons.arrow_forward_ios,
+                            //   color: kPrimaryColor,
+                            //   size: 20,
+                            // ),
+                            // iconSize: 20,
+                            validator: (text) {
+                              if (text == null ||
+                                  text.isEmpty ||
+                                  text.length < 5) {
+                                return 'Select City !';
+                              }
+                              return null;
+                            }),
+                      ),
                     ),
                     // profile_textfield(
                     //   controller: city,

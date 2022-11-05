@@ -412,34 +412,33 @@ class ApiService {
     return res_data;
   }
 
+  TaxCertificates_listSyncPDF(context, id) async {
+    final uri = Uri.parse('${apiGlobal}/api/user/tax-cert-details/${id}');
+    print(uri);
+    final headers = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Bearer ${globaltoken}',
+    };
+    http.Response response = await http.get(
+      uri,
+      headers: headers,
+      // body: jsonBody,
+    );
 
-  // TaxCertificates_listSyncPDF(context , id) async {
-  //   final uri = Uri.parse('${apiGlobal}/api/user/tax-cert-details/${id}');
-  //   print(uri);
-  //   final headers = {
-  //     'Content-Type': 'application/x-www-form-urlencoded',
-  //     'Authorization': 'Bearer ${globaltoken}',
-  //   };
-  //   http.Response response = await http.get(
-  //     uri,
-  //     headers: headers,
-  //     // body: jsonBody,
-  //   );
+    print(response.statusCode);
+    var res_data = json.decode(response.body);
+    print(res_data);
+    if (res_data["status"] == true) {
+    } else
+      Get.snackbar(
+        'Error',
+        'Wrong Credentials',
+        animationDuration: Duration(seconds: 2),
+        snackPosition: SnackPosition.BOTTOM,
+      );
 
-  //   print(response.statusCode);
-  //   var res_data = json.decode(response.body);
-  //   print(res_data);
-  //   if (res_data["status"] == true) {
-  //   } else
-  //     Get.snackbar(
-  //       'Error',
-  //       'Wrong Credentials',
-  //       animationDuration: Duration(seconds: 2),
-  //       snackPosition: SnackPosition.BOTTOM,
-  //     );
-
-  //   return res_data;
-  // }
+    return res_data;
+  }
 
   payment_history() async {
     final uri = Uri.parse('${apiGlobal}/api/user/payments');
@@ -738,18 +737,11 @@ class ApiService {
     http.Response response = await http.get(
       uri,
       headers: headers,
-      // body: jsonBody,
     );
 
     print("response.body" + json.decode(response.body).toString());
-    // var res_data = json.decode(response.body);
-    // print(res_data);
-    // if (res_data["status"] == true) {
-    // } else{
-      
-    // }
-      
-    Navigator.pop(context);
-    return  json.decode(response.body);
+
+    var res_data = json.decode(response.body);
+    return res_data;
   }
 }
