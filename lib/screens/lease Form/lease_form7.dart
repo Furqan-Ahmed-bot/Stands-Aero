@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../payment/paypal.dart';
+
 class lease_form7 extends StatelessWidget {
   const lease_form7({Key? key}) : super(key: key);
   @override
@@ -71,7 +73,8 @@ class lease_form7 extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.to(lease_form7());
+                    Get.to(PaymentScreen());
+                    // Get.to(lease_form7());
                   },
                   child: Container(
                     width: res_width * 0.9,

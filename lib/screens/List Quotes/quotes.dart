@@ -104,6 +104,7 @@ class _quotesState extends State<quotes> with TickerProviderStateMixin {
               future: quotation_list(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
+                  print("Osama");
                   return FadeTransition(
                     opacity: _fadeInFadeOut,
                     child: Container(
@@ -113,32 +114,43 @@ class _quotesState extends State<quotes> with TickerProviderStateMixin {
                           children: [
                             SingleChildScrollView(
                               physics: ScrollPhysics(),
-                              child: ListView.builder(
-                                  shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  scrollDirection: Axis.vertical,
-                                  // itemCount: quotations_data['data'].length,
-                                  itemCount: quotations_data['data'].length,
-                                  itemBuilder: (context, index) {
-                                    // log("length" + quotations_data['data'].length);
-                                    return Quotess_Card(
-                                        id: quotations_data['data'][index]
-                                            ['quote_id'],
-                                        status: quotations_data['data'][index]
-                                            ['status'],
-                                        name: quotations_data['data'][index]
-                                            ['product_name'],
-                                        location: quotations_data['data'][index]
-                                                    ['location'] ==
-                                                null
-                                            ? "No Location"
-                                            : quotations_data['data'][index]
-                                                ['location'],
-                                        description: quotations_data['data']
-                                            [index]['product_description'],
-                                        image: quotations_data['data'][index]
-                                            ['product_image']);
-                                  }),
+                              child: quotations_data['data'].length > 0
+                                  ? ListView.builder(
+                                      shrinkWrap: true,
+                                      physics: NeverScrollableScrollPhysics(),
+                                      scrollDirection: Axis.vertical,
+                                      // itemCount: quotations_data['data'].length,
+                                      itemCount: quotations_data['data'].length,
+                                      itemBuilder: (context, index) {
+                                        print("length" +
+                                            quotations_data['data']
+                                                .length
+                                                .toString());
+                                        return quotations_data['data'].length > 0
+                                            ? Quotess_Card(
+                                                id: quotations_data['data']
+                                                    [index]['quote_id'],
+                                                status: quotations_data['data']
+                                                    [index]['status'],
+                                                name: quotations_data['data']
+                                                    [index]['product_name'],
+                                                location: quotations_data['data']
+                                                                [index]
+                                                            ['location'] ==
+                                                        null
+                                                    ? "No Location"
+                                                    : quotations_data['data']
+                                                        [index]['location'],
+                                                description:
+                                                    quotations_data['data']
+                                                            [index]
+                                                        ['product_description'],
+                                                image: quotations_data['data']
+                                                    [index]['product_image'])
+                                            : Text("asasssssssssssssssssssssssssssssssssssssssssssssssssssssdata");
+                                      })
+                                  : Text(
+                                      "asasssssssssssssssssssssssssssssssssssssssssssssssssssssdata"),
                             ),
                           ],
                         ),

@@ -9,12 +9,13 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:stande_aero/screens/mainhome.dart';
+import 'package:stande_aero/screens/taxcertificate/pdfview.dart';
 import 'package:stande_aero/services/remote_services.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../helper/loader.dart';
-
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class TexCertificateScreen extends StatefulWidget {
   const TexCertificateScreen({Key? key}) : super(key: key);
@@ -29,7 +30,7 @@ class _TexCertificateScreenState extends State<TexCertificateScreen> {
   String remotePDFpath = "";
   var url;
   bool _isLoading = true;
-  
+  final GlobalKey<SfPdfViewerState> _pdfViewerKey = GlobalKey();
 
   @override
   void initState() {
@@ -81,10 +82,11 @@ class _TexCertificateScreenState extends State<TexCertificateScreen> {
 
   Future<void> taxCertificateListPDF() async {
     var getLength = taxCertificates['data'][0];
-    log('getLength' + getLength.toString());
-    // taxCertificatesPDF = await ApiService().TaxCertificates_listSyncPDF(context,taxCertificates['data']['id']);
+    print('getLength' + getLength.toString());
+    taxCertificatesPDF = await ApiService()
+        .TaxCertificates_listSyncPDF(context, taxCertificates['data']['id']);
 
-    log("taxCertificates" + taxCertificates['data'].toString());
+    print("taxCertificates" + taxCertificates['data'].toString());
   }
 
   @override
@@ -241,8 +243,12 @@ class _TexCertificateScreenState extends State<TexCertificateScreen> {
                 onTap: () async {
                   var res_data = await ApiService().previewPDF(context, id);
                   // remotePDFpath= res_data['data']['path'].toString();
-                  log("pdf preview" + res_data['data']['path'].toString());
+                  print("pdf preview" + res_data['data']['path'].toString());
+
                   url = res_data['data']['path'];
+                  Get.to(() => PdfView(
+                        path: url,
+                      ));
                 },
                 child: Container(
                     width: res_width * 0.35,
