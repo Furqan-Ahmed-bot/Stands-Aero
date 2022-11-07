@@ -95,24 +95,31 @@ class _OrderHistoryState extends State<OrderHistory> {
                   child: SingleChildScrollView(
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
-                      child: order_historyvar['data'].length>0 ? ListView.builder(
-                          itemCount: order_historyvar['data'].length,
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          scrollDirection: Axis.vertical,
-                          itemBuilder: (context, index) {
-                            return Quotes_Card(
-                                orderNumber: order_historyvar['data'][index]
-                                    ['order_number'],
-                                payAmount: order_historyvar['data'][index]
-                                    ['pay_amount'],
-                                orderDate: order_historyvar['data'][index]
-                                    ['order_date'],
-                                orderStatus: order_historyvar['data'][index]
-                                    ['order_status'],
-                                paymentStatus: order_historyvar['data'][index]
-                                    ['payment_status']);
-                          }) : Text("No Orders found",textAlign: TextAlign.center,),
+                      child: order_historyvar['data'].length > 0
+                          ? ListView.builder(
+                              itemCount: order_historyvar['data'].length,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              scrollDirection: Axis.vertical,
+                              itemBuilder: (context, index) {
+                                return Quotes_Card(
+                                    orderNumber: order_historyvar['data'][index]
+                                        ['order_number'],
+                                    payAmount: order_historyvar['data'][index]
+                                        ['pay_amount'],
+                                    orderDate: order_historyvar['data'][index]
+                                        ['order_date'],
+                                    orderStatus: order_historyvar['data'][index]
+                                        ['order_status'],
+                                    orderID: order_historyvar['data'][index]
+                                        ['id'],
+                                    paymentStatus: order_historyvar['data']
+                                        [index]['payment_status']);
+                              })
+                          : Text(
+                              "No Orders found",
+                              textAlign: TextAlign.center,
+                            ),
                     ),
                   ),
                 );
@@ -127,7 +134,7 @@ class _OrderHistoryState extends State<OrderHistory> {
 
 class Quotes_Card extends StatelessWidget {
   // var MODEL, location, description;
-  var orderNumber, payAmount, orderDate, orderStatus, paymentStatus;
+  var orderNumber, payAmount, orderDate, orderStatus, paymentStatus, orderID;
 
   Quotes_Card(
       {Key? key,
@@ -135,7 +142,8 @@ class Quotes_Card extends StatelessWidget {
       this.payAmount,
       this.orderDate,
       this.orderStatus,
-      this.paymentStatus})
+      this.paymentStatus,
+      this.orderID})
       : super(key: key);
 
   @override
@@ -148,7 +156,9 @@ class Quotes_Card extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            Get.to(OrderStatus());
+            Get.to(OrderStatus(
+              orderID: orderID,
+            ));
           },
           child: Container(
             width: res_width * 0.925,
