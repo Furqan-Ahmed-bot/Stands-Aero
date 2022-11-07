@@ -6,8 +6,11 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:stande_aero/screens/mainhome.dart';
 import 'package:stande_aero/screens/orders/orderstatusdetail.dart';
 
+import '../../services/remote_services.dart';
+
 class OrderStatus extends StatefulWidget {
-  const OrderStatus({Key? key}) : super(key: key);
+  final orderID;
+  const OrderStatus({Key? key, this.orderID}) : super(key: key);
 
   @override
   State<OrderStatus> createState() => _OrderStatusState();
@@ -15,6 +18,24 @@ class OrderStatus extends StatefulWidget {
 
 class _OrderStatusState extends State<OrderStatus> {
   int _currentStep = 0;
+  dynamic order_historyvar;
+
+  @override
+  void initState() {
+    Future.delayed(Duration.zero, () {
+      setState(() {
+        order_history();
+      });
+    });
+
+    super.initState();
+  }
+
+  Future<void> order_history() async {
+    order_historyvar = await ApiService().orderDetails(widget.orderID);
+
+    print("order_historyvar detail" + order_historyvar['data'].toString());
+  }
 
   continued() {
     _currentStep < 2 ? setState(() => _currentStep += 1) : null;
@@ -148,7 +169,7 @@ class _OrderStatusState extends State<OrderStatus> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              'Order In Progress',
+                                              'Order In Process',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold),
                                             ),
@@ -209,7 +230,7 @@ class _OrderStatusState extends State<OrderStatus> {
                                               height: res_height * 0.006,
                                             ),
                                             Container(
-                                                width: res_width * 0.6,
+                                                width: res_width * 0.68,
                                                 child: Text(
                                                     'Lorem ipsum dolor sit amet consectetur adipiscing elit estmaecenas aenean',
                                                     style: TextStyle(
@@ -218,10 +239,10 @@ class _OrderStatusState extends State<OrderStatus> {
                                                     )))
                                           ],
                                         ),
-                                        Icon(
-                                          Icons.arrow_forward_ios,
-                                          color: Colors.grey,
-                                        )
+                                        // Icon(
+                                        //   Icons.arrow_forward_ios,
+                                        //   color: Colors.grey,
+                                        // )
                                       ],
                                     ),
                                   ),

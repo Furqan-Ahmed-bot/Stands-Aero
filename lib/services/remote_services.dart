@@ -728,25 +728,6 @@ class ApiService {
     }
 
     request.fields.addAll({
-      // 'day': '20',
-      // 'month': '10',
-      // 'customer_name': 'test',
-      // 'customer_location': 'testloc',
-      // 'stand_manufacturer': 'teststand',
-      // 'stand_color': 'testcol',
-      // 'stand_type': 'testtype',
-      // 'stand_serial_number': 'testserial',
-      // 'stand_quantity': '1',
-      // 'delivery_location': 'testloc',
-      // 'delivery_date': '2022-12-10',
-      // 'daily_rent': '1000',
-      // 'replacement_value': '2000',
-      // 'security_deposit': '500',
-      // 'guarantor': 'testguarantor',
-      // 'registered_agent': 'testagent',
-      // 'signature_1': 'test_sign_1',
-      // 'signature_2': 'test_sign_2'
-
       'day': sendData['day'],
       'month': sendData['month'],
       'customer_name': sendData['customer_name'],
@@ -864,6 +845,26 @@ class ApiService {
 
     var res_data = json.decode(response.body.toString());
     print("email " + res_data.toString());
+    return res_data;
+  }
+
+  orderDetails(orderID) async {
+    final uri = Uri.parse('${apiGlobal}/api/user/order/${orderID}/details');
+    print(uri);
+
+    final headers = {
+      'Authorization': 'bearer ${globaltoken}',
+    };
+
+    http.Response response = await http.get(
+      uri,
+      headers: headers,
+    );
+
+    print(response.statusCode);
+    var res_data = json.decode(response.body);
+    print(res_data);
+
     return res_data;
   }
 }
