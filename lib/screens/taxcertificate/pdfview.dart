@@ -22,19 +22,23 @@ class _PdfView extends State<PdfView> {
     print("NEW PATH : " + widget.path);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Syncfusion Flutter PDF Viewer'),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(
-              Icons.bookmark,
-              color: Colors.white,
-              semanticLabel: 'Bookmark',
-            ),
-            onPressed: () {
-              _pdfViewerKey.currentState?.openBookmarkView();
-            },
+        leading: GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.pop(context);
+            // _key.currentState!.openDrawer();
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Container(
+                width: 25,
+                child: Image.asset(
+                  'assets/slicing/Untitled-3.png',
+                )),
           ),
-        ],
+        ),
+        title: const Text('Your Text Certificate'),
       ),
       body: SfPdfViewer.network(
         widget.path,
