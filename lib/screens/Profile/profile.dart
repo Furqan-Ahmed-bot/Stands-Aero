@@ -240,7 +240,7 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
                           ),
                           GestureDetector(
                             onTap: () {
-                              // ApiService().logout(context);
+                              ApiService().deleteAccount();
                             },
                             child: Container(
                               width: res_width * 0.9,
