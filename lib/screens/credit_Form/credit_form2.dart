@@ -450,10 +450,38 @@ class _credit_from2State extends State<credit_from2> {
                       //     fontSize: 12,
                       //   ),
                       // ),
-                      textfiel_kyc(
-                          controller: bsns_trde_phone,
-                          head: 'Phone:',
-                          res_width: res_width),
+                      
+                          Container(
+                        width: res_width * 0.925,
+                        decoration: BoxDecoration(
+                            color: Colors.grey,
+                            borderRadius: BorderRadius.all(Radius.circular(7))),
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 8, bottom: 0, right: 8, left: 8),
+                          child: TextFormField(
+                            controller: bsns_trde_phone,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter phone number';
+                              }
+                              return null;
+                            },
+                            keyboardType: TextInputType.number,
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
+                            decoration: InputDecoration(
+                                contentPadding:
+                                    EdgeInsets.symmetric(horizontal: 10),
+                                labelText: 'Phone',
+                                labelStyle: TextStyle(
+                                    color: myFocusNode.hasFocus
+                                        ? Colors.white
+                                        : Colors.black)),
+                          ),
+                        ),
+                      ),
 
                       SizedBox(
                         height: res_height * 0.02,

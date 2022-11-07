@@ -558,7 +558,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         var responseData;
         // print(productController.Product1.name);
         var response_data =
-            await ApiService().singleProductDetails(id).then((res_data) {
+            await ApiService().singleProductDetails(context,id).then((res_data) {
           // log("response of product details" + res_data.toString());
 
           if (res_data['status'] == true) {

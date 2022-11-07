@@ -369,7 +369,7 @@ class _quotes_detailsState extends State<quotes_details> {
                                   if (filePath == null && fileType == null) {
                                     Get.snackbar(
                                       'Error',
-                                      'Tax Certificate is not',
+                                      'Please upload tax certificate',
                                       animationDuration: Duration(seconds: 2),
                                       snackPosition: SnackPosition.BOTTOM,
                                     );

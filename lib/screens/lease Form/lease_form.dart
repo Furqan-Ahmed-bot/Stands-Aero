@@ -124,6 +124,7 @@ class _lease_FormState extends State<lease_Form> {
                                     }
                                     return null;
                                   },
+                                  maxLength: 2,
                                   keyboardType: TextInputType.number,
                                   inputFormatters: <TextInputFormatter>[
                                     FilteringTextInputFormatter.digitsOnly
@@ -165,6 +166,7 @@ class _lease_FormState extends State<lease_Form> {
                                     }
                                     return null;
                                   },
+                                  maxLength: 2,
                                   keyboardType: TextInputType.number,
                                   inputFormatters: <TextInputFormatter>[
                                     FilteringTextInputFormatter.digitsOnly
@@ -274,6 +276,7 @@ class _lease_FormState extends State<lease_Form> {
                                     }
                                     return null;
                                   },
+                                  maxLength: 2,
                                   keyboardType: TextInputType.number,
                                   inputFormatters: <TextInputFormatter>[
                                     FilteringTextInputFormatter.digitsOnly
@@ -324,7 +327,7 @@ class _lease_FormState extends State<lease_Form> {
                                 ),
                                 TextFormField(
                                   controller: delivery_date,
-                                  readOnly: false,
+                                  readOnly: true,
                                   onSaved: (newValue) => delivery_date.text,
                                   style: TextStyle(color: Colors.black),
                                   decoration: InputDecoration(
@@ -405,6 +408,7 @@ class _lease_FormState extends State<lease_Form> {
                                     }
                                     return null;
                                   },
+                                  maxLength: 7,
                                   keyboardType: TextInputType.number,
                                   inputFormatters: <TextInputFormatter>[
                                     FilteringTextInputFormatter.digitsOnly
@@ -413,7 +417,7 @@ class _lease_FormState extends State<lease_Form> {
                                     isCollapsed: true,
                                     // contentPadding: EdgeInsets.symmetric(vertical: 0),
                                     constraints: BoxConstraints(
-                                        maxWidth: 50, minWidth: 10),
+                                        maxWidth: 80, minWidth: 10),
                                     border: UnderlineInputBorder(
                                       borderSide:
                                           BorderSide(color: Colors.grey),
@@ -447,6 +451,7 @@ class _lease_FormState extends State<lease_Form> {
                                     }
                                     return null;
                                   },
+                                  maxLength: 7,
                                   keyboardType: TextInputType.number,
                                   inputFormatters: <TextInputFormatter>[
                                     FilteringTextInputFormatter.digitsOnly

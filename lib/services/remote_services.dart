@@ -70,10 +70,8 @@ class ApiService {
 
       globaltoken = res_data["data"]["token"];
       userid = res_data['data']['user']['id'].toString();
-      
-      Get.to(
-        EmailLoginScreen()
-      );
+
+      Get.to(EmailLoginScreen());
       Get.snackbar(
         'Congratulations',
         'Account Registered Successfully',
@@ -525,7 +523,13 @@ class ApiService {
     return res_data;
   }
 
-  singleProductDetails(productId) async {
+  singleProductDetails(context, productId) async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return spinkit;
+        });
     final uri =
         Uri.parse('${apiGlobal}/api/front/product/${productId}/details');
 
@@ -543,8 +547,10 @@ class ApiService {
     var res_data = json.decode(response.body);
 
     // print(res_data);
-    // if (res_data["status"] == true) {
+    if (res_data["status"] == true) {
     //   Get.to(() => MainLoginScreen());
+    Navigator.pop(context);
+    }
     // } else
     //   Get.snackbar(
     //     'Error',

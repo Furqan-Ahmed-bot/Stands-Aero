@@ -253,8 +253,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       filled: true,
                     ),
                     validator: (text) {
-                      if (text == null || text.isEmpty || text.length < 6) {
-                        return 'Password Must Contain Atleast 6 Characters !';
+                      if (text == null || text.isEmpty || text.length < 8) {
+                        return 'Password Must Contain Atleast 8 Characters !';
                       }
                       return null;
                     },
@@ -297,9 +297,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     validator: (text) {
                       if (text == null || text.isEmpty || text.length < 8) {
-                        return 'Enter Same Password !';
+                        return 'Password Must Contain Atleast 8 Characters !';
+                      } else {
+                        if (password.text != password_confirmation.text) {
+                          return 'Enter Same Password !';
+                        } else {
+                          return null;
+                        }
                       }
-                      return null;
                     },
                   ),
                 ),

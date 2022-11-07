@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:stande_aero/screens/lease%20Form/lease_form7.dart';
 import 'package:stande_aero/helper/global.dart';
 
-class lease_form6 extends StatelessWidget {
+class lease_form6 extends StatefulWidget {
   const lease_form6({Key? key}) : super(key: key);
 
+  @override
+  State<lease_form6> createState() => _lease_form6State();
+}
+
+class _lease_form6State extends State<lease_form6> {
+  TextEditingController security_deposit = TextEditingController();
+  TextEditingController guarantor = TextEditingController();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
-    TextEditingController security_deposit = TextEditingController();
-    TextEditingController guarantor = TextEditingController();
-    GlobalKey<FormState> formKey = GlobalKey<FormState>();
-    
 
     return Scaffold(
       appBar: AppBar(
@@ -83,6 +88,11 @@ class lease_form6 extends StatelessWidget {
                                 }
                                 return null;
                               },
+                              maxLength: 7,
+                                keyboardType: TextInputType.number,
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
                               decoration: InputDecoration(
                                 isCollapsed: true,
                                 // contentPadding: EdgeInsets.symmetric(vertical: 0),
