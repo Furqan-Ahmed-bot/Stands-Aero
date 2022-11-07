@@ -4,8 +4,6 @@ var requestFormdatafromQuote;
 var kycrequestFormdatafromQuote;
 var creditfirstFormData;
 var placeOrderData;
-
-
 var global_day;
 var global_month;
 var global_customer_name;

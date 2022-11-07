@@ -1,9 +1,15 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:stande_aero/screens/payment/paymentrecieved.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../../helper/global.dart';
+
 class PaymentScreen extends StatefulWidget {
+  final quotationId;
+  const PaymentScreen({Key? key, this.quotationId}) : super(key: key);
   @override
   _PaymentScreenState createState() => _PaymentScreenState();
 }
@@ -21,7 +27,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   @override
   void initState() {
     super.initState();
-    selectedUrl = '${apiGlobal}/api/user/pay-paypal/5/45';
+    selectedUrl = '${apiGlobal}/api/user/pay-paypal/${userid}/${userid}';
     //selectedUrl="https://mvs.bslmeiyu.com";
     // if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
   }
@@ -94,7 +100,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   }
 
   void _redirect(String url) {
-    print("redirect");
+    print("redirect url : " + url);
     if (_canRedirect) {
       bool _isSuccess = url.contains('success') && url.contains(apiGlobal);
       bool _isFailed = url.contains('fail') && url.contains(apiGlobal);
@@ -104,6 +110,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
       }
       if (_isSuccess) {
         print("Success");
+        Get.to(PaymentRecieved());
         // Get.offNamed(RouteHelper.getOrderSuccessRoute(widget.orderModel.id.toString(), 'success'));
       } else if (_isFailed || _isCancel) {
         print("Failed");
