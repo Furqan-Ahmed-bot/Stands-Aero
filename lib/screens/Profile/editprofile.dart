@@ -176,11 +176,13 @@ class _EditprofileState extends State<Editprofile> {
                       ],
                     ),
                     profile_textfield(
+                      readOnly: false,
                       controller: name,
                       hed: "Name",
                       labelText: usercontroller.user.fullName,
                     ),
                     profile_textfield(
+                      readOnly: true,
                       controller: email,
                       hed: "Email",
                       labelText: usercontroller.user.email,
@@ -258,11 +260,13 @@ class _EditprofileState extends State<Editprofile> {
                       height: res_height * 0.01,
                     ),
                     profile_textfield(
+                      readOnly: false,
                       controller: phone,
                       hed: "Phone Number",
                       labelText: usercontroller.user.phone,
                     ),
                     profile_textfield(
+                      readOnly: false,
                       controller: description,
                       hed: "Description",
                       labelText: usercontroller.user.description,
@@ -404,14 +408,16 @@ class profile_textfield extends StatelessWidget {
   var labelText, hed;
   TextEditingController? controller;
   var maxLines;
+  bool readOnly;
 
-  profile_textfield({
-    this.controller,
-    Key? key,
-    this.labelText,
-    this.hed,
-    this.maxLines,
-  }) : super(key: key);
+  profile_textfield(
+      {this.controller,
+      Key? key,
+      this.labelText,
+      this.hed,
+      this.maxLines,
+      required this.readOnly})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -443,7 +449,7 @@ class profile_textfield extends StatelessWidget {
               child: TextFormField(
                 controller: controller,
                 maxLines: maxLines,
-
+                readOnly: readOnly,
                 decoration: InputDecoration(
                     border: InputBorder.none,
                     // hintText: "$labelText",

@@ -25,18 +25,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController phone = TextEditingController();
   TextEditingController password_confirmation = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-   bool _passwordVisible = false;
-   bool _passwordVisible1 = false;
+  bool _passwordVisible = false;
+  bool _passwordVisible1 = false;
 
   late String _selectedValue1;
   @override
   Widget build(BuildContext context) {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
-   
+
     return Scaffold(
       body: Container(
         width: double.infinity,
+        height: double.infinity,
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/slicing/Untitled-1.jpg"),
@@ -159,8 +160,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                       isExpanded: true,
-                      items:
-                          <String>['New York', 'New Jersey'].map((String value) {
+                      items: <String>['New York', 'New Jersey']
+                          .map((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
@@ -322,7 +323,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       // "password_confirmation": password_confirmation,
                     };
                     if (_formKey.currentState!.validate()) {
-                      ApiService().register(context,sendData);
+                      ApiService().register(context, sendData);
                     }
                   },
                   child: Container(
@@ -359,10 +360,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: (){
-                        Get.to(
-                            MainLoginScreen()
-                        );
+                      onTap: () {
+                        Get.to(MainLoginScreen());
                       },
                       child: Text(
                         'Login',

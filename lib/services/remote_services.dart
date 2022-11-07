@@ -76,7 +76,8 @@ class ApiService {
       if (bottomctrl.navigationBarIndexValue != 3) {
         bottomctrl.navBarChange(3);
       } else {
-        Navigator.pop(context);
+        // Navigator.pop(context);
+        bottomctrl.navBarChange(0);
       }
     } else {
       Get.snackbar(
