@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:http/http.dart' as http;
+import 'package:stande_aero/main.dart';
 import 'package:stande_aero/screens/Profile/editprofile.dart';
 import 'package:stande_aero/screens/Profile/profile.dart';
 import 'package:stande_aero/screens/auth/emaillogin.dart';
@@ -141,10 +142,7 @@ class ApiService {
 
   homeApi() async {
     final uri = Uri.parse('${apiGlobal}/api/front/products');
-    // ProductController productController = Get.put(ProductController());
     print(uri);
-
-    // var jsonBody = json.encode(sendData);
 
     final headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -158,13 +156,8 @@ class ApiService {
     );
 
     print(response.statusCode);
-
-    // log("home API" + response.body.toString());
-
     var res_data = json.decode(response.body);
-
     print(res_data);
-
     if (res_data["status"] == true) {
       print(res_data['data'].length);
     } else
@@ -742,6 +735,43 @@ class ApiService {
     print("response.body" + json.decode(response.body).toString());
 
     var res_data = json.decode(response.body);
+    return res_data;
+  }
+
+  deleteAccount() async {
+    final uri = Uri.parse('${apiGlobal}/api/user/delete');
+    print(uri);
+
+    final headers = {
+      'Authorization': 'bearer ${globaltoken}',
+    };
+
+    http.Response response = await http.get(
+      uri,
+      headers: headers,
+    );
+
+    print(response.statusCode);
+    var res_data = json.decode(response.body);
+    print(res_data);
+    if (res_data["status"] == true) {
+      print(res_data['data'].length);
+      Get.back();
+      Get.snackbar(
+        'Success',
+        'Account Deleted Successfully',
+        animationDuration: Duration(seconds: 2),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      Get.to(() => MainLoginScreen());
+    } else
+      Get.snackbar(
+        'Error',
+        'Wrong Credentials',
+        animationDuration: Duration(seconds: 2),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+
     return res_data;
   }
 }
