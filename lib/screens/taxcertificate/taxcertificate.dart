@@ -76,7 +76,7 @@ class _TexCertificateScreenState extends State<TexCertificateScreen> {
   Future<void> taxCertificateList() async {
     taxCertificates = await ApiService().TaxCertificates_list();
 
-    log("taxCertificates" + taxCertificates['data'].toString());
+    // log("taxCertificates" + taxCertificates['data'].toString());
     taxCertificateListPDF();
   }
 
@@ -86,7 +86,7 @@ class _TexCertificateScreenState extends State<TexCertificateScreen> {
     taxCertificatesPDF = await ApiService()
         .TaxCertificates_listSyncPDF(context, taxCertificates['data']['id']);
 
-    print("taxCertificates" + taxCertificates['data'].toString());
+    // print("taxCertificates" + taxCertificates['data'].toString());
   }
 
   @override
@@ -141,19 +141,19 @@ class _TexCertificateScreenState extends State<TexCertificateScreen> {
         ),
         body: Padding(
           padding: const EdgeInsets.all(12.0),
-          child: FutureBuilder<void>(
+          child:  FutureBuilder<void>(
               future: taxCertificateList(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
-                  log("taxCertificates['data'][0].length" +
-                      taxCertificates['data'][0].length.toString());
+                  // log("taxCertificates['data'][0].length" +
+                  //     taxCertificates['data'][0].length.toString());
                   return Container(
                     width: double.infinity,
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
                           SingleChildScrollView(
-                            child: ListView.builder(
+                            child: taxCertificates['data'].length>0 ? ListView.builder(
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
                                 scrollDirection: Axis.vertical,
@@ -172,7 +172,7 @@ class _TexCertificateScreenState extends State<TexCertificateScreen> {
                                         taxCertificates['data'][snapshot]
                                             ['cstm_tax_certificate']),
                                   );
-                                }),
+                                }) : Text("No Certificates found"),
                           )
                         ],
                       ),

@@ -95,7 +95,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                   child: SingleChildScrollView(
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
-                      child: ListView.builder(
+                      child: order_historyvar['data'].length>0 ? ListView.builder(
                           itemCount: order_historyvar['data'].length,
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
@@ -112,7 +112,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                     ['order_status'],
                                 paymentStatus: order_historyvar['data'][index]
                                     ['payment_status']);
-                          }),
+                          }) : Text("No Orders found",textAlign: TextAlign.center,),
                     ),
                   ),
                 );

@@ -90,30 +90,33 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                   child: SingleChildScrollView(
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
-                      child: ListView.builder(
-                          itemCount: paymentsHistory['data'].length,
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          scrollDirection: Axis.vertical,
-                          itemBuilder: (context, index) {
-                            return Quotes_Card(
-                                orderNumber: paymentsHistory['data'][index]
-                                    ['order_number'],
-                                payAmount: paymentsHistory['data'][index]
-                                    ['pay_amount'],
-                                paymentDate: paymentsHistory['data'][index]
-                                    ['payment_date'],
-                                txnId: paymentsHistory['data'][index]['txnid'],
-                                paymentStatus: paymentsHistory['data'][index]
-                                    ['payment_status']);
-                          }),
+                      child: paymentsHistory['data'].length > 0
+                          ? ListView.builder(
+                              itemCount: paymentsHistory['data'].length,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              scrollDirection: Axis.vertical,
+                              itemBuilder: (context, index) {
+                                return Quotes_Card(
+                                    orderNumber: paymentsHistory['data'][index]
+                                        ['order_number'],
+                                    payAmount: paymentsHistory['data'][index]
+                                        ['pay_amount'],
+                                    paymentDate: paymentsHistory['data'][index]
+                                        ['payment_date'],
+                                    txnId: paymentsHistory['data'][index]
+                                        ['txnid'],
+                                    paymentStatus: paymentsHistory['data']
+                                        [index]['payment_status']);
+                              })
+                          : Text("No Payments found",textAlign: TextAlign.center),
                     ),
                   ),
                 );
-              }
-              else{
+              } else {
                 return spinkit;
-              };
+              }
+              ;
             }),
       ),
     );

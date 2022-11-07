@@ -147,10 +147,10 @@ class _quotesState extends State<quotes> with TickerProviderStateMixin {
                                                         ['product_description'],
                                                 image: quotations_data['data']
                                                     [index]['product_image'])
-                                            : Text("asasssssssssssssssssssssssssssssssssssssssssssssssssssssdata");
+                                            : Text("No Quotes found");
                                       })
                                   : Text(
-                                      "asasssssssssssssssssssssssssssssssssssssssssssssssssssssdata"),
+                                      "No Quotes found"),
                             ),
                           ],
                         ),
