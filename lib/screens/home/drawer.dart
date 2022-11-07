@@ -58,6 +58,7 @@ class _NavDrawerState extends State<NavDrawer> {
                           Image.network(
                             userController.user.propic.toString(),
                             width: 80,
+                            height: 80,
                           ) :                        
                           Image.asset("assets/slicing/NoPath.png",
                           width:80,height:80

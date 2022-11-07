@@ -259,7 +259,7 @@ class Quotess_Card extends StatelessWidget {
                       ],
                     ),
                     Container(
-                        width: res_width * 0.375,
+                        width: res_width * 0.27,
                         height: res_height * 0.17,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(7))),

@@ -451,7 +451,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               gridDelegate:
                                   SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
-                                childAspectRatio: 0.6,
+                                childAspectRatio: 0.58,
                                 crossAxisSpacing: 1,
                                 mainAxisSpacing: 5,
                               ),

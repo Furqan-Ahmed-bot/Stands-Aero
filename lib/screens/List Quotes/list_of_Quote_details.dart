@@ -199,7 +199,7 @@ class _quotes_detailsState extends State<quotes_details> {
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 17),
+                                            fontSize: 12),
                                       ),
                                     ),
                                   ),
@@ -369,7 +369,7 @@ class _quotes_detailsState extends State<quotes_details> {
                                   if (filePath == null && fileType == null) {
                                     Get.snackbar(
                                       'Error',
-                                      'Tax Certificate is not uploaded',
+                                      'Tax Certificate is not',
                                       animationDuration: Duration(seconds: 2),
                                       snackPosition: SnackPosition.BOTTOM,
                                     );

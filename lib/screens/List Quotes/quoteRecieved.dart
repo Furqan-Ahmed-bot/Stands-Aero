@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:stande_aero/screens/List%20Quotes/quotes.dart';
 import 'package:stande_aero/screens/home/home.dart';
+import 'package:stande_aero/screens/mainhome.dart';
 import 'package:stande_aero/screens/orders/orderstatus.dart';
 
 class QuoteRecieved extends StatefulWidget {
@@ -77,7 +78,7 @@ class _QuoteRecievedState extends State<QuoteRecieved> {
               ),
               GestureDetector(
                 onTap: (){
-                  Get.to(() => HomeScreen());
+                  Get.to(() => MainScreen());
                 },
                 child: Container(
                   width: res_width * 0.95,

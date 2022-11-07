@@ -70,15 +70,25 @@ class ApiService {
 
       globaltoken = res_data["data"]["token"];
       userid = res_data['data']['user']['id'].toString();
-      print("bottomctrl.navigationBarIndexValue" +
-          bottomctrl.navigationBarIndexValue.toString());
-      Navigator.pop(context);
-      if (bottomctrl.navigationBarIndexValue != 3) {
-        bottomctrl.navBarChange(3);
-      } else {
-        // Navigator.pop(context);
-        bottomctrl.navBarChange(0);
-      }
+      
+      Get.to(
+        EmailLoginScreen()
+      );
+      Get.snackbar(
+        'Congratulations',
+        'Account Registered Successfully',
+        animationDuration: Duration(seconds: 2),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      // print("bottomctrl.navigationBarIndexValue" +
+      //     bottomctrl.navigationBarIndexValue.toString());
+      // Navigator.pop(context);
+      // if (bottomctrl.navigationBarIndexValue != 3) {
+      //   bottomctrl.navBarChange(3);
+      // } else {
+      //   // Navigator.pop(context);
+      //   bottomctrl.navBarChange(0);
+      // }
     } else {
       Get.snackbar(
         'Error',

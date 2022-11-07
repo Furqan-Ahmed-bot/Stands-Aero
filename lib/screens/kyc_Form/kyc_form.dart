@@ -535,7 +535,7 @@ class _kyc_formState extends State<kyc_form> {
                                       color: myFocusNode.hasFocus
                                           ? Colors.white
                                           : Colors.black)),
-                              keyboardType: TextInputType.datetime,
+                              
                             ),
                           ),
                         ),
@@ -567,7 +567,7 @@ class _kyc_formState extends State<kyc_form> {
                                       color: myFocusNode.hasFocus
                                           ? Colors.white
                                           : Colors.black)),
-                              keyboardType: TextInputType.datetime,
+                             
                             ),
                           ),
                         ),
@@ -591,7 +591,7 @@ class _kyc_formState extends State<kyc_form> {
                                       color: myFocusNode.hasFocus
                                           ? Colors.white
                                           : Colors.black)),
-                              keyboardType: TextInputType.datetime,
+                              
                             ),
                           ),
                         ),
