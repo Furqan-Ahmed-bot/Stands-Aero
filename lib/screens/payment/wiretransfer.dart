@@ -263,6 +263,7 @@ class TextFieldHelper extends StatelessWidget {
                   borderRadius: BorderRadius.circular(5),
                   border: Border.all(color: Colors.grey)),
               child: TextField(
+                controller: controller,
                 maxLines: maxLines,
                 decoration: InputDecoration(
                     border: InputBorder.none,
