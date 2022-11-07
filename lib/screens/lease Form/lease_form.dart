@@ -15,26 +15,26 @@ class lease_Form extends StatefulWidget {
 }
 
 class _lease_FormState extends State<lease_Form> {
-   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-    TextEditingController day = TextEditingController();
-    TextEditingController month = TextEditingController();
-    TextEditingController customer_name = TextEditingController();
-    TextEditingController customer_location = TextEditingController();
-    TextEditingController stand_manufacturer = TextEditingController();
-    TextEditingController stand_color = TextEditingController();
-    TextEditingController stand_type = TextEditingController();
-    TextEditingController stand_serial_number = TextEditingController();
-    TextEditingController stand_quantity = TextEditingController();
-    TextEditingController delivery_location = TextEditingController();
-    TextEditingController delivery_date = TextEditingController();
-    TextEditingController daily_rent = TextEditingController();
-    TextEditingController replacement_value = TextEditingController();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  TextEditingController day = TextEditingController();
+  TextEditingController month = TextEditingController();
+  TextEditingController customer_name = TextEditingController();
+  TextEditingController customer_location = TextEditingController();
+  TextEditingController stand_manufacturer = TextEditingController();
+  TextEditingController stand_color = TextEditingController();
+  TextEditingController stand_type = TextEditingController();
+  TextEditingController stand_serial_number = TextEditingController();
+  TextEditingController stand_quantity = TextEditingController();
+  TextEditingController delivery_location = TextEditingController();
+  TextEditingController delivery_date = TextEditingController();
+  TextEditingController daily_rent = TextEditingController();
+  TextEditingController replacement_value = TextEditingController();
   @override
   Widget build(BuildContext context) {
     print(widget.placeOrderData.toString());
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
-   
+
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -120,7 +120,7 @@ class _lease_FormState extends State<lease_Form> {
                                   controller: day,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'Please enter day';
+                                      return 'Required';
                                     }
                                     return null;
                                   },
@@ -161,7 +161,7 @@ class _lease_FormState extends State<lease_Form> {
                                   controller: month,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'Please enter All fields';
+                                      return 'Required';
                                     }
                                     return null;
                                   },
@@ -270,7 +270,7 @@ class _lease_FormState extends State<lease_Form> {
                                   controller: stand_quantity,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'Please enter quantity';
+                                      return 'Required';
                                     }
                                     return null;
                                   },
@@ -325,7 +325,7 @@ class _lease_FormState extends State<lease_Form> {
                                 TextFormField(
                                   controller: delivery_date,
                                   readOnly: false,
-                                  onSaved:(newValue) => delivery_date.text,
+                                  onSaved: (newValue) => delivery_date.text,
                                   style: TextStyle(color: Colors.black),
                                   decoration: InputDecoration(
                                     isCollapsed: true,
@@ -349,7 +349,6 @@ class _lease_FormState extends State<lease_Form> {
                                           BorderSide(color: Colors.grey),
                                     ),
                                   ),
-                                  
                                   onTap: () async {
                                     DateTime? pickedDate = await showDatePicker(
                                         context:
@@ -360,7 +359,7 @@ class _lease_FormState extends State<lease_Form> {
                                         lastDate: DateTime(2101));
 
                                     if (pickedDate != null) {
-                                      // print("date"+ 
+                                      // print("date"+
                                       //     pickedDate.toString()); //pickedDate output format => 2021-03-10 00:00:00.000
                                       String formattedDate =
                                           DateFormat('yyyy-MM-dd')
@@ -371,17 +370,11 @@ class _lease_FormState extends State<lease_Form> {
                                             formattedDate; //set output date to TextField value.
                                       });
                                       // print("delivery_date.text" + delivery_date.text);
-                                     //formatted date output using intl package =>  2021-03-16
+                                      //formatted date output using intl package =>  2021-03-16
                                     } else {
                                       print("Date is not selected");
                                     }
                                   },
-                                ),
-                                Text(
-                                  "-2022",
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w500),
                                 ),
                               ],
                             ),
@@ -408,7 +401,7 @@ class _lease_FormState extends State<lease_Form> {
                                   controller: daily_rent,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'Please enter daily rent amount';
+                                      return 'Required';
                                     }
                                     return null;
                                   },
@@ -450,7 +443,7 @@ class _lease_FormState extends State<lease_Form> {
                                   controller: replacement_value,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'Please enter replacement value';
+                                      return 'Required';
                                     }
                                     return null;
                                   },

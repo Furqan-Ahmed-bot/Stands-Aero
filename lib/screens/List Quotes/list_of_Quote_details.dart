@@ -366,12 +366,19 @@ class _quotes_detailsState extends State<quotes_details> {
                                   // var res_data = ApiService()
                                   //     .placeOrder(context, sendData);
                                   // if (res_data = ['status'] == true) {}
-                                  placeOrderData_tax_file = filePath;
-                                  placeOrderData_quote_id = widget.quoteId;
-                                  placeOrderData_fileType = fileType;
-                                  Get.to(
-                                    lease_Form(placeOrderData)
-                                  );
+                                  if (filePath == null && fileType == null) {
+                                    Get.snackbar(
+                                      'Error',
+                                      'Tax Certificate is not uploaded',
+                                      animationDuration: Duration(seconds: 2),
+                                      snackPosition: SnackPosition.BOTTOM,
+                                    );
+                                  } else {
+                                    placeOrderData_tax_file = filePath;
+                                    placeOrderData_quote_id = widget.quoteId;
+                                    placeOrderData_fileType = fileType;
+                                    Get.to(lease_Form(placeOrderData));
+                                  }
                                 },
                                 child: Container(
                                   width: res_width * 0.95,
