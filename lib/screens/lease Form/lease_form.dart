@@ -1,16 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:stande_aero/screens/lease%20Form/lease_form2.dart';
+import 'package:stande_aero/helper/global.dart';
 
-class lease_Form extends StatelessWidget {
+class lease_Form extends StatefulWidget {
   final placeOrderData;
   const lease_Form(this.placeOrderData, {Key? key}) : super(key: key);
 
   @override
+  State<lease_Form> createState() => _lease_FormState();
+}
+
+class _lease_FormState extends State<lease_Form> {
+  @override
   Widget build(BuildContext context) {
-    print(placeOrderData.toString());
+    print(widget.placeOrderData.toString());
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
+    TextEditingController day = TextEditingController();
+    TextEditingController month = TextEditingController();
+    TextEditingController customer_name = TextEditingController();
+    TextEditingController customer_location = TextEditingController();
+    TextEditingController stand_manufacturer = TextEditingController();
+    TextEditingController stand_color = TextEditingController();
+    TextEditingController stand_type = TextEditingController();
+    TextEditingController stand_serial_number = TextEditingController();
+    TextEditingController stand_quantity = TextEditingController();
+    TextEditingController delivery_location = TextEditingController();
+    TextEditingController delivery_date = TextEditingController();
+    TextEditingController daily_rent = TextEditingController();
+    TextEditingController replacement_value = TextEditingController();
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -89,25 +109,34 @@ class lease_Form extends StatelessWidget {
                                     fontSize: 15, fontWeight: FontWeight.w400),
                               ),
                               // SizedBox(width: 5),
-                              blank(widt: 60),
+                              blank(
+                                widt: 60,
+                                kontroller: day,
+                              ),
                               Text(
                                 "day of",
                                 style: TextStyle(
                                     fontSize: 15, fontWeight: FontWeight.w400),
                               ),
-                              blank(widt: 30),
+                              blank(
+                                widt: 30,
+                                kontroller: month,
+                              ),
                               Text(
                                 """2022 by and between (i) National Aero Stands, LLC, a Texas limited liability company, having its principal place of business at 500 W. 5th Street, Suite 1010, Austin, TX 78701(\"NAS\"), and (ii)""",
                                 style: TextStyle(
                                     fontSize: 13, fontWeight: FontWeight.w500),
                               ),
-                              blank(widt: 60),
+                              blank(widt: 60, kontroller: customer_name),
                               Text(
                                 "having its principal place of business at",
                                 style: TextStyle(
                                     fontSize: 15, fontWeight: FontWeight.w400),
                               ),
-                              blank(widt: 30),
+                              blank(
+                                widt: 30,
+                                kontroller: customer_location,
+                              ),
                               Text(
                                 """("CUSTOMER"). """,
                                 style: TextStyle(fontSize: 12),
@@ -135,31 +164,31 @@ class lease_Form extends StatelessWidget {
                                 style: TextStyle(
                                     fontSize: 13, fontWeight: FontWeight.w500),
                               ),
-                              blank(widt: 50),
+                              blank(widt: 50, kontroller: stand_manufacturer),
                               Text(
                                 "Engine Stand Color:",
                                 style: TextStyle(
                                     fontSize: 13, fontWeight: FontWeight.w500),
                               ),
-                              blank(widt: 50),
+                              blank(widt: 50, kontroller: stand_color),
                               Text(
                                 "Type:",
                                 style: TextStyle(
                                     fontSize: 13, fontWeight: FontWeight.w500),
                               ),
-                              blank(widt: 50),
+                              blank(widt: 50, kontroller: stand_type),
                               Text(
                                 "Serial No.",
                                 style: TextStyle(
                                     fontSize: 13, fontWeight: FontWeight.w500),
                               ),
-                              blank(widt: 50),
+                              blank(widt: 50, kontroller: stand_serial_number),
                               Text(
                                 "Quantity:",
                                 style: TextStyle(
                                     fontSize: 13, fontWeight: FontWeight.w500),
                               ),
-                              blank(widt: 50),
+                              blank(widt: 50, kontroller: stand_quantity),
                             ],
                           ),
                           SizedBox(height: 10),
@@ -173,13 +202,13 @@ class lease_Form extends StatelessWidget {
                                 style: TextStyle(
                                     fontSize: 13, fontWeight: FontWeight.w500),
                               ),
-                              blank(widt: 50),
+                              blank(widt: 50, kontroller: delivery_location),
                               Text(
                                 """("Delivery Location") by NAS's tender of the Engine Stand to CUSTOMER's common carrier for shipment outside the State of Florida on (the "Delivery Date")""",
                                 style: TextStyle(
                                     fontSize: 13, fontWeight: FontWeight.w500),
                               ),
-                              blank(widt: 50),
+                              blank(widt: 50, kontroller: delivery_date),
                               Text(
                                 "-2022",
                                 style: TextStyle(
@@ -198,21 +227,23 @@ class lease_Form extends StatelessWidget {
                                 style: TextStyle(
                                     fontSize: 13, fontWeight: FontWeight.w500),
                               ),
-                              blank(widt: 50),
                               Text(
                                 "\n\n4:Daily Rent: Daily Rent will be charged as follows:",
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                     fontSize: 13, fontWeight: FontWeight.w500),
                               ),
-                              blank(widt: 50),
+                              blank(
+                                widt: 50,
+                                kontroller: daily_rent,
+                              ),
                               Text(
                                 "U.S. Dollars (US.00) per Day of the Agreement Term, payable in advance for the first thirty (30) days of the Agreement Term and payable in advance of every Agreement Month thereafter. Agreement Month is defined as thirty (30) consecutive days, commencing on the Delivery date and recurring every thirty (30) days there- after. In all events, CUSTOMER will be charged and CUSTOMER shall pay Daily Rent until the Engine Stand is Redelivered to the redelivery Location in the Redelivery Condition in accordance with Section 14 below. \n\n5. Interest on Past Due Payments: Any payment due hereunder not made within five (5) days after the due date shall accrue interest at the rate of ten percent 10% per annum. \n\n6. Total Loss: It is hereby agreed that if the Engine Stand is lost, destroyed or damaged beyond economic repair, CUSTOMER shall forthwith pay NAS the Agreed Value, in addition to the unpaid Daily Rent, for the Engine Stand. Such payment shall be without setoff for rent or other money paid by CUSTOMER. The Agreed Value for the replacement of the Engine Stand is USS",
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                     fontSize: 13, fontWeight: FontWeight.w500),
                               ),
-                              blank(widt: 50),
+                              blank(widt: 50, kontroller: replacement_value),
                             ],
                           ),
                           Text(
@@ -229,6 +260,22 @@ class lease_Form extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
+                    setState(() {
+                      global_day = day.text;
+                      global_month = month.text;
+                      global_customer_name = customer_name.text;
+                      global_customer_location = customer_location.text;
+                      global_stand_manufacturer = stand_manufacturer.text;
+                      global_stand_color = stand_color.text;
+                      global_stand_type = stand_type.text;
+                      global_stand_serial_number = stand_serial_number.text;
+                      global_stand_quantity = stand_quantity.text;
+                      global_delivery_location = delivery_location.text;
+                      global_delivery_date = delivery_date.text;
+                      global_daily_rent = daily_rent.text;
+                      global_replacement_value = replacement_value.text;
+                    });
+
                     Get.to(lease_form2());
                   },
                   child: Container(
@@ -275,6 +322,12 @@ class blank extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: kontroller,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter All fields';
+        }
+        return null;
+      },
       decoration: InputDecoration(
         isCollapsed: true,
         // contentPadding: EdgeInsets.symmetric(vertical: 0),

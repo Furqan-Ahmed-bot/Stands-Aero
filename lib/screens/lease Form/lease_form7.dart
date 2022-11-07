@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:stande_aero/helper/global.dart';
 import '../payment/paypal.dart';
 
 class lease_form7 extends StatelessWidget {
@@ -9,6 +9,10 @@ class lease_form7 extends StatelessWidget {
   Widget build(BuildContext context) {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
+    TextEditingController registered_agent = TextEditingController();
+    TextEditingController signature_1 = TextEditingController();
+    TextEditingController signature_2 = TextEditingController();
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -61,9 +65,104 @@ class lease_form7 extends StatelessWidget {
                   child: Card(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        """ 24. Jurisdiction: Each party hereby irrevocably and unconditionally submits, for itself and its property, to the nonexclusive jurisdiction of the courts of the State of Texas in any action or proceeding arising out of or relating \nto this Agreement, or for recognition or enforcement of any judgment, and each party hereby irrevocably and unconditionally agrees that all claims in respect of any such action or proceeding may be heard and determined in the courts of the State of Texas. The prevailing party shall be entitled to reimbursement of all reasonable attorney fees and costs. \n\n25. WAIVER OF JURY TRIAL: NAS AND CUSTOMER WAIVE TRIAL BY JURY IN ANY JUDICIAL PROCEEDING TO WHICH THEY ARE PARTIES INVOLVING, DIRECTLY OR INDIRECTLY, ANY MATTER ARISING OUT OF OR RELATING TO THIS AGREEMENT. (Signatures on following page) IN WITNESS WHEREOF, NAS and CUSTOMER have caused their respective duly authorized representatives to execute this Agreement as of the day and year first above written. NATIONAL AERO STANDS, LLC CUSTOMER NAME \n\nBy:_________ \n\nBy:________  \n\nName: Name: \n\nTitle: Title: \n\nGUARANTOR NAME""",
-                        style: TextStyle(fontSize: 12),
+                      child: Column(
+                        children: [
+                          Text(
+                            """ 24. Jurisdiction: Each party hereby irrevocably and unconditionally submits, for itself and its property, to the nonexclusive jurisdiction of the courts of the State of Texas in any action or proceeding arising out of or relating \nto this Agreement, or for recognition or enforcement of any judgment, and each party hereby irrevocably and unconditionally agrees that all claims in respect of any such action or proceeding may be heard and determined in the courts of the State of Texas. The prevailing party shall be entitled to reimbursement of all reasonable attorney fees and costs. \n\n25. WAIVER OF JURY TRIAL: NAS AND CUSTOMER WAIVE TRIAL BY JURY IN ANY JUDICIAL PROCEEDING TO WHICH THEY ARE PARTIES INVOLVING, DIRECTLY OR INDIRECTLY, ANY MATTER ARISING OUT OF OR RELATING TO THIS AGREEMENT. (Signatures on following page) IN WITNESS WHEREOF, NAS and CUSTOMER have caused their respective duly authorized representatives to execute this Agreement as of the day and year first above written. NATIONAL AERO STANDS, LLC CUSTOMER NAME """,
+                            style: TextStyle(fontSize: 12),
+                          ),
+                          Row(
+                            children: [
+                              Column(
+                                children: [
+                                  Text(
+                                    """ By:""",
+                                    style: TextStyle(fontSize: 12),
+                                  )
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  blank(
+                                    widt: 100,
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Column(
+                                children: [
+                                  Text(
+                                    """ By:""",
+                                    style: TextStyle(fontSize: 12),
+                                  )
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  blank(
+                                    widt: 100,kontroller: signature_1,
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Column(
+                                children: [
+                                  Text(
+                                    """ Name:""",
+                                    style: TextStyle(fontSize: 12),
+                                  )
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  blank(
+                                    widt: 100,kontroller: signature_2,
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Column(
+                                children: [
+                                  Text(
+                                    """ Title:""",
+                                    style: TextStyle(fontSize: 12),
+                                  )
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  blank(widt: 100,kontroller: registered_agent,)
+                                ],
+                              )
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Column(
+                                children: [
+                                  Text(
+                                    """ GUARANTOR NAME:""",
+                                    style: TextStyle(fontSize: 12),
+                                  )
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  blank(widt: 100,)
+                                ],
+                              )
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -73,6 +172,30 @@ class lease_form7 extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
+                     var sendData={
+                      'day': global_day,
+                      'month': global_month,
+                      'customer_name': global_customer_name,
+                      'customer_location': global_customer_location,
+                      'stand_manufacturer': global_stand_manufacturer,
+                      'stand_color': global_stand_color,
+                      'stand_type': global_stand_type,
+                      'stand_serial_number': global_stand_serial_number,
+                      'stand_quantity': global_stand_quantity,
+                      'delivery_location': global_delivery_location,
+                      'delivery_date': global_delivery_date,
+                      'daily_rent': global_daily_rent,
+                      'replacement_value': global_replacement_value,
+                      'security_deposit': global_security_deposit,
+                      'guarantor': global_guarantor,
+                      'registered_agent': registered_agent.text,
+                      'signature_1': signature_1.text,
+                      'signature_2': signature_2,
+                      'tax_file': placeOrderData.tax_file,
+                      'quote_id': placeOrderData.quote_id,
+                      'fileType': placeOrderData.fileType
+                     };
+
                     Get.to(PaymentScreen());
                     // Get.to(lease_form7());
                   },
@@ -101,6 +224,40 @@ class lease_form7 extends StatelessWidget {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class blank extends StatelessWidget {
+  TextEditingController? kontroller;
+  double? widt;
+  blank({
+    this.widt,
+    this.kontroller,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: kontroller,
+      decoration: InputDecoration(
+        isCollapsed: true,
+        // contentPadding: EdgeInsets.symmetric(vertical: 0),
+        constraints: BoxConstraints(maxWidth: widt!, minWidth: 10),
+        border: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey),
+        ),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey),
+        ),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey),
+        ),
+        disabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey),
         ),
       ),
     );
