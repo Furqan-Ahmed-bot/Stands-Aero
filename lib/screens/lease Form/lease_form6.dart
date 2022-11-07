@@ -13,6 +13,7 @@ class lease_form6 extends StatelessWidget {
     TextEditingController security_deposit = TextEditingController();
     TextEditingController guarantor = TextEditingController();
     GlobalKey<FormState> formKey = GlobalKey<FormState>();
+    
 
     return Scaffold(
       appBar: AppBar(
@@ -78,7 +79,7 @@ class lease_form6 extends StatelessWidget {
                               controller: security_deposit,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Please enter security deposit';
+                                  return 'Required';
                                 }
                                 return null;
                               },
