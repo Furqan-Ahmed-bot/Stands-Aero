@@ -16,7 +16,9 @@ class HomeScreen extends StatefulWidget {
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
-}TextEditingController searchController=  TextEditingController() ;
+}
+
+TextEditingController searchController = TextEditingController();
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   late AnimationController animation;
@@ -26,13 +28,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   String searchQuery = "";
   bool dynamicContent = true;
   List<product> filteredProducts = [];
-   final formKey = GlobalKey<FormState>();
-final GlobalKey<ScaffoldState> _key = GlobalKey();
-
-   
+  final formKey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
 
   @override
-  void initState() { 
+  void initState() {
     super.initState();
 
     Future.delayed(Duration.zero, () {
@@ -79,29 +79,45 @@ final GlobalKey<ScaffoldState> _key = GlobalKey();
     searchProduct(searchQuery);
   }
 
-   Future<List<product>> searchProduct(String query) async {
+  Future<List<product>> searchProduct(String query) async {
     print("Called Search " + query);
     setState(() {
-        // filteredProducts = [];
-    // setState(() {
-    filteredProducts = productController.productList
-        .where((element) => element.name.contains(query))
-        .toList();
+      // filteredProducts = [];
+      // setState(() {
+      filteredProducts = productController.productList
+          .where((element) => element.name.contains(query))
+          .toList();
     });
+
     print(filteredProducts.length.toString());
-  return filteredProducts;
+    return filteredProducts;
     //  print(filteredProducts[0].name.toString());
     // });
   }
-  bool klr=false;
+
+  Future<List<product>> searchProductFilter(String query) async {
+    print("Called Search " + query);
+    setState(() {
+      // filteredProducts = [];
+      // setState(() {
+      filteredProducts = productController.productList
+          .where((element) => element.desc.contains(query))
+          .toList();
+    });
+
+    print(filteredProducts.length.toString());
+    return filteredProducts;
+    //  print(filteredProducts[0].name.toString());
+    // });
+  }
+
+  bool klr = false;
 
   @override
   Widget build(BuildContext context) {
-
-
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
-    
+
     // List<product> filteredProducts = productController.productList.where((element) => element.name.contains("")).toList();
     // print(abc[0].name.toString());
     // print("Search "+productController.productList.where((element) => element.name.contains("")).toList().toString());
@@ -163,7 +179,6 @@ final GlobalKey<ScaffoldState> _key = GlobalKey();
                     height: res_height * 0.01,
                   ),
 
-              
                   Padding(
                     padding: const EdgeInsets.only(left: 13, right: 13),
                     child: Container(
@@ -174,16 +189,14 @@ final GlobalKey<ScaffoldState> _key = GlobalKey();
                       child: TextField(
                         controller: searchController,
                         onChanged: (value) {
-                            searchProduct(value);
+                          searchProduct(value);
                         },
-                 
                         onEditingComplete: () {
                           searchProduct(searchController.text);
                         },
-                        onSubmitted:(value) {
-                           searchProduct(value);
-                           FocusManager.instance.primaryFocus?.unfocus();
-
+                        onSubmitted: (value) {
+                          searchProduct(value);
+                          FocusManager.instance.primaryFocus?.unfocus();
                         },
                         decoration: new InputDecoration(
                           border: OutlineInputBorder(
@@ -216,23 +229,62 @@ final GlobalKey<ScaffoldState> _key = GlobalKey();
                         // spacing: 10,
                         // runSpacing: 10,
                         children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.015,
+                          ),
+                          GestureDetector(
+                            onTap: () {},
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.35,
+                              decoration: BoxDecoration(
+                                  color: klr == false
+                                      ? kPrimaryColor
+                                      : Color(0xffa1a1a1),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5))),
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                        radvalue2 != null
+                                            ? radvalue2.toString()
+                                            : 'All Products',
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          color: klr == false
+                                              ? Colors.white
+                                              : Colors.black,
+                                        )),
+                                    Icon(
+                                      Icons.arrow_drop_down,
+                                      color: klr == false
+                                          ? Colors.white
+                                          : Colors.black,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.015,
+                          ),
                           GestureDetector(
                             onTap: () {
                               setState(() {
                                 // catvalue;
-                                klr=true;
+                                klr = true;
                               });
-                              filterpopup([
-                                'Engine Stands 1',
-                                'Engine Stands 2',
-                                'Engine Stands 3',
-                                'Engine Stands 5'
-                              ], "cat");
                             },
                             child: Container(
                               width: MediaQuery.of(context).size.width * 0.35,
                               decoration: BoxDecoration(
-                                  color: klr==true? kPrimaryColor:Color(0xffa1a1a1),
+                                  color: klr == true
+                                      ? kPrimaryColor
+                                      : Color(0xffa1a1a1),
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5))),
                               child: Padding(
@@ -248,11 +300,15 @@ final GlobalKey<ScaffoldState> _key = GlobalKey();
                                             : 'Engine Stands',
                                         style: TextStyle(
                                           fontSize: 13,
-                                          color:klr==true?Colors.white: Colors.black,
+                                          color: klr == true
+                                              ? Colors.white
+                                              : Colors.black,
                                         )),
                                     Icon(
                                       Icons.arrow_drop_down,
-                                     color:klr==true?Colors.white: Colors.black,
+                                      color: klr == true
+                                          ? Colors.white
+                                          : Colors.black,
                                     )
                                   ],
                                 ),
@@ -266,20 +322,15 @@ final GlobalKey<ScaffoldState> _key = GlobalKey();
                             onTap: () {
                               setState(() {
                                 // catvalue;
-                                klr=false;
+                                klr = false;
                               });
-                              // print();
-                              filterpopup([
-                                'Manufacture 1',
-                                'Manufacture 2',
-                                'Manufacture 3',
-                                'Manufacture 4',
-                              ], "rad");
                             },
                             child: Container(
                               width: MediaQuery.of(context).size.width * 0.35,
                               decoration: BoxDecoration(
-                                   color: klr==false? kPrimaryColor:Color(0xffa1a1a1),
+                                  color: klr == false
+                                      ? kPrimaryColor
+                                      : Color(0xffa1a1a1),
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5))),
                               child: Padding(
@@ -294,11 +345,15 @@ final GlobalKey<ScaffoldState> _key = GlobalKey();
                                             : 'Manufactures',
                                         style: TextStyle(
                                           fontSize: 13,
-                                           color:klr==false?Colors.white: Colors.black,
+                                          color: klr == false
+                                              ? Colors.white
+                                              : Colors.black,
                                         )),
                                     Icon(
                                       Icons.arrow_drop_down,
-                                      color:klr==false?Colors.white: Colors.black,
+                                      color: klr == false
+                                          ? Colors.white
+                                          : Colors.black,
                                     )
                                   ],
                                 ),
@@ -386,41 +441,40 @@ final GlobalKey<ScaffoldState> _key = GlobalKey();
                   //   ),
                   // ),
                   FutureBuilder<List<product>>(
-                    future: searchProduct(searchController.text),
-                    builder: (context, snapshot) {
-                      return Padding(
-                        padding: const EdgeInsets.only(left: 13),
-                        child: Container(
-                          height: Get.height * 0.7,
-                          child: GridView.builder(
-                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              childAspectRatio: 0.6,
-                              crossAxisSpacing: 1,
-                              mainAxisSpacing: 5,
+                      future: searchProduct(searchController.text),
+                      builder: (context, snapshot) {
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 13),
+                          child: Container(
+                            height: Get.height * 0.7,
+                            child: GridView.builder(
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                childAspectRatio: 0.6,
+                                crossAxisSpacing: 1,
+                                mainAxisSpacing: 5,
+                              ),
+                              scrollDirection: Axis.vertical,
+                              itemCount: filteredProducts.length,
+                              itemBuilder: (context, i) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 5, left: 5, right: 5, bottom: 5),
+                                  child: StandsBox(
+                                    context,
+                                    filteredProducts[i].thumbnail,
+                                    filteredProducts[i].name,
+                                    filteredProducts[i].location,
+                                    filteredProducts[i].desc,
+                                    filteredProducts[i].id,
+                                  ),
+                                );
+                              },
                             ),
-                            scrollDirection: Axis.vertical,
-                            itemCount: filteredProducts.length,
-                            itemBuilder: (context, i) {
-                  
-                              return Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 5, left: 5, right: 5, bottom: 5),
-                                child: StandsBox(
-                                  context,
-                                  filteredProducts[i].thumbnail,
-                                  filteredProducts[i].name,
-                                  filteredProducts[i].location,
-                                  filteredProducts[i].desc,
-                                  filteredProducts[i].id,
-                                ),
-                              );
-                            },
                           ),
-                        ),
-                      );
-                    }
-                  ),
+                        );
+                      }),
                   // SizedBox(
                   //   height: res_height * 0.025,
                   // ),
@@ -517,7 +571,7 @@ final GlobalKey<ScaffoldState> _key = GlobalKey();
           Get.to(booking(bookingapiresponse: responseData));
         });
       },
-      child:  Container(
+      child: Container(
         width: res_width * 0.475,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -553,7 +607,7 @@ final GlobalKey<ScaffoldState> _key = GlobalKey();
             )
           ],
         ),
-      ) ,
+      ),
     );
   }
 
