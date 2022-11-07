@@ -358,15 +358,17 @@ class _quotes_detailsState extends State<quotes_details> {
                             ? GestureDetector(
                                 onTap: () {
                                   // Get.to(() => payment());
-                                  var sendData = {
-                                    'tax_file': filePath,
-                                    'quote_id': widget.quoteId,
-                                    'fileType': fileType
-                                  };
+                                  // var sendData = {
+                                  //   'tax_file': filePath,
+                                  //   'quote_id': widget.quoteId,
+                                  //   'fileType': fileType
+                                  // };
                                   // var res_data = ApiService()
                                   //     .placeOrder(context, sendData);
                                   // if (res_data = ['status'] == true) {}
-                                  placeOrderData = sendData;
+                                  placeOrderData_tax_file = filePath;
+                                  placeOrderData_quote_id = widget.quoteId;
+                                  placeOrderData_fileType = fileType;
                                   Get.to(
                                     lease_Form(placeOrderData)
                                   );

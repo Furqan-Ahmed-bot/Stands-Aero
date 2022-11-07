@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stande_aero/helper/global.dart';
@@ -190,11 +192,13 @@ class lease_form7 extends StatelessWidget {
                       'guarantor': global_guarantor,
                       'registered_agent': registered_agent.text,
                       'signature_1': signature_1.text,
-                      'signature_2': signature_2,
-                      'tax_file': placeOrderData.tax_file,
-                      'quote_id': placeOrderData.quote_id,
-                      'fileType': placeOrderData.fileType
+                      'signature_2': signature_2.text,
+                      'tax_file': placeOrderData_tax_file,
+                      'quote_id': placeOrderData_quote_id,
+                      'fileType': placeOrderData_fileType
                      };
+
+                     log("leas form data display" + sendData.toString());
 
                     Get.to(PaymentScreen());
                     // Get.to(lease_form7());
