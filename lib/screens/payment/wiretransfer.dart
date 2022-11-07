@@ -3,7 +3,11 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:stande_aero/screens/auth/mainlogin.dart';
+import 'package:stande_aero/screens/orders/orderstatus.dart';
 import 'package:stande_aero/screens/payment/awaiting.dart';
+
+import '../../helper/global.dart';
+import '../../services/remote_services.dart';
 
 class WireTransfer extends StatefulWidget {
   const WireTransfer({Key? key}) : super(key: key);
@@ -13,6 +17,18 @@ class WireTransfer extends StatefulWidget {
 }
 
 class _WireTransferState extends State<WireTransfer> {
+  TextEditingController wire_swift_code = TextEditingController();
+  TextEditingController wire_payment_reference = TextEditingController();
+
+  TextEditingController wire_account_holder = TextEditingController();
+  TextEditingController wire_bank_name = TextEditingController();
+
+  TextEditingController wire_iban = TextEditingController();
+  TextEditingController wire_city = TextEditingController();
+
+  TextEditingController wire_bank_account_number = TextEditingController();
+  TextEditingController wire_special_id = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     double res_width = MediaQuery.of(context).size.width;
@@ -70,21 +86,110 @@ class _WireTransferState extends State<WireTransfer> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                TextFieldHelper(hed: "Swift Code", labelText: ""),
-                TextFieldHelper(hed: "Payment Refrence", labelText: ""),
-                TextFieldHelper(hed: "Account Holder", labelText: ""),
-                TextFieldHelper(hed: "Bank Name", labelText: ""),
-                TextFieldHelper(hed: "IBAN", labelText: ""),
-                TextFieldHelper(hed: "City", labelText: ""),
-                TextFieldHelper(hed: "Bank Account Number", labelText: ""),
-                TextFieldHelper(hed: "Special ID", labelText: ""),
+                TextFieldHelper(
+                    hed: "Swift Code",
+                    labelText: "",
+                    controller: wire_swift_code),
+                TextFieldHelper(
+                    hed: "Payment Refrence",
+                    labelText: "",
+                    controller: wire_payment_reference),
+                TextFieldHelper(
+                    hed: "Account Holder",
+                    labelText: "",
+                    controller: wire_account_holder),
+                TextFieldHelper(
+                    hed: "Bank Name",
+                    labelText: "",
+                    controller: wire_bank_name),
+                TextFieldHelper(
+                    hed: "IBAN", labelText: "", controller: wire_iban),
+                TextFieldHelper(
+                    hed: "City", labelText: "", controller: wire_city),
+                TextFieldHelper(
+                    hed: "Bank Account Number",
+                    labelText: "",
+                    controller: wire_bank_account_number),
+                TextFieldHelper(
+                    hed: "Special ID",
+                    labelText: "",
+                    controller: wire_special_id),
                 SizedBox(
                   height: res_height * 0.01,
                 ),
                 GestureDetector(
-                  onTap: () {
-                    print('asdasd');
-                    Get.to(() => AwaitingConfirm());
+                  onTap: () async {
+                    var sendData = {
+                      'day': global_day,
+                      'month': global_month,
+                      'customer_name': global_customer_name,
+                      'customer_location': global_customer_location,
+                      'stand_manufacturer': global_stand_manufacturer,
+                      'stand_color': global_stand_color,
+                      'stand_type': global_stand_type,
+                      'stand_serial_number': global_stand_serial_number,
+                      'stand_quantity': global_stand_quantity,
+                      'delivery_location': global_delivery_location,
+                      'delivery_date': global_delivery_date,
+                      'daily_rent': global_daily_rent,
+                      'replacement_value': global_replacement_value,
+                      'security_deposit': global_security_deposit,
+                      'guarantor': global_guarantor,
+                      'registered_agent': global_registered_agent,
+                      'signature_1': global_signature_1,
+                      'signature_2': global_signature_2,
+                      'tax_file': placeOrderData_tax_file,
+                      'quote_id': placeOrderData_quote_id,
+                      'fileType': placeOrderData_fileType
+                    };
+                    var res_data =
+                        await ApiService().placeOrder(context, sendData);
+
+                    print("Lease Form RESPONSE" + res_data.toString());
+                    if (res_data['status'] == true) {
+                      var wiretransferData = {
+                        'wire_swift_code': wire_swift_code.text,
+                        'wire_payment_reference': wire_payment_reference.text,
+                        'wire_account_holder': wire_account_holder.text,
+                        'wire_bank_name': wire_bank_name.text,
+                        'wire_iban': wire_iban.text,
+                        'wire_city': wire_city.text,
+                        'wire_bank_account_number':
+                            wire_bank_account_number.text,
+                        'wire_special_id': wire_special_id.text
+                      };
+
+                      var res_data2 = await ApiService()
+                          .wireTransfer(context, wiretransferData);
+                      if (res_data2['status'] == true) {
+                        Get.snackbar(
+                          'Success',
+                          "Kindly Pay the Amount using wire transfer",
+                          snackPosition: SnackPosition.TOP,
+                        );
+
+                        Get.to(() => OrderStatus());
+                      } else {
+                        Get.back();
+
+                        Get.snackbar(
+                          'Error',
+                          "Payment Failed",
+                          snackPosition: SnackPosition.BOTTOM,
+                          backgroundColor: Colors.white,
+                        );
+                      }
+                      // Get.to(PaymentScreen());
+                    } else {
+                      Get.snackbar(
+                        'Error',
+                        "Invalid Email Address",
+                        snackPosition: SnackPosition.BOTTOM,
+                        backgroundColor: Colors.white,
+                      );
+                    }
+                    // print('asdasd');
+                    // Get.to(() => AwaitingConfirm());
                     // Get.to(() => MainLoginScreen());
                   },
                   child: Container(
@@ -122,8 +227,13 @@ class TextFieldHelper extends StatelessWidget {
   var labelText, hed;
 
   var maxLines;
-
-  TextFieldHelper({Key? key, this.labelText, this.hed, this.maxLines})
+  TextEditingController controller;
+  TextFieldHelper(
+      {Key? key,
+      this.labelText,
+      this.hed,
+      this.maxLines,
+      required this.controller})
       : super(key: key);
 
   @override

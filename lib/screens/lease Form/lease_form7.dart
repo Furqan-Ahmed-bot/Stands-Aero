@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stande_aero/helper/global.dart';
+import 'package:stande_aero/screens/payment/wiretransfer.dart';
+import 'package:stande_aero/services/remote_services.dart';
 import '../payment/paypal.dart';
 
 class lease_form7 extends StatelessWidget {
@@ -105,7 +107,8 @@ class lease_form7 extends StatelessWidget {
                               Column(
                                 children: [
                                   blank(
-                                    widt: 100,kontroller: signature_1,
+                                    widt: 100,
+                                    kontroller: signature_1,
                                   )
                                 ],
                               )
@@ -124,7 +127,8 @@ class lease_form7 extends StatelessWidget {
                               Column(
                                 children: [
                                   blank(
-                                    widt: 100,kontroller: signature_2,
+                                    widt: 100,
+                                    kontroller: signature_2,
                                   )
                                 ],
                               )
@@ -142,7 +146,10 @@ class lease_form7 extends StatelessWidget {
                               ),
                               Column(
                                 children: [
-                                  blank(widt: 100,kontroller: registered_agent,)
+                                  blank(
+                                    widt: 100,
+                                    kontroller: registered_agent,
+                                  )
                                 ],
                               )
                             ],
@@ -159,7 +166,9 @@ class lease_form7 extends StatelessWidget {
                               ),
                               Column(
                                 children: [
-                                  blank(widt: 100,)
+                                  blank(
+                                    widt: 100,
+                                  )
                                 ],
                               )
                             ],
@@ -173,8 +182,11 @@ class lease_form7 extends StatelessWidget {
                   height: res_height * 0.01,
                 ),
                 GestureDetector(
-                  onTap: () {
-                     var sendData={
+                  onTap: () async {
+                    global_registered_agent = registered_agent.text;
+                    global_signature_1 = signature_1.text;
+                    global_signature_2 = signature_2.text;
+                    var sendData = {
                       'day': global_day,
                       'month': global_month,
                       'customer_name': global_customer_name,
@@ -196,9 +208,21 @@ class lease_form7 extends StatelessWidget {
                       'tax_file': placeOrderData_tax_file,
                       'quote_id': placeOrderData_quote_id,
                       'fileType': placeOrderData_fileType
-                     };
+                    };
+                    var res_data =
+                        await ApiService().placeOrder(context, sendData);
 
-                     log("leas form data display" + sendData.toString());
+                    print("Lease Form RESPONSE" + res_data.toString());
+                    if (res_data['status'] == true) {
+                      Get.to(PaymentScreen());
+                    } else {
+                      Get.snackbar(
+                        'Error',
+                        "Invalid Email Address",
+                        snackPosition: SnackPosition.BOTTOM,
+                        backgroundColor: Colors.white,
+                      );
+                    }
 
                     Get.to(PaymentScreen());
                     // Get.to(lease_form7());
@@ -212,7 +236,7 @@ class lease_form7 extends StatelessWidget {
                       padding: const EdgeInsets.all(13.0),
                       child: Center(
                         child: Text(
-                          'Continue',
+                          'Pay via Paypal',
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -224,6 +248,32 @@ class lease_form7 extends StatelessWidget {
                 ),
                 SizedBox(
                   height: res_height * 0.01,
+                ),
+                GestureDetector(
+                  onTap: () async {
+                    Get.to(WireTransfer());
+
+                    // Get.to(PaymentScreen());
+                    // Get.to(lease_form7());
+                  },
+                  child: Container(
+                    width: res_width * 0.9,
+                    decoration: BoxDecoration(
+                        color: Color(0xffaf8a39),
+                        borderRadius: BorderRadius.all(Radius.circular(7))),
+                    child: Padding(
+                      padding: const EdgeInsets.all(13.0),
+                      child: Center(
+                        child: Text(
+                          'Pay via Wire Transfer',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),

@@ -678,10 +678,10 @@ class ApiService {
     log("place order get quote id ${getId}");
     var currentFileType = sendData['fileType'];
     var attachmentType = '';
-    final uri = Uri.parse('${apiGlobal}/api/user/create-order/${getId}');
+    final uri = Uri.parse('${apiGlobal}/api/user/order-lease/${getId}');
     var request = http.MultipartRequest('POST', uri);
 
-    var headers = {'Authorization': "Bearer " + globaltoken};
+    var headers = {'Authorization': "bearer " + globaltoken};
 
     if (sendData['tax_file'] != null) {
       print(sendData['tax_file'].toString());
@@ -698,6 +698,46 @@ class ApiService {
           contentType: MediaType(attachmentType, currentFileType));
       request.files.add(multipartFile);
     }
+
+    request.fields.addAll({
+      'day': '20',
+      'month': '10',
+      'customer_name': 'test',
+      'customer_location': 'testloc',
+      'stand_manufacturer': 'teststand',
+      'stand_color': 'testcol',
+      'stand_type': 'testtype',
+      'stand_serial_number': 'testserial',
+      'stand_quantity': '1',
+      'delivery_location': 'testloc',
+      'delivery_date': '2022-12-10',
+      'daily_rent': '1000',
+      'replacement_value': '2000',
+      'security_deposit': '500',
+      'guarantor': 'testguarantor',
+      'registered_agent': 'testagent',
+      'signature_1': 'test_sign_1',
+      'signature_2': 'test_sign_2'
+
+      // 'day': sendData['day'],
+      // 'month': sendData['month'],
+      // 'customer_name': sendData['customer_name'],
+      // 'customer_location': sendData['customer_location'],
+      // 'stand_manufacturer': sendData['stand_manufacturer'],
+      // 'stand_color': sendData['stand_color'],
+      // 'stand_type': sendData['stand_type'],
+      // 'stand_serial_number': sendData['stand_serial_number'],
+      // 'stand_quantity': sendData['stand_quantity'],
+      // 'delivery_location': sendData['delivery_location'],
+      // 'delivery_date': sendData['delivery_date'],
+      // 'daily_rent': sendData['daily_rent'],
+      // 'replacement_value': sendData['replacement_value'],
+      // 'security_deposit': sendData['security_deposit'],
+      // 'guarantor': sendData['guarantor'],
+      // 'registered_agent': sendData['registered_agent'],
+      // 'signature_1': sendData['signature_1'],
+      // 'signature_2': sendData['signature_2']
+    });
     String jsonBody = json.encode(request.fields);
     log("Request " + jsonBody.toString());
     request.headers.addAll(headers);
@@ -707,10 +747,7 @@ class ApiService {
     log("res print" + res.body.toString());
     var res_data = json.decode(res.body.toString());
 
-    if (res_data['status'] == true) {
-      Navigator.pop(context);
-      log("res print" + res.body.toString());
-    }
+    return res_data;
   }
 
   previewPDF(context, id) async {
@@ -772,6 +809,33 @@ class ApiService {
         snackPosition: SnackPosition.BOTTOM,
       );
 
+    return res_data;
+  }
+
+  wireTransfer(context, data) async {
+    print(data);
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return spinkit;
+        });
+
+    //print('${apiGlobal}/auth/register');
+    final uri =
+        Uri.parse('${apiGlobal}/api/user/pay-wire/${placeOrderData_quote_id}');
+    final headers = {'Content-Type': 'application/json'};
+    String jsonBody = json.encode(data);
+
+    http.Response response = await http.post(
+      uri,
+      headers: headers,
+      body: jsonBody,
+    );
+    //print(response.statusCode);
+
+    var res_data = json.decode(response.body.toString());
+    print("email " + res_data.toString());
     return res_data;
   }
 }

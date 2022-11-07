@@ -27,7 +27,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
   @override
   void initState() {
     super.initState();
-    selectedUrl = '${apiGlobal}/api/user/pay-paypal/${userid}/${userid}';
+    selectedUrl =
+        '${apiGlobal}/api/user/pay-paypal/${placeOrderData_quote_id}/${userid}';
     //selectedUrl="https://mvs.bslmeiyu.com";
     // if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
   }

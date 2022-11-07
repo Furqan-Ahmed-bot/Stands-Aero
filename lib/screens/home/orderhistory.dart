@@ -7,6 +7,8 @@ import 'package:stande_aero/screens/List%20Quotes/list_of_Quote_details.dart';
 import 'package:stande_aero/screens/home/drawer.dart';
 import 'package:stande_aero/services/remote_services.dart';
 
+import '../orders/orderstatus.dart';
+
 class OrderHistory extends StatefulWidget {
   const OrderHistory({Key? key}) : super(key: key);
 
@@ -33,7 +35,6 @@ class _OrderHistoryState extends State<OrderHistory> {
     order_historyvar = await ApiService().order_history();
 
     log("order_historyvar" + order_historyvar['data'].toString());
-    
   }
 
   Widget build(BuildContext context) {
@@ -89,32 +90,35 @@ class _OrderHistoryState extends State<OrderHistory> {
             future: order_history(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-              return Container(
-                      width: double.infinity,
-                      child: SingleChildScrollView(
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: ListView.builder(
-                              itemCount: order_historyvar['data'].length,
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              scrollDirection: Axis.vertical,
-                              itemBuilder: (context, index) {
-                                return Quotes_Card(
-                                      orderNumber:order_historyvar['data'][index]['order_number'] ,
-                                      payAmount: order_historyvar['data'][index]['pay_amount'],
-                                      orderDate: order_historyvar['data'][index]['order_date'],
-                                          orderStatus: order_historyvar['data'][index]['order_status'],
-                                          paymentStatus:order_historyvar['data'][index]['payment_status']
-                                    );                                
-                              }),
-                        ),
-                      ),
-                    ); 
-              }
-              else {
+                return Container(
+                  width: double.infinity,
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: ListView.builder(
+                          itemCount: order_historyvar['data'].length,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          scrollDirection: Axis.vertical,
+                          itemBuilder: (context, index) {
+                            return Quotes_Card(
+                                orderNumber: order_historyvar['data'][index]
+                                    ['order_number'],
+                                payAmount: order_historyvar['data'][index]
+                                    ['pay_amount'],
+                                orderDate: order_historyvar['data'][index]
+                                    ['order_date'],
+                                orderStatus: order_historyvar['data'][index]
+                                    ['order_status'],
+                                paymentStatus: order_historyvar['data'][index]
+                                    ['payment_status']);
+                          }),
+                    ),
+                  ),
+                );
+              } else {
                 return spinkit;
-              }                 
+              }
             }),
       ),
     );
@@ -123,9 +127,15 @@ class _OrderHistoryState extends State<OrderHistory> {
 
 class Quotes_Card extends StatelessWidget {
   // var MODEL, location, description;
-  var orderNumber,payAmount,orderDate,orderStatus,paymentStatus;
+  var orderNumber, payAmount, orderDate, orderStatus, paymentStatus;
 
-  Quotes_Card({Key? key, this.orderNumber, this.payAmount, this.orderDate,this.orderStatus,this.paymentStatus})
+  Quotes_Card(
+      {Key? key,
+      this.orderNumber,
+      this.payAmount,
+      this.orderDate,
+      this.orderStatus,
+      this.paymentStatus})
       : super(key: key);
 
   @override
@@ -138,7 +148,7 @@ class Quotes_Card extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            // Get.to(quotes_details());
+            Get.to(OrderStatus());
           },
           child: Container(
             width: res_width * 0.925,
@@ -199,7 +209,7 @@ class Quotes_Card extends StatelessWidget {
                           ],
                         ),
                         SizedBox(
-                            height: res_height * 0.006,
+                          height: res_height * 0.006,
                         ),
                         Row(
                           children: [
@@ -215,7 +225,7 @@ class Quotes_Card extends StatelessWidget {
                           ],
                         ),
                         SizedBox(
-                            height: res_height * 0.006,
+                          height: res_height * 0.006,
                         ),
                         Row(
                           children: [
