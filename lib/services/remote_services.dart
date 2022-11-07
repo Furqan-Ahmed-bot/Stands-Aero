@@ -8,9 +8,11 @@ import 'package:stande_aero/main.dart';
 import 'package:stande_aero/screens/Profile/editprofile.dart';
 import 'package:stande_aero/screens/Profile/profile.dart';
 import 'package:stande_aero/screens/auth/emaillogin.dart';
+import 'package:stande_aero/screens/home/home.dart';
 import 'package:stande_aero/screens/payment/paymentrecieved.dart';
 import 'dart:developer';
 
+import '../bottomcontroller.dart';
 import '../controller/usercontroller.dart';
 import '../controller//ProductController.dart';
 import '../helper/ProductModel.dart';
@@ -24,6 +26,7 @@ import '../screens/mainhome.dart';
 
 // String apiGlobal = "http://localhost:3000/api/v1";
 String apiGlobal = "https://standsaero.jumppace.com";
+final bottomctrl = Get.put(BottomController());
 // String apiGlobal = "https://standsaeroapi.jumppace.com";
 
 class ApiService {
@@ -67,8 +70,14 @@ class ApiService {
 
       globaltoken = res_data["data"]["token"];
       userid = res_data['data']['user']['id'].toString();
+      print("bottomctrl.navigationBarIndexValue" +
+          bottomctrl.navigationBarIndexValue.toString());
       Navigator.pop(context);
-      Get.to(() => MainScreen());
+      if (bottomctrl.navigationBarIndexValue != 3) {
+        bottomctrl.navBarChange(3);
+      } else {
+        Navigator.pop(context);
+      }
     } else {
       Get.snackbar(
         'Error',
@@ -324,7 +333,8 @@ class ApiService {
     var res_data = json.decode(res.body.toString());
     if (res_data['status'] == true) {
       UserController userController = Get.put(UserController());
-      userController.editUser(
+
+      userController.addUser(
         UserModel(
           id: res_data['id'],
           fullName: res_data['full_name'],
@@ -336,7 +346,7 @@ class ApiService {
           description: res_data['description'],
         ),
       );
-      Get.to(Editprofile());
+
       Get.snackbar(
         'Success',
         'Profile updated successfully',
@@ -344,9 +354,10 @@ class ApiService {
         snackPosition: SnackPosition.BOTTOM,
       );
       Navigator.pop(context);
+      Get.to(() => MainScreen());
     }
 
-    return res_data;
+    // return res_data;
   }
 
   order_history() async {

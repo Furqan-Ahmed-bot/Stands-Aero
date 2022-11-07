@@ -109,10 +109,11 @@ class _EditprofileState extends State<Editprofile> {
       extendBodyBehindAppBar: true,
       body: Container(
         width: double.infinity,
+        height: double.infinity,
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/slicing/Untitled-46.jpg"),
-            fit: BoxFit.cover,
+            fit: BoxFit.fill,
           ),
         ),
         child: SafeArea(
