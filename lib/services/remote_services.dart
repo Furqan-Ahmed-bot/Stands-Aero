@@ -922,7 +922,7 @@ class ApiService {
 
     final res = await http.Response.fromStream(response);
 
-    log("send messages print" + res.body.toString());
+    print("send messages print" + res.body.toString());
     // https://standsaero-dev.jumppace.com/chatify/api/sendMessage
   }
 
