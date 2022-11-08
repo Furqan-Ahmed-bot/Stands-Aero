@@ -867,4 +867,62 @@ class ApiService {
 
     return res_data;
   }
+
+  get_messages(context) async {
+    final uri = await Uri.parse(
+        'https://standsaero-dev.jumppace.com/chatify/api/fetchMessages');
+
+    print(uri);
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'bearer ${globaltoken}',
+    };
+    String jsonBody = json.encode({'id': 1});
+    // print("jsonbody" + jsonBody);
+    http.Response response = await http.post(
+      uri,
+      headers: headers,
+      body: jsonBody,
+    );
+
+    // log("response status code ${response.body}");
+    var res_data = json.decode(response.body);
+    print(res_data);
+    // if (res_data["status"] == true) {
+    // } else
+    //   Get.snackbar(
+    //     'Error',
+    //     'Wrong Credentials',
+    //     animationDuration: Duration(seconds: 2),
+    //     snackPosition: SnackPosition.BOTTOM,
+    //   );
+
+    return res_data;
+  }
+
+  send_messages(context, data) async {
+    final uri = await Uri.parse(
+        'https://standsaero-dev.jumppace.com/chatify/api/sendMessage');
+
+    String jsonBody = json.encode(data);
+    print("jsonBody" + jsonBody);
+    final headers = {
+      'Authorization': 'Bearer ${globaltoken}',
+    };
+    var request = http.MultipartRequest('POST', uri);
+    request.fields['id'] = data['id'].toString();
+    request.fields['type'] = data['type'].toString();
+    request.fields['message'] = data['message'].toString();
+    request.fields['temporaryMsgId'] = data['temporaryMsgId'].toString();
+
+    log("Request " + jsonBody.toString());
+    request.headers.addAll(headers);
+    log("request" + request.toString());
+    var response = await request.send();
+
+    final res = await http.Response.fromStream(response);
+
+    log("send messages print" + res.body.toString());
+    // https://standsaero-dev.jumppace.com/chatify/api/sendMessage
+  }
 }
