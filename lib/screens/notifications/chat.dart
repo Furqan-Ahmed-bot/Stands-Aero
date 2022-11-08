@@ -38,13 +38,10 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Future<dynamic> get_messages_previous1() async {
     var id = 1;
-    print("JOSH");
+
     chat_historyvar = await ApiService().get_messages(context);
 
-    print("LENGTH " +
-        chat_historyvar['messages'][chat_historyvar['messages'].length - 1]
-                ['body']
-            .toString());
+    setState(() {});
 
     // _scrollDown();
   }
@@ -52,11 +49,6 @@ class _ChatScreenState extends State<ChatScreen> {
   Future<void> get_messages_previous() async {
     var id = 1;
     chat_historyvar = await ApiService().get_messages(context);
-
-    log("get_messages_previous" + chat_historyvar['messages'].toString());
-    log("get_messages_previous from id" +
-        chat_historyvar['messages'][0]['from_id'].toString());
-
     // _scrollDown();
   }
 
@@ -77,10 +69,10 @@ class _ChatScreenState extends State<ChatScreen> {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
 
-    // timer = Timer.periodic(const Duration(seconds: 10), (timer) {
-    //   print("osama" + timer.tick.toString());
-    //   get_messages_previous1();
-    // });
+    timer = Timer.periodic(const Duration(seconds: 10), (timer) {
+      print("osama" + timer.tick.toString());
+      get_messages_previous1();
+    });
 
     return Container(
       child: Scaffold(
