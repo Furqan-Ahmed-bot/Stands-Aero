@@ -29,11 +29,24 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     Future.delayed(Duration.zero, () {
       setState(() {
-        get_messages_previous();
+        get_messages_previous1();
       });
     });
 
     super.initState();
+  }
+
+  Future<dynamic> get_messages_previous1() async {
+    var id = 1;
+    print("JOSH");
+    chat_historyvar = await ApiService().get_messages(context);
+
+    print("LENGTH " +
+        chat_historyvar['messages'][chat_historyvar['messages'].length - 1]
+                ['body']
+            .toString());
+
+    // _scrollDown();
   }
 
   Future<void> get_messages_previous() async {
@@ -44,25 +57,29 @@ class _ChatScreenState extends State<ChatScreen> {
     log("get_messages_previous from id" +
         chat_historyvar['messages'][0]['from_id'].toString());
 
-        
-
-        // _scrollDown();
+    // _scrollDown();
   }
 
 //   void _scrollDown() {
 //     log("chat_historyvar['messages'].length " + chat_historyvar['messages'].length.toString());
 //   _controller.jumpTo(_controller.position.maxScrollExtent);
 // }
+  int counter = 0;
+  Timer? timer;
+  @override
+  void dispose() {
+    super.dispose();
+    timer?.cancel();
+  }
 
   @override
   Widget build(BuildContext context) {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
 
-    // ScrollController _controller = ScrollController();
-
-    // SchedulerBinding.instance.addPostFrameCallback((_) {
-    //   _controller.jumpTo(_controller.position.maxScrollExtent);
+    // timer = Timer.periodic(const Duration(seconds: 10), (timer) {
+    //   print("osama" + timer.tick.toString());
+    //   get_messages_previous1();
     // });
 
     return Container(
@@ -103,10 +120,14 @@ class _ChatScreenState extends State<ChatScreen> {
             ],
           ),
         ),
-        body: FutureBuilder<void>(
-            future: get_messages_previous(),
+        body: FutureBuilder<dynamic>(
+            future: get_messages_previous1(),
             builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
+              print("chat_historyvar['messages'].lengt" +
+                  chat_historyvar['messages'].length.toString());
+              if (snapshot.connectionState == ConnectionState.done ||
+                  counter > 0) {
+                counter++;
                 return Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
@@ -121,11 +142,9 @@ class _ChatScreenState extends State<ChatScreen> {
                       Container(
                         height: res_height * 0.8,
                         child: ListView(
-                          
                           shrinkWrap: true,
                           children: [
                             ListView.builder(
-                                 
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
                                 scrollDirection: Axis.vertical,
