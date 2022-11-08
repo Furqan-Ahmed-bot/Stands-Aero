@@ -3,18 +3,18 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stande_aero/services/remote_services.dart';
-import 'package:stande_aero/controller/usercontroller.dart';
-import 'package:stande_aero/helper/colors.dart';
-import 'package:stande_aero/helper/global.dart';
-import 'package:stande_aero/screens/Profile/editprofile.dart';
-import 'package:stande_aero/screens/auth/mainlogin.dart';
-import 'package:stande_aero/screens/home/drawer.dart';
-import 'package:stande_aero/helper/loader.dart';
+import 'package:StandsAero/services/remote_services.dart';
+import 'package:StandsAero/controller/usercontroller.dart';
+import 'package:StandsAero/helper/colors.dart';
+import 'package:StandsAero/helper/global.dart';
+import 'package:StandsAero/screens/Profile/editprofile.dart';
+import 'package:StandsAero/screens/auth/mainlogin.dart';
+import 'package:StandsAero/screens/home/drawer.dart';
+import 'package:StandsAero/helper/loader.dart';
 
 import '../../helper/model.dart';
 
-// import 'package:stande_aero/screens/home/Profile/editprofile.dart';
+// import 'package:StandsAero/screens/home/Profile/editprofile.dart';
 
 class profile extends StatefulWidget {
   const profile({Key? key}) : super(key: key);

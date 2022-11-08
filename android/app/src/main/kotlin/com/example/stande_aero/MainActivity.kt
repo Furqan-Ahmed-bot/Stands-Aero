@@ -1,4 +1,4 @@
-package com.example.stande_aero
+package com.example.StandsAero
 
 import io.flutter.embedding.android.FlutterActivity
 

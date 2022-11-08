@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "stande_aero" "\0"
+            VALUE "FileDescription", "StandsAero" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "stande_aero" "\0"
+            VALUE "InternalName", "StandsAero" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2022 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "stande_aero.exe" "\0"
-            VALUE "ProductName", "stande_aero" "\0"
+            VALUE "OriginalFilename", "StandsAero.exe" "\0"
+            VALUE "ProductName", "StandsAero" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

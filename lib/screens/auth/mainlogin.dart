@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stande_aero/screens/auth/emaillogin.dart';
+import 'package:StandsAero/screens/auth/emaillogin.dart';
 
 class MainLoginScreen extends StatelessWidget {
   const MainLoginScreen({Key? key}) : super(key: key);

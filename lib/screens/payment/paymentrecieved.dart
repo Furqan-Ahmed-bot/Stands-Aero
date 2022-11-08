@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:stande_aero/screens/orders/orderstatus.dart';
+import 'package:StandsAero/screens/orders/orderstatus.dart';
 
 class PaymentRecieved extends StatefulWidget {
   const PaymentRecieved({Key? key}) : super(key: key);
@@ -41,8 +41,8 @@ class _PaymentRecievedState extends State<PaymentRecieved> {
                 decoration: BoxDecoration(color: Colors.white),
                 child: Center(
                   child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
                           width: res_width * 0.275,
@@ -52,8 +52,8 @@ class _PaymentRecievedState extends State<PaymentRecieved> {
                       ),
                       Text(
                         'Payment Recieved',
-                        style:
-                            TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 20),
                       ),
                       SizedBox(
                         height: res_height * 0.005,
@@ -67,11 +67,11 @@ class _PaymentRecievedState extends State<PaymentRecieved> {
                   ),
                 ),
               ),
-               SizedBox(
+              SizedBox(
                 height: res_height * 0.02,
               ),
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   Get.to(() => OrderStatus());
                 },
                 child: Container(
@@ -93,7 +93,6 @@ class _PaymentRecievedState extends State<PaymentRecieved> {
                   ),
                 ),
               ),
-          
             ],
           ),
         ),

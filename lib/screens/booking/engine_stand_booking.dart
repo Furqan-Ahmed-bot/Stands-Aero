@@ -2,17 +2,17 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stande_aero/helper/colors.dart';
-import 'package:stande_aero/helper/global.dart';
-import 'package:stande_aero/screens/auth/mainlogin.dart';
-import 'package:stande_aero/screens/kyc_Form/kyc_form.dart';
-import 'package:stande_aero/services/remote_services.dart';
+import 'package:StandsAero/helper/colors.dart';
+import 'package:StandsAero/helper/global.dart';
+import 'package:StandsAero/screens/auth/mainlogin.dart';
+import 'package:StandsAero/screens/kyc_Form/kyc_form.dart';
+import 'package:StandsAero/services/remote_services.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:get/get.dart';
-import 'package:stande_aero/helper/colors.dart';
-import 'package:stande_aero/screens/booking/engine_stand_booking.dart';
+import 'package:StandsAero/helper/colors.dart';
+import 'package:StandsAero/screens/booking/engine_stand_booking.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -337,7 +337,7 @@ class _stand_bookingState extends State<stand_booking> {
                   height: 20,
                 ),
                 GestureDetector(
-                  onTap: () async{
+                  onTap: () async {
                     // Get.to(() => MainLoginScreen());
                     // if (location.text == "") {
                     //   Get.snackbar(
@@ -347,16 +347,17 @@ class _stand_bookingState extends State<stand_booking> {
                     //     snackPosition: SnackPosition.BOTTOM,
                     //   );
                     // } else {
-                      var sendData = await {
-                        'product_id': widget.productId,
-                        'location': location.text,
-                        'date_from': firstDay.text,
-                        'date_to': lastDay.text
-                      };
-                      // log("sendData" + sendData);
-                      requestFormdatafromQuote = sendData;
-                      log("requestFormdatafromQuote" + requestFormdatafromQuote.toString());
-                      Get.to(kyc_form());
+                    var sendData = await {
+                      'product_id': widget.productId,
+                      'location': location.text,
+                      'date_from': firstDay.text,
+                      'date_to': lastDay.text
+                    };
+                    // log("sendData" + sendData);
+                    requestFormdatafromQuote = sendData;
+                    log("requestFormdatafromQuote" +
+                        requestFormdatafromQuote.toString());
+                    Get.to(kyc_form());
                     // }
 
                     // var res_data= ApiService().quoteRequest(context,sendData,widget.productId);

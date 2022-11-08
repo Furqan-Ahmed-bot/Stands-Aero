@@ -2,9 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stande_aero/helper/global.dart';
-import 'package:stande_aero/screens/payment/wiretransfer.dart';
-import 'package:stande_aero/services/remote_services.dart';
+import 'package:StandsAero/helper/global.dart';
+import 'package:StandsAero/screens/payment/wiretransfer.dart';
+import 'package:StandsAero/services/remote_services.dart';
 import '../payment/paypal.dart';
 
 class lease_form7 extends StatefulWidget {
@@ -295,7 +295,7 @@ class _lease_form7State extends State<lease_form7> {
                           'quote_id': placeOrderData_quote_id,
                           'fileType': placeOrderData_fileType
                         };
-                      Get.to(WireTransfer());
+                        Get.to(WireTransfer());
                       }
 
                       // Get.to(PaymentScreen());

@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:http/http.dart' as http;
-import 'package:stande_aero/main.dart';
-import 'package:stande_aero/screens/Profile/editprofile.dart';
-import 'package:stande_aero/screens/Profile/profile.dart';
-import 'package:stande_aero/screens/auth/emaillogin.dart';
-import 'package:stande_aero/screens/home/home.dart';
-import 'package:stande_aero/screens/payment/paymentrecieved.dart';
+import 'package:StandsAero/main.dart';
+import 'package:StandsAero/screens/Profile/editprofile.dart';
+import 'package:StandsAero/screens/Profile/profile.dart';
+import 'package:StandsAero/screens/auth/emaillogin.dart';
+import 'package:StandsAero/screens/home/home.dart';
+import 'package:StandsAero/screens/payment/paymentrecieved.dart';
 import 'dart:developer';
 
 import '../bottomcontroller.dart';
@@ -548,8 +548,8 @@ class ApiService {
 
     // print(res_data);
     if (res_data["status"] == true) {
-    //   Get.to(() => MainLoginScreen());
-    Navigator.pop(context);
+      //   Get.to(() => MainLoginScreen());
+      Navigator.pop(context);
     }
     // } else
     //   Get.snackbar(

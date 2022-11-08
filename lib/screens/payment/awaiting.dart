@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:stande_aero/screens/payment/paymentrecieved.dart';
+import 'package:StandsAero/screens/payment/paymentrecieved.dart';
 
 class AwaitingConfirm extends StatefulWidget {
   const AwaitingConfirm({Key? key}) : super(key: key);
@@ -14,7 +14,7 @@ class AwaitingConfirm extends StatefulWidget {
 }
 
 class _AwaitingConfirmState extends State<AwaitingConfirm> {
-    @override
+  @override
   void initState() {
     start();
     super.initState();
@@ -23,7 +23,7 @@ class _AwaitingConfirmState extends State<AwaitingConfirm> {
   start() {
     Timer(Duration(seconds: 2), () => Get.to(() => PaymentRecieved()));
   }
-  
+
   @override
   Widget build(BuildContext context) {
     double res_width = MediaQuery.of(context).size.width;

@@ -7,10 +7,10 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:stande_aero/controller/usercontroller.dart';
-import 'package:stande_aero/helper/colors.dart';
+import 'package:StandsAero/controller/usercontroller.dart';
+import 'package:StandsAero/helper/colors.dart';
 import 'package:http/http.dart' as http;
-import 'package:stande_aero/screens/Profile/profile.dart';
+import 'package:StandsAero/screens/Profile/profile.dart';
 import '../../helper/global.dart';
 import 'package:image_picker/image_picker.dart';
 

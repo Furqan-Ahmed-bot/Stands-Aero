@@ -5,11 +5,11 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stande_aero/helper/global.dart';
-import 'package:stande_aero/screens/Profile/profile.dart';
-import 'package:stande_aero/screens/credit_Form/credit_form.dart';
-import 'package:stande_aero/screens/mainhome.dart';
-import 'package:stande_aero/services/remote_services.dart';
+import 'package:StandsAero/helper/global.dart';
+import 'package:StandsAero/screens/Profile/profile.dart';
+import 'package:StandsAero/screens/credit_Form/credit_form.dart';
+import 'package:StandsAero/screens/mainhome.dart';
+import 'package:StandsAero/services/remote_services.dart';
 import 'package:email_validator/email_validator.dart';
 
 class kyc_form extends StatefulWidget {
@@ -535,7 +535,6 @@ class _kyc_formState extends State<kyc_form> {
                                       color: myFocusNode.hasFocus
                                           ? Colors.white
                                           : Colors.black)),
-                              
                             ),
                           ),
                         ),
@@ -567,7 +566,6 @@ class _kyc_formState extends State<kyc_form> {
                                       color: myFocusNode.hasFocus
                                           ? Colors.white
                                           : Colors.black)),
-                             
                             ),
                           ),
                         ),
@@ -591,7 +589,6 @@ class _kyc_formState extends State<kyc_form> {
                                       color: myFocusNode.hasFocus
                                           ? Colors.white
                                           : Colors.black)),
-                              
                             ),
                           ),
                         ),
@@ -632,7 +629,7 @@ class _kyc_formState extends State<kyc_form> {
                     Container(
                       width: res_width * 0.925,
                       decoration: BoxDecoration(
-                          color: Colors.grey,   
+                          color: Colors.grey,
                           borderRadius: BorderRadius.all(Radius.circular(7))),
                       child: Padding(
                         padding: const EdgeInsets.only(

@@ -2,10 +2,10 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stande_aero/screens/List%20Quotes/list_of_Quote_details.dart';
-import 'package:stande_aero/screens/home/drawer.dart';
-import 'package:stande_aero/services/remote_services.dart';
-import 'package:stande_aero/helper/loader.dart';
+import 'package:StandsAero/screens/List%20Quotes/list_of_Quote_details.dart';
+import 'package:StandsAero/screens/home/drawer.dart';
+import 'package:StandsAero/services/remote_services.dart';
+import 'package:StandsAero/helper/loader.dart';
 
 class quotes extends StatefulWidget {
   const quotes({Key? key}) : super(key: key);
@@ -149,8 +149,7 @@ class _quotesState extends State<quotes> with TickerProviderStateMixin {
                                                     [index]['product_image'])
                                             : Text("No Quotes found");
                                       })
-                                  : Text(
-                                      "No Quotes found"),
+                                  : Text("No Quotes found"),
                             ),
                           ],
                         ),

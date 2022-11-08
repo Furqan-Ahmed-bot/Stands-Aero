@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:stande_aero/screens/auth/mainlogin.dart';
-import 'package:stande_aero/screens/orders/orderstatus.dart';
-import 'package:stande_aero/screens/payment/awaiting.dart';
+import 'package:StandsAero/screens/auth/mainlogin.dart';
+import 'package:StandsAero/screens/orders/orderstatus.dart';
+import 'package:StandsAero/screens/payment/awaiting.dart';
 
 import '../../helper/global.dart';
 import '../../services/remote_services.dart';

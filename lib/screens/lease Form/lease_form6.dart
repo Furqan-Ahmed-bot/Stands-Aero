@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:stande_aero/screens/lease%20Form/lease_form7.dart';
-import 'package:stande_aero/helper/global.dart';
+import 'package:StandsAero/screens/lease%20Form/lease_form7.dart';
+import 'package:StandsAero/helper/global.dart';
 
 class lease_form6 extends StatefulWidget {
   const lease_form6({Key? key}) : super(key: key);
@@ -89,10 +89,10 @@ class _lease_form6State extends State<lease_form6> {
                                 return null;
                               },
                               maxLength: 7,
-                                keyboardType: TextInputType.number,
-                                  inputFormatters: <TextInputFormatter>[
-                                    FilteringTextInputFormatter.digitsOnly
-                                  ],
+                              keyboardType: TextInputType.number,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
                               decoration: InputDecoration(
                                 isCollapsed: true,
                                 // contentPadding: EdgeInsets.symmetric(vertical: 0),

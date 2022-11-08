@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
-import 'package:stande_aero/screens/lease%20Form/lease_form2.dart';
-import 'package:stande_aero/helper/global.dart';
+import 'package:StandsAero/screens/lease%20Form/lease_form2.dart';
+import 'package:StandsAero/helper/global.dart';
 import 'package:intl/intl.dart';
 
 class lease_Form extends StatefulWidget {

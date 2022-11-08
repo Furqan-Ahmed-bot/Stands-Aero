@@ -8,9 +8,9 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:stande_aero/screens/mainhome.dart';
-import 'package:stande_aero/screens/taxcertificate/pdfview.dart';
-import 'package:stande_aero/services/remote_services.dart';
+import 'package:StandsAero/screens/mainhome.dart';
+import 'package:StandsAero/screens/taxcertificate/pdfview.dart';
+import 'package:StandsAero/services/remote_services.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -141,7 +141,7 @@ class _TexCertificateScreenState extends State<TexCertificateScreen> {
         ),
         body: Padding(
           padding: const EdgeInsets.all(12.0),
-          child:  FutureBuilder<void>(
+          child: FutureBuilder<void>(
               future: taxCertificateList(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
@@ -153,26 +153,30 @@ class _TexCertificateScreenState extends State<TexCertificateScreen> {
                       child: Column(
                         children: [
                           SingleChildScrollView(
-                            child: taxCertificates['data'].length>0 ? ListView.builder(
-                                shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
-                                scrollDirection: Axis.vertical,
-                                itemCount: taxCertificates['data'].length,
-                                itemBuilder: (Context, snapshot) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(bottom: 8.0),
-                                    child: NotBox(
-                                        taxCertificates['data'][snapshot]
-                                                ['name']
-                                            .toString(),
-                                        taxCertificates['data'][snapshot]
-                                                ['location']
-                                            .toString(),
-                                        taxCertificates['data'][snapshot]['id'],
-                                        taxCertificates['data'][snapshot]
-                                            ['cstm_tax_certificate']),
-                                  );
-                                }) : Text("No Certificates found"),
+                            child: taxCertificates['data'].length > 0
+                                ? ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: taxCertificates['data'].length,
+                                    itemBuilder: (Context, snapshot) {
+                                      return Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 8.0),
+                                        child: NotBox(
+                                            taxCertificates['data'][snapshot]
+                                                    ['name']
+                                                .toString(),
+                                            taxCertificates['data'][snapshot]
+                                                    ['location']
+                                                .toString(),
+                                            taxCertificates['data'][snapshot]
+                                                ['id'],
+                                            taxCertificates['data'][snapshot]
+                                                ['cstm_tax_certificate']),
+                                      );
+                                    })
+                                : Text("No Certificates found"),
                           )
                         ],
                       ),

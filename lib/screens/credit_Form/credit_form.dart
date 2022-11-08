@@ -5,9 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stande_aero/screens/credit_Form/credit_form2.dart';
-import 'package:stande_aero/helper/global.dart';
-import 'package:stande_aero/services/remote_services.dart';
+import 'package:StandsAero/screens/credit_Form/credit_form2.dart';
+import 'package:StandsAero/helper/global.dart';
+import 'package:StandsAero/services/remote_services.dart';
 import 'package:intl/intl.dart';
 
 class credit_form extends StatefulWidget {

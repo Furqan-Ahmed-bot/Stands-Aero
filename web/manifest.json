@@ -1,6 +1,6 @@
 {
-    "name": "stande_aero",
-    "short_name": "stande_aero",
+    "name": "StandsAero",
+    "short_name": "StandsAero",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

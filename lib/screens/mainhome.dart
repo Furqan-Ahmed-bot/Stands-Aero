@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:stande_aero/bottomcontroller.dart';
-import 'package:stande_aero/helper/colors.dart';
-import 'package:stande_aero/screens/List%20Quotes/quotes.dart';
-import 'package:stande_aero/screens/Profile/profile.dart';
-// import 'package:stande_aero/screens/home/Profile/profile.dart';
-import 'package:stande_aero/screens/home/home.dart';
-import 'package:stande_aero/screens/notifications/notification.dart';
+import 'package:StandsAero/bottomcontroller.dart';
+import 'package:StandsAero/helper/colors.dart';
+import 'package:StandsAero/screens/List%20Quotes/quotes.dart';
+import 'package:StandsAero/screens/Profile/profile.dart';
+// import 'package:StandsAero/screens/home/Profile/profile.dart';
+import 'package:StandsAero/screens/home/home.dart';
+import 'package:StandsAero/screens/notifications/notification.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stande_aero/helper/loader.dart';
-import 'package:stande_aero/screens/List%20Quotes/list_of_Quote_details.dart';
-import 'package:stande_aero/screens/home/drawer.dart';
-import 'package:stande_aero/services/remote_services.dart';
+import 'package:StandsAero/helper/loader.dart';
+import 'package:StandsAero/screens/List%20Quotes/list_of_Quote_details.dart';
+import 'package:StandsAero/screens/home/drawer.dart';
+import 'package:StandsAero/services/remote_services.dart';
 
 class PaymentHistory extends StatefulWidget {
   const PaymentHistory({Key? key}) : super(key: key);
@@ -109,7 +109,8 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                                     paymentStatus: paymentsHistory['data']
                                         [index]['payment_status']);
                               })
-                          : Text("No Payments found",textAlign: TextAlign.center),
+                          : Text("No Payments found",
+                              textAlign: TextAlign.center),
                     ),
                   ),
                 );

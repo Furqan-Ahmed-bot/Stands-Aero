@@ -1,5 +1,5 @@
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:stande_aero/helper/model.dart';
+import 'package:StandsAero/helper/model.dart';
 
 class UserController extends GetxController {
   var user = UserModel();

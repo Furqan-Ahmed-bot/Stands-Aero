@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stande_aero/screens/payment/paymentrecieved.dart';
+import 'package:StandsAero/screens/payment/paymentrecieved.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../helper/global.dart';

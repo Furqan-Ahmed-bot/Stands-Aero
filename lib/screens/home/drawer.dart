@@ -2,19 +2,19 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stande_aero/bottomcontroller.dart';
-import 'package:stande_aero/controller/usercontroller.dart';
-import 'package:stande_aero/screens/about/aboutus.dart';
-import 'package:stande_aero/screens/credit_Form/credit_form.dart';
-import 'package:stande_aero/screens/home/orderhistory.dart';
-import 'package:stande_aero/screens/home/payment_history.dart';
-import 'package:stande_aero/screens/home/privacy.dart';
-import 'package:stande_aero/screens/home/terms.dart';
-import 'package:stande_aero/screens/kyc_Form/kyc_form.dart';
-import 'package:stande_aero/screens/lease%20Form/lease_form.dart';
-import 'package:stande_aero/screens/notifications/chat.dart';
-import 'package:stande_aero/screens/taxcertificate/taxcertificate.dart';
-import 'package:stande_aero/services/remote_services.dart';
+import 'package:StandsAero/bottomcontroller.dart';
+import 'package:StandsAero/controller/usercontroller.dart';
+import 'package:StandsAero/screens/about/aboutus.dart';
+import 'package:StandsAero/screens/credit_Form/credit_form.dart';
+import 'package:StandsAero/screens/home/orderhistory.dart';
+import 'package:StandsAero/screens/home/payment_history.dart';
+import 'package:StandsAero/screens/home/privacy.dart';
+import 'package:StandsAero/screens/home/terms.dart';
+import 'package:StandsAero/screens/kyc_Form/kyc_form.dart';
+import 'package:StandsAero/screens/lease%20Form/lease_form.dart';
+import 'package:StandsAero/screens/notifications/chat.dart';
+import 'package:StandsAero/screens/taxcertificate/taxcertificate.dart';
+import 'package:StandsAero/services/remote_services.dart';
 
 class NavDrawer extends StatefulWidget {
   const NavDrawer({Key? key}) : super(key: key);
@@ -54,16 +54,14 @@ class _NavDrawerState extends State<NavDrawer> {
                     children: [
                       Row(
                         children: [
-                          userController.user.propic != null ?
-                          Image.network(
-                            userController.user.propic.toString(),
-                            width: 80,
-                            height: 80,
-                          ) :                        
-                          Image.asset("assets/slicing/NoPath.png",
-                          width:80,height:80
-                          )
-                          ,
+                          userController.user.propic != null
+                              ? Image.network(
+                                  userController.user.propic.toString(),
+                                  width: 80,
+                                  height: 80,
+                                )
+                              : Image.asset("assets/slicing/NoPath.png",
+                                  width: 80, height: 80),
                           SizedBox(
                             width: 10,
                           ),
@@ -71,15 +69,20 @@ class _NavDrawerState extends State<NavDrawer> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                userController.user.fullName !=null ? userController.user.fullName.toString() : 'No Name',
+                                userController.user.fullName != null
+                                    ? userController.user.fullName.toString()
+                                    : 'No Name',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
                                     color: Colors.white),
                               ),
-                              Container(width: res_width*0.4,
-                                child: Text(userController.user.email.toString(),
-                                    style: TextStyle(color: Colors.white,fontSize: 12)),
+                              Container(
+                                width: res_width * 0.4,
+                                child: Text(
+                                    userController.user.email.toString(),
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 12)),
                               )
                             ],
                           ),

@@ -4,15 +4,15 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stande_aero/services/remote_services.dart';
-import 'package:stande_aero/controller/usercontroller.dart';
-import 'package:stande_aero/helper/colors.dart';
-import 'package:stande_aero/helper/global.dart';
-import 'package:stande_aero/helper/model.dart';
-import 'package:stande_aero/screens/auth/register.dart';
-import 'package:stande_aero/screens/home/home.dart';
-import 'package:stande_aero/screens/mainhome.dart';
-import 'package:stande_aero/screens/payment/awaiting.dart';
+import 'package:StandsAero/services/remote_services.dart';
+import 'package:StandsAero/controller/usercontroller.dart';
+import 'package:StandsAero/helper/colors.dart';
+import 'package:StandsAero/helper/global.dart';
+import 'package:StandsAero/helper/model.dart';
+import 'package:StandsAero/screens/auth/register.dart';
+import 'package:StandsAero/screens/home/home.dart';
+import 'package:StandsAero/screens/mainhome.dart';
+import 'package:StandsAero/screens/payment/awaiting.dart';
 import 'package:http/http.dart' as http;
 
 import 'forgotpasswordwithotp.dart';
@@ -112,7 +112,7 @@ class _ForgotPasswordEnterEmailState extends State<ForgotPasswordEnterEmail> {
                 GestureDetector(
                   onTap: () async {
                     print(email.text);
-                    if (email.text.length==0) {
+                    if (email.text.length == 0) {
                       Get.snackbar(
                         'Error',
                         "Invalid Email Address",

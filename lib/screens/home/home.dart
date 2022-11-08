@@ -2,14 +2,14 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stande_aero/services/remote_services.dart';
-import 'package:stande_aero/controller/ProductController.dart';
-import 'package:stande_aero/helper/ProductModel.dart';
-import 'package:stande_aero/helper/colors.dart';
-import 'package:stande_aero/screens/booking/booking.dart';
-import 'package:stande_aero/screens/home/drawer.dart';
-// import 'package:stande_aero/screens/home/Profile/editprofile.dart';
-// import 'package:stande_aero/screens/home/Profile/profile.dart';
+import 'package:StandsAero/services/remote_services.dart';
+import 'package:StandsAero/controller/ProductController.dart';
+import 'package:StandsAero/helper/ProductModel.dart';
+import 'package:StandsAero/helper/colors.dart';
+import 'package:StandsAero/screens/booking/booking.dart';
+import 'package:StandsAero/screens/home/drawer.dart';
+// import 'package:StandsAero/screens/home/Profile/editprofile.dart';
+// import 'package:StandsAero/screens/home/Profile/profile.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -557,8 +557,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       onTap: () async {
         var responseData;
         // print(productController.Product1.name);
-        var response_data =
-            await ApiService().singleProductDetails(context,id).then((res_data) {
+        var response_data = await ApiService()
+            .singleProductDetails(context, id)
+            .then((res_data) {
           // log("response of product details" + res_data.toString());
 
           if (res_data['status'] == true) {

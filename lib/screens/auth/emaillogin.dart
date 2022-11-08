@@ -2,15 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stande_aero/services/remote_services.dart';
-import 'package:stande_aero/controller/usercontroller.dart';
-import 'package:stande_aero/helper/colors.dart';
-import 'package:stande_aero/helper/global.dart';
-import 'package:stande_aero/helper/model.dart';
-import 'package:stande_aero/screens/auth/register.dart';
-import 'package:stande_aero/screens/home/home.dart';
-import 'package:stande_aero/screens/mainhome.dart';
-import 'package:stande_aero/screens/payment/awaiting.dart';
+import 'package:StandsAero/services/remote_services.dart';
+import 'package:StandsAero/controller/usercontroller.dart';
+import 'package:StandsAero/helper/colors.dart';
+import 'package:StandsAero/helper/global.dart';
+import 'package:StandsAero/helper/model.dart';
+import 'package:StandsAero/screens/auth/register.dart';
+import 'package:StandsAero/screens/home/home.dart';
+import 'package:StandsAero/screens/mainhome.dart';
+import 'package:StandsAero/screens/payment/awaiting.dart';
 import 'package:http/http.dart' as http;
 
 import 'forgot.dart';
@@ -25,10 +25,9 @@ class EmailLoginScreen extends StatefulWidget {
 class _EmailLoginScreenState extends State<EmailLoginScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _passwordVisible = false;
-  
+
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
-   
 
   var user = UserModel();
   @override
@@ -163,13 +162,13 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                   onTap: () {
                     print("login");
                     var sendData = {
-                        "email": email.text,
-                        "password": password.text,
-                        "device_token": "123654"
-                      };
+                      "email": email.text,
+                      "password": password.text,
+                      "device_token": "123654"
+                    };
 
                     if (_formKey.currentState!.validate()) {
-                      ApiService().login(context,sendData);
+                      ApiService().login(context, sendData);
                     }
                     // Get.to(() => MainScreen());
                   },
@@ -196,10 +195,8 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                   height: res_height * 0.035,
                 ),
                 GestureDetector(
-                  onTap: (){
-                    Get.to(
-                      ForgotPasswordEnterEmail()
-                    );
+                  onTap: () {
+                    Get.to(ForgotPasswordEnterEmail());
                   },
                   child: Text(
                     'Forgot Password?',
@@ -248,6 +245,4 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
       ),
     );
   }
-
-  
 }

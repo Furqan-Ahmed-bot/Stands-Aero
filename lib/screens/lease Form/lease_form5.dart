@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stande_aero/screens/lease%20Form/lease_form6.dart';
+import 'package:StandsAero/screens/lease%20Form/lease_form6.dart';
 
 class lease_form5 extends StatelessWidget {
   const lease_form5({Key? key}) : super(key: key);

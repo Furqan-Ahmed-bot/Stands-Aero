@@ -2,13 +2,13 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stande_aero/screens/List%20Quotes/quotes.dart';
-import 'package:stande_aero/screens/home/orderhistory.dart';
-import 'package:stande_aero/screens/lease%20Form/lease_form.dart';
-import 'package:stande_aero/screens/payment/payment.dart';
-import 'package:stande_aero/services/remote_services.dart';
-import 'package:stande_aero/helper/loader.dart';
-import 'package:stande_aero/helper/global.dart';
+import 'package:StandsAero/screens/List%20Quotes/quotes.dart';
+import 'package:StandsAero/screens/home/orderhistory.dart';
+import 'package:StandsAero/screens/lease%20Form/lease_form.dart';
+import 'package:StandsAero/screens/payment/payment.dart';
+import 'package:StandsAero/services/remote_services.dart';
+import 'package:StandsAero/helper/loader.dart';
+import 'package:StandsAero/helper/global.dart';
 import 'package:file_picker/file_picker.dart';
 
 class quotes_details extends StatefulWidget {

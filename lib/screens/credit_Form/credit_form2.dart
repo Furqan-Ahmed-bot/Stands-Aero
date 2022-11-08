@@ -6,13 +6,13 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:stande_aero/controller/usercontroller.dart';
-import 'package:stande_aero/helper/loader.dart';
-import 'package:stande_aero/services/remote_services.dart';
-import 'package:stande_aero/bottomcontroller.dart';
-import 'package:stande_aero/helper/global.dart';
-import 'package:stande_aero/screens/kyc_Form/kyc_form.dart';
-import 'package:stande_aero/screens/mainhome.dart';
+import 'package:StandsAero/controller/usercontroller.dart';
+import 'package:StandsAero/helper/loader.dart';
+import 'package:StandsAero/services/remote_services.dart';
+import 'package:StandsAero/bottomcontroller.dart';
+import 'package:StandsAero/helper/global.dart';
+import 'package:StandsAero/screens/kyc_Form/kyc_form.dart';
+import 'package:StandsAero/screens/mainhome.dart';
 
 class credit_from2 extends StatefulWidget {
   const credit_from2({
@@ -450,8 +450,8 @@ class _credit_from2State extends State<credit_from2> {
                       //     fontSize: 12,
                       //   ),
                       // ),
-                      
-                          Container(
+
+                      Container(
                         width: res_width * 0.925,
                         decoration: BoxDecoration(
                             color: Colors.grey,

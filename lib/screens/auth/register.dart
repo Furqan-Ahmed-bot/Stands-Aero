@@ -2,13 +2,13 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stande_aero/screens/auth/mainlogin.dart';
-import 'package:stande_aero/services/remote_services.dart';
-import 'package:stande_aero/helper/colors.dart';
-import 'package:stande_aero/screens/home/home.dart';
-import 'package:stande_aero/screens/kyc_Form/kyc_form.dart';
-import 'package:stande_aero/screens/mainhome.dart';
-import 'package:stande_aero/screens/payment/awaiting.dart';
+import 'package:StandsAero/screens/auth/mainlogin.dart';
+import 'package:StandsAero/services/remote_services.dart';
+import 'package:StandsAero/helper/colors.dart';
+import 'package:StandsAero/screens/home/home.dart';
+import 'package:StandsAero/screens/kyc_Form/kyc_form.dart';
+import 'package:StandsAero/screens/mainhome.dart';
+import 'package:StandsAero/screens/payment/awaiting.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);

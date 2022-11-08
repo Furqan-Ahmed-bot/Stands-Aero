@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:stande_aero/helper/ProductModel.dart';
-import 'package:stande_aero/helper/model.dart';
-import 'package:stande_aero/services/remote_services.dart';
+import 'package:StandsAero/helper/ProductModel.dart';
+import 'package:StandsAero/helper/model.dart';
+import 'package:StandsAero/services/remote_services.dart';
 
 class ProductController extends GetxController {
   List<product> productList = <product>[].obs;

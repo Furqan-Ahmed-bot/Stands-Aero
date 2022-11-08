@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:stande_aero/screens/List%20Quotes/quotes.dart';
-import 'package:stande_aero/screens/home/home.dart';
-import 'package:stande_aero/screens/mainhome.dart';
-import 'package:stande_aero/screens/orders/orderstatus.dart';
+import 'package:StandsAero/screens/List%20Quotes/quotes.dart';
+import 'package:StandsAero/screens/home/home.dart';
+import 'package:StandsAero/screens/mainhome.dart';
+import 'package:StandsAero/screens/orders/orderstatus.dart';
 
 class QuoteRecieved extends StatefulWidget {
   const QuoteRecieved({Key? key}) : super(key: key);
@@ -44,8 +44,8 @@ class _QuoteRecievedState extends State<QuoteRecieved> {
                 decoration: BoxDecoration(color: Colors.white),
                 child: Center(
                   child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
                           width: res_width * 0.275,
@@ -55,14 +55,14 @@ class _QuoteRecievedState extends State<QuoteRecieved> {
                       ),
                       Text(
                         'Congratulations',
-                        style:
-                            TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 20),
                       ),
                       SizedBox(
                         height: res_height * 0.005,
                       ),
                       Container(
-                        width: res_width*0.8,
+                        width: res_width * 0.8,
                         child: Text(
                           'Your Request has been sent. Please wait for the sales team confirmation 48 hours turn around time. ',
                           textAlign: TextAlign.center,
@@ -73,11 +73,11 @@ class _QuoteRecievedState extends State<QuoteRecieved> {
                   ),
                 ),
               ),
-               SizedBox(
+              SizedBox(
                 height: res_height * 0.02,
               ),
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   Get.to(() => MainScreen());
                 },
                 child: Container(
@@ -99,7 +99,6 @@ class _QuoteRecievedState extends State<QuoteRecieved> {
                   ),
                 ),
               ),
-          
             ],
           ),
         ),
