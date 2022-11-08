@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:StandsAero/screens/notifications/notification.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:StandsAero/bottomcontroller.dart';
@@ -298,6 +299,43 @@ class _NavDrawerState extends State<NavDrawer> {
                           ),
                           Text(
                             'Chat Support',
+                            style: TextStyle(fontSize: 15, color: Colors.white),
+                          )
+                        ],
+                      ),
+                      Container(
+                        height: 1,
+                        color: Colors.grey.withOpacity(0.2),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () {
+                  if (bottomctrl.navigationBarIndexValue != 1) {
+                    bottomctrl.navBarChange(1);
+                  } else {
+                    Navigator.pop(context);
+                  }
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 13, right: 13),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: Padding(
+                              padding: const EdgeInsets.all(7.0),
+                              child:
+                                  Image.asset("assets/slicing/notifications-icon.png"),
+                            ),
+                            onPressed: () {},
+                          ),
+                          Text(
+                            'Notifications',
                             style: TextStyle(fontSize: 15, color: Colors.white),
                           )
                         ],
