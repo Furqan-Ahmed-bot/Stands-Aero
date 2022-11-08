@@ -925,4 +925,37 @@ class ApiService {
     print("send messages print" + res.body.toString());
     // https://standsaero-dev.jumppace.com/chatify/api/sendMessage
   }
+
+
+
+  getnotifications() async {
+    final uri = Uri.parse('${apiGlobal}/api/user/getnotifications');
+    print(uri);
+    final headers = {
+      'Authorization': 'Bearer ${globaltoken}',
+    };
+    http.Response response = await http.get(
+      uri,
+      headers: headers,
+      // body: jsonBody,
+    );
+
+    print(response.statusCode);
+    var res_data = json.decode(response.body);
+    // print("notifications response" + res_data.toString());
+    if (res_data["status"] == true) {
+    } else
+      Get.snackbar(
+        'Error',
+        'Wrong Credentials',
+        animationDuration: Duration(seconds: 2),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+
+    return res_data;
+  }
+
+
+
+
 }
