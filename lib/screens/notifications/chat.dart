@@ -29,19 +29,23 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     Future.delayed(Duration.zero, () {
       setState(() {
-        get_messages_previous1();
+        get_messages_previous();
       });
     });
 
     super.initState();
   }
 
+  late int lengthOfChat;
   Future<dynamic> get_messages_previous1() async {
     var id = 1;
 
     chat_historyvar = await ApiService().get_messages(context);
+    if (lengthOfChat < chat_historyvar['messages'].length) {
+      setState(() {});
 
-    setState(() {});
+      lengthOfChat = chat_historyvar['messages'].length;
+    }
 
     // _scrollDown();
   }
@@ -49,6 +53,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Future<void> get_messages_previous() async {
     var id = 1;
     chat_historyvar = await ApiService().get_messages(context);
+    lengthOfChat = chat_historyvar['messages'].length;
     // _scrollDown();
   }
 
@@ -69,10 +74,11 @@ class _ChatScreenState extends State<ChatScreen> {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
 
-    timer = Timer.periodic(const Duration(seconds: 10), (timer) {
-      print("osama" + timer.tick.toString());
-      get_messages_previous1();
-    });
+    if (timer?.isActive == false || counter == 0) {
+      timer = Timer.periodic(const Duration(seconds: 3), (timer) {
+        get_messages_previous1();
+      });
+    }
 
     return Container(
       child: Scaffold(
@@ -313,6 +319,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
                                         setState(() {
                                           chatcontroller.clear();
+                                          dispose();
                                         });
                                       },
                                       child: Padding(
