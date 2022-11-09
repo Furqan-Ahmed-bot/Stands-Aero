@@ -68,6 +68,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   id: element['id'],
                   name: element['name'],
                   sku: element['sku'],
+                  category_name: element['category_name'],
                   thumbnail: element['thumbnail'],
                   location: element['location'].toString(),
                   desc: element['desc'].toString(),
@@ -101,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       // filteredProducts = [];
       // setState(() {
       filteredProducts = productController.productList
-          .where((element) => element.desc.contains(query))
+          .where((element) => element.category_name.contains(query))
           .toList();
     });
 
@@ -233,7 +234,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             width: MediaQuery.of(context).size.width * 0.015,
                           ),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              setState(() {
+                                searchProduct("");
+                              });
+                            },
                             child: Container(
                               width: MediaQuery.of(context).size.width * 0.35,
                               decoration: BoxDecoration(
@@ -276,6 +281,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             onTap: () {
                               setState(() {
                                 // catvalue;
+                                searchProductFilter("Engine Stands");
                                 klr = true;
                               });
                             },
@@ -322,6 +328,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             onTap: () {
                               setState(() {
                                 // catvalue;
+                                searchProductFilter("Bootstrap Kits");
                                 klr = false;
                               });
                             },

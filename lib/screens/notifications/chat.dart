@@ -23,6 +23,8 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final chatcontroller = TextEditingController();
   dynamic chat_historyvar;
+  ScrollController scrollController = new ScrollController();
+
   // final ScrollController _controller = ScrollController();
   ScrollController _controller = ScrollController();
   @override
@@ -121,8 +123,7 @@ class _ChatScreenState extends State<ChatScreen> {
         body: FutureBuilder<dynamic>(
             future: get_messages_previous1(),
             builder: (context, snapshot) {
-              print("chat_historyvar['messages'].lengt" +
-                  chat_historyvar['messages'].length.toString());
+              print("chat_historyvar['messages'].lengt" + counter.toString());
               if (snapshot.connectionState == ConnectionState.done ||
                   counter > 0) {
                 counter++;
@@ -141,6 +142,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         height: res_height * 0.8,
                         child: ListView(
                           shrinkWrap: true,
+                          reverse: true,
                           children: [
                             ListView.builder(
                                 shrinkWrap: true,
@@ -319,7 +321,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
                                         setState(() {
                                           chatcontroller.clear();
-                                          dispose();
                                         });
                                       },
                                       child: Padding(

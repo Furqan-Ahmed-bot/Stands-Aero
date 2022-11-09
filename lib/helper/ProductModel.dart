@@ -37,7 +37,7 @@ class product {
     required this.id,
     required this.name,
     required this.sku,
-    // required this.leaseRate,
+    required this.category_name,
     required this.thumbnail,
     required this.location,
     required this.desc,
@@ -48,7 +48,7 @@ class product {
   int id;
   String name;
   String sku;
-  // int leaseRate;
+  String category_name;
   String thumbnail;
   String location;
   String desc;
@@ -59,7 +59,7 @@ class product {
         id: json["id"],
         name: json["name"],
         sku: json["sku"],
-        // leaseRate: json["lease_rate"],
+        category_name: json["category_name"],
         thumbnail: json["thumbnail"],
         location: json["location"] == null ? null : json["location"],
         desc: json["desc"],
@@ -71,7 +71,7 @@ class product {
         "id": id,
         "name": name,
         "sku": sku,
-        // "lease_rate": leaseRate,
+        "category_name": category_name,
         "thumbnail": thumbnail,
         "location": location == null ? null : location,
         "desc": desc,
