@@ -138,8 +138,8 @@ class _ChatScreenState extends State<ChatScreen> {
                       fit: BoxFit.cover,
                     ),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: ListView(
+                    // crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
                         height: res_height * 0.8,
@@ -279,12 +279,14 @@ class _ChatScreenState extends State<ChatScreen> {
                         ),
                       ),
                       Spacer(),
-                      Container(
-                        color: Colors.transparent.withOpacity(0.2),
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 13, right: 13, top: 13, bottom: 25),
-                          child: Container(
+                      Padding(
+                        padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).viewInsets.bottom),
+                        child: Container(
+                          color: Colors.transparent.withOpacity(0.2),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 13, right: 13, top: 13, bottom: 10),
                             child: TextField(
                               controller: chatcontroller,
                               decoration: new InputDecoration(
