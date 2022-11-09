@@ -109,8 +109,18 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                                     paymentStatus: paymentsHistory['data']
                                         [index]['payment_status']);
                               })
-                          : Text("No Payments found",
-                              textAlign: TextAlign.center),
+                          : Container(
+                              height: res_height * 0.8,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    'assets/slicing/no-data-found.png',
+                                    fit: BoxFit.cover,
+                                    height: 300,
+                                  ),
+                                ],
+                              )),
                     ),
                   ),
                 );

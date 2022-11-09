@@ -116,10 +116,18 @@ class _OrderHistoryState extends State<OrderHistory> {
                                     paymentStatus: order_historyvar['data']
                                         [index]['payment_status']);
                               })
-                          : Text(
-                              "No Orders found",
-                              textAlign: TextAlign.center,
-                            ),
+                          : Container(
+                              height: res_height * 0.8,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    'assets/slicing/no-data-found.png',
+                                    fit: BoxFit.cover,
+                                    height: 300,
+                                  ),
+                                ],
+                              )),
                     ),
                   ),
                 );

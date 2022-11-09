@@ -149,7 +149,19 @@ class _quotesState extends State<quotes> with TickerProviderStateMixin {
                                                     [index]['product_image'])
                                             : Text("No Quotes found");
                                       })
-                                  : Text("No Quotes found"),
+                                  : Container(
+                                      height: res_height * 0.8,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Image.asset(
+                                            'assets/slicing/no-data-found.png',
+                                            fit: BoxFit.cover,
+                                            height: 300,
+                                          ),
+                                        ],
+                                      )),
                             ),
                           ],
                         ),

@@ -40,11 +40,14 @@ class _ChatScreenState extends State<ChatScreen> {
 
   late int lengthOfChat;
   Future<dynamic> get_messages_previous1() async {
-    var id = 1;
+    
 
     chat_historyvar = await ApiService().get_messages(context);
     if (lengthOfChat < chat_historyvar['messages'].length) {
-      setState(() {});
+      if (mounted){
+        setState(() {});
+      }
+      
 
       lengthOfChat = chat_historyvar['messages'].length;
     }
@@ -53,7 +56,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Future<void> get_messages_previous() async {
-    var id = 1;
+   
     chat_historyvar = await ApiService().get_messages(context);
     lengthOfChat = chat_historyvar['messages'].length;
     // _scrollDown();

@@ -176,7 +176,19 @@ class _TexCertificateScreenState extends State<TexCertificateScreen> {
                                                 ['cstm_tax_certificate']),
                                       );
                                     })
-                                : Text("No Certificates found"),
+                                : Container(
+                                    height: res_height * 0.8,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                          'assets/slicing/no-data-found.png',
+                                          fit: BoxFit.cover,
+                                          height: 300,
+                                        ),
+                                      ],
+                                    )),
                           )
                         ],
                       ),

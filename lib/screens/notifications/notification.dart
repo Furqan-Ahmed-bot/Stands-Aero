@@ -119,58 +119,74 @@ class _NotificationScreenState extends State<NotificationScreen>
             ],
           ),
         ),
-        body: FutureBuilder<void>(
-            future: notifications(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: FadeTransition(
-                    opacity: _fadeInFadeOut,
-                    child: Container(
-                      width: double.infinity,
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            SingleChildScrollView(
-                              child: notificationsList['data'].length > 0
-                                  ? ListView.builder(
-                                      shrinkWrap: true,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      scrollDirection: Axis.vertical,
-                                      // itemCount: quotations_data['data'].length,
-                                      itemCount:
-                                          notificationsList['data'].length,
-                                      itemBuilder: (context, index) {
-                                        return Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Notifications_Card(
-                                              title: notificationsList['data']
-                                                      [index]['title']
-                                                  .toString(),
-                                              bodytext:
-                                                  notificationsList['data']
-                                                          [index]['body']
-                                                      .toString(),
-                                              datetimevalue:
-                                                  notificationsList['data']
-                                                          [index]['created_at']
-                                                      .toString()),
-                                        );
-                                      })
-                                  : spinkit,
+        body: notificationsList['data'].length > 0
+            ? FutureBuilder<void>(
+                future: notifications(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: FadeTransition(
+                        opacity: _fadeInFadeOut,
+                        child: Container(
+                          width: double.infinity,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                SingleChildScrollView(
+                                  child: notificationsList['data'].length > 0
+                                      ? ListView.builder(
+                                          shrinkWrap: true,
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
+                                          scrollDirection: Axis.vertical,
+                                          // itemCount: quotations_data['data'].length,
+                                          itemCount:
+                                              notificationsList['data'].length,
+                                          itemBuilder: (context, index) {
+                                            return Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Notifications_Card(
+                                                  title:
+                                                      notificationsList['data']
+                                                              [index]['title']
+                                                          .toString(),
+                                                  bodytext:
+                                                      notificationsList['data']
+                                                              [index]['body']
+                                                          .toString(),
+                                                  datetimevalue:
+                                                      notificationsList['data']
+                                                                  [index]
+                                                              ['created_at']
+                                                          .toString()),
+                                            );
+                                          })
+                                      : spinkit,
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
                       ),
+                    );
+                  } else {
+                    return spinkit;
+                  }
+                })
+            : Container(
+                height: res_height * 0.8,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/slicing/no-data-found.png',
+                      fit: BoxFit.cover,
+                      height: 300,
                     ),
-                  ),
-                );
-              }
-              else{
-                return spinkit;
-              }
-            }),
+                  ],
+                )),
       ),
     );
   }
