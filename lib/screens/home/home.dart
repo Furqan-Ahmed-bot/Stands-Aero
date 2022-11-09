@@ -30,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   List<product> filteredProducts = [];
   final formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _key = GlobalKey();
+  int filterCounter = 0;
 
   @override
   void initState() {
@@ -81,6 +82,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   Future<List<product>> searchProduct(String query) async {
+    filterCounter = 1;
     print("Called Search " + query);
     setState(() {
       // filteredProducts = [];
@@ -179,7 +181,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   SizedBox(
                     height: res_height * 0.01,
                   ),
-
                   Padding(
                     padding: const EdgeInsets.only(left: 13, right: 13),
                     child: Container(
@@ -242,7 +243,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             child: Container(
                               width: MediaQuery.of(context).size.width * 0.35,
                               decoration: BoxDecoration(
-                                  color: klr == false
+                                  color: filterCounter == 1
                                       ? kPrimaryColor
                                       : Color(0xffa1a1a1),
                                   borderRadius:
@@ -259,13 +260,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                             : 'All Products',
                                         style: TextStyle(
                                           fontSize: 13,
-                                          color: klr == false
+                                          color: filterCounter == 1
                                               ? Colors.white
                                               : Colors.black,
                                         )),
                                     Icon(
-                                      Icons.arrow_drop_down,
-                                      color: klr == false
+                                      Icons.filter_list,
+                                      color: filterCounter == 1
                                           ? Colors.white
                                           : Colors.black,
                                     )
@@ -281,14 +282,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             onTap: () {
                               setState(() {
                                 // catvalue;
-                                searchProductFilter("Engine Stands");
+                                filterCounter = 2;
+                                searchProductFilter("Engine Stand");
                                 klr = true;
                               });
                             },
                             child: Container(
                               width: MediaQuery.of(context).size.width * 0.35,
                               decoration: BoxDecoration(
-                                  color: klr == true
+                                  color: filterCounter == 2
                                       ? kPrimaryColor
                                       : Color(0xffa1a1a1),
                                   borderRadius:
@@ -306,13 +308,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                             : 'Engine Stands',
                                         style: TextStyle(
                                           fontSize: 13,
-                                          color: klr == true
+                                          color: filterCounter == 2
                                               ? Colors.white
                                               : Colors.black,
                                         )),
                                     Icon(
-                                      Icons.arrow_drop_down,
-                                      color: klr == true
+                                      Icons.filter_list,
+                                      color: filterCounter == 2
                                           ? Colors.white
                                           : Colors.black,
                                     )
@@ -328,14 +330,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             onTap: () {
                               setState(() {
                                 // catvalue;
-                                searchProductFilter("Bootstrap Kits");
+                                filterCounter = 3;
+                                searchProductFilter("Bootstrap Kit");
                                 klr = false;
                               });
                             },
                             child: Container(
                               width: MediaQuery.of(context).size.width * 0.35,
                               decoration: BoxDecoration(
-                                  color: klr == false
+                                  color: filterCounter == 3
                                       ? kPrimaryColor
                                       : Color(0xffa1a1a1),
                                   borderRadius:
@@ -352,13 +355,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                             : 'Manufactures',
                                         style: TextStyle(
                                           fontSize: 13,
-                                          color: klr == false
+                                          color: filterCounter == 3
                                               ? Colors.white
                                               : Colors.black,
                                         )),
                                     Icon(
-                                      Icons.arrow_drop_down,
-                                      color: klr == false
+                                      Icons.filter_list,
+                                      color: filterCounter == 3
                                           ? Colors.white
                                           : Colors.black,
                                     )
@@ -370,48 +373,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.015,
                           ),
-                          // GestureDetector(
-                          //   onTap: () {
-                          //     // print();
-                          //     filterpopup([
-                          //       'Manufacture 1',
-                          //       'Manufacture 2',
-                          //       'Manufacture 3',
-                          //       'Manufacture 4',
-                          //     ], "rad");
-                          //   },
-                          //   child: Container(
-                          //     width: MediaQuery.of(context).size.width * 0.35,
-                          //     decoration: BoxDecoration(
-                          //         color: Color(0xffa1a1a1),
-                          //         borderRadius:
-                          //             BorderRadius.all(Radius.circular(5))),
-                          //     child: Padding(
-                          //       padding: const EdgeInsets.all(10.0),
-                          //       child: Row(
-                          //         mainAxisAlignment:
-                          //             MainAxisAlignment.spaceBetween,
-                          //         children: [
-                          //           Text(
-                          //               radvalue2 != null
-                          //                   ? radvalue2.toString()
-                          //                   : 'Bootstrao Kit',
-                          //               style: TextStyle(
-                          //                 fontSize: 13,
-                          //                 color: Colors.black,
-                          //               )),
-                          //           Icon(
-                          //             Icons.arrow_drop_down,
-                          //             color: Colors.black,
-                          //           )
-                          //         ],
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-                          // SizedBox(
-                          //   width: MediaQuery.of(context).size.width * 0.015,
-                          // ),
                         ],
                       ),
                     ),
@@ -419,36 +380,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   SizedBox(
                     height: res_height * 0.025,
                   ),
-                  // Padding(
-                  //   padding: const EdgeInsets.only(left: 13),
-                  //   child: Container(
-                  //     child: SingleChildScrollView(
-                  //       scrollDirection: Axis.horizontal,
-                  //       child: Row(
-                  //         children: [
-                  //           StandsBox(
-                  //               context, 'assets/slicing/Untitled-26.png'),
-                  //           SizedBox(
-                  //             width: res_width * 0.05,
-                  //           ),
-                  //           StandsBox(
-                  //               context, 'assets/slicing/Untitled-26.png'),
-                  //           SizedBox(
-                  //             width: res_width * 0.05,
-                  //           ),
-                  //           StandsBox(
-                  //               context, 'assets/slicing/Untitled-26.png'),
-                  //           SizedBox(
-                  //             width: res_width * 0.05,
-                  //           ),
-                  //           StandsBox(context, 'assets/slicing/Untitled-26.png')
-                  //         ],
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
                   FutureBuilder<List<product>>(
-                      future: searchProduct(searchController.text),
+                      future: filterCounter == 1
+                          ? searchProduct(searchController.text)
+                          : filterCounter == 2
+                              ? searchProductFilter("Engine Stand")
+                              : searchProductFilter("Bootstrap Kit"),
                       builder: (context, snapshot) {
                         return Padding(
                           padding: const EdgeInsets.only(left: 13),
@@ -482,69 +419,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           ),
                         );
                       }),
-                  // SizedBox(
-                  //   height: res_height * 0.025,
-                  // ),
-                  // Padding(
-                  //   padding: const EdgeInsets.only(left: 13),
-                  //   child: Container(
-                  //       child: ListView.builder(
-                  //           shrinkWrap: true,
-                  //           scrollDirection: Axis.horizontal,
-                  //           itemCount: 5,
-                  //           itemBuilder: (BuildContext context, int index) {
-                  //             return StandsBox(
-                  //                 context, "assets/slicing/Untitled-26.png");
-                  //           })
-                  //       //     SingleChildScrollView(
-                  //       //   scrollDirection: Axis.horizontal,
-                  //       //   child: Row(
-                  //       //     children: [
-                  //       //       StandsBox(
-                  //       //           context, 'assets/slicing/Untitled-26.png'),
-                  //       //       SizedBox(
-                  //       //         width: res_width * 0.05,
-                  //       //       ),
-                  //       //       StandsBox(
-                  //       //           context, 'assets/slicing/Untitled-26.png'),
-                  //       //       SizedBox(
-                  //       //         width: res_width * 0.05,
-                  //       //       ),
-                  //       //       StandsBox(
-                  //       //           context, 'assets/slicing/Untitled-26.png'),
-                  //       //       SizedBox(
-                  //       //         width: res_width * 0.05,
-                  //       //       ),
-                  //       //       StandsBox(context, 'assets/slicing/Untitled-26.png')
-                  //       //     ],
-                  //       //   ),
-                  //       // ),
-                  //       ),
-                  // ),
-                  // Padding(
-                  //   padding: const EdgeInsets.only(left: 13),
-                  //   child: Container(
-                  //     height: Get.height * 0.35,
-                  //     child: ListView.builder(
-                  //       scrollDirection: Axis.horizontal,
-                  //       itemCount: productController.productList.length,
-                  //       itemBuilder: (context, i) {
-                  //         return Padding(
-                  //           padding: const EdgeInsets.only(
-                  //               top: 5, left: 5, right: 5, bottom: 5),
-                  //           child: StandsBox(
-                  //             context,
-                  //             productController.productList[i].thumbnail,
-                  //             productController.productList[i].name,
-                  //             productController.productList[i].location,
-                  //             productController.productList[i].desc,
-                  //             productController.productList[i].id
-                  //           ),
-                  //         );
-                  //       },
-                  //     ),
-                  //   ),
-                  // ),
                   SizedBox(
                     height: res_height * 0.025,
                   ),

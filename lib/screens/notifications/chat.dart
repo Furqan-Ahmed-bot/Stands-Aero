@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:StandsAero/helper/loader.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -23,6 +24,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final chatcontroller = TextEditingController();
   dynamic chat_historyvar;
+  bool stopTimer = false;
   ScrollController scrollController = new ScrollController();
 
   // final ScrollController _controller = ScrollController();
@@ -34,20 +36,22 @@ class _ChatScreenState extends State<ChatScreen> {
         get_messages_previous();
       });
     });
+    if (stopTimer == true || counter == 0) {
+      timer = Timer.periodic(const Duration(seconds: 3), (timer) {
+        get_messages_previous1();
+      });
+    }
 
     super.initState();
   }
 
   late int lengthOfChat;
   Future<dynamic> get_messages_previous1() async {
-    
-
     chat_historyvar = await ApiService().get_messages(context);
     if (lengthOfChat < chat_historyvar['messages'].length) {
-      if (mounted){
+      if (mounted) {
         setState(() {});
       }
-      
 
       lengthOfChat = chat_historyvar['messages'].length;
     }
@@ -56,7 +60,6 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Future<void> get_messages_previous() async {
-   
     chat_historyvar = await ApiService().get_messages(context);
     lengthOfChat = chat_historyvar['messages'].length;
     // _scrollDown();
@@ -79,12 +82,6 @@ class _ChatScreenState extends State<ChatScreen> {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
 
-    if (timer?.isActive == false || counter == 0) {
-      timer = Timer.periodic(const Duration(seconds: 3), (timer) {
-        get_messages_previous1();
-      });
-    }
-
     return Container(
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -96,6 +93,9 @@ class _ChatScreenState extends State<ChatScreen> {
           leading: GestureDetector(
             behavior: HitTestBehavior.translucent,
             onTap: () {
+              stopTimer = true;
+              deactivate();
+              timer!.cancel();
               Navigator.pop(context);
               // _key.currentState!.openDrawer();
             },
@@ -148,6 +148,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           reverse: true,
                           children: [
                             ListView.builder(
+                                dragStartBehavior: DragStartBehavior.start,
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
                                 scrollDirection: Axis.vertical,
