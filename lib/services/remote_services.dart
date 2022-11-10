@@ -25,8 +25,8 @@ import '../screens/auth/mainlogin.dart';
 import '../screens/mainhome.dart';
 
 // String apiGlobal = "http://localhost:3000/api/v1";
-// String apiGlobal = "https://standsaero.jumppace.com";
-String apiGlobal = "https://standsaero-dev.jumppace.com";
+String apiGlobal = "https://standsaero.jumppace.com";
+// String apiGlobal = "https://standsaero-dev.jumppace.com";
 final bottomctrl = Get.put(BottomController());
 // String apiGlobal = "https://standsaeroapi.jumppace.com";
 
@@ -927,8 +927,6 @@ class ApiService {
     // https://standsaero-dev.jumppace.com/chatify/api/sendMessage
   }
 
-
-
   getnotifications() async {
     final uri = Uri.parse('${apiGlobal}/api/user/getnotifications');
     print(uri);
@@ -955,8 +953,4 @@ class ApiService {
 
     return res_data;
   }
-
-
-
-
 }

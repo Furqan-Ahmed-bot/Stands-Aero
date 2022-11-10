@@ -148,7 +148,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           reverse: true,
                           children: [
                             ListView.builder(
-                                dragStartBehavior: DragStartBehavior.start,
+                                // dragStartBehavior: DragStartBehavior.start,
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
                                 scrollDirection: Axis.vertical,
@@ -180,13 +180,11 @@ class _ChatScreenState extends State<ChatScreen> {
                                                       bottomRight:
                                                           Radius.circular(20),
                                                     ),
-                                                    // border: Border.all(
-                                                    //   width: 3,
-                                                    //   color: Colors.green,
-                                                    //   style: BorderStyle.solid,
-                                                    // ),
                                                   ),
-                                                  width: res_width * 0.75,
+                                                  // width: res_width * 0.5,
+                                                  constraints: BoxConstraints(
+                                                    maxWidth: res_width * 0.75,
+                                                  ),
                                                   child: Padding(
                                                     padding:
                                                         const EdgeInsets.all(
@@ -312,22 +310,28 @@ class _ChatScreenState extends State<ChatScreen> {
                                     GestureDetector(
                                       behavior: HitTestBehavior.translucent,
                                       onTap: () async {
-                                        var temporaryMsgId = 'temp_' + userid;
-                                        var sendData = {
-                                          'id': 1,
-                                          'type': 'user',
-                                          'message': chatcontroller.text,
-                                          'temporaryMsgId': temporaryMsgId
-                                        };
-                                        ApiService()
-                                            .send_messages(context, sendData);
-                                        // if (res_data['status'] == true) {
-                                        //   Navigator.pop(context);
-                                        // }
+                                        if (chatcontroller.text.isNotEmpty) {
+                                          var temporaryMsgId = 'temp_' + userid;
+                                          var sendData = {
+                                            'id': 1,
+                                            'type': 'user',
+                                            'message': chatcontroller.text,
+                                            'temporaryMsgId': temporaryMsgId
+                                          };
+                                          ApiService()
+                                              .send_messages(context, sendData);
 
-                                        setState(() {
-                                          chatcontroller.clear();
-                                        });
+                                          setState(() {
+                                            chatcontroller.clear();
+                                          });
+                                        } else {
+                                          Get.snackbar(
+                                            'Error',
+                                            "Please write your message",
+                                            snackPosition: SnackPosition.TOP,
+                                            backgroundColor: Colors.white,
+                                          );
+                                        }
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.all(10.0),
