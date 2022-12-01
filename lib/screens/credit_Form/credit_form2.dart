@@ -46,6 +46,7 @@ class _credit_from2State extends State<credit_from2> {
   final usercontroller = Get.put(UserController());
 
   final bottomctrl = Get.put(BottomController());
+  //
 
   // var requestDataofQuote;
 
