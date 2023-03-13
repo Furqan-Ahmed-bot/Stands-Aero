@@ -25,3 +25,14 @@ var global_guarantor;
 var global_registered_agent;
 var global_signature_1;
 var global_signature_2;
+
+final globalHeaders1 = {
+  'Accept': 'application/json',
+  'Content-Type': 'application/x-www-form-urlencoded',
+  'Authorization': 'Bearer ${globaltoken}',
+};
+
+final globalHeaders = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer ${globaltoken}',
+};

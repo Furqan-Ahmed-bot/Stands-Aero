@@ -56,13 +56,21 @@ class _NavDrawerState extends State<NavDrawer> {
                       Row(
                         children: [
                           userController.user.propic != null
-                              ? Image.network(
-                                  userController.user.propic.toString(),
-                                  width: 80,
-                                  height: 80,
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(45),
+                                  child: Image.network(
+                                    userController.user.propic.toString(),
+                                    width: 80,
+                                    height: 80,
+                                  ),
                                 )
-                              : Image.asset("assets/slicing/NoPath.png",
-                                  width: 80, height: 80),
+                              : ClipRRect(
+                                  borderRadius: BorderRadius.circular(45),
+                                  child: Image.asset(
+                                      "assets/slicing/NoPath.png",
+                                      width: 80,
+                                      height: 80),
+                                ),
                           SizedBox(
                             width: 10,
                           ),
@@ -329,8 +337,8 @@ class _NavDrawerState extends State<NavDrawer> {
                           IconButton(
                             icon: Padding(
                               padding: const EdgeInsets.all(7.0),
-                              child:
-                                  Image.asset("assets/slicing/notifications-icon.png"),
+                              child: Image.asset(
+                                  "assets/slicing/notifications-icon.png"),
                             ),
                             onPressed: () {},
                           ),
@@ -540,10 +548,6 @@ class _NavDrawerState extends State<NavDrawer> {
                           )
                         ],
                       ),
-                      Container(
-                        height: 1,
-                        color: Colors.grey.withOpacity(0.2),
-                      )
                     ],
                   ),
                 ),

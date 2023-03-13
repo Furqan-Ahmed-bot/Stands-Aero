@@ -1,6 +1,6 @@
 // To parse this JSON data, do
 //
-// final product = productFromJson(jsonString);
+//     final product = productFromJson(jsonString);
 
 import 'dart:convert';
 
@@ -37,45 +37,65 @@ class product {
     required this.id,
     required this.name,
     required this.sku,
-    required this.category_name,
     required this.thumbnail,
     required this.location,
+    required this.address,
     required this.desc,
-    required this.createdAt,
-    required this.updatedAt,
+    required this.categoryId,
+    required this.manufacturerId,
+    required this.categoryName,
+    required this.manufacturerName,
+    required this.status,
+    required this.color,
+    required this.availableStatus,
   });
 
   int id;
   String name;
   String sku;
-  String category_name;
   String thumbnail;
   String location;
+  String address;
   String desc;
-  String createdAt;
-  String updatedAt;
+  String categoryId;
+  String manufacturerId;
+  String categoryName;
+  String manufacturerName;
+  String status;
+  String color;
+  String availableStatus;
 
   factory product.fromJson(Map<String, dynamic> json) => product(
         id: json["id"],
         name: json["name"],
         sku: json["sku"],
-        category_name: json["category_name"],
         thumbnail: json["thumbnail"],
-        location: json["location"] == null ? null : json["location"],
+        location: json["location"],
+        address: json["address"],
         desc: json["desc"],
-        createdAt: json["created_at"],
-        updatedAt: json["updated_at"],
+        categoryId: json["category_id"],
+        manufacturerId: json["manufacturer_id"],
+        categoryName: json["category_name"],
+        manufacturerName: json["manufacturer_name"],
+        status: json["status"],
+        color: json["color"],
+        availableStatus: json["available_status"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
         "sku": sku,
-        "category_name": category_name,
         "thumbnail": thumbnail,
-        "location": location == null ? null : location,
+        "location": location,
+        "address": address,
         "desc": desc,
-        "created_at": createdAt,
-        "updated_at": updatedAt,
+        "category_id": categoryId,
+        "manufacturer_id": manufacturerId,
+        "category_name": categoryName,
+        "manufacturer_name": manufacturerName,
+        "status": status,
+        "color": color,
+        "available_status": availableStatus,
       };
 }

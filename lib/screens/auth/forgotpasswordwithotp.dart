@@ -1,17 +1,8 @@
-import 'dart:convert';
-
+import 'package:StandsAero/helper/colors.dart';
+import 'package:StandsAero/helper/model.dart';
+import 'package:StandsAero/services/remote_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:StandsAero/services/remote_services.dart';
-import 'package:StandsAero/controller/usercontroller.dart';
-import 'package:StandsAero/helper/colors.dart';
-import 'package:StandsAero/helper/global.dart';
-import 'package:StandsAero/helper/model.dart';
-import 'package:StandsAero/screens/auth/register.dart';
-import 'package:StandsAero/screens/home/home.dart';
-import 'package:StandsAero/screens/mainhome.dart';
-import 'package:StandsAero/screens/payment/awaiting.dart';
-import 'package:http/http.dart' as http;
 
 class ForgotPasswordScreen extends StatefulWidget {
   final userId;

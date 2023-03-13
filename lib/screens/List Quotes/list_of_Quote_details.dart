@@ -1,15 +1,13 @@
 import 'dart:developer';
 
+import 'package:StandsAero/helper/global.dart';
+import 'package:StandsAero/helper/loader.dart';
+import 'package:StandsAero/screens/List%20Quotes/quotes.dart';
+import 'package:StandsAero/screens/lease%20Form/lease_form.dart';
+import 'package:StandsAero/services/remote_services.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:StandsAero/screens/List%20Quotes/quotes.dart';
-import 'package:StandsAero/screens/home/orderhistory.dart';
-import 'package:StandsAero/screens/lease%20Form/lease_form.dart';
-import 'package:StandsAero/screens/payment/payment.dart';
-import 'package:StandsAero/services/remote_services.dart';
-import 'package:StandsAero/helper/loader.dart';
-import 'package:StandsAero/helper/global.dart';
-import 'package:file_picker/file_picker.dart';
 
 class quotes_details extends StatefulWidget {
   final quoteId;

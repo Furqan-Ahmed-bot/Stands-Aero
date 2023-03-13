@@ -1,21 +1,14 @@
 import 'dart:developer';
 
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:StandsAero/helper/colors.dart';
-import 'package:StandsAero/helper/global.dart';
-import 'package:StandsAero/screens/auth/mainlogin.dart';
-import 'package:StandsAero/screens/kyc_Form/kyc_form.dart';
-import 'package:StandsAero/services/remote_services.dart';
-import 'package:table_calendar/table_calendar.dart';
-import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:StandsAero/helper/colors.dart';
-import 'package:StandsAero/screens/booking/engine_stand_booking.dart';
-import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:table_calendar/table_calendar.dart';
+
+import '../../services/remote_services.dart';
 
 class stand_booking extends StatefulWidget {
   final productId;
@@ -46,31 +39,33 @@ class _stand_bookingState extends State<stand_booking> {
   DateTime? _selectedDay;
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
-  String _selectedDate = '';
-  String _dateCount = '';
-  String _range = '';
-  String _rangeCount = '';
+  // String _selectedDate = '';
+  // String _dateCount = '';
+  // String _range = '';
+  // String _rangeCount = '';
   final kToday = DateTime.now();
   final kFirstDay = DateTime(
       DateTime.now().year, DateTime.now().month - 3, DateTime.now().day);
   final kLastDay = DateTime(
       DateTime.now().year, DateTime.now().month + 3, DateTime.now().day);
   double pad = 23.0;
-  void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
-    setState(() {
-      if (args.value is PickerDateRange) {
-        _range = '${DateFormat('dd/MM/yyyy').format(args.value.startDate)} -'
-            // ignore: lines_longer_than_80_chars
-            ' ${DateFormat('dd/MM/yyyy').format(args.value.endDate ?? args.value.startDate)}';
-      } else if (args.value is DateTime) {
-        _selectedDate = args.value.toString();
-      } else if (args.value is List<DateTime>) {
-        _dateCount = args.value.length.toString();
-      } else {
-        _rangeCount = args.value.length.toString();
-      }
-    });
-  }
+  final _formKeyBooking = GlobalKey<FormState>();
+
+  // void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
+  //   setState(() {
+  //     if (args.value is PickerDateRange) {
+  //       _range = '${DateFormat('dd/MM/yyyy').format(args.value.startDate)} -'
+  //           // ignore: lines_longer_than_80_chars
+  //           ' ${DateFormat('dd/MM/yyyy').format(args.value.endDate ?? args.value.startDate)}';
+  //     } else if (args.value is DateTime) {
+  //       _selectedDate = args.value.toString();
+  //     } else if (args.value is List<DateTime>) {
+  //       _dateCount = args.value.length.toString();
+  //     } else {
+  //       _rangeCount = args.value.length.toString();
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +76,7 @@ class _stand_bookingState extends State<stand_booking> {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
     double pad = 23.0;
-    FocusNode myFocusNode = new FocusNode();
+    // FocusNode myFocusNode = new FocusNode();
 
     return Scaffold(
       appBar: AppBar(
@@ -106,6 +101,7 @@ class _stand_bookingState extends State<stand_booking> {
         ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               widget.productSku.toString(),
@@ -119,11 +115,10 @@ class _stand_bookingState extends State<stand_booking> {
           ],
         ),
       ),
-      extendBodyBehindAppBar: true,
+      // extendBodyBehindAppBar: true,
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        // height:  double.infinity,
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/slicing/Untitled-46.jpg"),
@@ -132,259 +127,175 @@ class _stand_bookingState extends State<stand_booking> {
         ),
         child: SafeArea(
           child: SingleChildScrollView(
-            child: Column(
-              children: [
-                // custum_Slider(res_width: res_width),
-                Padding(
-                  padding: EdgeInsets.all(pad),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(13.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
+            child: Form(
+              key: _formKeyBooking,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(pad),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(13.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        child: TableCalendar(
+                            calendarStyle: CalendarStyle(
+                                todayDecoration: BoxDecoration(
+                                    color: kPrimaryColor,
+                                    borderRadius: BorderRadius.circular(50)),
+                                selectedDecoration:
+                                    BoxDecoration(color: kPrimaryColor)),
+                            headerStyle: HeaderStyle(
+                                formatButtonVisible: false,
+                                titleCentered: true,
+                                leftChevronIcon: CircleAvatar(
+                                  backgroundColor: kPrimaryColor,
+                                  child: Icon(
+                                    Icons.chevron_left,
+                                    color: Colors.white,
+                                    size: 28,
+                                  ),
+                                ),
+                                rightChevronIcon: CircleAvatar(
+                                  backgroundColor: kPrimaryColor,
+                                  child: Icon(
+                                    Icons.chevron_right,
+                                    color: Colors.white,
+                                    size: 28,
+                                  ),
+                                ),
+                                decoration: BoxDecoration(color: Colors.white)),
+                            firstDay: widget.firstDay,
+                            lastDay: widget.lastDay,
+                            focusedDay: widget.firstDay,
+                            rangeStartDay: _rangeStart,
+                            rangeEndDay: _rangeEnd,
+                            calendarFormat: _calendarFormat,
+                            rangeSelectionMode: _rangeSelectionMode,
+                            onRangeSelected: (start, end, focusedDay) {}),
                       ),
-                      child: TableCalendar(
-                          // daysOfWeekVisible: false,
-
-                          calendarStyle: CalendarStyle(
-                              todayDecoration: BoxDecoration(
-                                  color: kPrimaryColor,
-                                  borderRadius: BorderRadius.circular(50)),
-                              selectedDecoration:
-                                  BoxDecoration(color: kPrimaryColor)),
-                          // calendarFormat: false,
-                          headerStyle: HeaderStyle(
-                              formatButtonVisible: false,
-                              titleCentered: true,
-                              leftChevronIcon: CircleAvatar(
-                                backgroundColor: kPrimaryColor,
-                                child: Icon(
-                                  Icons.chevron_left,
-                                  color: Colors.white,
-                                  size: 28,
-                                ),
-                              ),
-                              rightChevronIcon: CircleAvatar(
-                                backgroundColor: kPrimaryColor,
-                                child: Icon(
-                                  Icons.chevron_right,
-                                  color: Colors.white,
-                                  size: 28,
-                                ),
-                              ),
-                              decoration: BoxDecoration(color: Colors.white)),
-                          firstDay: widget.firstDay,
-                          lastDay: widget.lastDay,
-                          focusedDay: widget.firstDay,
-                          rangeStartDay: _rangeStart,
-                          rangeEndDay: _rangeEnd,
-                          calendarFormat: _calendarFormat,
-                          rangeSelectionMode: _rangeSelectionMode,
-                          onRangeSelected: (start, end, focusedDay) {}),
-                      // SfDateRangePicker(
-                      //   // onSelectionChanged: _onSelectionChanged,
-                      //   selectionMode: DateRangePickerSelectionMode.range,
-                      //   // rangeTextStyle: TextStyle(color: Colors.red),
-                      //   // selectionTextStyle: TextStyle(color: Colors.red),
-                      //   enablePastDates: false,
-                      //   selectionColor: kPrimaryColor,
-                      //   rangeSelectionColor: kPrimaryColor.withOpacity(0.3),
-                      //   endRangeSelectionColor: kPrimaryColor,
-                      //   startRangeSelectionColor: kPrimaryColor,
-                      //   todayHighlightColor: kPrimaryColor,
-                      //   backgroundColor: Colors.white,
-                      //   // showTodayButton: false,
-
-                      //   initialSelectedRange: PickerDateRange(
-                      //       widget.firstDay,
-                      //       widget.lastDay),
-                      // ),
                     ),
                   ),
-                ),
-                ////sahdajhadjad
-                // Padding(
-                //   padding: EdgeInsets.all(pad),
-                //   child: Container(
-                //     decoration: BoxDecoration(color: Colors.white),
-                //     child: TableCalendar(
-                //       // daysOfWeekVisible: false,
-
-                //       calendarStyle: CalendarStyle(
-                //           todayDecoration: BoxDecoration(
-                //               color: kPrimaryColor,
-                //               borderRadius: BorderRadius.circular(50)),
-                //           selectedDecoration:
-                //               BoxDecoration(color: kPrimaryColor)),
-                //       // calendarFormat: false,
-                //       headerStyle: HeaderStyle(
-                //           formatButtonVisible: false,
-                //           titleCentered: true,
-                //           leftChevronIcon: CircleAvatar(
-                //             backgroundColor: kPrimaryColor,
-                //             child: Icon(
-                //               Icons.chevron_left,
-                //               color: Colors.white,
-                //               size: 28,
-                //             ),
-                //           ),
-                //           rightChevronIcon: CircleAvatar(
-                //             backgroundColor: kPrimaryColor,
-                //             child: Icon(
-                //               Icons.chevron_right,
-                //               color: Colors.white,
-                //               size: 28,
-                //             ),
-                //           ),
-                //           decoration: BoxDecoration(color: Colors.white)),
-                //       firstDay: DateTime.now(),
-                //       lastDay: DateTime.utc(2030, 3, 14),
-                //       focusedDay: DateTime.now(),
-                //     ),
-                //   ),
-                // ),
-                Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: pad, vertical: pad / 2),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'From',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 15,
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: pad, vertical: pad / 2),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'From',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
+                              ),
                             ),
-                          ),
-                          Container(
-                            height: 50,
-                            width: res_width / 2.4,
-                            decoration: BoxDecoration(color: Colors.grey),
-                            child: TextFormField(
-                              readOnly: true,
-                              controller: firstDay,
-                              decoration: InputDecoration(
-                                  hintText: "22/5/22",
-                                  contentPadding: EdgeInsets.only(left: 10)),
-                              keyboardType: TextInputType.datetime,
-                            ),
-                          )
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Till",
-                            style: TextStyle(fontSize: 15, color: Colors.black),
-                          ),
-                          Container(
-                            height: 50,
-                            width: res_width / 2.4,
-                            decoration: BoxDecoration(color: Colors.grey),
-                            child: TextFormField(
-                              readOnly: true,
-                              controller: lastDay,
-                              decoration: InputDecoration(
-                                  hintText: "22/5/22",
-                                  contentPadding: EdgeInsets.only(left: 10)),
-                              keyboardType: TextInputType.datetime,
-                            ),
-                          )
-                        ],
-                      ),
-                      // Text(
-                      //   'Miami, Florida',
-                      //   style: TextStyle(color: Colors.black),
-                      // ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      height: 50,
-                      width: res_width * 0.9,
-                      decoration: BoxDecoration(color: Colors.grey),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: TextFormField(
-                          controller: location,
-                          decoration: InputDecoration(
-                              labelText: "Location",
-                              labelStyle: TextStyle(
-                                  color: myFocusNode.hasFocus
-                                      ? Colors.white
-                                      : Colors.black))
-                          // decoration: InputDecoration(
-                          //     // hintText: "Location",
-                          //     contentPadding: EdgeInsets.only(left: 10))
-                          ,
-                          keyboardType: TextInputType.text,
+                            Container(
+                              height: 50,
+                              width: res_width / 2.4,
+                              decoration: BoxDecoration(color: Colors.grey),
+                              child: TextFormField(
+                                readOnly: true,
+                                controller: firstDay,
+                                decoration: InputDecoration(
+                                    hintText: "22/5/22",
+                                    contentPadding: EdgeInsets.only(left: 10)),
+                                keyboardType: TextInputType.datetime,
+                              ),
+                            )
+                          ],
                         ),
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                GestureDetector(
-                  onTap: () async {
-                    // Get.to(() => MainLoginScreen());
-                    // if (location.text == "") {
-                    //   Get.snackbar(
-                    //     'Error',
-                    //     'Please enter location',
-                    //     animationDuration: Duration(seconds: 2),
-                    //     snackPosition: SnackPosition.BOTTOM,
-                    //   );
-                    // } else {
-                    var sendData = await {
-                      'product_id': widget.productId,
-                      'location': location.text,
-                      'date_from': firstDay.text,
-                      'date_to': lastDay.text
-                    };
-                    // log("sendData" + sendData);
-                    requestFormdatafromQuote = sendData;
-                    log("requestFormdatafromQuote" +
-                        requestFormdatafromQuote.toString());
-                    Get.to(kyc_form());
-                    // }
-
-                    // var res_data= ApiService().quoteRequest(context,sendData,widget.productId);
-                    // if(res_data['status'] ==true){
-
-                    // }
-                  },
-                  child: Container(
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Till",
+                              style:
+                                  TextStyle(fontSize: 15, color: Colors.black),
+                            ),
+                            Container(
+                              height: 50,
+                              width: res_width / 2.4,
+                              decoration: BoxDecoration(color: Colors.grey),
+                              child: TextFormField(
+                                readOnly: true,
+                                controller: lastDay,
+                                decoration: InputDecoration(
+                                    hintText: "22/5/22",
+                                    contentPadding: EdgeInsets.only(left: 10)),
+                                keyboardType: TextInputType.datetime,
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Container(
+                    height: 50,
                     width: res_width * 0.9,
-                    decoration: BoxDecoration(
-                        color: Color(0xffaf8a39),
-                        borderRadius: BorderRadius.all(Radius.circular(7))),
+                    decoration: BoxDecoration(color: Colors.grey),
                     child: Padding(
-                      padding: EdgeInsets.all(13.0),
-                      child: Center(
-                        child: Text(
-                          'Get a quote',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17),
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: TextFormField(
+                        controller: location,
+                        validator: (value) {
+                          if (value == null || value.length == 0) {
+                            return '';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                            labelText: "Location",
+                            labelStyle: TextStyle(color: Colors.black)),
+                        keyboardType: TextInputType.text,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  GestureDetector(
+                    onTap: () async {
+                      if (_formKeyBooking.currentState!.validate()) {
+                        var sendData = await {
+                          'product_id': widget.productId.toString(),
+                          'location': location.text,
+                          'date_from': firstDay.text,
+                          'date_to': lastDay.text
+                        };
+                        log("sendData" + sendData.toString());
+
+                        await ApiService().getQuoteRequest(context, sendData);
+                      }
+                    },
+                    child: Container(
+                      width: res_width * 0.9,
+                      decoration: BoxDecoration(
+                          color: Color(0xffaf8a39),
+                          borderRadius: BorderRadius.all(Radius.circular(7))),
+                      child: Padding(
+                        padding: EdgeInsets.all(13.0),
+                        child: Center(
+                          child: Text(
+                            'Get a quote',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 17),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:StandsAero/widgets/disallow_indicator_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:StandsAero/screens/List%20Quotes/list_of_Quote_details.dart';
@@ -85,6 +86,7 @@ class _quotesState extends State<quotes> with TickerProviderStateMixin {
           ),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Text(
                 'List of Quotes',
@@ -104,66 +106,67 @@ class _quotesState extends State<quotes> with TickerProviderStateMixin {
               future: quotation_list(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
-                  print("Osama");
                   return FadeTransition(
                     opacity: _fadeInFadeOut,
                     child: Container(
                       width: double.infinity,
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            SingleChildScrollView(
-                              physics: ScrollPhysics(),
-                              child: quotations_data['data'].length > 0
-                                  ? ListView.builder(
-                                      shrinkWrap: true,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      scrollDirection: Axis.vertical,
-                                      // itemCount: quotations_data['data'].length,
-                                      itemCount: quotations_data['data'].length,
-                                      itemBuilder: (context, index) {
-                                        print("length" +
-                                            quotations_data['data']
-                                                .length
-                                                .toString());
-                                        return quotations_data['data'].length > 0
-                                            ? Quotess_Card(
-                                                id: quotations_data['data']
-                                                    [index]['quote_id'],
-                                                status: quotations_data['data']
-                                                    [index]['status'],
-                                                name: quotations_data['data']
-                                                    [index]['product_name'],
-                                                location: quotations_data['data']
-                                                                [index]
-                                                            ['location'] ==
-                                                        null
-                                                    ? "No Location"
-                                                    : quotations_data['data']
-                                                        [index]['location'],
-                                                description:
-                                                    quotations_data['data']
-                                                            [index]
-                                                        ['product_description'],
-                                                image: quotations_data['data']
-                                                    [index]['product_image'])
-                                            : Text("No Quotes found");
-                                      })
-                                  : Container(
-                                      height: res_height * 0.8,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Image.asset(
-                                            'assets/slicing/no-data-found.png',
-                                            fit: BoxFit.cover,
-                                            height: 300,
-                                          ),
-                                        ],
-                                      )),
-                            ),
-                          ],
+                      child: DisAllowIndicatorWidget(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              SingleChildScrollView(
+                                physics: ScrollPhysics(),
+                                child: quotations_data['data'].length > 0
+                                    ? ListView.builder(
+                                        shrinkWrap: true,
+                                        physics: NeverScrollableScrollPhysics(),
+                                        scrollDirection: Axis.vertical,
+                                        // itemCount: quotations_data['data'].length,
+                                        itemCount:
+                                            quotations_data['data'].length,
+                                        itemBuilder: (context, index) {
+                                          print("length" +
+                                              quotations_data['data']
+                                                  .length
+                                                  .toString());
+                                          return quotations_data['data'].length > 0
+                                              ? Quotess_Card(
+                                                  id: quotations_data['data']
+                                                      [index]['quote_id'],
+                                                  status: quotations_data['data']
+                                                      [index]['status'],
+                                                  name: quotations_data['data']
+                                                      [index]['product_name'],
+                                                  location: quotations_data['data']
+                                                                  [index]
+                                                              ['location'] ==
+                                                          null
+                                                      ? "No Location"
+                                                      : quotations_data['data']
+                                                          [index]['location'],
+                                                  description: quotations_data['data']
+                                                          [index]
+                                                      ['product_description'],
+                                                  image: quotations_data['data']
+                                                      [index]['product_image'])
+                                              : Text("No Quotes found");
+                                        })
+                                    : Container(
+                                        height: res_height * 0.8,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Image.asset(
+                                              'assets/slicing/no-data-found.png',
+                                              fit: BoxFit.cover,
+                                              height: 300,
+                                            ),
+                                          ],
+                                        )),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -262,8 +265,9 @@ class Quotess_Card extends StatelessWidget {
                         SizedBox(
                           width: 200,
                           child: Text(
+                            description == null ? '' : description,
                             overflow: TextOverflow.ellipsis,
-                            "$description",
+                          
                             style: TextStyle(fontSize: 10),
                           ),
                         ),

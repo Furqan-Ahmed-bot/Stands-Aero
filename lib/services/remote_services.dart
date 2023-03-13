@@ -1,21 +1,17 @@
 import 'dart:convert';
-import 'dart:io';
+import 'dart:developer';
+
+import 'package:StandsAero/screens/auth/emaillogin.dart';
+import 'package:StandsAero/screens/credit_Form/credit_form.dart';
+import 'package:StandsAero/screens/kyc_Form/kyc_form.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http_parser/http_parser.dart';
 import 'package:http/http.dart' as http;
-import 'package:StandsAero/main.dart';
-import 'package:StandsAero/screens/Profile/editprofile.dart';
-import 'package:StandsAero/screens/Profile/profile.dart';
-import 'package:StandsAero/screens/auth/emaillogin.dart';
-import 'package:StandsAero/screens/home/home.dart';
-import 'package:StandsAero/screens/payment/paymentrecieved.dart';
-import 'dart:developer';
+import 'package:http_parser/http_parser.dart';
 
 import '../bottomcontroller.dart';
 import '../controller/usercontroller.dart';
-import '../controller//ProductController.dart';
-import '../helper/ProductModel.dart';
+import '../helper/data_storage.dart';
 import '../helper/global.dart';
 import '../helper/loader.dart';
 import '../helper/model.dart';
@@ -25,7 +21,9 @@ import '../screens/auth/mainlogin.dart';
 import '../screens/mainhome.dart';
 
 // String apiGlobal = "http://localhost:3000/api/v1";
-String apiGlobal = "https://standsaero.jumppace.com";
+// String apiGlobal = "https://standsaero.jumppace.com";
+String apiGlobal = "https://standsaero-merger.jumppace.com/nsa";
+
 // String apiGlobal = "https://standsaero-dev.jumppace.com";
 final bottomctrl = Get.put(BottomController());
 // String apiGlobal = "https://standsaeroapi.jumppace.com";
@@ -66,13 +64,17 @@ class ApiService {
           city: res_data['data']['user']['city'],
           country: res_data['data']['user']['country'],
           description: res_data['data']['user']['description'],
+          isKycFilled: res_data['data']['user']['is_kyc'],
+          isCreditFormFilled: res_data['data']['user']['is_creditappform'],
         ),
       );
 
       globaltoken = res_data["data"]["token"];
       userid = res_data['data']['user']['id'].toString();
 
-      Get.to(EmailLoginScreen());
+      Get.to(kyc_form(
+        clientId: res_data['data']['user']['id'],
+      ));
       Get.snackbar(
         'Congratulations',
         'Account Registered Successfully',
@@ -135,17 +137,33 @@ class ApiService {
           city: res_data['data']['user']['city'],
           country: res_data['data']['user']['country'],
           description: res_data['data']['user']['description'],
+          isKycFilled: res_data['data']['user']['is_kyc'],
+          isCreditFormFilled: res_data['data']['user']['is_creditappform'],
         ),
       );
 
       globaltoken = res_data["data"]["token"];
+      log('GLOBAL TOKEN: $globaltoken');
+
       userid = res_data['data']['user']['id'].toString();
       // userid = res_data['data']['user']['id'].toString();
-      print("USER MODEL" + userController.user.id.toString());
+      log("USER MODEL" + userController.toString());
       print("nameee :  " + userController.user.propic.toString());
 
       Navigator.pop(context);
-      Get.to(() => MainScreen());
+
+      await DataStorage.getInstance.setSession();
+      if (res_data['data']['user']['is_kyc'] == 0) {
+        Get.to(kyc_form(
+          clientId: res_data['data']['user']['id'],
+        ));
+      } else if (res_data['data']['user']['is_creditappform'] == 0) {
+        Get.to(credit_form(
+          clientId: res_data['data']['user']['id'],
+        ));
+      } else {
+        Get.offAll(() => MainScreen());
+      }
     } else {
       Get.snackbar(
         'Error',
@@ -338,36 +356,51 @@ class ApiService {
 
     final res = await http.Response.fromStream(response);
 
-    log("res print" + res.body.toString());
+    try {
+      log("res print" + res.body.toString());
+      // var res_data = json.decode(res.body);
+      Map<String, dynamic> res_data = jsonDecode(res.body);
 
-    var res_data = json.decode(res.body.toString());
-    if (res_data['status'] == true) {
-      UserController userController = Get.put(UserController());
+      log("res print2 ${res_data}");
+      log("res print1 ${res_data['data']}");
 
-      userController.addUser(
-        UserModel(
-          id: res_data['id'],
-          fullName: res_data['full_name'],
-          phone: res_data['phone'],
-          email: res_data['email'],
-          propic: res_data['photo'],
-          city: res_data['city'],
-          country: res_data['country'],
-          description: res_data['description'],
-        ),
-      );
+      if (res_data['status'] == true) {
+        UserController userController = Get.put(UserController());
 
+        userController.addUser(
+          UserModel(
+            id: res_data['id'],
+            fullName: res_data['data']['full_name'],
+            phone: res_data['data']['phone'],
+            email: res_data['data']['email'],
+            propic: res_data['data']['propic'],
+            city: res_data['data']['city'],
+            country: res_data['data']['country'],
+            description: res_data['data']['description'],
+          ),
+        );
+
+        Get.snackbar(
+          'Success',
+          'Profile updated successfully',
+          animationDuration: Duration(seconds: 2),
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        Navigator.pop(context);
+        Get.to(() => MainScreen());
+      }
+      return res_data;
+    } catch (e) {
+      log("UPDATEPROFILE Exception Caught: $e");
       Get.snackbar(
-        'Success',
-        'Profile updated successfully',
+        'Failed',
+        'Profile updation failed',
         animationDuration: Duration(seconds: 2),
         snackPosition: SnackPosition.BOTTOM,
       );
       Navigator.pop(context);
-      Get.to(() => MainScreen());
+      return true;
     }
-
-    // return res_data;
   }
 
   order_history() async {
@@ -534,7 +567,7 @@ class ApiService {
     final uri =
         Uri.parse('${apiGlobal}/api/front/product/${productId}/details');
 
-    print(uri);
+    log("SINGLE PRODUCT DETAILS: ${uri.toString()}");
 
     final headers = {'Authorization': 'bearer ${globaltoken}'};
 
@@ -544,12 +577,13 @@ class ApiService {
       // body: jsonBody,
     );
 
-    print(response.statusCode);
+    log("SINGLE PRODUCT DETAILS STATUS CODE: ${response.statusCode}");
     var res_data = json.decode(response.body);
+
+    log("SINGLE PRODUCT DETAILS RES DATA: $res_data");
 
     // print(res_data);
     if (res_data["status"] == true) {
-      //   Get.to(() => MainLoginScreen());
       Navigator.pop(context);
     }
     // } else
@@ -563,26 +597,86 @@ class ApiService {
     return res_data;
   }
 
-  getQuoteRequest(context, sendData) async {
+  creditFormApi(context, sendData) async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return spinkit;
+        });
+
     var jsonBody = jsonEncode(sendData);
 
-    // log("jsonBody['product_id']" + jsonBody.toString());
-    var getId = sendData['product_id'];
-    // log("received id "+ getId.toString());
-    final uriget = Uri.parse('${apiGlobal}/api/user/getaquote/${getId}');
+    log('CREDIT API : $jsonBody');
+    final uri = Uri.parse('${apiGlobal}/api/user/credit-application-submit');
 
-    // print("getQuoteRequest " + uri.toString());
-    // log("globaltoken " + globaltoken.toString());
-    final headers = {
-      // 'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${globaltoken}',
-    };
+    log("GLOBALTOKEN: " + globaltoken.toString());
 
     // var jsonBodya = jsonEncode(sendData);
     // log("sendData data value " + jsonBodya.toString());
     http.Response response = await http.post(
-      uriget,
-      headers: headers,
+      uri,
+      headers: globalHeaders1,
+      body: sendData,
+    );
+
+    var res_data = json.decode(response.body);
+
+    log("response.body res_data" + response.body.toString());
+
+    log(res_data.toString());
+
+    if (res_data["status"] == true) {
+      Get.offAll(() => MainScreen());
+      Get.snackbar(
+        'Success',
+        'Your credit form submitted successfully',
+        animationDuration: Duration(seconds: 3),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    } else {
+      try {
+        log('${res_data['error']}');
+        Get.snackbar(
+          'Failed',
+          res_data['error'],
+          animationDuration: Duration(seconds: 3),
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      } on Exception catch (e) {
+        log('Credit Form Api caught exception: $e');
+      }
+    }
+
+    return res_data;
+  }
+
+  getQuoteRequest(context, sendData) async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return spinkit;
+        });
+
+    var jsonBody = json.encode(sendData);
+
+    var getId = sendData['product_id'];
+
+    final uri =
+        Uri.parse('${apiGlobal}/api/user/product/${getId}/quotation-request');
+
+    print("GET QUOTE REQUEST $uri $jsonBody");
+    log("GET QUOTE REQUEST GLOBAL TOKEN: " + globaltoken.toString());
+
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${globaltoken}',
+    };
+
+    http.Response response = await http.post(
+      uri,
+      headers: globalHeaders1,
       body: sendData,
     );
 
@@ -599,9 +693,20 @@ class ApiService {
         animationDuration: Duration(seconds: 2),
         snackPosition: SnackPosition.BOTTOM,
       );
+    } else {
+      try {
+        log('GET QUOTE REQUEST Failed: ${res_data['error'].toString()}');
+        Get.snackbar(
+          'Failed',
+          res_data['error'].toString(),
+          animationDuration: Duration(seconds: 2),
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        Navigator.pop(context);
+      } on Exception catch (e) {
+        log('GET QUOTE REQUEST Exception caught: $e');
+      }
     }
-
-    return res_data;
   }
 
   setNewPassword(context, data) async {

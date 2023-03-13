@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:StandsAero/widgets/disallow_indicator_widget.dart';
+import 'package:StandsAero/widgets/remove_focus_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:StandsAero/services/remote_services.dart';
@@ -8,6 +10,8 @@ import 'package:StandsAero/helper/ProductModel.dart';
 import 'package:StandsAero/helper/colors.dart';
 import 'package:StandsAero/screens/booking/booking.dart';
 import 'package:StandsAero/screens/home/drawer.dart';
+
+import '../../helper/loader.dart';
 // import 'package:StandsAero/screens/home/Profile/editprofile.dart';
 // import 'package:StandsAero/screens/home/Profile/profile.dart';
 
@@ -20,7 +24,8 @@ class HomeScreen extends StatefulWidget {
 
 TextEditingController searchController = TextEditingController();
 
-class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen>
+    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   late AnimationController animation;
   late Animation<double> _fadeInFadeOut;
   final productController = Get.put(ProductController());
@@ -31,6 +36,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   final formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   int filterCounter = 0;
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -58,27 +66,40 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   Future<void> getProducts() async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return spinkit;
+        });
     productController.productList.clear();
     getPorductResponse = await ApiService().homeApi();
-    print("getPorductResponse" + getPorductResponse.toString());
+    // print("getPorductResponse" + getPorductResponse.toString());
     getPorductResponse['data'].forEach((element) => {
           // log("Element"+ element.toString());
           setState(() {
             productController.addProduct(
               product(
-                  id: element['id'],
-                  name: element['name'],
-                  sku: element['sku'],
-                  category_name: element['category_name'],
-                  thumbnail: element['thumbnail'],
-                  location: element['location'].toString(),
-                  desc: element['desc'].toString(),
-                  createdAt: element['created_at'],
-                  updatedAt: element['updated_at']),
+                id: element['id'],
+                name: element['name'],
+                sku: element['sku'],
+                thumbnail: element['thumbnail'],
+                location: element['location'].toString(),
+                address: element['address'] ?? "",
+                desc: element['desc'] ?? "",
+                categoryId: element['category_id'],
+                manufacturerId: element['manufacturer_id'],
+                categoryName: element['category_name'],
+                manufacturerName: element['manufacturer_name'],
+                availableStatus: element['available_status'] ?? "",
+                color: element['color'],
+                status: element['status'],
+              ),
             );
           })
         });
     searchProduct(searchQuery);
+    Navigator.pop(context);
   }
 
   Future<List<product>> searchProduct(String query) async {
@@ -104,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       // filteredProducts = [];
       // setState(() {
       filteredProducts = productController.productList
-          .where((element) => element.category_name.contains(query))
+          .where((element) => element.categoryName.contains(query))
           .toList();
     });
 
@@ -155,6 +176,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           ),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Text(
                 'Home',
@@ -173,256 +195,256 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         ),
         body: FadeTransition(
           opacity: _fadeInFadeOut,
-          child: SingleChildScrollView(
-            child: Container(
-              width: double.infinity,
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: res_height * 0.01,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 13, right: 13),
-                    child: Container(
-                      // width: MediaQuery.of(context).size.width * 0.95,
-                      decoration: BoxDecoration(
-                          // border: Border.all(color: Colors.grey),
-                          ),
-                      child: TextField(
-                        controller: searchController,
-                        onChanged: (value) {
-                          searchProduct(value);
-                        },
-                        onEditingComplete: () {
-                          searchProduct(searchController.text);
-                        },
-                        onSubmitted: (value) {
-                          searchProduct(value);
-                          FocusManager.instance.primaryFocus?.unfocus();
-                        },
-                        decoration: new InputDecoration(
-                          border: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: Colors.grey, width: 0.0),
-                              borderRadius: BorderRadius.circular(10.0)),
+          child: RemoveFocusWidget(
+            child: SingleChildScrollView(
+              child: Container(
+                width: double.infinity,
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: res_height * 0.01,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 13, right: 13),
+                      child: Container(
+                        // width: MediaQuery.of(context).size.width * 0.95,
+                        decoration: BoxDecoration(
+                            // border: Border.all(color: Colors.grey),
+                            ),
+                        child: TextField(
+                          controller: searchController,
+                          onChanged: (value) {
+                            searchProduct(value);
+                          },
+                          onEditingComplete: () {
+                            searchProduct(searchController.text);
+                          },
+                          onSubmitted: (value) {
+                            searchProduct(value);
+                            FocusManager.instance.primaryFocus?.unfocus();
+                          },
+                          decoration: new InputDecoration(
+                            border: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    color: Colors.grey, width: 0.0),
+                                borderRadius: BorderRadius.circular(10.0)),
 
-                          hintText: 'Search Jobs / Services',
-                          hintStyle: TextStyle(),
-                          contentPadding: EdgeInsets.only(top: 16, left: 16),
-                          suffixIcon: Padding(
-                            padding: const EdgeInsets.all(13.0),
-                            child: Icon(Icons.search_outlined),
+                            hintText: 'Search Jobs / Services',
+                            hintStyle: TextStyle(),
+                            contentPadding: EdgeInsets.only(top: 16, left: 16),
+                            suffixIcon: Padding(
+                              padding: const EdgeInsets.all(13.0),
+                              child: Icon(Icons.search_outlined),
+                            ),
+                            fillColor: Colors.white,
+                            // filled: true,
+                            // border: InputBorder.none,
                           ),
-                          fillColor: Colors.white,
-                          // filled: true,
-                          // border: InputBorder.none,
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: res_height * 0.025,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        // spacing: 10,
-                        // runSpacing: 10,
-                        children: [
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.015,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                searchProduct("");
-                              });
-                            },
-                            child: Container(
-                              width: MediaQuery.of(context).size.width * 0.35,
-                              decoration: BoxDecoration(
-                                  color: filterCounter == 1
-                                      ? kPrimaryColor
-                                      : Color(0xffa1a1a1),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                        radvalue2 != null
-                                            ? radvalue2.toString()
-                                            : 'All Products',
-                                        style: TextStyle(
-                                          fontSize: 13,
-                                          color: filterCounter == 1
-                                              ? Colors.white
-                                              : Colors.black,
-                                        )),
-                                    Icon(
-                                      Icons.filter_list,
-                                      color: filterCounter == 1
-                                          ? Colors.white
-                                          : Colors.black,
-                                    )
-                                  ],
+                    SizedBox(
+                      height: res_height * 0.025,
+                    ),
+                    Container(
+                      // width: MediaQuery.of(context).size.width * 0.9,
+                      padding: const EdgeInsets.only(left: 10),
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          // spacing: 10,
+                          // runSpacing: 10,
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.015,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  searchProduct("");
+                                });
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * 0.35,
+                                decoration: BoxDecoration(
+                                    color: filterCounter == 1
+                                        ? kPrimaryColor
+                                        : Color(0xffa1a1a1),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5))),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                          radvalue2 != null
+                                              ? radvalue2.toString()
+                                              : 'All Products',
+                                          style: TextStyle(
+                                            fontSize: 13,
+                                            color: filterCounter == 1
+                                                ? Colors.white
+                                                : Colors.black,
+                                          )),
+                                      Icon(
+                                        Icons.filter_list,
+                                        color: filterCounter == 1
+                                            ? Colors.white
+                                            : Colors.black,
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.015,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                // catvalue;
-                                filterCounter = 2;
-                                searchProductFilter("Engine Stand");
-                                klr = true;
-                              });
-                            },
-                            child: Container(
-                              width: MediaQuery.of(context).size.width * 0.35,
-                              decoration: BoxDecoration(
-                                  color: filterCounter == 2
-                                      ? kPrimaryColor
-                                      : Color(0xffa1a1a1),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                              child: Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    10.0, 10.0, 1.0, 10.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                        catvalue != null
-                                            ? catvalue.toString()
-                                            : 'Engine Stands',
-                                        style: TextStyle(
-                                          fontSize: 13,
-                                          color: filterCounter == 2
-                                              ? Colors.white
-                                              : Colors.black,
-                                        )),
-                                    Icon(
-                                      Icons.filter_list,
-                                      color: filterCounter == 2
-                                          ? Colors.white
-                                          : Colors.black,
-                                    )
-                                  ],
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.015,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  // catvalue;
+                                  filterCounter = 2;
+                                  searchProductFilter("Engine Stand");
+                                  klr = true;
+                                });
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * 0.35,
+                                decoration: BoxDecoration(
+                                    color: filterCounter == 2
+                                        ? kPrimaryColor
+                                        : Color(0xffa1a1a1),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5))),
+                                child: Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      10.0, 10.0, 1.0, 10.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                          catvalue != null
+                                              ? catvalue.toString()
+                                              : 'Engine Stands',
+                                          style: TextStyle(
+                                            fontSize: 13,
+                                            color: filterCounter == 2
+                                                ? Colors.white
+                                                : Colors.black,
+                                          )),
+                                      Icon(
+                                        Icons.filter_list,
+                                        color: filterCounter == 2
+                                            ? Colors.white
+                                            : Colors.black,
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.015,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                // catvalue;
-                                filterCounter = 3;
-                                searchProductFilter("Bootstrap Kit");
-                                klr = false;
-                              });
-                            },
-                            child: Container(
-                              width: MediaQuery.of(context).size.width * 0.35,
-                              decoration: BoxDecoration(
-                                  color: filterCounter == 3
-                                      ? kPrimaryColor
-                                      : Color(0xffa1a1a1),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                        radvalue2 != null
-                                            ? radvalue2.toString()
-                                            : 'Manufactures',
-                                        style: TextStyle(
-                                          fontSize: 13,
-                                          color: filterCounter == 3
-                                              ? Colors.white
-                                              : Colors.black,
-                                        )),
-                                    Icon(
-                                      Icons.filter_list,
-                                      color: filterCounter == 3
-                                          ? Colors.white
-                                          : Colors.black,
-                                    )
-                                  ],
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.015,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  // catvalue;
+                                  filterCounter = 3;
+                                  searchProductFilter("Bootstrap Kit");
+                                  klr = false;
+                                });
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * 0.35,
+                                decoration: BoxDecoration(
+                                    color: filterCounter == 3
+                                        ? kPrimaryColor
+                                        : Color(0xffa1a1a1),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5))),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                          radvalue2 != null
+                                              ? radvalue2.toString()
+                                              : 'Manufactures',
+                                          style: TextStyle(
+                                            fontSize: 13,
+                                            color: filterCounter == 3
+                                                ? Colors.white
+                                                : Colors.black,
+                                          )),
+                                      Icon(
+                                        Icons.filter_list,
+                                        color: filterCounter == 3
+                                            ? Colors.white
+                                            : Colors.black,
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.015,
-                          ),
-                        ],
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.015,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: res_height * 0.025,
-                  ),
-                  FutureBuilder<List<product>>(
-                      future: filterCounter == 1
-                          ? searchProduct(searchController.text)
-                          : filterCounter == 2
-                              ? searchProductFilter("Engine Stand")
-                              : searchProductFilter("Bootstrap Kit"),
-                      builder: (context, snapshot) {
-                        return Padding(
-                          padding: const EdgeInsets.only(left: 13),
-                          child: Container(
+                    SizedBox(
+                      height: res_height * 0.025,
+                    ),
+                    FutureBuilder<List<product>>(
+                        future: filterCounter == 1
+                            ? searchProduct(searchController.text)
+                            : filterCounter == 2
+                                ? searchProductFilter("Engine Stand")
+                                : searchProductFilter("Bootstrap Kit"),
+                        builder: (context, snapshot) {
+                          return Container(
                             height: Get.height * 0.7,
-                            child: GridView.builder(
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                childAspectRatio: 0.58,
-                                crossAxisSpacing: 1,
-                                mainAxisSpacing: 5,
-                              ),
-                              scrollDirection: Axis.vertical,
-                              itemCount: filteredProducts.length,
-                              itemBuilder: (context, i) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 5, left: 5, right: 5, bottom: 5),
-                                  child: StandsBox(
+                            child: DisAllowIndicatorWidget(
+                              child: GridView.builder(
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  childAspectRatio: 0.55,
+                                  crossAxisSpacing: 15,
+                                  mainAxisSpacing: 5,
+                                ),
+                                shrinkWrap: true,
+                                itemCount: filteredProducts.length,
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 15),
+                                itemBuilder: (context, i) {
+                                  return StandsBox(
                                     context,
                                     filteredProducts[i].thumbnail,
                                     filteredProducts[i].name,
                                     filteredProducts[i].location,
                                     filteredProducts[i].desc,
                                     filteredProducts[i].id,
-                                  ),
-                                );
-                              },
+                                  );
+                                },
+                              ),
                             ),
-                          ),
-                        );
-                      }),
-                  SizedBox(
-                    height: res_height * 0.025,
-                  ),
-                ],
+                          );
+                        }),
+                    SizedBox(
+                      height: res_height * 0.025,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -457,11 +479,34 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         width: res_width * 0.475,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-                child:
-                    // Image.asset(image, fit: BoxFit.cover)),
-                    Image.network(image)),
+            SizedBox(
+              // height: 170,
+              // width: double.infinity,
+              child: Image.network(
+                image,
+                loadingBuilder: (context, child, loadingProgress) {
+                  // return SizedBox(
+                  //     height: 100,
+                  //     child: Center(child: CircularProgressIndicator()));
+                  return ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.asset(
+                        'assets/images/dummyProduct.png',
+                        fit: BoxFit.cover,
+                      ));
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  return ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.asset(
+                        'assets/images/dummyProduct.png',
+                        fit: BoxFit.cover,
+                      ));
+                },
+              ),
+            ),
             SizedBox(
               height: res_height * 0.01,
             ),
@@ -483,6 +528,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               width: res_width * 0.4,
               child: Text(
                 maxLines: 3,
+                overflow: TextOverflow.ellipsis,
                 description.toString(),
                 style: TextStyle(fontSize: 13),
               ),

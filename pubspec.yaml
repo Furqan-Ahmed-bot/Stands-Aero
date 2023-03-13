@@ -49,6 +49,8 @@ dependencies:
   permission_handler: ^10.2.0
   webview_flutter: ^3.0.4
   syncfusion_flutter_pdfviewer: ^20.3.52
+  shared_preferences: ^2.0.17
+  cached_network_image: ^3.2.3
   
 
 dev_dependencies:
@@ -81,6 +83,7 @@ flutter:
 
   assets:
     - assets/slicing/
+    - assets/images/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

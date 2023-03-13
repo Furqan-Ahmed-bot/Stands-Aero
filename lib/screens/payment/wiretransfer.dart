@@ -1,10 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:get/get.dart';
-import 'package:StandsAero/screens/auth/mainlogin.dart';
+import 'dart:developer';
+
 import 'package:StandsAero/screens/orders/orderstatus.dart';
-import 'package:StandsAero/screens/payment/awaiting.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../helper/global.dart';
 import '../../services/remote_services.dart';
@@ -121,6 +119,7 @@ class _WireTransferState extends State<WireTransfer> {
                   ),
                   GestureDetector(
                     onTap: () async {
+                      log('HERE IAM');
                       if (formKey.currentState!.validate()) {
                         var sendData = {
                           'day': global_day,
@@ -148,7 +147,9 @@ class _WireTransferState extends State<WireTransfer> {
                         var res_data =
                             await ApiService().placeOrder(context, sendData);
 
-                        print("Lease Form RESPONSE" + res_data.toString());
+                        log("=======> Lease Form RESPONSE" +
+                            res_data.toString());
+
                         if (res_data['status'] == true) {
                           var wiretransferData = {
                             'wire_swift_code': wire_swift_code.text,
@@ -165,6 +166,9 @@ class _WireTransferState extends State<WireTransfer> {
 
                           var res_data2 = await ApiService()
                               .wireTransfer(context, wiretransferData);
+
+                          log("=======> Wiretransfer RESPONSE" +
+                              res_data2.toString());
                           if (res_data2['status'] == true) {
                             Get.snackbar(
                               'Success',
@@ -172,7 +176,10 @@ class _WireTransferState extends State<WireTransfer> {
                               snackPosition: SnackPosition.TOP,
                             );
 
-                            Get.to(() => OrderStatus());
+                            Get.to(() => OrderStatus(
+                                  orderID: res_data['data']['order_id'],
+                                  isComingFromPaymentScreen: true,
+                                ));
                           } else {
                             Get.back();
 

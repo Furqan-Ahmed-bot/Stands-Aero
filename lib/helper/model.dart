@@ -1,5 +1,7 @@
 class UserModel {
   int? id;
+  int? isKycFilled;
+  int? isCreditFormFilled;
   String? fullName;
   String? phone;
   String? email;
@@ -16,6 +18,8 @@ class UserModel {
       this.propic,
       this.city,
       this.country,
+      this.isKycFilled,
+      this.isCreditFormFilled,
       this.description});
 }
 
@@ -40,7 +44,6 @@ class productModel {
     this.createdAt,
     this.updatedAt,
   });
-  
 }
 
 class quoteModel {
@@ -52,7 +55,6 @@ class quoteModel {
     this.id,
     this.name,
     this.location,
-    this.details,  
+    this.details,
   });
-  
 }

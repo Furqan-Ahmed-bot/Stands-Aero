@@ -2,17 +2,14 @@
 
 import 'dart:developer';
 
-import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:get/get.dart';
-import 'package:StandsAero/helper/ProductModel.dart';
 import 'package:StandsAero/helper/colors.dart';
-import 'package:StandsAero/helper/loader.dart';
 import 'package:StandsAero/screens/booking/engine_stand_booking.dart';
-import 'package:table_calendar/table_calendar.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
-import 'package:StandsAero/services/remote_services.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class booking extends StatefulWidget {
   final bookingapiresponse;
@@ -81,42 +78,42 @@ class _bookingState extends State<booking> {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
 
-    if (counter == 0) {
-      AVgetcurrentDate = DateTime.tryParse(responseData['availablity']['from']);
-      AVgetCurrentYear = int.parse(DateFormat('y').format(AVgetcurrentDate));
-      AVgetCurrentMonth = int.parse(DateFormat('MM').format(AVgetcurrentDate));
-      AVgetCurrentDay = int.parse(DateFormat('dd').format(AVgetcurrentDate));
-      // log('responseData Year' + AVgetCurrentYear.toString());
-      // log('responseData MOnth' + AVgetCurrentMonth.toString());
-      // log('responseData Day' + AVgetCurrentDay.toString());
-      // log('responseData to' + responseData['availablity']['to']);
+    // if (counter == 0) {
+    //   AVgetcurrentDate = DateTime.tryParse(responseData['availablity']['from']);
+    //   AVgetCurrentYear = int.parse(DateFormat('y').format(AVgetcurrentDate));
+    //   AVgetCurrentMonth = int.parse(DateFormat('MM').format(AVgetcurrentDate));
+    //   AVgetCurrentDay = int.parse(DateFormat('dd').format(AVgetcurrentDate));
+    //   // log('responseData Year' + AVgetCurrentYear.toString());
+    //   // log('responseData MOnth' + AVgetCurrentMonth.toString());
+    //   // log('responseData Day' + AVgetCurrentDay.toString());
+    //   // log('responseData to' + responseData['availablity']['to']);
 
-      TogetcurrentDate = DateTime.tryParse(responseData['availablity']['to']);
-      TogetCurrentYear = int.parse(DateFormat('y').format(TogetcurrentDate));
-      TogetCurrentMonth = int.parse(DateFormat('MM').format(TogetcurrentDate));
-      TogetCurrentDay = int.parse(DateFormat('dd').format(TogetcurrentDate));
-      // log('responseData Year To' + TogetCurrentYear.toString());
-      // log('responseData MOnth To' + TogetCurrentMonth.toString());
-      // log('responseData Day To' + TogetCurrentDay.toString());
-      // log('responseData to' + responseData['availablity']['to']);
+    //   TogetcurrentDate = DateTime.tryParse(responseData['availablity']['to']);
+    //   TogetCurrentYear = int.parse(DateFormat('y').format(TogetcurrentDate));
+    //   TogetCurrentMonth = int.parse(DateFormat('MM').format(TogetcurrentDate));
+    //   TogetCurrentDay = int.parse(DateFormat('dd').format(TogetcurrentDate));
+    //   // log('responseData Year To' + TogetCurrentYear.toString());
+    //   // log('responseData MOnth To' + TogetCurrentMonth.toString());
+    //   // log('responseData Day To' + TogetCurrentDay.toString());
+    //   // log('responseData to' + responseData['availablity']['to']);
 
-      if (AVgetcurrentDate.compareTo(DateTime.now()) <= 0) {
-        kFirstDay = DateTime.now().add(Duration(days: 1));
-      } else {
-        kFirstDay =
-            DateTime(AVgetCurrentYear, AVgetCurrentMonth, AVgetCurrentDay);
-      }
-      counter++;
-    }
+    //   if (AVgetcurrentDate.compareTo(DateTime.now()) <= 0) {
+    //     kFirstDay = DateTime.now().add(Duration(days: 1));
+    //   } else {
+    //     kFirstDay =
+    //         DateTime(AVgetCurrentYear, AVgetCurrentMonth, AVgetCurrentDay);
+    //   }
+    //   counter++;
+    // }
 
-    kLastDay = DateTime(TogetCurrentYear, TogetCurrentMonth, TogetCurrentDay);
-    var TodaysDateTIme = DateTime.now();
+    // kLastDay = DateTime(TogetCurrentYear, TogetCurrentMonth, TogetCurrentDay);
+    // var TodaysDateTIme = DateTime.now();
 
-    if (kFirstDay.compareTo(DateTime.now()) > 0) {
-      log("kFirstDay now this" + kFirstDay.toString());
-      log("kLastDay now this" + kLastDay.toString());
-      log("Datetime now this" + DateTime.now().toString());
-    }
+    // if (kFirstDay.compareTo(DateTime.now()) > 0) {
+    //   log("kFirstDay now this" + kFirstDay.toString());
+    //   log("kLastDay now this" + kLastDay.toString());
+    //   log("Datetime now this" + DateTime.now().toString());
+    // }
 
     return Container(
         // future: productDetails(),
@@ -143,6 +140,7 @@ class _bookingState extends State<booking> {
         ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               responseData['sku'],
@@ -231,9 +229,10 @@ class _bookingState extends State<booking> {
                               ),
                             ),
                             decoration: BoxDecoration(color: Colors.white)),
-                        firstDay: kFirstDay,
-                        lastDay: kLastDay,
-                        focusedDay: kFirstDay,
+                        firstDay: DateTime.now(), // kFirstDay,
+                        lastDay: DateTime.utc(2030, 1, 1), //kLastDay,
+                        focusedDay:
+                            DateTime.now().add(Duration(days: 1)), //kFirstDay,
                         rangeStartDay: _rangeStart,
                         rangeEndDay: _rangeEnd,
                         calendarFormat: _calendarFormat,

@@ -1,12 +1,13 @@
 import 'dart:async';
+import 'dart:developer';
 
+import 'package:StandsAero/helper/data_storage.dart';
+import 'package:StandsAero/screens/auth/emaillogin.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:StandsAero/screens/List%20Quotes/quotes.dart';
-import 'package:StandsAero/screens/auth/emaillogin.dart';
-import 'package:StandsAero/screens/booking/booking.dart';
-import 'package:StandsAero/screens/mainhome.dart';
+
+import 'screens/mainhome.dart';
 
 void main() {
   runApp(const MyApp());
@@ -60,8 +61,17 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
   }
 
-  start() {
-    Timer(Duration(seconds: 2), () => Get.to(() => EmailLoginScreen()));
+  start() async {
+    log('start called');
+    Timer(Duration(seconds: 2), () => Get.offAll(() => EmailLoginScreen()));
+    // bool isLoggedIn = await DataStorage.getInstance.getSession();
+    // if (isLoggedIn) {
+    //   log('LOGGED: $isLoggedIn');
+    //   Timer(Duration(seconds: 2), () => Get.offAll(() => MainScreen()));
+    // } else {
+    //   log('NOTLOGGED: $isLoggedIn');
+    //   Timer(Duration(seconds: 2), () => Get.offAll(() => EmailLoginScreen()));
+    // }
   }
 
   @override

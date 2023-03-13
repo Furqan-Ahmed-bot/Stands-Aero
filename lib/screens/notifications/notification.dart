@@ -1,14 +1,9 @@
 import 'dart:developer';
 
 import 'package:StandsAero/helper/loader.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:StandsAero/screens/home/drawer.dart';
-import 'package:StandsAero/screens/mainhome.dart';
 import 'package:StandsAero/services/remote_services.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class NotificationScreen extends StatefulWidget {
@@ -106,6 +101,7 @@ class _NotificationScreenState extends State<NotificationScreen>
           // ),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Text(
                 'Notifications',
