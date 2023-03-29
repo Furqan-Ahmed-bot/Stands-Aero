@@ -382,7 +382,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         'city': city.text,
                         'phone': phone.text,
                         'password': password.text,
-                        // 'password_confirmation': password_confirmation.text,
+                        'password_confirmation': password_confirmation.text,
                         // "fullname": fullname.text,
                         // "email": email.text,
                         // "city": city.text,

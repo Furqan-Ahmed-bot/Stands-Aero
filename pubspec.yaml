@@ -51,6 +51,8 @@ dependencies:
   syncfusion_flutter_pdfviewer: ^20.3.52
   shared_preferences: ^2.0.17
   cached_network_image: ^3.2.3
+  circular_countdown_timer: ^0.2.3
+  flutter_otp_text_field: ^1.1.1
   
 
 dev_dependencies:

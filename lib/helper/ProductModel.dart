@@ -36,6 +36,7 @@ class product {
   product({
     required this.id,
     required this.name,
+    required this.slug,
     required this.sku,
     required this.thumbnail,
     required this.location,
@@ -45,13 +46,14 @@ class product {
     required this.manufacturerId,
     required this.categoryName,
     required this.manufacturerName,
-    required this.status,
+    // required this.status,
     required this.color,
     required this.availableStatus,
   });
 
   int id;
   String name;
+  String slug;
   String sku;
   String thumbnail;
   String location;
@@ -61,13 +63,14 @@ class product {
   String manufacturerId;
   String categoryName;
   String manufacturerName;
-  String status;
+  // String status;
   String color;
   String availableStatus;
 
   factory product.fromJson(Map<String, dynamic> json) => product(
         id: json["id"],
         name: json["name"],
+        slug: json["slug"],
         sku: json["sku"],
         thumbnail: json["thumbnail"],
         location: json["location"],
@@ -77,7 +80,7 @@ class product {
         manufacturerId: json["manufacturer_id"],
         categoryName: json["category_name"],
         manufacturerName: json["manufacturer_name"],
-        status: json["status"],
+        // status: json["status"],
         color: json["color"],
         availableStatus: json["available_status"],
       );
@@ -85,6 +88,7 @@ class product {
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
+        "slug": slug,
         "sku": sku,
         "thumbnail": thumbnail,
         "location": location,
@@ -94,7 +98,7 @@ class product {
         "manufacturer_id": manufacturerId,
         "category_name": categoryName,
         "manufacturer_name": manufacturerName,
-        "status": status,
+        // "status": status,
         "color": color,
         "available_status": availableStatus,
       };

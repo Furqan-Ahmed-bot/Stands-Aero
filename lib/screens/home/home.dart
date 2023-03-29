@@ -74,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen>
         });
     productController.productList.clear();
     getPorductResponse = await ApiService().homeApi();
-    // print("getPorductResponse" + getPorductResponse.toString());
+    log("getPorductResponse" + getPorductResponse.toString());
     getPorductResponse['data'].forEach((element) => {
           // log("Element"+ element.toString());
           setState(() {
@@ -82,6 +82,7 @@ class _HomeScreenState extends State<HomeScreen>
               product(
                 id: element['id'],
                 name: element['name'],
+                slug: element['slug'],
                 sku: element['sku'],
                 thumbnail: element['thumbnail'],
                 location: element['location'].toString(),
@@ -93,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen>
                 manufacturerName: element['manufacturer_name'],
                 availableStatus: element['available_status'] ?? "",
                 color: element['color'],
-                status: element['status'],
+                // status: element['status'],
               ),
             );
           })
@@ -418,7 +419,7 @@ class _HomeScreenState extends State<HomeScreen>
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
-                                  childAspectRatio: 0.55,
+                                  childAspectRatio: 0.9,
                                   crossAxisSpacing: 15,
                                   mainAxisSpacing: 5,
                                 ),
@@ -431,6 +432,7 @@ class _HomeScreenState extends State<HomeScreen>
                                     context,
                                     filteredProducts[i].thumbnail,
                                     filteredProducts[i].name,
+                                    filteredProducts[i].slug,
                                     filteredProducts[i].location,
                                     filteredProducts[i].desc,
                                     filteredProducts[i].id,
@@ -453,20 +455,23 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-  Widget StandsBox(context, image, name, location, description, id) {
+  Widget StandsBox(context, image, name,slug, location, description, id) {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
+     if(image.contains('no-image.png')){
+      log("image dummy hy" + image.toString());
+     } 
     return GestureDetector(
       onTap: () async {
         var responseData;
         // print(productController.Product1.name);
         var response_data = await ApiService()
-            .singleProductDetails(context, id)
+            .singleProductDetails(context, slug)
             .then((res_data) {
           // log("response of product details" + res_data.toString());
 
           if (res_data['status'] == true) {
-            responseData = res_data['data'][0];
+            responseData = res_data['data'];
 
             // print("responseData from home : " + res_data['data'].toString());
 
@@ -492,8 +497,11 @@ class _HomeScreenState extends State<HomeScreen>
                   //     child: Center(child: CircularProgressIndicator()));
                   return ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: Image.asset(
+                      child:image==null || image.contains('no-image.png') ? Image.asset(
                         'assets/images/dummyProduct.png',
+                        fit: BoxFit.cover,
+                      ) : Image.network(
+                        image,
                         fit: BoxFit.cover,
                       ));
                 },
@@ -517,13 +525,13 @@ class _HomeScreenState extends State<HomeScreen>
             SizedBox(
               height: res_height * 0.0015,
             ),
-            Text(
-              location.toString(),
-              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
-            ),
-            SizedBox(
-              height: res_height * 0.0015,
-            ),
+            // Text(
+            //   location.toString(),
+            //   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+            // ),
+            // SizedBox(
+            //   height: res_height * 0.0015,
+            // ),
             Container(
               width: res_width * 0.4,
               child: Text(

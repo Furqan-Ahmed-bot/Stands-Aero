@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:StandsAero/screens/auth/emaillogin.dart';
+import 'package:StandsAero/screens/auth/otp.dart';
 import 'package:StandsAero/screens/credit_Form/credit_form.dart';
 import 'package:StandsAero/screens/kyc_Form/kyc_form.dart';
 import 'package:flutter/material.dart';
@@ -53,43 +54,63 @@ class ApiService {
 
     print(res_data);
     if (res_data["status"] == true) {
-      final userController = Get.put(UserController());
-      userController.addUser(
-        UserModel(
-          id: res_data['data']['user']['id'],
-          fullName: res_data['data']['user']['full_name'],
-          phone: res_data['data']['user']['phone'],
-          email: res_data['data']['user']['email'],
-          propic: res_data['data']['user']['propic'],
-          city: res_data['data']['user']['city'],
-          country: res_data['data']['user']['country'],
-          description: res_data['data']['user']['description'],
-          isKycFilled: res_data['data']['user']['is_kyc'],
-          isCreditFormFilled: res_data['data']['user']['is_creditappform'],
-        ),
-      );
+      if (res_data['data']['user']['email_verified'] == 'No') {
+        Get.snackbar(
+          'Error',
+          'Please verify your account',
+          animationDuration: Duration(seconds: 2),
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        Navigator.pop(context);
 
-      globaltoken = res_data["data"]["token"];
-      userid = res_data['data']['user']['id'].toString();
+        globaltoken = res_data["data"]["token"];
+        log('GLOBAL TOKEN: $globaltoken');
 
-      Get.to(kyc_form(
-        clientId: res_data['data']['user']['id'],
-      ));
-      Get.snackbar(
-        'Congratulations',
-        'Account Registered Successfully',
-        animationDuration: Duration(seconds: 2),
-        snackPosition: SnackPosition.BOTTOM,
-      );
-      // print("bottomctrl.navigationBarIndexValue" +
-      //     bottomctrl.navigationBarIndexValue.toString());
-      // Navigator.pop(context);
-      // if (bottomctrl.navigationBarIndexValue != 3) {
-      //   bottomctrl.navBarChange(3);
-      // } else {
-      //   // Navigator.pop(context);
-      //   bottomctrl.navBarChange(0);
-      // }
+        Get.to(OTPScreen(
+            userId: res_data['data']['user']['id'],
+            email: res_data['data']['user']['email'],
+            page: 'signup'));
+      } else {
+
+
+        final userController = Get.put(UserController());
+        userController.addUser(
+          UserModel(
+            id: res_data['data']['user']['id'],
+            fullName: res_data['data']['user']['full_name'],
+            phone: res_data['data']['user']['phone'],
+            email: res_data['data']['user']['email'],
+            propic: res_data['data']['user']['propic'],
+            city: res_data['data']['user']['city'],
+            country: res_data['data']['user']['country'],
+            description: res_data['data']['user']['description'],
+            isKycFilled: res_data['data']['user']['is_kyc'],
+            isCreditFormFilled: res_data['data']['user']['is_creditappform'],
+          ),
+        );
+
+        globaltoken = res_data["data"]["token"];
+        userid = res_data['data']['user']['id'].toString();
+
+        // Get.to(kyc_form(
+        //   clientId: res_data['data']['user']['id'],
+        // ));
+        Get.offAll(() => MainScreen());
+        Get.snackbar(
+          'Congratulations',
+          'Account Registered Successfully',
+          animationDuration: Duration(seconds: 2),
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        // print("bottomctrl.navigationBarIndexValue" +
+        //     bottomctrl.navigationBarIndexValue.toString());
+        // Navigator.pop(context);
+        // if (bottomctrl.navigationBarIndexValue != 3) {
+        //   bottomctrl.navBarChange(3);
+        // } else {
+        //   // Navigator.pop(context);
+        //   bottomctrl.navBarChange(0);
+      }
     } else {
       Get.snackbar(
         'Error',
@@ -126,43 +147,61 @@ class ApiService {
 
     print(res_data);
     if (res_data["status"] == true) {
-      UserController userController = Get.put(UserController());
-      userController.addUser(
-        UserModel(
-          id: res_data['data']['user']['id'],
-          fullName: res_data['data']['user']['full_name'],
-          phone: res_data['data']['user']['phone'],
-          email: res_data['data']['user']['email'],
-          propic: res_data['data']['user']['propic'],
-          city: res_data['data']['user']['city'],
-          country: res_data['data']['user']['country'],
-          description: res_data['data']['user']['description'],
-          isKycFilled: res_data['data']['user']['is_kyc'],
-          isCreditFormFilled: res_data['data']['user']['is_creditappform'],
-        ),
-      );
+      if (res_data['data']['user']['email_verified'] == 'No') {
+        Get.snackbar(
+          'Error',
+          'Account Not Verified',
+          animationDuration: Duration(seconds: 2),
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        Navigator.pop(context);
 
-      globaltoken = res_data["data"]["token"];
-      log('GLOBAL TOKEN: $globaltoken');
+        globaltoken = res_data["data"]["token"];
+        log('GLOBAL TOKEN: $globaltoken');
 
-      userid = res_data['data']['user']['id'].toString();
-      // userid = res_data['data']['user']['id'].toString();
-      log("USER MODEL" + userController.toString());
-      print("nameee :  " + userController.user.propic.toString());
-
-      Navigator.pop(context);
-
-      await DataStorage.getInstance.setSession();
-      if (res_data['data']['user']['is_kyc'] == 0) {
-        Get.to(kyc_form(
-          clientId: res_data['data']['user']['id'],
-        ));
-      } else if (res_data['data']['user']['is_creditappform'] == 0) {
-        Get.to(credit_form(
-          clientId: res_data['data']['user']['id'],
-        ));
+        Get.to(OTPScreen(
+            userId: res_data['data']['user']['id'],
+            email: res_data['data']['user']['email'],
+            page: 'login'));
       } else {
-        Get.offAll(() => MainScreen());
+        UserController userController = Get.put(UserController());
+        userController.addUser(
+          UserModel(
+            id: res_data['data']['user']['id'],
+            fullName: res_data['data']['user']['full_name'],
+            phone: res_data['data']['user']['phone'],
+            email: res_data['data']['user']['email'],
+            propic: res_data['data']['user']['propic'],
+            city: res_data['data']['user']['city'],
+            country: res_data['data']['user']['country'],
+            description: res_data['data']['user']['description'],
+            isKycFilled: res_data['data']['user']['is_kyc'],
+            isCreditFormFilled: res_data['data']['user']['is_creditappform'],
+          ),
+        );
+
+        globaltoken = res_data["data"]["token"];
+        log('GLOBAL TOKEN: $globaltoken');
+
+        userid = res_data['data']['user']['id'].toString();
+        // userid = res_data['data']['user']['id'].toString();
+        log("USER MODEL" + userController.toString());
+        print("nameee :  " + userController.user.propic.toString());
+
+        Navigator.pop(context);
+
+        await DataStorage.getInstance.setSession();
+        // if (res_data['data']['user']['is_kyc'] == 0) {
+        //   Get.to(kyc_form(
+        //     clientId: res_data['data']['user']['id'],
+        //   ));
+        // } else if (res_data['data']['user']['is_creditappform'] == 0) {
+        //   Get.to(credit_form(
+        //     clientId: res_data['data']['user']['id'],
+        //   ));
+        // } else {
+          Get.offAll(() => MainScreen());
+        // }
       }
     } else {
       Get.snackbar(
@@ -178,7 +217,7 @@ class ApiService {
   }
 
   homeApi() async {
-    final uri = Uri.parse('${apiGlobal}/api/front/products');
+    final uri = Uri.parse('${apiGlobal}/api/front/products-groupbyname');
     print(uri);
 
     final headers = {
@@ -194,7 +233,7 @@ class ApiService {
 
     print(response.statusCode);
     var res_data = json.decode(response.body);
-    print(res_data);
+    // log("front products"+ res_data.toString());
     if (res_data["status"] == true) {
       print(res_data['data'].length);
     } else
@@ -565,7 +604,7 @@ class ApiService {
           return spinkit;
         });
     final uri =
-        Uri.parse('${apiGlobal}/api/front/product/${productId}/details');
+        Uri.parse('${apiGlobal}/api/front/products/${productId}');
 
     log("SINGLE PRODUCT DETAILS: ${uri.toString()}");
 
@@ -1056,6 +1095,104 @@ class ApiService {
         snackPosition: SnackPosition.BOTTOM,
       );
 
+    return res_data;
+  }
+
+  void otpVerification(BuildContext context, data) async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return spinkit;
+        });
+
+    final uri = Uri.parse('${apiGlobal}/api/user/verify');
+    print(uri);
+    var request = http.MultipartRequest('POST', uri);
+    request.fields['otp'] = data['otp'].toString();
+    var headers = {'Authorization': "Bearer " + globaltoken};
+
+    request.headers.addAll(headers);
+    log("request" + request.toString());
+    String jsonBody = json.encode(request.fields);
+    var response = await request.send();
+
+    final res = await http.Response.fromStream(response);
+    print(res);
+
+    Map<String, dynamic> res_data = jsonDecode(res.body);
+    log("res print1 ${res_data['data']}");
+
+    if (res_data['status'] == true) {
+      UserController userController = Get.put(UserController());
+      userController.addUser(
+        UserModel(
+          id: res_data['data']['user']['id'],
+          fullName: res_data['data']['user']['full_name'],
+          phone: res_data['data']['user']['phone'],
+          email: res_data['data']['user']['email'],
+          propic: res_data['data']['user']['propic'],
+          city: res_data['data']['user']['city'],
+          country: res_data['data']['user']['country'],
+          description: res_data['data']['user']['description'],
+          isKycFilled: res_data['data']['user']['is_kyc'],
+          isCreditFormFilled: res_data['data']['user']['is_creditappform'],
+        ),
+      );
+
+      // globaltoken = res_data["data"]["token"];
+      log('GLOBAL TOKEN: ${globaltoken}');
+
+      userid = res_data['data']['user']['id'].toString();
+      // userid = res_data['data']['user']['id'].toString();
+      log("USER MODEL" + userController.toString());
+      print("nameee :  " + userController.user.propic.toString());
+
+      Navigator.pop(context);
+
+      await DataStorage.getInstance.setSession();
+      // if (res_data['data']['user']['is_kyc'] == 0) {
+      //   Get.to(kyc_form(
+      //     clientId: res_data['data']['user']['id'],
+      //   ));
+      // } else if (res_data['data']['user']['is_creditappform'] == 0) {
+      //   Get.to(credit_form(
+      //     clientId: res_data['data']['user']['id'],
+      //   ));
+      // } else {
+      Get.offAll(() => MainScreen());
+      // }
+
+      // Navigator.pop(context);
+    }
+  }
+
+
+  resendOTP(context) async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return spinkit;
+        });
+
+
+    final uri = Uri.parse('${apiGlobal}/api/user/resend');
+
+    print(uri);
+    final headers = {
+      'Authorization': 'Bearer ${globaltoken}',
+    };
+    print(headers);
+    http.Response response = await http.get(
+      uri,
+      headers: headers,
+    );
+
+    print("response.body" + json.decode(response.body).toString());
+    Navigator.pop(context);
+    var res_data = json.decode(response.body);
+    print("res_data" + res_data.toString());
     return res_data;
   }
 }

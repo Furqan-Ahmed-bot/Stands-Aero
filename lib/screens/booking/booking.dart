@@ -1,5 +1,6 @@
 // import 'dart:html';
 
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:StandsAero/helper/colors.dart';
@@ -73,47 +74,26 @@ class _bookingState extends State<booking> {
   late int TogetCurrentDay;
   var TogetDate = '';
   var TogetcurrentDate = null;
+  List responsevalue = [];
+  List filteredResponse = [];
+  int checkBuild = 0;
+  int productId = 0;
+  
   @override
   Widget build(BuildContext context) {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
 
-    // if (counter == 0) {
-    //   AVgetcurrentDate = DateTime.tryParse(responseData['availablity']['from']);
-    //   AVgetCurrentYear = int.parse(DateFormat('y').format(AVgetcurrentDate));
-    //   AVgetCurrentMonth = int.parse(DateFormat('MM').format(AVgetcurrentDate));
-    //   AVgetCurrentDay = int.parse(DateFormat('dd').format(AVgetcurrentDate));
-    //   // log('responseData Year' + AVgetCurrentYear.toString());
-    //   // log('responseData MOnth' + AVgetCurrentMonth.toString());
-    //   // log('responseData Day' + AVgetCurrentDay.toString());
-    //   // log('responseData to' + responseData['availablity']['to']);
+    if (checkBuild == 0) {
+      for (var i = 0; i < responseData.length; i++) {
+        if (responseData[i]['available_status'].toString() == 'Available') {
+          filteredResponse.add(responseData[i]);
+        }
+      }
+    }
+    checkBuild++;
 
-    //   TogetcurrentDate = DateTime.tryParse(responseData['availablity']['to']);
-    //   TogetCurrentYear = int.parse(DateFormat('y').format(TogetcurrentDate));
-    //   TogetCurrentMonth = int.parse(DateFormat('MM').format(TogetcurrentDate));
-    //   TogetCurrentDay = int.parse(DateFormat('dd').format(TogetcurrentDate));
-    //   // log('responseData Year To' + TogetCurrentYear.toString());
-    //   // log('responseData MOnth To' + TogetCurrentMonth.toString());
-    //   // log('responseData Day To' + TogetCurrentDay.toString());
-    //   // log('responseData to' + responseData['availablity']['to']);
-
-    //   if (AVgetcurrentDate.compareTo(DateTime.now()) <= 0) {
-    //     kFirstDay = DateTime.now().add(Duration(days: 1));
-    //   } else {
-    //     kFirstDay =
-    //         DateTime(AVgetCurrentYear, AVgetCurrentMonth, AVgetCurrentDay);
-    //   }
-    //   counter++;
-    // }
-
-    // kLastDay = DateTime(TogetCurrentYear, TogetCurrentMonth, TogetCurrentDay);
-    // var TodaysDateTIme = DateTime.now();
-
-    // if (kFirstDay.compareTo(DateTime.now()) > 0) {
-    //   log("kFirstDay now this" + kFirstDay.toString());
-    //   log("kLastDay now this" + kLastDay.toString());
-    //   log("Datetime now this" + DateTime.now().toString());
-    // }
+    log('filteredResponse' + filteredResponse.toString());
 
     return Container(
         // future: productDetails(),
@@ -143,7 +123,7 @@ class _bookingState extends State<booking> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              responseData['sku'],
+              responseData[0]['name'],
               style: TextStyle(color: Colors.black),
             ),
             Container(
@@ -168,7 +148,8 @@ class _bookingState extends State<booking> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                custum_Slider(res_width: res_width),
+                custum_Slider(
+                    res_width: res_width, images: responseData[0]['images']),
                 Padding(
                   padding:
                       EdgeInsets.symmetric(horizontal: pad, vertical: pad / 2),
@@ -176,24 +157,24 @@ class _bookingState extends State<booking> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        responseData['sku'],
+                        responseData[0]['name'],
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 15,
                         ),
                       ),
-                      Text(
-                        responseData['location'],
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ),
+                      // Text(
+                      //   responseData['location'],
+                      //   style: TextStyle(fontSize: 15, color: Colors.black),
+                      // ),
                     ],
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: pad),
-                  child: DescriptionTextWidget(
-                      text: responseData['details'].toString()),
-                ),
+                // Padding(
+                //   padding: EdgeInsets.symmetric(horizontal: pad),
+                //   child:
+                //       DescriptionTextWidget(text: responseData['d'].toString()),
+                // ),
                 Padding(
                   padding: EdgeInsets.all(pad),
                   child: Container(
@@ -248,24 +229,95 @@ class _bookingState extends State<booking> {
                         }),
                   ),
                 ),
+                Container(
+                  width: res_width * 0.9,
+                  child: DropdownButtonFormField(
+                    hint: Text(
+                      'Select Location',
+                      style: TextStyle(color: Color(0xffAFAEAE), fontSize: 14),
+                    ), // Not necessary for Option 1
+                    items: filteredResponse.map((category) {
+                      return DropdownMenuItem(
+                          value: category['id'],
+                          child: Text(
+                            category['address']==null?category['location'] :category['address'].toString(),
+                            style: TextStyle(
+                                color: Color(0xffAFAEAE), fontSize: 14),
+                          ));
+                    }).toList(),
+
+                    // items: [
+                    //   'No Interval',
+                    //   '10 Minutes',
+                    //   '20 Minutes',
+                    //   '30 Minutes',
+                    //   '40 Minutes',
+                    //   '50 Minutes',
+                    //   '60 Minutes'
+                    // ].map((category) {
+
+                    //   return DropdownMenuItem(
+                    //       value: category,
+                    //       child: Text(
+                    //         category.toString(),
+                    //         style: TextStyle(
+                    //             color: Color(0xffAFAEAE), fontSize: 14),
+                    //       ));
+                    // }).toList(),
+
+                    onChanged: (value) {
+                      print("location id" + value.toString());
+                      productId = int.parse(value.toString());
+                    },
+
+                    decoration: InputDecoration(
+                      hintStyle:
+                          TextStyle(color: Color(0xffAFAEAE), fontSize: 14),
+
+                      enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white)),
+                      filled: true,
+                      // hintStyle: TextStyle(color: Color(0xffbdbdbd)),
+                      fillColor: Colors.white,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white, width: 1),
+                        // borderRadius: BorderRadius.all(
+                        //   Radius.circular(10.0),
+                        // ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
                 GestureDetector(
                   onTap: () async {
                     log("_rangeStart" + _rangeStart.toString());
                     log("_rangeEnd" + _rangeEnd.toString());
 
-                    _rangeStart != null && _rangeEnd != null
-                        ? Get.to(stand_booking(
-                            productId: responseData['id'],
-                            productSku: responseData['sku'],
-                            firstDay: _rangeStart,
-                            lastDay: _rangeEnd,
-                          ))
-                        : Get.snackbar(
-                            'Error',
-                            'Select booking dates before proceeding',
-                            animationDuration: Duration(seconds: 2),
-                            snackPosition: SnackPosition.TOP,
-                          );
+                    if (productId == 0) {
+                      Get.snackbar(
+                        'Error',
+                        'Select Location',
+                        animationDuration: Duration(seconds: 2),
+                        snackPosition: SnackPosition.TOP,
+                      );
+                    } else {
+                      _rangeStart != null && _rangeEnd != null
+                          ? Get.to(stand_booking(
+                              productId: productId,
+                              productSku: responseData[0]['name'],
+                              firstDay: _rangeStart,
+                              lastDay: _rangeEnd,
+                            ))
+                          : Get.snackbar(
+                              'Error',
+                              'Select booking dates before proceeding',
+                              animationDuration: Duration(seconds: 2),
+                              snackPosition: SnackPosition.TOP,
+                            );
+                    }
                   },
                   child: Container(
                     width: res_width * 0.9,
@@ -304,61 +356,98 @@ class _bookingState extends State<booking> {
 }
 
 class custum_Slider extends StatelessWidget {
-  const custum_Slider({
-    Key? key,
-    required this.res_width,
-  }) : super(key: key);
+  const custum_Slider({Key? key, required this.res_width, required this.images})
+      : super(key: key);
 
   final double res_width;
-
+  final images;
   @override
   Widget build(BuildContext context) {
+    // log("images data" + images.toString());
+    // if(images==''){
+    //   print("images are empty");
+    // }
     return CarouselSlider(
       options: CarouselOptions(
-        height: 190.0,
+        height: 220.0,
         autoPlay: true,
         enlargeCenterPage: true,
         viewportFraction: 0.9,
         aspectRatio: 7.0,
         initialPage: 2,
       ),
-      items: [
-        1,
-        2,
-        3,
-      ].map((i) {
-        return Builder(
-          builder: (BuildContext context) {
-            return Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(20))),
-              child: GestureDetector(
-                onTap: () {
-                  Get.to(() => PreviewImage());
+      items: images.isNotEmpty
+          ? images.map<Widget>((i) {
+              log('images data' + i['image'].toString());
+              return Builder(
+                builder: (BuildContext context) {
+                  return Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.to(() => PreviewImage(image: i['image']));
+                      },
+                      child: Card(
+                          elevation: 8,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          child: Image.network(
+                            i['image'],
+                            width: res_width,
+                            fit: BoxFit.fill,
+                          )
+                          //  Image.asset(
+                          //   "assets/slicing/Untitled-26.png",
+                          //   width: res_width,
+                          //   fit: BoxFit.fill,
+                          // ),
+                          ),
+                    ),
+                  );
                 },
-                child: Card(
-                  elevation: 8,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  child: Image.asset(
-                    "assets/slicing/Untitled-26.png",
-                    width: res_width,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ),
-            );
-          },
-        );
-      }).toList(),
+              );
+            }).toList()
+          : [
+              1,
+              2,
+              3,
+            ].map((i) {
+              return Builder(
+                builder: (BuildContext context) {
+                  return Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.to(() => PreviewImage(
+                              image: "assets/slicing/Untitled-26.png",
+                            ));
+                      },
+                      child: Card(
+                        elevation: 8,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        child: Image.asset(
+                          "assets/slicing/Untitled-26.png",
+                          width: res_width,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              );
+            }).toList(),
     );
   }
 }
 
 class PreviewImage extends StatelessWidget {
-  const PreviewImage({Key? key}) : super(key: key);
-
+  const PreviewImage({Key? key, required this.image}) : super(key: key);
+  final image;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -367,9 +456,8 @@ class PreviewImage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
-            child: Image.asset(
-              "assets/slicing/Untitled-26.png",
-              // width: res_width,
+            child: Image.network(
+              image,
               fit: BoxFit.fill,
             ),
           ),
