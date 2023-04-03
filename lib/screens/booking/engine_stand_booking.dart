@@ -194,15 +194,23 @@ class _stand_bookingState extends State<stand_booking> {
                               ),
                             ),
                             Container(
+                              
                               height: 50,
                               width: res_width / 2.4,
-                              decoration: BoxDecoration(color: Colors.grey),
+                              decoration: BoxDecoration(color: Colors.grey,
+                              borderRadius: BorderRadius.all(Radius.circular(7))
+                              ),
                               child: TextFormField(
                                 readOnly: true,
                                 controller: firstDay,
+                                
                                 decoration: InputDecoration(
+                                  
                                     hintText: "22/5/22",
-                                    contentPadding: EdgeInsets.only(left: 10)),
+                                    contentPadding: EdgeInsets.only(left: 10),
+                                     border: InputBorder.none,
+                                  
+                                    ),
                                 keyboardType: TextInputType.datetime,
                               ),
                             )
@@ -219,13 +227,17 @@ class _stand_bookingState extends State<stand_booking> {
                             Container(
                               height: 50,
                               width: res_width / 2.4,
-                              decoration: BoxDecoration(color: Colors.grey),
+                              decoration: BoxDecoration(color: Colors.grey,
+                              borderRadius: BorderRadius.all(Radius.circular(7))
+                              ),
                               child: TextFormField(
                                 readOnly: true,
                                 controller: lastDay,
                                 decoration: InputDecoration(
                                     hintText: "22/5/22",
-                                    contentPadding: EdgeInsets.only(left: 10)),
+                                    contentPadding: EdgeInsets.only(left: 10),
+                                     border: InputBorder.none,
+                                    ),
                                 keyboardType: TextInputType.datetime,
                               ),
                             )
@@ -240,7 +252,9 @@ class _stand_bookingState extends State<stand_booking> {
                   Container(
                     height: 50,
                     width: res_width * 0.9,
-                    decoration: BoxDecoration(color: Colors.grey),
+                  decoration: BoxDecoration(color: Colors.grey,
+                              borderRadius: BorderRadius.all(Radius.circular(7))
+                              ),
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8.0),
                       child: TextFormField(
@@ -253,7 +267,9 @@ class _stand_bookingState extends State<stand_booking> {
                         },
                         decoration: InputDecoration(
                             labelText: "Location",
-                            labelStyle: TextStyle(color: Colors.black)),
+                            labelStyle: TextStyle(color: Colors.black),
+                            border: InputBorder.none
+                            ),
                         keyboardType: TextInputType.text,
                       ),
                     ),
@@ -278,7 +294,7 @@ class _stand_bookingState extends State<stand_booking> {
                     child: Container(
                       width: res_width * 0.9,
                       decoration: BoxDecoration(
-                          color: Color(0xffaf8a39),
+                          color: Color(0xff85714e),
                           borderRadius: BorderRadius.all(Radius.circular(7))),
                       child: Padding(
                         padding: EdgeInsets.all(13.0),

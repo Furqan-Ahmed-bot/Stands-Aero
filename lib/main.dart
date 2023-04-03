@@ -81,11 +81,11 @@ class _SplashScreenState extends State<SplashScreen> {
         width: double.infinity,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/slicing/Untitled-1.jpg"),
+            image: AssetImage("assets/slicing/Splash.jpg"),
             fit: BoxFit.cover,
           ),
         ),
-        child: Center(child: Image.asset('assets/slicing/Untitled-2.png')),
+        //child: Center(child: Image.asset('assets/slicing/Untitled-2.png')),
       ),
     );
   }

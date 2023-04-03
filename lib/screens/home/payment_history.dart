@@ -159,99 +159,105 @@ class Quotes_Card extends StatelessWidget {
           onTap: () {
             // Get.to(quotes_details());
           },
-          child: Container(
-            width: res_width * 0.925,
-            child: Card(
-              // margin: EdgeInsets.fromLTRB(18.0, 4.0, 18.0, 18.0),
-              elevation: 8,
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              "Order Number: ",
-                              style: TextStyle(
-                                  fontSize: 13, fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              "$orderNumber",
-                              style: TextStyle(fontSize: 13),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: res_height * 0.006,
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              "Pay Amount: ",
-                              style: TextStyle(
-                                  fontSize: 13, fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              "$payAmount",
-                              style: TextStyle(fontSize: 13),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: res_height * 0.006,
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              "Payment Date: ",
-                              style: TextStyle(
-                                  fontSize: 13, fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              "$paymentDate",
-                              style: TextStyle(fontSize: 13),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: res_height * 0.006,
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              "TxnId: ",
-                              style: TextStyle(
-                                  fontSize: 13, fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              "$txnId",
-                              style: TextStyle(fontSize: 13),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: res_height * 0.006,
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              "Payment Status: ",
-                              style: TextStyle(
-                                  fontSize: 13, fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              "$paymentStatus",
-                              style: TextStyle(fontSize: 13),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
+          child: Center(
+            child: Container(
+              width: res_width * 0.90,
+              child: Card(
+                 shape: RoundedRectangleBorder(
+   
+    borderRadius: BorderRadius.circular(10.0), //<-- SEE HERE
+  ),
+                // margin: EdgeInsets.fromLTRB(18.0, 4.0, 18.0, 18.0),
+                elevation: 8,
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                "Order Number: ",
+                                style: TextStyle(
+                                    fontSize: 13, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "$orderNumber",
+                                style: TextStyle(fontSize: 13),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: res_height * 0.006,
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                "Pay Amount: ",
+                                style: TextStyle(
+                                    fontSize: 13, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "$payAmount",
+                                style: TextStyle(fontSize: 13),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: res_height * 0.006,
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                "Payment Date: ",
+                                style: TextStyle(
+                                    fontSize: 13, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "$paymentDate",
+                                style: TextStyle(fontSize: 13),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: res_height * 0.006,
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                "TxnId: ",
+                                style: TextStyle(
+                                    fontSize: 13, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "$txnId",
+                                style: TextStyle(fontSize: 13),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: res_height * 0.006,
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                "Payment Status: ",
+                                style: TextStyle(
+                                    fontSize: 13, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "$paymentStatus",
+                                style: TextStyle(fontSize: 13),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

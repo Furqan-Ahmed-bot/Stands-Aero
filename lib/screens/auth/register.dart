@@ -43,7 +43,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             horizontal: MediaQuery.of(context).size.width * 0.05),
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/slicing/Untitled-1.jpg"),
+            image: AssetImage("assets/slicing/Untitled-5.jpg"),
             fit: BoxFit.cover,
           ),
         ),
@@ -58,7 +58,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   Container(
                       width: res_width * 0.8,
-                      child: Image.asset('assets/slicing/Untitled-2.png')),
+                      child: Image.asset('assets/slicing/Layer-2.png')),
                   SizedBox(
                     height: res_height * 0.025,
                   ),
@@ -66,7 +66,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     'Signup',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: Color(0xff85714e),
                         fontSize: 28),
                   ),
                   SizedBox(
@@ -76,6 +76,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     controller: fullname,
                     decoration: new InputDecoration(
                       hintText: 'Name',
+                      enabledBorder:  OutlineInputBorder(
+
+                          borderRadius: BorderRadius.circular(7.0),
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                          )
+                          ),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(7.0),
                           borderSide: BorderSide(
@@ -101,6 +108,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     keyboardType: TextInputType.emailAddress,
                     decoration: new InputDecoration(
                       hintText: 'Email',
+                      enabledBorder:  OutlineInputBorder(
+
+                          borderRadius: BorderRadius.circular(7.0),
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                          )
+                          ),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(7.0),
                           borderSide: BorderSide(
@@ -257,6 +271,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     keyboardType: TextInputType.phone,
                     decoration: new InputDecoration(
                       hintText: 'Phone Number',
+                      enabledBorder:  OutlineInputBorder(
+
+                          borderRadius: BorderRadius.circular(7.0),
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                          )
+                          ),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(7.0),
                           borderSide: BorderSide(
@@ -285,6 +306,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     obscureText: !_passwordVisible,
                     decoration: new InputDecoration(
                         hintText: 'Password',
+                        enabledBorder:  OutlineInputBorder(
+
+                          borderRadius: BorderRadius.circular(7.0),
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                          )
+                          ),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(7.0),
                             borderSide: BorderSide(
@@ -334,6 +362,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     obscureText: !_passwordVisible1,
                     decoration: new InputDecoration(
                       hintText: 'Confirm Password',
+                      enabledBorder:  OutlineInputBorder(
+
+                          borderRadius: BorderRadius.circular(7.0),
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                          )
+                          ),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(7.0),
                           borderSide: BorderSide(
@@ -407,7 +442,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: Container(
                       // width: res_width * 0.9,
                       decoration: BoxDecoration(
-                          color: Color(0xffaf8a39),
+                          color: Color(0xff85714e),
                           borderRadius: BorderRadius.all(Radius.circular(7))),
                       child: Padding(
                         padding: const EdgeInsets.all(13.0),
@@ -424,7 +459,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: res_height * 0.015,
+                    height: res_height * 0.055,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

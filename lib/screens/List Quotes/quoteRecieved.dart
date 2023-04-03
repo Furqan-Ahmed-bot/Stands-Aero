@@ -83,7 +83,7 @@ class _QuoteRecievedState extends State<QuoteRecieved> {
                 child: Container(
                   width: res_width * 0.95,
                   decoration: BoxDecoration(
-                      color: Color(0xffaf8a39),
+                      color: Color(0xff85714e),
                       borderRadius: BorderRadius.all(Radius.circular(7))),
                   child: Padding(
                     padding: const EdgeInsets.all(13.0),

@@ -90,26 +90,33 @@ class _WireTransferState extends State<WireTransfer> {
                       hed: "Swift Code",
                       labelText: "",
                       controller: wire_swift_code),
+                      SizedBox(height: 10,),
                   TextFieldHelper(
                       hed: "Payment Refrence",
                       labelText: "",
                       controller: wire_payment_reference),
+                        SizedBox(height: 10,),
                   TextFieldHelper(
                       hed: "Account Holder",
                       labelText: "",
                       controller: wire_account_holder),
+                        SizedBox(height: 10,),
                   TextFieldHelper(
                       hed: "Bank Name",
                       labelText: "",
                       controller: wire_bank_name),
+                        SizedBox(height: 10,),
                   TextFieldHelper(
                       hed: "IBAN", labelText: "", controller: wire_iban),
+                        SizedBox(height: 10,),
                   TextFieldHelper(
                       hed: "City", labelText: "", controller: wire_city),
+                        SizedBox(height: 10,),
                   TextFieldHelper(
                       hed: "Bank Account Number",
                       labelText: "",
                       controller: wire_bank_account_number),
+                        SizedBox(height: 10,),
                   TextFieldHelper(
                       hed: "Special ID",
                       labelText: "",
@@ -208,7 +215,7 @@ class _WireTransferState extends State<WireTransfer> {
                     child: Container(
                       width: res_width * 0.9,
                       decoration: BoxDecoration(
-                          color: Color(0xffaf8a39),
+                          color: Color(0xff85714e),
                           borderRadius: BorderRadius.all(Radius.circular(7))),
                       child: Padding(
                         padding: const EdgeInsets.all(13.0),

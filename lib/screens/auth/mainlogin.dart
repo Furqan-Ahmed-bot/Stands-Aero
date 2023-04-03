@@ -15,7 +15,7 @@ class MainLoginScreen extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/slicing/Untitled-1.jpg"),
+            image: AssetImage("assets/slicing/Untitled-5.jpg"),
             fit: BoxFit.cover,
           ),
         ),
@@ -26,7 +26,7 @@ class MainLoginScreen extends StatelessWidget {
             ),
             Container(
                 width: res_width * 0.85,
-                child: Image.asset('assets/slicing/Untitled-2.png')),
+                child: Image.asset('assets/slicing/Layer-2.png')),
             SizedBox(
               height: res_height * 0.125,
             ),
@@ -34,7 +34,7 @@ class MainLoginScreen extends StatelessWidget {
               'Social Login',
               style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                    color: Color(0xff85714e),
                   fontSize: 28),
             ),
             SizedBox(
@@ -47,7 +47,7 @@ class MainLoginScreen extends StatelessWidget {
               child: Container(
                 width: res_width * 0.9,
                 decoration: BoxDecoration(
-                    color: Color(0xffaf8a39),
+                    color: Color(0xff85714e),
                     borderRadius: BorderRadius.all(Radius.circular(5))),
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),

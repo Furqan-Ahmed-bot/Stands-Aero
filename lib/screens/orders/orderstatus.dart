@@ -160,6 +160,7 @@ class _OrderStatusState extends State<OrderStatus> {
                                               Container(
                                                 width: res_width * 0.75,
                                                 decoration: BoxDecoration(
+                                                   borderRadius: BorderRadius.all(Radius.circular(10)),
                                                     color: orderStatus ==
                                                             "Order In Process"
                                                         ? primaryColor
@@ -216,8 +217,10 @@ class _OrderStatusState extends State<OrderStatus> {
                                           Row(
                                             children: [
                                               Container(
+                                                
                                                 width: res_width * 0.75,
                                                 decoration: BoxDecoration(
+                                                   borderRadius: BorderRadius.all(Radius.circular(10)),
                                                     color: orderStatus ==
                                                             "Order Shipped"
                                                         ? primaryColor
@@ -278,6 +281,7 @@ class _OrderStatusState extends State<OrderStatus> {
                                               Container(
                                                 width: res_width * 0.75,
                                                 decoration: BoxDecoration(
+                                                   borderRadius: BorderRadius.all(Radius.circular(10)),
                                                     color: orderStatus ==
                                                             "Order In Route"
                                                         ? primaryColor
@@ -336,8 +340,10 @@ class _OrderStatusState extends State<OrderStatus> {
                                           Row(
                                             children: [
                                               Container(
+                                                
                                                 width: res_width * 0.75,
                                                 decoration: BoxDecoration(
+                                                   borderRadius: BorderRadius.all(Radius.circular(10)),
                                                     color: orderStatus ==
                                                             "Order Arrived"
                                                         ? primaryColor
@@ -366,6 +372,7 @@ class _OrderStatusState extends State<OrderStatus> {
                                                                 0.006,
                                                           ),
                                                           Container(
+                                                          
                                                               width: res_width *
                                                                   0.6,
                                                               child: Text(
@@ -405,7 +412,7 @@ class _OrderStatusState extends State<OrderStatus> {
                                   child: Container(
                                     width: res_width * 0.95,
                                     decoration: BoxDecoration(
-                                        color: Color(0xffaf8a39),
+                                        color: Color(0xff85714e),
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(7))),
                                     child: Padding(
@@ -456,6 +463,12 @@ class Quotes_Card extends StatelessWidget {
         Container(
           width: res_width * 0.925,
           child: Card(
+             shape: RoundedRectangleBorder(
+    side: BorderSide(
+      color: Colors.transparent,
+    ),
+    borderRadius: BorderRadius.circular(10.0), //<-- SEE HERE
+  ),
             // margin: EdgeInsets.fromLTRB(18.0, 4.0, 18.0, 18.0),
             elevation: 8,
             child: Padding(
@@ -492,6 +505,7 @@ class Quotes_Card extends StatelessWidget {
                       ),
                       SingleChildScrollView(
                         child: Container(
+                          
                           height: res_height * 0.1,
                           width: res_width * 0.45,
                           child: SingleChildScrollView(

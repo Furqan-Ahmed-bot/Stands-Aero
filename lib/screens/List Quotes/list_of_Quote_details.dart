@@ -184,7 +184,7 @@ class _quotes_detailsState extends State<quotes_details> {
                                 child: Container(
                                   width: res_width * 0.6,
                                   decoration: BoxDecoration(
-                                      color: Color(0xffaf8a39),
+                                      color: Color(0xff85714e),
                                       borderRadius:
                                           BorderRadius.all(Radius.circular(7))),
                                   child: Padding(
@@ -381,7 +381,7 @@ class _quotes_detailsState extends State<quotes_details> {
                                 child: Container(
                                   width: res_width * 0.95,
                                   decoration: BoxDecoration(
-                                      color: Color(0xffaf8a39),
+                                      color: Color(0xff85714e),
                                       borderRadius:
                                           BorderRadius.all(Radius.circular(7))),
                                   child: Padding(

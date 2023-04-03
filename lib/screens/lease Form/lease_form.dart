@@ -42,7 +42,11 @@ class _lease_FormState extends State<lease_Form> {
         ),
       ),
       child: Scaffold(
+        backgroundColor: Colors.transparent,
+        extendBody: true,
         appBar: AppBar(
+          
+          
           automaticallyImplyLeading: false,
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -90,7 +94,8 @@ class _lease_FormState extends State<lease_Form> {
               child: Column(
                 children: [
                   Container(
-                    width: res_width * 0.95,
+                    
+                    width: res_width * 0.85,
                     child: Card(
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -514,9 +519,9 @@ class _lease_FormState extends State<lease_Form> {
                       }
                     },
                     child: Container(
-                      width: res_width * 0.9,
+                      width: res_width * 0.85,
                       decoration: BoxDecoration(
-                          color: Color(0xffaf8a39),
+                          color: Color(0xff85714e),
                           borderRadius: BorderRadius.all(Radius.circular(7))),
                       child: Padding(
                         padding: const EdgeInsets.all(13.0),

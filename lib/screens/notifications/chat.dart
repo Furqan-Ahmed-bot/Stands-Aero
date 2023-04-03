@@ -48,12 +48,13 @@ class _ChatScreenState extends State<ChatScreen> {
   late int lengthOfChat;
   Future<dynamic> get_messages_previous1() async {
     chat_historyvar = await ApiService().get_messages(context);
-    if (lengthOfChat < chat_historyvar['messages'].length) {
+    if (lengthOfChat < chat_historyvar['data']['0'].length) {
+        print("previous messages length" + chat_historyvar['data']['0'].length.toString());
       if (mounted) {
         setState(() {});
       }
 
-      lengthOfChat = chat_historyvar['messages'].length;
+      lengthOfChat = chat_historyvar['data']['0'].length;
     }
 
     // _scrollDown();
@@ -61,7 +62,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Future<void> get_messages_previous() async {
     chat_historyvar = await ApiService().get_messages(context);
-    lengthOfChat = chat_historyvar['messages'].length;
+    lengthOfChat = chat_historyvar['data']['0'].length;
     // _scrollDown();
   }
 
@@ -153,10 +154,10 @@ class _ChatScreenState extends State<ChatScreen> {
                                 physics: NeverScrollableScrollPhysics(),
                                 scrollDirection: Axis.vertical,
                                 // itemCount: quotations_data['data'].length,
-                                itemCount: chat_historyvar['messages'].length,
+                                itemCount: chat_historyvar['data']['0'].length,
                                 itemBuilder: (context, index) {
-                                  return chat_historyvar['messages'][index]
-                                              ['from_id'] ==
+                                  return chat_historyvar['data']['0'][index]['sent_user']
+                                              ==
                                           userid
                                       ? Align(
                                           alignment: Alignment.topRight,
@@ -190,9 +191,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                                         const EdgeInsets.all(
                                                             13.0),
                                                     child: Text(
-                                                      chat_historyvar[
-                                                              'messages'][index]
-                                                          ['body'],
+                                                    chat_historyvar['data']['0'][index]
+                                                          ['message'],
                                                       style: TextStyle(
                                                           color: Colors.white),
                                                     ),
@@ -206,10 +206,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                                   child: Text(
                                                     DateFormat.jm()
                                                         .format(DateTime.parse(
-                                                            chat_historyvar[
-                                                                        'messages']
-                                                                    [index]
-                                                                ['created_at']))
+                                                           chat_historyvar['data']['0'][index]['created_at']
+                                                                ))
                                                         .toString(),
                                                     style: TextStyle(
                                                         color: Colors.white),
@@ -248,8 +246,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                                   padding: const EdgeInsets.all(
                                                       13.0),
                                                   child: Text(
-                                                    chat_historyvar['messages']
-                                                        [index]['body'],
+                                                    chat_historyvar['data']['0'][index] ['message'],
+                                                       
                                                     style: TextStyle(
                                                         color: Colors.black),
                                                   ),
@@ -262,9 +260,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                                 child: Text(
                                                   DateFormat.jm()
                                                       .format(DateTime.parse(
-                                                          chat_historyvar[
-                                                                      'messages']
-                                                                  [index]
+                                                          chat_historyvar['data']['0'][index]
                                                               ['created_at']))
                                                       .toString(),
                                                   style: TextStyle(

@@ -218,9 +218,16 @@ class Notifications_Card extends StatelessWidget {
 
     return Container(
       width: res_width * 0.9,
-      decoration: BoxDecoration(color: Colors.white),
+       decoration: BoxDecoration(
+                    color: Colors.white,
+    
+   borderRadius: BorderRadius.all(Radius.circular(10))
+ ),
+         
+      
+    
       child: Padding(
-        padding: const EdgeInsets.all(13.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

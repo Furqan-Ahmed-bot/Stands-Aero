@@ -322,7 +322,7 @@ class _bookingState extends State<booking> {
                   child: Container(
                     width: res_width * 0.9,
                     decoration: BoxDecoration(
-                        color: Color(0xffaf8a39),
+                        color: Color(0xff85714e),
                         borderRadius: BorderRadius.all(Radius.circular(7))),
                     child: Padding(
                       padding: EdgeInsets.all(13.0),

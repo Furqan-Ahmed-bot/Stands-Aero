@@ -216,6 +216,10 @@ class Quotess_Card extends StatelessWidget {
             // ));
           },
           child: Container(
+              decoration: BoxDecoration(
+    
+   borderRadius: BorderRadius.all(Radius.circular(20))
+ ),
             width: res_width * 0.925,
             child: Card(
               elevation: 8,

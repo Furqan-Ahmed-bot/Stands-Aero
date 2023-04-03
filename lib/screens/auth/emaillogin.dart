@@ -40,7 +40,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
               width: double.infinity,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/slicing/Untitled-1.jpg"),
+                  image: AssetImage("assets/slicing/Rectangle-11.png"),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -49,19 +49,22 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: res_height * 0.125,
+                      height: res_height * 0.105,
                     ),
-                    Container(
-                        width: res_width * 0.85,
-                        child: Image.asset('assets/slicing/Untitled-2.png')),
+                    Center(
+                      child: Container(
+                          height: res_height * 0.23,
+                          width: res_width * 0.70,
+                          child: Image.asset('assets/slicing/Group-1.png')),
+                    ),
                     SizedBox(
-                      height: res_height * 0.1,
+                      height: res_height * 0.02,
                     ),
                     Text(
                       'Login',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: Colors.black,
                           fontSize: 28),
                     ),
                     SizedBox(
@@ -78,6 +81,13 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                               borderSide: BorderSide(
                                 color: Colors.transparent,
                               )),
+                               enabledBorder:  OutlineInputBorder(
+
+                          borderRadius: BorderRadius.circular(7.0),
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                          )
+                          ),
                           hintStyle: TextStyle(),
                           contentPadding: EdgeInsets.only(top: 16, left: 16),
                           prefixIcon: Padding(
@@ -117,6 +127,13 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                               borderSide: BorderSide(
                                 color: Colors.transparent,
                               )),
+                               enabledBorder:  OutlineInputBorder(
+
+                          borderRadius: BorderRadius.circular(7.0),
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                          )
+                          ),
                           hintStyle: TextStyle(),
                           contentPadding: EdgeInsets.only(top: 16, left: 16),
                           suffixIcon: IconButton(
@@ -174,7 +191,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                       child: Container(
                         width: res_width * 0.9,
                         decoration: BoxDecoration(
-                            color: Color(0xffaf8a39),
+                            color: Color(0xff85714e),
                             borderRadius: BorderRadius.all(Radius.circular(7))),
                         child: Padding(
                           padding: const EdgeInsets.all(13.0),
@@ -191,7 +208,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                       ),
                     ),
                     SizedBox(
-                      height: res_height * 0.035,
+                      height: res_height * 0.030,
                     ),
                     GestureDetector(
                       onTap: () {
@@ -202,13 +219,20 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                         style: TextStyle(
                           decoration: TextDecoration.underline,
                           fontWeight: FontWeight.w500,
-                          color: Colors.white,
+                          color: Colors.black,
                           fontSize: 17,
                         ),
                       ),
                     ),
+                     Padding(
+                       padding: const EdgeInsets.only(right: 30),
+                       child: Container(
+                         height: res_height * 0.23,
+                          width: res_width * 0.70,
+                          child: Image.asset('assets/slicing/Group-2.png')),
+                     ),
                     SizedBox(
-                      height: res_height * 0.13,
+                      height: res_height * 0.01,
                     ),
                     GestureDetector(
                       onTap: () {
@@ -221,7 +245,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                             "Don't have an account? ",
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
-                              color: Colors.white,
+                              color: Colors.black,
                               fontSize: 17,
                             ),
                           ),

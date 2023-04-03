@@ -168,111 +168,117 @@ class Quotes_Card extends StatelessWidget {
               orderID: orderID,
             ));
           },
-          child: Container(
-            width: res_width * 0.925,
-            child: Card(
-              // margin: EdgeInsets.fromLTRB(18.0, 4.0, 18.0, 18.0),
-              elevation: 8,
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              "Order Number: ",
-                              style: TextStyle(
-                                  fontSize: 13, fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              "$orderNumber",
-                              style: TextStyle(fontSize: 13),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: res_height * 0.006,
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              "Pay Amount: ",
-                              style: TextStyle(
-                                  fontSize: 13, fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              "$payAmount",
-                              style: TextStyle(fontSize: 13),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: res_height * 0.006,
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              "Dated Ordered: ",
-                              style: TextStyle(
-                                  fontSize: 13, fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              "$orderDate",
-                              style: TextStyle(fontSize: 13),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: res_height * 0.006,
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              "Order Status: ",
-                              style: TextStyle(
-                                  fontSize: 13, fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              "$orderStatus",
-                              style: TextStyle(fontSize: 13),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: res_height * 0.006,
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              "Payment Status: ",
-                              style: TextStyle(
-                                  fontSize: 13, fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              "$paymentStatus",
-                              style: TextStyle(fontSize: 13),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    // SizedBox(
-                    //   width: res_width * 0.05,
-                    // ),
-                    // Container(
-                    //     width: res_width * 0.375,
-                    //     height: res_height * 0.17,
-                    //     decoration: BoxDecoration(
-                    //         borderRadius: BorderRadius.all(Radius.circular(7))),
-                    //     child: Image.asset(
-                    //       "assets/slicing/Untitled-6.png",
-                    //       fit: BoxFit.cover,
-                    //     ))
-                  ],
+          child: Center(
+            child: Container(
+              width: res_width * 0.90,
+              child: Card(
+                 shape: RoundedRectangleBorder(
+             
+              borderRadius: BorderRadius.circular(10.0), //<-- SEE HERE
+            ),
+                // margin: EdgeInsets.fromLTRB(18.0, 4.0, 18.0, 18.0),
+                elevation: 8,
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                "Order Number: ",
+                                style: TextStyle(
+                                    fontSize: 13, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "$orderNumber",
+                                style: TextStyle(fontSize: 13),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: res_height * 0.006,
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                "Pay Amount: ",
+                                style: TextStyle(
+                                    fontSize: 13, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "$payAmount",
+                                style: TextStyle(fontSize: 13),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: res_height * 0.006,
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                "Dated Ordered: ",
+                                style: TextStyle(
+                                    fontSize: 13, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "$orderDate",
+                                style: TextStyle(fontSize: 13),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: res_height * 0.006,
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                "Order Status: ",
+                                style: TextStyle(
+                                    fontSize: 13, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "$orderStatus",
+                                style: TextStyle(fontSize: 13),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: res_height * 0.006,
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                "Payment Status: ",
+                                style: TextStyle(
+                                    fontSize: 13, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "$paymentStatus",
+                                style: TextStyle(fontSize: 13),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      // SizedBox(
+                      //   width: res_width * 0.05,
+                      // ),
+                      // Container(
+                      //     width: res_width * 0.375,
+                      //     height: res_height * 0.17,
+                      //     decoration: BoxDecoration(
+                      //         borderRadius: BorderRadius.all(Radius.circular(7))),
+                      //     child: Image.asset(
+                      //       "assets/slicing/Untitled-6.png",
+                      //       fit: BoxFit.cover,
+                      //     ))
+                    ],
+                  ),
                 ),
               ),
             ),

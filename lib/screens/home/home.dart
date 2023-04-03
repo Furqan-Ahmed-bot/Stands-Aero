@@ -230,7 +230,7 @@ class _HomeScreenState extends State<HomeScreen>
                                     color: Colors.grey, width: 0.0),
                                 borderRadius: BorderRadius.circular(10.0)),
 
-                            hintText: 'Search Jobs / Services',
+                            hintText: 'Search...', 
                             hintStyle: TextStyle(),
                             contentPadding: EdgeInsets.only(top: 16, left: 16),
                             suffixIcon: Padding(
@@ -272,7 +272,7 @@ class _HomeScreenState extends State<HomeScreen>
                                         ? kPrimaryColor
                                         : Color(0xffa1a1a1),
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(5))),
+                                        BorderRadius.all(Radius.circular(8))),
                                 child: Padding(
                                   padding: const EdgeInsets.all(10.0),
                                   child: Row(
@@ -290,7 +290,7 @@ class _HomeScreenState extends State<HomeScreen>
                                                 : Colors.black,
                                           )),
                                       Icon(
-                                        Icons.filter_list,
+                                        Icons.arrow_drop_down,
                                         color: filterCounter == 1
                                             ? Colors.white
                                             : Colors.black,
@@ -319,7 +319,7 @@ class _HomeScreenState extends State<HomeScreen>
                                         ? kPrimaryColor
                                         : Color(0xffa1a1a1),
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(5))),
+                                        BorderRadius.all(Radius.circular(8))),
                                 child: Padding(
                                   padding: const EdgeInsets.fromLTRB(
                                       10.0, 10.0, 1.0, 10.0),
@@ -338,7 +338,7 @@ class _HomeScreenState extends State<HomeScreen>
                                                 : Colors.black,
                                           )),
                                       Icon(
-                                        Icons.filter_list,
+                                        Icons.arrow_drop_down,
                                         color: filterCounter == 2
                                             ? Colors.white
                                             : Colors.black,
@@ -367,7 +367,7 @@ class _HomeScreenState extends State<HomeScreen>
                                         ? kPrimaryColor
                                         : Color(0xffa1a1a1),
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(5))),
+                                        BorderRadius.all(Radius.circular(8))),
                                 child: Padding(
                                   padding: const EdgeInsets.all(10.0),
                                   child: Row(
@@ -385,7 +385,7 @@ class _HomeScreenState extends State<HomeScreen>
                                                 : Colors.black,
                                           )),
                                       Icon(
-                                        Icons.filter_list,
+                                      Icons.arrow_drop_down,
                                         color: filterCounter == 3
                                             ? Colors.white
                                             : Colors.black,

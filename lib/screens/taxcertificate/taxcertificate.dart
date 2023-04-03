@@ -210,6 +210,12 @@ class _TexCertificateScreenState extends State<TexCertificateScreen> {
     return Container(
       width: res_width * 0.925,
       child: Card(
+         shape: RoundedRectangleBorder(
+    side: BorderSide(
+      color: Colors.transparent,
+    ),
+    borderRadius: BorderRadius.circular(10.0), //<-- SEE HERE
+  ),
         // margin: EdgeInsets.fromLTRB(18.0, 4.0, 18.0, 18.0),
         elevation: 8,
         child: Padding(

@@ -60,9 +60,14 @@ class _TermsScreenState extends State<TermsScreen> {
         body: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(13.0),
+              padding: const EdgeInsets.all(25.0),
               child: Container(
-                color: Colors.white,
+                 decoration: BoxDecoration(
+                    color: Colors.white,
+    
+   borderRadius: BorderRadius.all(Radius.circular(10))
+ ),
+         
                 child: Padding(
                   padding: const EdgeInsets.all(13.0),
                   child: Text(

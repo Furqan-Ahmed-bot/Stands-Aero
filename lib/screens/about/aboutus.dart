@@ -77,8 +77,14 @@ class _AboututsState extends State<Aboututs> {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
     return Container(
+      
       width: res_width * 0.9,
-      decoration: BoxDecoration(color: Colors.white),
+      decoration: BoxDecoration(color: Colors.white,
+      borderRadius: BorderRadius.all(Radius.circular(10))
+      
+      
+      ),
+      
       child: Padding(
         padding: const EdgeInsets.all(13.0),
         child: Column(
