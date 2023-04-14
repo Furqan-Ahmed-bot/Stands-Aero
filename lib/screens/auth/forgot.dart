@@ -44,7 +44,7 @@ class _ForgotPasswordEnterEmailState extends State<ForgotPasswordEnterEmail> {
           width: double.infinity,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/slicing/Untitled-1.jpg"),
+              image: AssetImage("assets/slicing/Untitled-5.jpg"),
               fit: BoxFit.cover,
             ),
           ),
@@ -57,7 +57,7 @@ class _ForgotPasswordEnterEmailState extends State<ForgotPasswordEnterEmail> {
                 ),
                 Container(
                     width: res_width * 0.85,
-                    child: Image.asset('assets/slicing/Untitled-2.png')),
+                    child: Image.asset('assets/slicing/Layer-2.png')),
                 SizedBox(
                   height: res_height * 0.1,
                 ),
@@ -65,7 +65,7 @@ class _ForgotPasswordEnterEmailState extends State<ForgotPasswordEnterEmail> {
                   'Forgot Password',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize: 28),
                 ),
                 SizedBox(
@@ -81,6 +81,11 @@ class _ForgotPasswordEnterEmailState extends State<ForgotPasswordEnterEmail> {
                           borderRadius: BorderRadius.circular(7.0),
                           borderSide: BorderSide(
                             color: Colors.transparent,
+                          )),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(7.0),
+                          borderSide: BorderSide(
+                            color: Colors.white,
                           )),
                       hintStyle: TextStyle(),
                       contentPadding: EdgeInsets.only(top: 16, left: 16),
@@ -143,8 +148,8 @@ class _ForgotPasswordEnterEmailState extends State<ForgotPasswordEnterEmail> {
                   child: Container(
                     width: res_width * 0.9,
                     decoration: BoxDecoration(
-                        color: Color(0xffaf8a39),
-                        borderRadius: BorderRadius.all(Radius.circular(7))),
+                            color: Color(0xff85714e),
+                            borderRadius: BorderRadius.all(Radius.circular(7))),
                     child: Padding(
                       padding: const EdgeInsets.all(13.0),
                       child: Center(
@@ -175,10 +180,10 @@ class _ForgotPasswordEnterEmailState extends State<ForgotPasswordEnterEmail> {
                       Text(
                         "Don't have an account? ",
                         style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
-                          fontSize: 17,
-                        ),
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                              fontSize: 17,
+                            ),
                       ),
                       Text(
                         'Signup',

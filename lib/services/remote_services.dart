@@ -1164,6 +1164,7 @@ class ApiService {
     print(res);
 
     Map<String, dynamic> res_data = jsonDecode(res.body);
+    log("res print1 ${res_data}");
     log("res print1 ${res_data['data']}");
 
     if (res_data['status'] == true) {

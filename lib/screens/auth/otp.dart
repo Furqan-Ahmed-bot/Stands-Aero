@@ -40,7 +40,7 @@ class _OTPScreenState extends State<OTPScreen> {
             horizontal: MediaQuery.of(context).size.width * 0.05),
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/slicing/Untitled-1.jpg"),
+            image: AssetImage("assets/slicing/Untitled-5.jpg"),
             fit: BoxFit.cover,
           ),
         ),
@@ -51,7 +51,7 @@ class _OTPScreenState extends State<OTPScreen> {
             ),
             Container(
                 width: res_width * 0.8,
-                child: Image.asset('assets/slicing/Untitled-2.png')),
+                child: Image.asset('assets/slicing/Layer-2.png')),
             SizedBox(
               height: res_height * 0.025,
             ),
@@ -59,7 +59,7 @@ class _OTPScreenState extends State<OTPScreen> {
               'Verification',
               style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                    color: Color(0xff85714e),
                   fontSize: 28),
             ),
             SizedBox(
@@ -80,7 +80,10 @@ class _OTPScreenState extends State<OTPScreen> {
                     child: const Text(
                       'We have sent you an email containing 6 digits verification code. Please enter the code to verify your identity.',
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white, fontSize: 17),
+                      style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 17,
+                            ),
                     ),
                   ),
                   SizedBox(
@@ -93,9 +96,10 @@ class _OTPScreenState extends State<OTPScreen> {
                       // borderColor: accentPurpleColor,
                       // focusedBorderColor: accentPurpleColor,
                       // styles: otpTextStyles,
-                      textStyle: TextStyle(color: Colors.white),
+                      textStyle: TextStyle(color: Colors.black),
                       showFieldAsBox: false,
                       borderWidth: 4.0,
+                      enabledBorderColor: Colors.black,
                       onCodeChanged: (String code) {
                         print("Changed: " + code);
                       },
@@ -142,8 +146,8 @@ class _OTPScreenState extends State<OTPScreen> {
               child: Container(
                 // width: res_width * 0.9,
                 decoration: BoxDecoration(
-                    color: Color(0xffaf8a39),
-                    borderRadius: BorderRadius.all(Radius.circular(7))),
+                            color: Color(0xff85714e),
+                            borderRadius: BorderRadius.all(Radius.circular(7))),
                 child: Padding(
                   padding: const EdgeInsets.all(13.0),
                   child: Center(
