@@ -1,21 +1,11 @@
 // ignore_for_file: unnecessary_null_comparison
 
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:StandsAero/services/remote_services.dart';
-import 'package:StandsAero/controller/usercontroller.dart';
 import 'package:StandsAero/helper/colors.dart';
-import 'package:StandsAero/helper/global.dart';
 import 'package:StandsAero/helper/model.dart';
 import 'package:StandsAero/screens/auth/register.dart';
-import 'package:StandsAero/screens/home/home.dart';
-import 'package:StandsAero/screens/mainhome.dart';
-import 'package:StandsAero/screens/payment/awaiting.dart';
-import 'package:http/http.dart' as http;
-
-import 'forgotpasswordwithotp.dart';
 
 class ForgotPasswordEnterEmail extends StatefulWidget {
   const ForgotPasswordEnterEmail({Key? key}) : super(key: key);
@@ -44,7 +34,7 @@ class _ForgotPasswordEnterEmailState extends State<ForgotPasswordEnterEmail> {
           width: double.infinity,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/slicing/Untitled-1.jpg"),
+              image: AssetImage("assets/slicing/Untitled-5.jpg"),
               fit: BoxFit.cover,
             ),
           ),
@@ -57,7 +47,7 @@ class _ForgotPasswordEnterEmailState extends State<ForgotPasswordEnterEmail> {
                 ),
                 Container(
                     width: res_width * 0.85,
-                    child: Image.asset('assets/slicing/Untitled-2.png')),
+                    child: Image.asset('assets/slicing/Layer-2.png')),
                 SizedBox(
                   height: res_height * 0.1,
                 ),
@@ -65,7 +55,7 @@ class _ForgotPasswordEnterEmailState extends State<ForgotPasswordEnterEmail> {
                   'Forgot Password',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: kPrimaryColor,
                       fontSize: 28),
                 ),
                 SizedBox(
@@ -143,7 +133,8 @@ class _ForgotPasswordEnterEmailState extends State<ForgotPasswordEnterEmail> {
                   child: Container(
                     width: res_width * 0.9,
                     decoration: BoxDecoration(
-                        color: Color(0xffaf8a39),
+                        color: Color(0xff85714e),
+                        // Color(0xffaf8a39),
                         borderRadius: BorderRadius.all(Radius.circular(7))),
                     child: Padding(
                       padding: const EdgeInsets.all(13.0),
@@ -176,7 +167,7 @@ class _ForgotPasswordEnterEmailState extends State<ForgotPasswordEnterEmail> {
                         "Don't have an account? ",
                         style: TextStyle(
                           fontWeight: FontWeight.w500,
-                          color: Colors.white,
+                          color: Colors.black,
                           fontSize: 17,
                         ),
                       ),

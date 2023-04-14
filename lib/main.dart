@@ -1,13 +1,10 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:StandsAero/helper/data_storage.dart';
 import 'package:StandsAero/screens/auth/emaillogin.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import 'screens/mainhome.dart';
 
 void main() {
   runApp(const MyApp());

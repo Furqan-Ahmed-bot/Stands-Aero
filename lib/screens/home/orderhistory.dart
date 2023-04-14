@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:StandsAero/helper/loader.dart';
-import 'package:StandsAero/screens/List%20Quotes/list_of_Quote_details.dart';
 import 'package:StandsAero/screens/home/drawer.dart';
 import 'package:StandsAero/services/remote_services.dart';
 
@@ -164,6 +163,7 @@ class Quotes_Card extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
+            print('Helooooooooooo');
             Get.to(OrderStatus(
               orderID: orderID,
             ));
@@ -172,10 +172,9 @@ class Quotes_Card extends StatelessWidget {
             child: Container(
               width: res_width * 0.90,
               child: Card(
-                 shape: RoundedRectangleBorder(
-             
-              borderRadius: BorderRadius.circular(10.0), //<-- SEE HERE
-            ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0), //<-- SEE HERE
+                ),
                 // margin: EdgeInsets.fromLTRB(18.0, 4.0, 18.0, 18.0),
                 elevation: 8,
                 child: Padding(

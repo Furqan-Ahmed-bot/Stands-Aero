@@ -90,7 +90,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           )),
                       hintStyle: TextStyle(),
                       contentPadding: EdgeInsets.only(top: 16, left: 16),
-                      fillColor: Colors.white,
+                      fillColor: Color.fromRGBO(255, 255, 255, 1),
                       filled: true,
                     ),
                     validator: (text) {

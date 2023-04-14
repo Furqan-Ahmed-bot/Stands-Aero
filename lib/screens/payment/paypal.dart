@@ -22,7 +22,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   final Completer<WebViewController> _controller =
       Completer<WebViewController>();
   late WebViewController controllerGlobal;
-  String apiGlobal = "https://standsaero.jumppace.com";
+  String apiGlobal = "https://standsaero-merger.jumppace.com/nsa";
 
   @override
   void initState() {

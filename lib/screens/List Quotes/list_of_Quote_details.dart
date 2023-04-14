@@ -9,6 +9,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../kyc_Form/kyc_form.dart';
+
 class quotes_details extends StatefulWidget {
   final quoteId;
   const quotes_details({Key? key, required this.quoteId}) : super(key: key);
@@ -364,6 +366,8 @@ class _quotes_detailsState extends State<quotes_details> {
                                   // var res_data = ApiService()
                                   //     .placeOrder(context, sendData);
                                   // if (res_data = ['status'] == true) {}
+                                  // if(responseData[])
+
                                   if (filePath == null && fileType == null) {
                                     Get.snackbar(
                                       'Error',
@@ -371,12 +375,18 @@ class _quotes_detailsState extends State<quotes_details> {
                                       animationDuration: Duration(seconds: 2),
                                       snackPosition: SnackPosition.BOTTOM,
                                     );
+                                  } else if (is_kyc == 0) {
+                                    Get.to(kyc_form(
+                                      clientId: int.parse(userid),
+                                    ));
                                   } else {
                                     placeOrderData_tax_file = filePath;
                                     placeOrderData_quote_id = widget.quoteId;
                                     placeOrderData_fileType = fileType;
                                     Get.to(lease_Form(placeOrderData));
                                   }
+
+                                  //                             }
                                 },
                                 child: Container(
                                   width: res_width * 0.95,

@@ -1,10 +1,10 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:convert';
 import 'dart:developer';
 
 import 'package:StandsAero/screens/auth/emaillogin.dart';
 import 'package:StandsAero/screens/auth/otp.dart';
-import 'package:StandsAero/screens/credit_Form/credit_form.dart';
-import 'package:StandsAero/screens/kyc_Form/kyc_form.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -20,6 +20,7 @@ import '../screens/List Quotes/quoteRecieved.dart';
 import '../screens/auth/forgotpasswordwithotp.dart';
 import '../screens/auth/mainlogin.dart';
 import '../screens/mainhome.dart';
+import '../tickets/ticket_submitted.dart';
 
 // String apiGlobal = "http://localhost:3000/api/v1";
 // String apiGlobal = "https://standsaero.jumppace.com";
@@ -71,8 +72,6 @@ class ApiService {
             email: res_data['data']['user']['email'],
             page: 'signup'));
       } else {
-
-
         final userController = Get.put(UserController());
         userController.addUser(
           UserModel(
@@ -147,63 +146,65 @@ class ApiService {
 
     print(res_data);
     if (res_data["status"] == true) {
-      if (res_data['data']['user']['email_verified'] == 'No') {
-        Get.snackbar(
-          'Error',
-          'Account Not Verified',
-          animationDuration: Duration(seconds: 2),
-          snackPosition: SnackPosition.BOTTOM,
-        );
-        Navigator.pop(context);
+      // if (res_data['data']['user']['email_verified'] == 'No') {
+      //   Get.snackbar(
+      //     'Error',
+      //     'Account Not Verified',
+      //     animationDuration: Duration(seconds: 2),
+      //     snackPosition: SnackPosition.BOTTOM,
+      //   );
+      //   Navigator.pop(context);
 
-        globaltoken = res_data["data"]["token"];
-        log('GLOBAL TOKEN: $globaltoken');
+      //   globaltoken = res_data["data"]["token"];
+      //   log('GLOBAL TOKEN: $globaltoken');
 
-        Get.to(OTPScreen(
-            userId: res_data['data']['user']['id'],
-            email: res_data['data']['user']['email'],
-            page: 'login'));
-      } else {
-        UserController userController = Get.put(UserController());
-        userController.addUser(
-          UserModel(
-            id: res_data['data']['user']['id'],
-            fullName: res_data['data']['user']['full_name'],
-            phone: res_data['data']['user']['phone'],
-            email: res_data['data']['user']['email'],
-            propic: res_data['data']['user']['propic'],
-            city: res_data['data']['user']['city'],
-            country: res_data['data']['user']['country'],
-            description: res_data['data']['user']['description'],
-            isKycFilled: res_data['data']['user']['is_kyc'],
-            isCreditFormFilled: res_data['data']['user']['is_creditappform'],
-          ),
-        );
+      //   Get.to(OTPScreen(
+      //       userId: res_data['data']['user']['id'],
+      //       email: res_data['data']['user']['email'],
+      //       page: 'login'));
+      // } else {
+      UserController userController = Get.put(UserController());
+      userController.addUser(
+        UserModel(
+          id: res_data['data']['user']['id'],
+          fullName: res_data['data']['user']['full_name'],
+          phone: res_data['data']['user']['phone'],
+          email: res_data['data']['user']['email'],
+          propic: res_data['data']['user']['propic'],
+          city: res_data['data']['user']['city'],
+          country: res_data['data']['user']['country'],
+          description: res_data['data']['user']['description'],
+          isKycFilled: res_data['data']['user']['is_kyc'],
+          isCreditFormFilled: res_data['data']['user']['is_creditappform'],
+        ),
+      );
 
-        globaltoken = res_data["data"]["token"];
-        log('GLOBAL TOKEN: $globaltoken');
+      globaltoken = res_data["data"]["token"];
+      log('GLOBAL TOKEN: $globaltoken');
 
-        userid = res_data['data']['user']['id'].toString();
-        // userid = res_data['data']['user']['id'].toString();
-        log("USER MODEL" + userController.toString());
-        print("nameee :  " + userController.user.propic.toString());
+      userid = res_data['data']['user']['id'].toString();
+      is_kyc = res_data['data']['user']['is_kyc'];
+      // userid = res_data['data']['user']['id'].toString();
+      log("USER MODEL" + userController.toString());
+      print("nameee :  " + userController.user.propic.toString());
 
-        Navigator.pop(context);
+      Navigator.pop(context);
 
-        await DataStorage.getInstance.setSession();
-        // if (res_data['data']['user']['is_kyc'] == 0) {
-        //   Get.to(kyc_form(
-        //     clientId: res_data['data']['user']['id'],
-        //   ));
-        // } else if (res_data['data']['user']['is_creditappform'] == 0) {
-        //   Get.to(credit_form(
-        //     clientId: res_data['data']['user']['id'],
-        //   ));
-        // } else {
-          Get.offAll(() => MainScreen());
-        // }
-      }
-    } else {
+      await DataStorage.getInstance.setSession();
+      // if (res_data['data']['user']['is_kyc'] == 0) {
+      //   Get.to(kyc_form(
+      //     clientId: res_data['data']['user']['id'],
+      //   ));
+      // } else if (res_data['data']['user']['is_creditappform'] == 0) {
+      //   Get.to(credit_form(
+      //     clientId: res_data['data']['user']['id'],
+      //   ));
+      // } else {
+      Get.offAll(() => MainScreen());
+    }
+    // }
+    //}
+    else {
       Get.snackbar(
         'Error',
         'Wrong Credentials',
@@ -603,8 +604,7 @@ class ApiService {
         builder: (BuildContext context) {
           return spinkit;
         });
-    final uri =
-        Uri.parse('${apiGlobal}/api/front/products/${productId}');
+    final uri = Uri.parse('${apiGlobal}/api/front/products/${productId}');
 
     log("SINGLE PRODUCT DETAILS: ${uri.toString()}");
 
@@ -1071,12 +1071,10 @@ class ApiService {
   //   // https://standsaero-dev.jumppace.com/chatify/api/sendMessage
   // }
 
-    get_messages(context) async {
+  get_messages(context) async {
     final uri = await Uri.parse(
         //'https://standsaero-dev.jumppace.com/chatify/api/fetchMessages'
-        'https://standsaero-merger.jumppace.com/nsa/api/user/getAllMessage'
-        
-        );
+        'https://standsaero-merger.jumppace.com/nsa/api/user/getAllMessage');
     print(uri);
     final headers = {
       'Authorization': 'bearer ${globaltoken}',
@@ -1088,30 +1086,128 @@ class ApiService {
     var res_data = json.decode(response.body);
     print(res_data);
 
-
     return res_data;
   }
-    send_messages(context, data) async {
 
-    var dataa = {
-      'submit_message' :  data['message'].toString()
+  send_messages(context, data) async {
+    var dataa = {'submit_message': data['message'].toString()};
+    final response = await http.post(
+        Uri.parse(
+          'https://standsaero-merger.jumppace.com/nsa/api/user/sendMessage',
+        ),
+        headers: {
+          'Authorization': 'Bearer ${globaltoken}',
+        },
+        body: dataa);
+    print(response.statusCode);
+
+    if (response.body == 200) {
+      print(jsonDecode(response.body));
+    }
+    //print(response.statusCode);
+  }
+
+  get_tickets() async {
+    final uri = Uri.parse('${apiGlobal}/api/user/tickets');
+    //print(uri);
+    final headers = {
+      'Authorization': 'Bearer ${globaltoken}',
     };
-     final response = await http.post(
-          Uri.parse(
-            'https://standsaero-merger.jumppace.com/nsa/api/user/sendMessage',
-          ),
-          headers: {
-              'Authorization': 'Bearer ${globaltoken}',                  
-          },
-          body: dataa                                    
-          );
-            print(response.statusCode);
+    http.Response response = await http.get(
+      uri,
+      headers: headers,
+      // body: jsonBody,
+    );
+    //print(response.statusCode);
+    var res_data = json.decode(response.body);
+    if (res_data["status"] == true) {
+      print('done');
+    }
+    return res_data;
+  }
 
-          if(response.body == 200){
-               print(jsonDecode(response.body));
+  create_ticket(ticketdata) async {
+    var data = {
+      'subject': ticketdata['subject'].toString(),
+      'category': ticketdata['category'].toString(),
+      'message': ticketdata['message'].toString(),
+    };
 
-          }
-          print(response.statusCode);
+    final response = await http.post(
+        Uri.parse(
+          '${apiGlobal}/api/user/ticket-dispute/store',
+        ),
+        headers: {
+          'Authorization': 'Bearer ${globaltoken}',
+        },
+        body: data);
+    print(response.statusCode);
+
+    if (response.statusCode == 200) {
+      Get.offAll(() => TicketSubmitted());
+      print(jsonDecode(response.body));
+    }
+    print(response.statusCode);
+  }
+
+  send_ticket_comment(ticketcomment, categoryid) async {
+    var data = {
+      'comment': ticketcomment['comment'].toString(),
+      'status': ticketcomment['status'].toString(),
+    };
+
+    final response = await http.post(
+        Uri.parse(
+          '${apiGlobal}/api/user/ticket/${categoryid}/comment',
+        ),
+        headers: {
+          'Authorization': 'Bearer ${globaltoken}',
+        },
+        body: data);
+    print(response.statusCode);
+
+    if (response.body == 200) {
+      print(jsonDecode(response.body));
+    }
+    // print(response.statusCode);
+  }
+
+  get_ticket_information(ticketid) async {
+    final uri =
+        Uri.parse('${apiGlobal}/api/user/ticket-dispute/${ticketid}/show');
+    print(uri);
+    final headers = {
+      'Authorization': 'Bearer ${globaltoken}',
+    };
+    http.Response response = await http.get(
+      uri,
+      headers: headers,
+      // body: jsonBody,
+    );
+    print(response.statusCode);
+    var res_data = json.decode(response.body);
+    if (res_data["status"] == true) {
+      // print('done');
+    }
+    return res_data;
+  }
+
+  get_events() async {
+    final uri = Uri.parse('${apiGlobal}/api/user/events');
+    //print(uri);
+    final headers = {
+      'Authorization': 'Bearer ${globaltoken}',
+    };
+    http.Response response = await http.get(
+      uri,
+      headers: headers,
+      // body: jsonBody,
+    );
+    var res_data = json.decode(response.body);
+    if (res_data["status"] == true) {
+      print('done');
+    }
+    return res_data;
   }
 
   getnotifications() async {
@@ -1187,6 +1283,7 @@ class ApiService {
       log('GLOBAL TOKEN: ${globaltoken}');
 
       userid = res_data['data']['user']['id'].toString();
+      is_kyc = res_data['data']['user']['is_kyc'];
       // userid = res_data['data']['user']['id'].toString();
       log("USER MODEL" + userController.toString());
       print("nameee :  " + userController.user.propic.toString());
@@ -1210,7 +1307,6 @@ class ApiService {
     }
   }
 
-
   resendOTP(context) async {
     showDialog(
         context: context,
@@ -1218,7 +1314,6 @@ class ApiService {
         builder: (BuildContext context) {
           return spinkit;
         });
-
 
     final uri = Uri.parse('${apiGlobal}/api/user/resend');
 

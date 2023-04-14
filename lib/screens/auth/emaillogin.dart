@@ -49,16 +49,16 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: res_height * 0.105,
+                      height: res_height * 0.075,
                     ),
                     Center(
                       child: Container(
-                          height: res_height * 0.23,
+                          height: res_height * 0.22,
                           width: res_width * 0.70,
                           child: Image.asset('assets/slicing/Group-1.png')),
                     ),
                     SizedBox(
-                      height: res_height * 0.02,
+                      height: res_height * 0.01,
                     ),
                     Text(
                       'Login',
@@ -81,13 +81,11 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                               borderSide: BorderSide(
                                 color: Colors.transparent,
                               )),
-                               enabledBorder:  OutlineInputBorder(
-
-                          borderRadius: BorderRadius.circular(7.0),
-                          borderSide: BorderSide(
-                            color: Colors.white,
-                          )
-                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(7.0),
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                              )),
                           hintStyle: TextStyle(),
                           contentPadding: EdgeInsets.only(top: 16, left: 16),
                           prefixIcon: Padding(
@@ -127,13 +125,11 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                               borderSide: BorderSide(
                                 color: Colors.transparent,
                               )),
-                               enabledBorder:  OutlineInputBorder(
-
-                          borderRadius: BorderRadius.circular(7.0),
-                          borderSide: BorderSide(
-                            color: Colors.white,
-                          )
-                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(7.0),
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                              )),
                           hintStyle: TextStyle(),
                           contentPadding: EdgeInsets.only(top: 16, left: 16),
                           suffixIcon: IconButton(
@@ -224,13 +220,13 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                         ),
                       ),
                     ),
-                     Padding(
-                       padding: const EdgeInsets.only(right: 30),
-                       child: Container(
-                         height: res_height * 0.23,
+                    Padding(
+                      padding: const EdgeInsets.only(right: 30),
+                      child: Container(
+                          height: res_height * 0.22,
                           width: res_width * 0.70,
                           child: Image.asset('assets/slicing/Group-2.png')),
-                     ),
+                    ),
                     SizedBox(
                       height: res_height * 0.01,
                     ),

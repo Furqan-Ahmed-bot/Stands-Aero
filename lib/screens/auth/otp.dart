@@ -1,17 +1,12 @@
 import 'dart:developer';
 
 import 'package:StandsAero/helper/colors.dart';
-import 'package:StandsAero/screens/auth/mainlogin.dart';
-import 'package:StandsAero/helper/global.dart';
 import 'package:StandsAero/services/remote_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/otp_text_field.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
-import 'package:otp_text_field/style.dart';
-import '../../widgets/custom_menu_widget.dart';
-import '../../widgets/remove_focus_widget.dart';
 
 class OTPScreen extends StatefulWidget {
   final userId;
@@ -40,7 +35,7 @@ class _OTPScreenState extends State<OTPScreen> {
             horizontal: MediaQuery.of(context).size.width * 0.05),
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/slicing/Untitled-1.jpg"),
+            image: AssetImage("assets/slicing/Untitled-5.jpg"),
             fit: BoxFit.cover,
           ),
         ),
@@ -51,7 +46,7 @@ class _OTPScreenState extends State<OTPScreen> {
             ),
             Container(
                 width: res_width * 0.8,
-                child: Image.asset('assets/slicing/Untitled-2.png')),
+                child: Image.asset('assets/slicing/Layer-2.png')),
             SizedBox(
               height: res_height * 0.025,
             ),
@@ -59,7 +54,7 @@ class _OTPScreenState extends State<OTPScreen> {
               'Verification',
               style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: kPrimaryColor,
                   fontSize: 28),
             ),
             SizedBox(
@@ -74,13 +69,12 @@ class _OTPScreenState extends State<OTPScreen> {
                       topRight: Radius.circular(30))),
               child: Column(
                 children: [
-                  
                   Container(
                     width: Get.width * 0.9,
                     child: const Text(
                       'We have sent you an email containing 6 digits verification code. Please enter the code to verify your identity.',
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white, fontSize: 17),
+                      style: TextStyle(color: kPrimaryColor, fontSize: 17),
                     ),
                   ),
                   SizedBox(
@@ -104,15 +98,13 @@ class _OTPScreenState extends State<OTPScreen> {
                         var data;
                         if (widget.page != null) {
                           data = {
-                            
                             "otp": verificationCode,
-                            "page": widget.page,                            
+                            "page": widget.page,
                           };
                         } else {
                           data = {
                             "otp": verificationCode,
                             "page": "Signup",
-                            
                           };
                         }
 
@@ -127,22 +119,23 @@ class _OTPScreenState extends State<OTPScreen> {
               height: res_height * 0.03,
             ),
             GestureDetector(
-              onTap: () async{
-                  var response_otp=await ApiService().resendOTP(context);
-                  log(response_otp.toString());
-                  if(response_otp['status']==true){
-                    Get.snackbar(
-                      'Success',
-                      'Otp Sent',
-                      animationDuration: Duration(seconds: 2),
-                      snackPosition: SnackPosition.BOTTOM,
-                    );
-                  }
+              onTap: () async {
+                var response_otp = await ApiService().resendOTP(context);
+                log(response_otp.toString());
+                if (response_otp['status'] == true) {
+                  Get.snackbar(
+                    'Success',
+                    'Otp Sent',
+                    animationDuration: Duration(seconds: 2),
+                    snackPosition: SnackPosition.BOTTOM,
+                  );
+                }
               },
               child: Container(
                 // width: res_width * 0.9,
                 decoration: BoxDecoration(
-                    color: Color(0xffaf8a39),
+                    color: kPrimaryColor,
+                    //Color(0xffaf8a39),
                     borderRadius: BorderRadius.all(Radius.circular(7))),
                 child: Padding(
                   padding: const EdgeInsets.all(13.0),
@@ -158,7 +151,6 @@ class _OTPScreenState extends State<OTPScreen> {
                 ),
               ),
             ),
-            
           ],
         ),
       ),
