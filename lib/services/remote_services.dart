@@ -851,7 +851,7 @@ class ApiService {
     log("place order get quote id ${getId}");
     var currentFileType = sendData['fileType'];
     var attachmentType = '';
-    final uri = Uri.parse('${apiGlobal}/api/user/order-lease/${getId}');
+    final uri = Uri.parse('${apiGlobal}/api/user/order-leasewww/${getId}');
     var request = http.MultipartRequest('POST', uri);
 
     var headers = {'Authorization': "bearer " + globaltoken};
@@ -890,7 +890,13 @@ class ApiService {
       'guarantor': sendData['guarantor'],
       'registered_agent': sendData['registered_agent'],
       'signature_1': sendData['signature_1'],
-      'signature_2': sendData['signature_2']
+      'signature_2': sendData['signature_2'],
+      'customer_detail': sendData['customer_detail'],
+      'redelivery_dates': sendData['redelivery_dates'],
+      'receiving_date': sendData[''],
+      'receiving_days': sendData[''],
+      'accepting_location': sendData['accepting_location'],
+      'shipping_cost': sendData['shipping_cost'],
     });
     String jsonBody = json.encode(request.fields);
     log("Request " + jsonBody.toString());
@@ -1260,6 +1266,7 @@ class ApiService {
     print(res);
 
     Map<String, dynamic> res_data = jsonDecode(res.body);
+    log("res print1 ${res_data}");
     log("res print1 ${res_data['data']}");
 
     if (res_data['status'] == true) {

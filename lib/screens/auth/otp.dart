@@ -87,9 +87,10 @@ class _OTPScreenState extends State<OTPScreen> {
                       // borderColor: accentPurpleColor,
                       // focusedBorderColor: accentPurpleColor,
                       // styles: otpTextStyles,
-                      textStyle: TextStyle(color: Colors.white),
+                      textStyle: TextStyle(color: Colors.black),
                       showFieldAsBox: false,
                       borderWidth: 4.0,
+                      enabledBorderColor: Colors.black,
                       onCodeChanged: (String code) {
                         print("Changed: " + code);
                       },

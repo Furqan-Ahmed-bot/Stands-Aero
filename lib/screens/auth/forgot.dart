@@ -72,6 +72,11 @@ class _ForgotPasswordEnterEmailState extends State<ForgotPasswordEnterEmail> {
                           borderSide: BorderSide(
                             color: Colors.transparent,
                           )),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(7.0),
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                          )),
                       hintStyle: TextStyle(),
                       contentPadding: EdgeInsets.only(top: 16, left: 16),
                       prefixIcon: Padding(
@@ -140,7 +145,7 @@ class _ForgotPasswordEnterEmailState extends State<ForgotPasswordEnterEmail> {
                       padding: const EdgeInsets.all(13.0),
                       child: Center(
                         child: Text(
-                          'Login',
+                          'Submit',
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,

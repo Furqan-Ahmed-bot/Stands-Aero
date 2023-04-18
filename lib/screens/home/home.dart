@@ -230,7 +230,7 @@ class _HomeScreenState extends State<HomeScreen>
                                     color: Colors.grey, width: 0.0),
                                 borderRadius: BorderRadius.circular(10.0)),
 
-                            hintText: 'Search...', 
+                            hintText: 'Search...',
                             hintStyle: TextStyle(),
                             contentPadding: EdgeInsets.only(top: 16, left: 16),
                             suffixIcon: Padding(
@@ -385,7 +385,7 @@ class _HomeScreenState extends State<HomeScreen>
                                                 : Colors.black,
                                           )),
                                       Icon(
-                                      Icons.arrow_drop_down,
+                                        Icons.arrow_drop_down,
                                         color: filterCounter == 3
                                             ? Colors.white
                                             : Colors.black,
@@ -436,6 +436,7 @@ class _HomeScreenState extends State<HomeScreen>
                                     filteredProducts[i].location,
                                     filteredProducts[i].desc,
                                     filteredProducts[i].id,
+                                    filteredProducts[i].manufacturerName,
                                   );
                                 },
                               ),
@@ -455,12 +456,13 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-  Widget StandsBox(context, image, name,slug, location, description, id) {
+  Widget StandsBox(
+      context, image, name, slug, location, description, id, manufacturename) {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
-     if(image.contains('no-image.png')){
+    if (image.contains('no-image.png')) {
       log("image dummy hy" + image.toString());
-     } 
+    }
     return GestureDetector(
       onTap: () async {
         var responseData;
@@ -497,13 +499,15 @@ class _HomeScreenState extends State<HomeScreen>
                   //     child: Center(child: CircularProgressIndicator()));
                   return ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child:image==null || image.contains('no-image.png') ? Image.asset(
-                        'assets/images/dummyProduct.png',
-                        fit: BoxFit.cover,
-                      ) : Image.network(
-                        image,
-                        fit: BoxFit.cover,
-                      ));
+                      child: image == null || image.contains('no-image.png')
+                          ? Image.asset(
+                              'assets/images/dummyProduct.png',
+                              fit: BoxFit.cover,
+                            )
+                          : Image.network(
+                              image,
+                              fit: BoxFit.cover,
+                            ));
                 },
                 errorBuilder: (context, error, stackTrace) {
                   return ClipRRect(
@@ -525,10 +529,10 @@ class _HomeScreenState extends State<HomeScreen>
             SizedBox(
               height: res_height * 0.0015,
             ),
-            // Text(
-            //   location.toString(),
-            //   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
-            // ),
+            Text(
+              manufacturename.toString(),
+              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+            ),
             // SizedBox(
             //   height: res_height * 0.0015,
             // ),

@@ -155,7 +155,35 @@ class _OrderStatusState extends State<OrderStatus> {
                                           Container(
                                               width: 35,
                                               child: Image.asset(
-                                                  'assets/slicing/Untitled-61.png'))
+                                                  'assets/slicing/Untitled-61.png')),
+                                          Divider(
+                                            height: res_height * 0.095,
+                                          ),
+                                          Container(
+                                              width: 35,
+                                              child: Image.asset(
+                                                  'assets/slicing/Untitled-61.png')),
+                                          Divider(
+                                            height: res_height * 0.095,
+                                          ),
+                                          Container(
+                                              width: 35,
+                                              child: Image.asset(
+                                                  'assets/slicing/Untitled-61.png')),
+                                          Divider(
+                                            height: res_height * 0.095,
+                                          ),
+                                          Container(
+                                              width: 35,
+                                              child: Image.asset(
+                                                  'assets/slicing/Untitled-61.png')),
+                                          // Divider(
+                                          //   height: res_height * 0.095,
+                                          // ),
+                                          // Container(
+                                          //     width: 35,
+                                          //     child: Image.asset(
+                                          //         'assets/slicing/Untitled-61.png'))
                                         ],
                                       ),
                                       Column(
@@ -375,6 +403,198 @@ class _OrderStatusState extends State<OrderStatus> {
                                                         children: [
                                                           Text(
                                                             'Order Arrived',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .grey[600],
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                          SizedBox(
+                                                            height: res_height *
+                                                                0.006,
+                                                          ),
+                                                          Container(
+                                                              width: res_width *
+                                                                  0.6,
+                                                              child: Text(
+                                                                  'Lorem ipsum dolor sit amet consectetur adipiscing elit estmaecenas aenean',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: Colors
+                                                                            .grey[
+                                                                        600],
+                                                                    fontSize:
+                                                                        12,
+                                                                  )))
+                                                        ],
+                                                      ),
+                                                      Icon(
+                                                        Icons.arrow_forward_ios,
+                                                        color: Colors.grey,
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: res_height * 0.05,
+                                          ),
+                                          Row(
+                                            children: [
+                                              Container(
+                                                width: res_width * 0.75,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10)),
+                                                    color: orderStatus ==
+                                                            "Back In Order"
+                                                        ? primaryColor
+                                                        : secondaryColor),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      12.0),
+                                                  child: Row(
+                                                    children: [
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            'Back In Order',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .grey[600],
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                          SizedBox(
+                                                            height: res_height *
+                                                                0.006,
+                                                          ),
+                                                          Container(
+                                                              width: res_width *
+                                                                  0.6,
+                                                              child: Text(
+                                                                  'Lorem ipsum dolor sit amet consectetur adipiscing elit estmaecenas aenean',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: Colors
+                                                                            .grey[
+                                                                        600],
+                                                                    fontSize:
+                                                                        12,
+                                                                  )))
+                                                        ],
+                                                      ),
+                                                      Icon(
+                                                        Icons.arrow_forward_ios,
+                                                        color: Colors.grey,
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: res_height * 0.05,
+                                          ),
+                                          Row(
+                                            children: [
+                                              Container(
+                                                width: res_width * 0.75,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10)),
+                                                    color: orderStatus ==
+                                                            "Shipped Back"
+                                                        ? primaryColor
+                                                        : secondaryColor),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      12.0),
+                                                  child: Row(
+                                                    children: [
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            'Shipped Back',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .grey[600],
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                          SizedBox(
+                                                            height: res_height *
+                                                                0.006,
+                                                          ),
+                                                          Container(
+                                                              width: res_width *
+                                                                  0.6,
+                                                              child: Text(
+                                                                  'Lorem ipsum dolor sit amet consectetur adipiscing elit estmaecenas aenean',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: Colors
+                                                                            .grey[
+                                                                        600],
+                                                                    fontSize:
+                                                                        12,
+                                                                  )))
+                                                        ],
+                                                      ),
+                                                      Icon(
+                                                        Icons.arrow_forward_ios,
+                                                        color: Colors.grey,
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: res_height * 0.05,
+                                          ),
+                                          Row(
+                                            children: [
+                                              Container(
+                                                width: res_width * 0.75,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10)),
+                                                    color: orderStatus ==
+                                                            "Received Back"
+                                                        ? primaryColor
+                                                        : secondaryColor),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      12.0),
+                                                  child: Row(
+                                                    children: [
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            'Received Back',
                                                             style: TextStyle(
                                                                 color: Colors
                                                                     .grey[600],

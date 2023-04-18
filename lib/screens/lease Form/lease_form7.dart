@@ -1,12 +1,10 @@
-import 'dart:developer';
-
 import 'package:StandsAero/widgets/disallow_indicator_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:StandsAero/helper/global.dart';
-import 'package:StandsAero/screens/payment/wiretransfer.dart';
-import 'package:StandsAero/services/remote_services.dart';
+import '../../helper/global.dart';
+import '../../services/remote_services.dart';
 import '../payment/paypal.dart';
+import 'lease_form8.dart';
 
 class lease_form7 extends StatefulWidget {
   const lease_form7({Key? key}) : super(key: key);
@@ -26,23 +24,23 @@ class _lease_form7State extends State<lease_form7> {
     double res_height = MediaQuery.of(context).size.height;
 
     return Container(
-          width: double.infinity,
-          height: double.infinity,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/slicing/Untitled-46.jpg"),
-              fit: BoxFit.cover,
-            ),
-          ),
+      width: double.infinity,
+      height: double.infinity,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("assets/slicing/Untitled-46.jpg"),
+          fit: BoxFit.cover,
+        ),
+      ),
       child: Scaffold(
-         backgroundColor: Colors.transparent,
-          extendBody: true,
+        backgroundColor: Colors.transparent,
+        extendBody: true,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: Colors.transparent,
           elevation: 0,
           centerTitle: true,
-  leading: GestureDetector(
+          leading: GestureDetector(
             behavior: HitTestBehavior.translucent,
             onTap: () {
               Get.back();
@@ -88,7 +86,7 @@ class _lease_form7State extends State<lease_form7> {
                     child: Column(
                       children: [
                         Container(
-                           width: res_width * 0.85,
+                          width: res_width * 0.85,
                           child: Card(
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -207,8 +205,8 @@ class _lease_form7State extends State<lease_form7> {
                         GestureDetector(
                           onTap: () async {
                             if (formKey.currentState!.validate()) {
-                              print(
-                                  "registered_agent.text" + registered_agent.text);
+                              print("registered_agent.text" +
+                                  registered_agent.text);
                               print("signature_1.text" + signature_1.text);
                               print("signature_2.text" + signature_2.text);
                               global_registered_agent = registered_agent.text;
@@ -222,7 +220,8 @@ class _lease_form7State extends State<lease_form7> {
                                 'stand_manufacturer': global_stand_manufacturer,
                                 'stand_color': global_stand_color,
                                 'stand_type': global_stand_type,
-                                'stand_serial_number': global_stand_serial_number,
+                                'stand_serial_number':
+                                    global_stand_serial_number,
                                 'stand_quantity': global_stand_quantity,
                                 'delivery_location': global_delivery_location,
                                 'delivery_date': global_delivery_date,
@@ -237,10 +236,11 @@ class _lease_form7State extends State<lease_form7> {
                                 'quote_id': placeOrderData_quote_id,
                                 'fileType': placeOrderData_fileType
                               };
-                              var res_data =
-                                  await ApiService().placeOrder(context, sendData);
-                      
-                              print("Lease Form RESPONSE" + res_data.toString());
+                              var res_data = await ApiService()
+                                  .placeOrder(context, sendData);
+
+                              print(
+                                  "Lease Form RESPONSE" + res_data.toString());
                               if (res_data['status'] == true) {
                                 Get.to(PaymentScreen());
                               } else {
@@ -251,7 +251,7 @@ class _lease_form7State extends State<lease_form7> {
                                   backgroundColor: Colors.white,
                                 );
                               }
-                      
+
                               Get.to(PaymentScreen());
                             }
                             // Get.to(lease_form7());
@@ -260,7 +260,8 @@ class _lease_form7State extends State<lease_form7> {
                             width: res_width * 0.85,
                             decoration: BoxDecoration(
                                 color: Color(0xff85714e),
-                                borderRadius: BorderRadius.all(Radius.circular(7))),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(7))),
                             child: Padding(
                               padding: const EdgeInsets.all(13.0),
                               child: Center(
@@ -281,52 +282,21 @@ class _lease_form7State extends State<lease_form7> {
                         GestureDetector(
                           onTap: () async {
                             if (formKey.currentState!.validate()) {
-                              print(
-                                  "registered_agent.text" + registered_agent.text);
-                              print("signature_1.text" + signature_1.text);
-                              print("signature_2.text" + signature_2.text);
-                              global_registered_agent = registered_agent.text;
-                              global_signature_1 = signature_1.text;
-                              global_signature_2 = signature_2.text;
-                              var sendData = {
-                                'day': global_day,
-                                'month': global_month,
-                                'customer_name': global_customer_name,
-                                'customer_location': global_customer_location,
-                                'stand_manufacturer': global_stand_manufacturer,
-                                'stand_color': global_stand_color,
-                                'stand_type': global_stand_type,
-                                'stand_serial_number': global_stand_serial_number,
-                                'stand_quantity': global_stand_quantity,
-                                'delivery_location': global_delivery_location,
-                                'delivery_date': global_delivery_date,
-                                'daily_rent': global_daily_rent,
-                                'replacement_value': global_replacement_value,
-                                'security_deposit': global_security_deposit,
-                                'guarantor': global_guarantor,
-                                'registered_agent': registered_agent.text,
-                                'signature_1': signature_1.text,
-                                'signature_2': signature_2.text,
-                                'tax_file': placeOrderData_tax_file,
-                                'quote_id': placeOrderData_quote_id,
-                                'fileType': placeOrderData_fileType
-                              };
-                              Get.to(WireTransfer());
+                              Get.to(lease_form8());
                             }
-                      
-                            // Get.to(PaymentScreen());
                             // Get.to(lease_form7());
                           },
                           child: Container(
                             width: res_width * 0.85,
                             decoration: BoxDecoration(
                                 color: Color(0xff85714e),
-                                borderRadius: BorderRadius.all(Radius.circular(7))),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(7))),
                             child: Padding(
                               padding: const EdgeInsets.all(13.0),
                               child: Center(
                                 child: Text(
-                                  'Pay via Wire Transfer',
+                                  'Continue',
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -336,6 +306,66 @@ class _lease_form7State extends State<lease_form7> {
                             ),
                           ),
                         ),
+                        // GestureDetector(
+                        //   onTap: () async {
+                        //     if (formKey.currentState!.validate()) {
+                        //       print("registered_agent.text" +
+                        //           registered_agent.text);
+                        //       print("signature_1.text" + signature_1.text);
+                        //       print("signature_2.text" + signature_2.text);
+                        //       global_registered_agent = registered_agent.text;
+                        //       global_signature_1 = signature_1.text;
+                        //       global_signature_2 = signature_2.text;
+                        //       var sendData = {
+                        //         'day': global_day,
+                        //         'month': global_month,
+                        //         'customer_name': global_customer_name,
+                        //         'customer_location': global_customer_location,
+                        //         'stand_manufacturer': global_stand_manufacturer,
+                        //         'stand_color': global_stand_color,
+                        //         'stand_type': global_stand_type,
+                        //         'stand_serial_number':
+                        //             global_stand_serial_number,
+                        //         'stand_quantity': global_stand_quantity,
+                        //         'delivery_location': global_delivery_location,
+                        //         'delivery_date': global_delivery_date,
+                        //         'daily_rent': global_daily_rent,
+                        //         'replacement_value': global_replacement_value,
+                        //         'security_deposit': global_security_deposit,
+                        //         'guarantor': global_guarantor,
+                        //         'registered_agent': registered_agent.text,
+                        //         'signature_1': signature_1.text,
+                        //         'signature_2': signature_2.text,
+                        //         'tax_file': placeOrderData_tax_file,
+                        //         'quote_id': placeOrderData_quote_id,
+                        //         'fileType': placeOrderData_fileType
+                        //       };
+                        //       Get.to(WireTransfer());
+                        //     }
+
+                        //     // Get.to(PaymentScreen());
+                        //     // Get.to(lease_form7());
+                        //   },
+                        //   child: Container(
+                        //     width: res_width * 0.85,
+                        //     decoration: BoxDecoration(
+                        //         color: Color(0xff85714e),
+                        //         borderRadius:
+                        //             BorderRadius.all(Radius.circular(7))),
+                        //     child: Padding(
+                        //       padding: const EdgeInsets.all(13.0),
+                        //       child: Center(
+                        //         child: Text(
+                        //           'Pay via Wire Transfer',
+                        //           style: TextStyle(
+                        //               color: Colors.white,
+                        //               fontWeight: FontWeight.bold,
+                        //               fontSize: 17),
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

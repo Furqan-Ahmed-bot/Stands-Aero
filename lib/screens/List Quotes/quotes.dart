@@ -255,9 +255,12 @@ class Quotess_Card extends StatelessWidget {
                                         fontSize: 13,
                                         fontWeight: FontWeight.bold),
                                   ),
-                                  Text(
-                                    "$location",
-                                    style: TextStyle(fontSize: 13),
+                                  Container(
+                                    width: 150,
+                                    child: Text(
+                                      "$location",
+                                      style: TextStyle(fontSize: 13),
+                                    ),
                                   ),
                                 ],
                               ),
