@@ -1239,4 +1239,41 @@ class ApiService {
     print("res_data" + res_data.toString());
     return res_data;
   }
+
+  getOfficeTimings() async {
+    final uri = Uri.parse('${apiGlobal}/api/user/timeslots');
+
+    print(uri);
+
+    // var jsonBody = json.encode(sendData);
+
+    final headers = {
+      'Authorization': 'Bearer ${globaltoken}',
+    };
+
+    http.Response response = await http.get(
+      uri,
+      headers: headers,
+      // body: jsonBody,
+    );
+
+    print(response.statusCode);
+
+    log(response.body);
+
+    var res_data = json.decode(response.body);
+
+    print(res_data);
+    if (res_data["status"] == true) {
+    } else
+      Get.snackbar(
+        'Error',
+        'Wrong Credentials',
+        animationDuration: Duration(seconds: 2),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+
+    return res_data;
+  }
+
 }
