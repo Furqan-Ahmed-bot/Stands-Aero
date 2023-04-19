@@ -1,3 +1,4 @@
+import 'package:StandsAero/helper/colors.dart';
 import 'package:flutter/material.dart';
 
 import '../services/remote_services.dart';
@@ -156,6 +157,161 @@ class _EventScreenState extends State<EventScreen> {
                 ),
               ),
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: InkWell(
+                    onTap: () async {
+                      DateTime? pickedDate = await showDatePicker(
+                          context: context, //context of current state
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(
+                              2000), //DateTime.now() - not to allow to choose before today.
+                          lastDate: DateTime(2101));
+
+                      if (pickedDate != null) {
+                        // print("date"+
+                        //     pickedDate.toString()); //pickedDate output format => 2021-03-10 00:00:00.000
+                        String formattedDate =
+                            DateFormat('yyyy-MM-dd').format(pickedDate);
+                        // print("final date" + formattedDate);
+                        setState(() {
+                          _isButtonVisible = true;
+                          print('Okkkkkkkkkkkkkk');
+                          delivery_date.text = formattedDate;
+                          search(delivery_date
+                              .text); //set output date to TextField value.
+                        });
+                        // print("delivery_date.text" + delivery_date.text);
+                        //formatted date output using intl package =>  2021-03-16
+                      } else {
+                        print("Date is not selected");
+                      }
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          // Icon(
+                          //   Icons.calendar_month,
+                          //   color: Colors.white,
+                          //   size: 25,
+                          // ),
+                          Text(
+                            delivery_date.text.isEmpty
+                                ? 'Select a Date'
+                                : delivery_date.text,
+                            style: TextStyle(color: Colors.white, fontSize: 13),
+                          ),
+                        ],
+                      ),
+                      decoration: BoxDecoration(
+                        color: kPrimaryColor,
+                        border: Border.all(width: 1, color: Colors.transparent),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                      height: 55,
+                      width: 170,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 20),
+                  child: InkWell(
+                    onTap: () async {
+                      DateTime? pickedDate = await showDatePicker(
+                          context: context, //context of current state
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(
+                              2000), //DateTime.now() - not to allow to choose before today.
+                          lastDate: DateTime(2101));
+
+                      if (pickedDate != null) {
+                        // print("date"+
+                        //     pickedDate.toString()); //pickedDate output format => 2021-03-10 00:00:00.000
+                        String formattedDate =
+                            DateFormat('yyyy-MM-dd').format(pickedDate);
+                        // print("final date" + formattedDate);
+                        setState(() {
+                          _isButtonVisible = true;
+                          print('Okkkkkkkkkkkkkk');
+                          delivery_date.text = formattedDate;
+                          search(delivery_date
+                              .text); //set output date to TextField value.
+                        });
+                        // print("delivery_date.text" + delivery_date.text);
+                        //formatted date output using intl package =>  2021-03-16
+                      } else {
+                        print("Date is not selected");
+                      }
+                    },
+                    child: DropdownButtonHideUnderline(
+                      child:
+
+                          //starting the dropdown
+                          SizedBox(
+                        height: 55,
+                        width: res_width * 0.4,
+                        child: DropdownButtonFormField(
+                          isDense: true,
+                          isExpanded: true,
+                          decoration: InputDecoration(
+                            labelStyle: TextStyle(color: Colors.white),
+
+                            prefixIconConstraints: BoxConstraints(minWidth: 25),
+                            //prefixIcon: Icon(Icons.arrow_drop_down),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                              ),
+                            ),
+
+                            filled: true,
+                            fillColor: kPrimaryColor,
+                          ),
+                          items: eventlocations.map((item) {
+                            return new DropdownMenuItem(
+                                child: new Text(
+                                  item, //Names that the api dropdown contains
+                                  style: TextStyle(
+                                    fontSize: 13.0,
+                                  ),
+                                ),
+                                value: item
+                                    .toString() //Id that has to be passed that the dropdown has.....
+                                //e.g   India (Name)    and   its   ID (55fgf5f6frf56f) somethimg like that....
+                                );
+                          }).toList(),
+                          onChanged: (newVal) {
+                            // for (var i = 0; i < mylistt.length; i++) {
+                            //   if (newVal == mylistt[i]['name']) {
+                            //     setState(() {
+                            //       categoryid = mylistt[i]['id'];
+                            //       print('priorityyyyyyy ${categoryid}');
+                            //     });
+                            //     break;
+                            //   }
+                            // }
+                          },
+                          value:
+                              SelectedValue, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
             SizedBox(
               height: 30,
             ),
@@ -218,7 +374,7 @@ class _EventScreenState extends State<EventScreen> {
 
                       //starting the dropdown
                       SizedBox(
-                    height: 60,
+                    height: 55,
                     width: res_width * 0.4,
                     child: DropdownButtonFormField(
                       isDense: true,
@@ -240,7 +396,7 @@ class _EventScreenState extends State<EventScreen> {
                         ),
 
                         filled: true,
-                        fillColor: Colors.grey,
+                        fillColor: kPrimaryColor,
                       ),
                       items: eventlocations.map((item) {
                         return new DropdownMenuItem(
