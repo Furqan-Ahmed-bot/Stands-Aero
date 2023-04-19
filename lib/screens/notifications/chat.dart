@@ -135,7 +135,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   width: double.infinity,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage("assets/slicing/Untitled-1.jpg"),
+                      image: AssetImage("assets/slicing/chat-backgroun.jpg"),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -161,25 +161,28 @@ class _ChatScreenState extends State<ChatScreen> {
                                           userid
                                       ? Align(
                                           alignment: Alignment.topRight,
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
+                                          child: Stack(
+                                            alignment: Alignment.centerRight,
                                             children: [
+                                              Positioned(
+                                                
+                                                // right: 0,
+                                                // top: MediaQuery.of(context).size.height * .035,
+                                                child: Image.asset("assets/slicing/lid.png",scale: 35,),
+                                              ),
+                                              Column(
+                                                crossAxisAlignment:CrossAxisAlignment.end,
+                                              children: [
                                               Container(
                                                 padding: const EdgeInsets.only(
                                                     top: 13, right: 13),
                                                 child: Container(
                                                   decoration: BoxDecoration(
-                                                    color: Colors.blueGrey,
+                                                    color: Color(0xff86714f),
                                                     borderRadius:
-                                                        BorderRadius.only(
-                                                      // topRight: Radius.circular(20),
-                                                      topLeft:
-                                                          Radius.circular(20),
-                                                      bottomLeft:
-                                                          Radius.circular(20),
-                                                      bottomRight:
-                                                          Radius.circular(20),
+                                                        BorderRadius.all(
+                                                      Radius.circular(10),
+                                                      
                                                     ),
                                                   ),
                                                   // width: res_width * 0.5,
@@ -210,64 +213,77 @@ class _ChatScreenState extends State<ChatScreen> {
                                                                 ))
                                                         .toString(),
                                                     style: TextStyle(
+                                                        color: Color(0xff6c6c6c)),
+                                                  ))
+                                            ],
+                                          ),
+                                        
+                                            ],
+                                          ) 
+                                         
+                                        )
+                                      : Stack(
+                                        alignment: Alignment.centerLeft,
+                                        children: 
+                                        [
+                                          Positioned(
+    
+                                                // right: 0,
+                                                // top: MediaQuery.of(context).size.height * .035,
+                                                child: Image.asset("assets/slicing/admin-lid.png",scale: 35,),
+                                              ),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                padding: const EdgeInsets.only(
+                                                    top: 13, left: 13),
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                     
+                                                          Radius.circular(10),
+                                                     
+                                                     
+                                                    ),
+                                                    // border: Border.all(
+                                                    //   width: 3,
+                                                    //   color: Colors.green,
+                                                    //   style: BorderStyle.solid,
+                                                    // ),
+                                                  ),
+                                                  width: res_width * 0.75,
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.all(
+                                                        13.0),
+                                                    child: Text(
+                                                      chat_historyvar['data']['0'][index] ['message'],
+                                                         
+                                                      style: TextStyle(
+                                                          color: Colors.black),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Container(
+                                                  padding: const EdgeInsets.only(
+                                                      top: 6, left: 13),
+                                                  child: Text(
+                                                    DateFormat.jm()
+                                                        .format(DateTime.parse(
+                                                            chat_historyvar['data']['0'][index]
+                                                                ['created_at']))
+                                                        .toString(),
+                                                    style: TextStyle(
                                                         color: Colors.white),
                                                   ))
                                             ],
                                           ),
-                                        )
-                                      : Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                              padding: const EdgeInsets.only(
-                                                  top: 13, left: 13),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                    topRight:
-                                                        Radius.circular(20),
-                                                    // topLeft: Radius.circular(20),
-                                                    bottomLeft:
-                                                        Radius.circular(20),
-                                                    bottomRight:
-                                                        Radius.circular(20),
-                                                  ),
-                                                  // border: Border.all(
-                                                  //   width: 3,
-                                                  //   color: Colors.green,
-                                                  //   style: BorderStyle.solid,
-                                                  // ),
-                                                ),
-                                                width: res_width * 0.75,
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      13.0),
-                                                  child: Text(
-                                                    chat_historyvar['data']['0'][index] ['message'],
-                                                       
-                                                    style: TextStyle(
-                                                        color: Colors.black),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                                padding: const EdgeInsets.only(
-                                                    top: 6, left: 13),
-                                                child: Text(
-                                                  DateFormat.jm()
-                                                      .format(DateTime.parse(
-                                                          chat_historyvar['data']['0'][index]
-                                                              ['created_at']))
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                      color: Colors.white),
-                                                ))
-                                          ],
-                                        );
+                                        ]
+                                      );
                                 }),
                           ],
                         ),

@@ -936,7 +936,7 @@ class ApiService {
   }
 
   deleteAccount() async {
-    final uri = Uri.parse('${apiGlobal}/api/user/delete');
+    final uri = Uri.parse('${apiGlobal}/api/user/delete-account');
     print(uri);
 
     final headers = {
