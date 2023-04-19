@@ -302,6 +302,7 @@ class _EventScreenState extends State<EventScreen> {
                             //     break;
                             //   }
                             // }
+                            search(newVal);
                           },
                           value:
                               SelectedValue, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
