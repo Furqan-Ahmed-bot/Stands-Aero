@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:StandsAero/helper/colors.dart';
+import 'package:StandsAero/screens/auth/emaillogin.dart';
 import 'package:StandsAero/screens/auth/mainlogin.dart';
 import 'package:StandsAero/services/remote_services.dart';
 import 'package:flutter/material.dart';
@@ -474,7 +475,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Get.to(MainLoginScreen());
+                          Get.to(EmailLoginScreen());
                         },
                         child: Text(
                           'Login',

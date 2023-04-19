@@ -207,7 +207,7 @@ class ApiService {
     else {
       Get.snackbar(
         'Error',
-        'Wrong Credentials',
+        '${res_data['error']['message']}',
         animationDuration: Duration(seconds: 2),
         snackPosition: SnackPosition.BOTTOM,
       );
@@ -585,7 +585,7 @@ class ApiService {
 
     print(res_data);
     if (res_data["status"] == true) {
-      Get.to(() => MainLoginScreen());
+      Get.to(() => EmailLoginScreen());
     } else
       Get.snackbar(
         'Error',
@@ -948,7 +948,7 @@ class ApiService {
   }
 
   deleteAccount() async {
-    final uri = Uri.parse('${apiGlobal}/api/user/delete');
+    final uri = Uri.parse('${apiGlobal}/api/user/delete-account');
     print(uri);
 
     final headers = {
@@ -972,7 +972,7 @@ class ApiService {
         animationDuration: Duration(seconds: 2),
         snackPosition: SnackPosition.BOTTOM,
       );
-      Get.to(() => MainLoginScreen());
+      Get.to(() => EmailLoginScreen());
     } else
       Get.snackbar(
         'Error',
@@ -1352,4 +1352,41 @@ class ApiService {
     print("res_data" + res_data.toString());
     return res_data;
   }
+
+  getOfficeTimings() async {
+    final uri = Uri.parse('${apiGlobal}/api/user/timeslots');
+
+    print(uri);
+
+    // var jsonBody = json.encode(sendData);
+
+    final headers = {
+      'Authorization': 'Bearer ${globaltoken}',
+    };
+
+    http.Response response = await http.get(
+      uri,
+      headers: headers,
+      // body: jsonBody,
+    );
+
+    print(response.statusCode);
+
+    log(response.body);
+
+    var res_data = json.decode(response.body);
+
+    print(res_data);
+    if (res_data["status"] == true) {
+    } else
+      Get.snackbar(
+        'Error',
+        'Wrong Credentials',
+        animationDuration: Duration(seconds: 2),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+
+    return res_data;
+  }
+
 }

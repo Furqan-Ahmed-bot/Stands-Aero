@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:StandsAero/tickets/create_tickets.dart';
 import 'package:StandsAero/widgets/disallow_indicator_widget.dart';
 import 'package:StandsAero/widgets/remove_focus_widget.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,7 @@ import 'package:StandsAero/helper/ProductModel.dart';
 import 'package:StandsAero/helper/colors.dart';
 import 'package:StandsAero/screens/booking/booking.dart';
 import 'package:StandsAero/screens/home/drawer.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 import '../../helper/loader.dart';
 // import 'package:StandsAero/screens/home/Profile/editprofile.dart';
 // import 'package:StandsAero/screens/home/Profile/profile.dart';
@@ -36,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen>
   final formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   int filterCounter = 0;
-
+  dynamic officeTimings;
   @override
   bool get wantKeepAlive => true;
 
@@ -46,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen>
 
     Future.delayed(Duration.zero, () {
       getProducts();
+      getOfficeTimings();
     });
 
     // print("getPorductResponse"+getPorductResponse['data'].toString());
@@ -63,6 +65,11 @@ class _HomeScreenState extends State<HomeScreen>
       }
     });
     animation.forward();
+  }
+
+  Future<void> getOfficeTimings() async {
+    officeTimings = await ApiService().getOfficeTimings();
+    log("officeTimings" + officeTimings.toString());
   }
 
   Future<void> getProducts() async {
@@ -193,6 +200,235 @@ class _HomeScreenState extends State<HomeScreen>
                       fit: BoxFit.cover)),
             ],
           ),
+          actions: [
+            GestureDetector(
+              onTap: () {
+                showDialog<String>(
+                    context: context,
+                    barrierColor: Color(0xff212331).withOpacity(0.90),
+                    builder: (BuildContext context) => AlertDialog(
+                          // insetPadding: EdgeInsets.all(20),
+                          contentPadding: EdgeInsets.all(20),
+
+                          // title: const Text('Confirm'),
+                          content: Container(
+                            height: 170,
+                            width: MediaQuery.of(context).size.width * 1,
+                            child: Column(children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                      width: 20,
+                                      child: Image.asset(
+                                          'assets/slicing/liveChat-icon.png')),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Column(
+                                        children: [
+                                          Text(
+                                            "Live Call With Contact Support",
+                                            style: TextStyle(
+                                                color: Colors.grey[700],
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w100),
+                                          )
+                                        ],
+                                      ),
+                                      Column(
+                                        children: [
+                                          Text(
+                                            "${officeTimings['data']['openingtiming']} To ${officeTimings['data']['closingtiming']}",
+                                            style: TextStyle(
+                                                color: Color(0xff282828),
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w800),
+                                          )
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  officeTimings['data']['openingtiming'] ==
+                                          'online'
+                                      ? Container(
+                                          decoration: BoxDecoration(
+                                              color: Color(0xffff3ea548),
+                                              border: Border.all(
+                                                  width: 4,
+                                                  color: Color(0xffff3ea548)),
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(5))),
+                                          child: Text(
+                                            'Online',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 8,
+                                                letterSpacing: 0.1,
+                                                //  backgroundColor:kprimarycolor ,
+                                                fontWeight: FontWeight.normal),
+                                          ),
+                                        )
+                                      : Container(
+                                          decoration: BoxDecoration(
+                                              color: Color.fromARGB(
+                                                  255, 177, 3, 3),
+                                              border: Border.all(
+                                                  width: 4,
+                                                  color: Color.fromARGB(
+                                                      255, 177, 3, 3)),
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(5))),
+                                          child: Text(
+                                            'Offline',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 8,
+                                                letterSpacing: 0.1,
+                                                //  backgroundColor:kprimarycolor ,
+                                                fontWeight: FontWeight.normal),
+                                          ),
+                                        )
+                                ],
+                              ),
+                              Padding(padding: EdgeInsets.all(7)),
+                              Container(
+                                height: 1,
+                                color: Colors.grey.withOpacity(0.2),
+                              ),
+                              Padding(padding: EdgeInsets.all(7)),
+                              GestureDetector(
+                                onTap: () async {
+                                  if (officeTimings['data']['openingtiming'] ==
+                                      'online') {
+                                    Uri phoneno = Uri.parse('tel:+1307558873');
+                                    if (await launchUrl(phoneno)) {
+                                      //dialer opened
+                                    } else {
+                                      //dailer is not opened
+                                    }
+                                  } else {
+                                    Navigator.pop(context);
+                                    Get.to(() => CreateTickets());
+                                  }
+                                },
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                        width: 20,
+                                        child: Image.asset(
+                                            'assets/slicing/phone-icon.png')),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Column(
+                                          children: [
+                                            Text(
+                                              "Call At 305-558-873",
+                                              style: TextStyle(
+                                                  color: Colors.grey[700],
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w800),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(padding: EdgeInsets.all(7)),
+                              Container(
+                                height: 1,
+                                color: Colors.grey.withOpacity(0.2),
+                              ),
+                              Padding(padding: EdgeInsets.all(7)),
+                              GestureDetector(
+                                onTap: () async {
+                                  if (officeTimings['data']['openingtiming'] ==
+                                      'online') {
+                                    Uri email = Uri.parse(
+                                        'mailto:+support@stands.aero');
+                                    if (await launchUrl(email)) {
+                                      //dialer opened
+                                    } else {
+                                      //dailer is not opened
+                                    }
+                                  } else {
+                                    Navigator.pop(context);
+                                    Get.to(() => CreateTickets());
+                                  }
+                                },
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                        width: 20,
+                                        child: Image.asset(
+                                            'assets/slicing/email-icon.png')),
+                                    Padding(padding: EdgeInsets.all(7)),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Column(
+                                          children: [
+                                            Text(
+                                              "Email: support@stands.aero",
+                                              style: TextStyle(
+                                                  color: Colors.grey[700],
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w800),
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ]),
+                          ),
+                        ));
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    top: 15, bottom: 8, right: 8, left: 8),
+                child: Container(
+                    width: 20,
+                    child: Image.asset('assets/slicing/call-icon.png')),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                // if (bottomctrl.navigationBarIndexValue != 1) {
+                  bottomctrl.navBarChange(1);
+                // } else {
+                //   Navigator.pop(context);
+                // }
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    bottom: 8, top: 12, left: 12, right: 15),
+                child: Container(
+                    width: 16,
+                    child: Image.asset('assets/slicing/Untitled-52.png')),
+              ),
+            ),
+          ],
         ),
         body: FadeTransition(
           opacity: _fadeInFadeOut,

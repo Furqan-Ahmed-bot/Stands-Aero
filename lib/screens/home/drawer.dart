@@ -38,7 +38,9 @@ class _NavDrawerState extends State<NavDrawer> {
       child: Drawer(
         child: Container(
           decoration: BoxDecoration(
-            color: Color(0xff212330),
+            // color: Color(0xff212330),
+            image:
+              DecorationImage(image: AssetImage("assets/slicing/drawer-background.png"),fit: BoxFit.cover),
           ),
           child: ListView(
             padding: EdgeInsets.zero,
