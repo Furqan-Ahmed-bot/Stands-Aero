@@ -1,21 +1,11 @@
 // ignore_for_file: unnecessary_null_comparison
 
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:StandsAero/services/remote_services.dart';
-import 'package:StandsAero/controller/usercontroller.dart';
 import 'package:StandsAero/helper/colors.dart';
-import 'package:StandsAero/helper/global.dart';
 import 'package:StandsAero/helper/model.dart';
 import 'package:StandsAero/screens/auth/register.dart';
-import 'package:StandsAero/screens/home/home.dart';
-import 'package:StandsAero/screens/mainhome.dart';
-import 'package:StandsAero/screens/payment/awaiting.dart';
-import 'package:http/http.dart' as http;
-
-import 'forgotpasswordwithotp.dart';
 
 class ForgotPasswordEnterEmail extends StatefulWidget {
   const ForgotPasswordEnterEmail({Key? key}) : super(key: key);
@@ -65,7 +55,7 @@ class _ForgotPasswordEnterEmailState extends State<ForgotPasswordEnterEmail> {
                   'Forgot Password',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                      color: kPrimaryColor,
                       fontSize: 28),
                 ),
                 SizedBox(
@@ -148,8 +138,9 @@ class _ForgotPasswordEnterEmailState extends State<ForgotPasswordEnterEmail> {
                   child: Container(
                     width: res_width * 0.9,
                     decoration: BoxDecoration(
-                            color: Color(0xff85714e),
-                            borderRadius: BorderRadius.all(Radius.circular(7))),
+                        color: Color(0xff85714e),
+                        // Color(0xffaf8a39),
+                        borderRadius: BorderRadius.all(Radius.circular(7))),
                     child: Padding(
                       padding: const EdgeInsets.all(13.0),
                       child: Center(
@@ -180,10 +171,10 @@ class _ForgotPasswordEnterEmailState extends State<ForgotPasswordEnterEmail> {
                       Text(
                         "Don't have an account? ",
                         style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
-                              fontSize: 17,
-                            ),
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                          fontSize: 17,
+                        ),
                       ),
                       Text(
                         'Signup',

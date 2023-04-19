@@ -37,8 +37,8 @@ class _OrderStatusState extends State<OrderStatus> {
 
   Future<void> order_history() async {
     order_historyvar = await ApiService().orderDetails(widget.orderID);
-    productDetails = order_historyvar['data'][1];
-    orderStatus = order_historyvar['data'][0]["order_status"].toString();
+    productDetails = order_historyvar['data'];
+    orderStatus = order_historyvar['data']["order_status"].toString();
 
     print("orderStatus detail" + orderStatus);
   }
@@ -110,11 +110,16 @@ class _OrderStatusState extends State<OrderStatus> {
                           ? Column(
                               children: [
                                 Quotes_Card(
-                                  MODEL: productDetails['sku'],
-                                  location: productDetails['location'],
-                                  description: productDetails['desc'],
-                                  image: productDetails['thumbnail'],
-                                ),
+                                    MODEL: productDetails['stand_details']
+                                        ['name'],
+                                    location: productDetails['stand_details']
+                                        ['location'],
+                                    description: productDetails['stand_details']
+                                        ['desc'],
+                                    image: productDetails['stand_details']
+                                        ['thumbnail'],
+                                    serialno: productDetails['stand_details']
+                                        ['serial_number']),
                                 SizedBox(
                                   height: res_height * 0.03,
                                 ),
@@ -150,7 +155,35 @@ class _OrderStatusState extends State<OrderStatus> {
                                           Container(
                                               width: 35,
                                               child: Image.asset(
-                                                  'assets/slicing/Untitled-61.png'))
+                                                  'assets/slicing/Untitled-61.png')),
+                                          Divider(
+                                            height: res_height * 0.095,
+                                          ),
+                                          Container(
+                                              width: 35,
+                                              child: Image.asset(
+                                                  'assets/slicing/Untitled-61.png')),
+                                          Divider(
+                                            height: res_height * 0.095,
+                                          ),
+                                          Container(
+                                              width: 35,
+                                              child: Image.asset(
+                                                  'assets/slicing/Untitled-61.png')),
+                                          Divider(
+                                            height: res_height * 0.095,
+                                          ),
+                                          Container(
+                                              width: 35,
+                                              child: Image.asset(
+                                                  'assets/slicing/Untitled-61.png')),
+                                          // Divider(
+                                          //   height: res_height * 0.095,
+                                          // ),
+                                          // Container(
+                                          //     width: 35,
+                                          //     child: Image.asset(
+                                          //         'assets/slicing/Untitled-61.png'))
                                         ],
                                       ),
                                       Column(
@@ -160,7 +193,10 @@ class _OrderStatusState extends State<OrderStatus> {
                                               Container(
                                                 width: res_width * 0.75,
                                                 decoration: BoxDecoration(
-                                                   borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10)),
                                                     color: orderStatus ==
                                                             "Order In Process"
                                                         ? primaryColor
@@ -217,10 +253,12 @@ class _OrderStatusState extends State<OrderStatus> {
                                           Row(
                                             children: [
                                               Container(
-                                                
                                                 width: res_width * 0.75,
                                                 decoration: BoxDecoration(
-                                                   borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10)),
                                                     color: orderStatus ==
                                                             "Order Shipped"
                                                         ? primaryColor
@@ -281,7 +319,10 @@ class _OrderStatusState extends State<OrderStatus> {
                                               Container(
                                                 width: res_width * 0.75,
                                                 decoration: BoxDecoration(
-                                                   borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10)),
                                                     color: orderStatus ==
                                                             "Order In Route"
                                                         ? primaryColor
@@ -340,10 +381,12 @@ class _OrderStatusState extends State<OrderStatus> {
                                           Row(
                                             children: [
                                               Container(
-                                                
                                                 width: res_width * 0.75,
                                                 decoration: BoxDecoration(
-                                                   borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10)),
                                                     color: orderStatus ==
                                                             "Order Arrived"
                                                         ? primaryColor
@@ -372,7 +415,198 @@ class _OrderStatusState extends State<OrderStatus> {
                                                                 0.006,
                                                           ),
                                                           Container(
-                                                          
+                                                              width: res_width *
+                                                                  0.6,
+                                                              child: Text(
+                                                                  'Lorem ipsum dolor sit amet consectetur adipiscing elit estmaecenas aenean',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: Colors
+                                                                            .grey[
+                                                                        600],
+                                                                    fontSize:
+                                                                        12,
+                                                                  )))
+                                                        ],
+                                                      ),
+                                                      Icon(
+                                                        Icons.arrow_forward_ios,
+                                                        color: Colors.grey,
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: res_height * 0.05,
+                                          ),
+                                          Row(
+                                            children: [
+                                              Container(
+                                                width: res_width * 0.75,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10)),
+                                                    color: orderStatus ==
+                                                            "Back In Order"
+                                                        ? primaryColor
+                                                        : secondaryColor),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      12.0),
+                                                  child: Row(
+                                                    children: [
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            'Back In Order',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .grey[600],
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                          SizedBox(
+                                                            height: res_height *
+                                                                0.006,
+                                                          ),
+                                                          Container(
+                                                              width: res_width *
+                                                                  0.6,
+                                                              child: Text(
+                                                                  'Lorem ipsum dolor sit amet consectetur adipiscing elit estmaecenas aenean',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: Colors
+                                                                            .grey[
+                                                                        600],
+                                                                    fontSize:
+                                                                        12,
+                                                                  )))
+                                                        ],
+                                                      ),
+                                                      Icon(
+                                                        Icons.arrow_forward_ios,
+                                                        color: Colors.grey,
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: res_height * 0.05,
+                                          ),
+                                          Row(
+                                            children: [
+                                              Container(
+                                                width: res_width * 0.75,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10)),
+                                                    color: orderStatus ==
+                                                            "Shipped Back"
+                                                        ? primaryColor
+                                                        : secondaryColor),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      12.0),
+                                                  child: Row(
+                                                    children: [
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            'Shipped Back',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .grey[600],
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                          SizedBox(
+                                                            height: res_height *
+                                                                0.006,
+                                                          ),
+                                                          Container(
+                                                              width: res_width *
+                                                                  0.6,
+                                                              child: Text(
+                                                                  'Lorem ipsum dolor sit amet consectetur adipiscing elit estmaecenas aenean',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: Colors
+                                                                            .grey[
+                                                                        600],
+                                                                    fontSize:
+                                                                        12,
+                                                                  )))
+                                                        ],
+                                                      ),
+                                                      Icon(
+                                                        Icons.arrow_forward_ios,
+                                                        color: Colors.grey,
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: res_height * 0.05,
+                                          ),
+                                          Row(
+                                            children: [
+                                              Container(
+                                                width: res_width * 0.75,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10)),
+                                                    color: orderStatus ==
+                                                            "Received Back"
+                                                        ? primaryColor
+                                                        : secondaryColor),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      12.0),
+                                                  child: Row(
+                                                    children: [
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            'Received Back',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .grey[600],
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                          SizedBox(
+                                                            height: res_height *
+                                                                0.006,
+                                                          ),
+                                                          Container(
                                                               width: res_width *
                                                                   0.6,
                                                               child: Text(
@@ -446,10 +680,15 @@ class _OrderStatusState extends State<OrderStatus> {
 
 // ignore: must_be_immutable
 class Quotes_Card extends StatelessWidget {
-  var MODEL, location, description, image;
+  var MODEL, location, description, image, serialno;
 
   Quotes_Card(
-      {Key? key, this.MODEL, this.location, this.description, this.image})
+      {Key? key,
+      this.MODEL,
+      this.location,
+      this.description,
+      this.image,
+      this.serialno})
       : super(key: key);
 
   @override
@@ -463,12 +702,12 @@ class Quotes_Card extends StatelessWidget {
         Container(
           width: res_width * 0.925,
           child: Card(
-             shape: RoundedRectangleBorder(
-    side: BorderSide(
-      color: Colors.transparent,
-    ),
-    borderRadius: BorderRadius.circular(10.0), //<-- SEE HERE
-  ),
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                color: Colors.transparent,
+              ),
+              borderRadius: BorderRadius.circular(10.0), //<-- SEE HERE
+            ),
             // margin: EdgeInsets.fromLTRB(18.0, 4.0, 18.0, 18.0),
             elevation: 8,
             child: Padding(
@@ -503,14 +742,17 @@ class Quotes_Card extends StatelessWidget {
                       SizedBox(
                         height: res_height * 0.006,
                       ),
+                      Text(
+                        "$serialno",
+                        style: TextStyle(fontSize: 15),
+                      ),
                       SingleChildScrollView(
                         child: Container(
-                          
                           height: res_height * 0.1,
                           width: res_width * 0.45,
                           child: SingleChildScrollView(
                             child: Text(
-                              "$description",
+                              "${description == null ? '' : description}",
                               style: TextStyle(
                                 fontSize: 10,
                               ),
@@ -528,10 +770,15 @@ class Quotes_Card extends StatelessWidget {
                       height: res_height * 0.17,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(7))),
-                      child: Image.network(
-                        image,
-                        fit: BoxFit.cover,
-                      ))
+                      child: Image(
+                        image: NetworkImage(image),
+                      )
+
+                      // Image.network(
+                      //   image,
+                      //   fit: BoxFit.cover,
+                      // )
+                      )
                 ],
               ),
             ),

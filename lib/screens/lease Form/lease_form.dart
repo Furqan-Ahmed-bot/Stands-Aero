@@ -45,8 +45,6 @@ class _lease_FormState extends State<lease_Form> {
         backgroundColor: Colors.transparent,
         extendBody: true,
         appBar: AppBar(
-          
-          
           automaticallyImplyLeading: false,
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -94,7 +92,6 @@ class _lease_FormState extends State<lease_Form> {
               child: Column(
                 children: [
                   Container(
-                    
                     width: res_width * 0.85,
                     child: Card(
                       child: Padding(

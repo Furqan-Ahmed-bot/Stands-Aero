@@ -216,10 +216,8 @@ class Quotess_Card extends StatelessWidget {
             // ));
           },
           child: Container(
-              decoration: BoxDecoration(
-    
-   borderRadius: BorderRadius.all(Radius.circular(20))
- ),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(20))),
             width: res_width * 0.925,
             child: Card(
               elevation: 8,
@@ -257,9 +255,12 @@ class Quotess_Card extends StatelessWidget {
                                         fontSize: 13,
                                         fontWeight: FontWeight.bold),
                                   ),
-                                  Text(
-                                    "$location",
-                                    style: TextStyle(fontSize: 13),
+                                  Container(
+                                    width: 150,
+                                    child: Text(
+                                      "$location",
+                                      style: TextStyle(fontSize: 13),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -271,7 +272,6 @@ class Quotess_Card extends StatelessWidget {
                           child: Text(
                             description == null ? '' : description,
                             overflow: TextOverflow.ellipsis,
-                          
                             style: TextStyle(fontSize: 10),
                           ),
                         ),

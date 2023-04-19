@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:StandsAero/helper/colors.dart';
 import 'package:StandsAero/helper/global.dart';
 import 'package:StandsAero/screens/kyc_Form/kyc_form2.dart';
 import 'package:StandsAero/widgets/remove_focus_widget.dart';
@@ -753,7 +754,8 @@ class _kyc_formState extends State<kyc_form> {
                           child: Container(
                             width: res_width * 0.925,
                             decoration: BoxDecoration(
-                                color: Color(0xffaf8a39),
+                                color: kPrimaryColor,
+                                // Color(0xffaf8a39),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(7))),
                             child: Padding(

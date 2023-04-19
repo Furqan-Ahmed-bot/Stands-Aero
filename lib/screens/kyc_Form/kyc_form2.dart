@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:StandsAero/helper/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -324,7 +325,8 @@ class _KycForm2State extends State<KycForm2> {
                           child: Container(
                             width: res_width * 0.925,
                             decoration: BoxDecoration(
-                                color: Color(0xffaf8a39),
+                                color: kPrimaryColor,
+                                //  Color(0xffaf8a39),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(7))),
                             child: Padding(

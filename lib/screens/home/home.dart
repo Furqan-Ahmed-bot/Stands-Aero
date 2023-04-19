@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:StandsAero/tickets/create_tickets.dart';
 import 'package:StandsAero/widgets/disallow_indicator_widget.dart';
 import 'package:StandsAero/widgets/remove_focus_widget.dart';
 import 'package:flutter/material.dart';
@@ -314,7 +315,10 @@ class _HomeScreenState extends State<HomeScreen>
                                     } else {
                                       //dailer is not opened
                                     }
-                                  } else {}
+                                  } else {
+                                    Navigator.pop(context);
+                                    Get.to(() => CreateTickets());
+                                  }
                                 },
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -354,12 +358,18 @@ class _HomeScreenState extends State<HomeScreen>
                               Padding(padding: EdgeInsets.all(7)),
                               GestureDetector(
                                 onTap: () async {
-                                  Uri email =
-                                      Uri.parse('mailto:+support@stands.aero');
-                                  if (await launchUrl(email)) {
-                                    //dialer opened
+                                  if (officeTimings['data']['openingtiming'] ==
+                                      'online') {
+                                    Uri email = Uri.parse(
+                                        'mailto:+support@stands.aero');
+                                    if (await launchUrl(email)) {
+                                      //dialer opened
+                                    } else {
+                                      //dailer is not opened
+                                    }
                                   } else {
-                                    //dailer is not opened
+                                    Navigator.pop(context);
+                                    Get.to(() => CreateTickets());
                                   }
                                 },
                                 child: Row(
@@ -404,11 +414,11 @@ class _HomeScreenState extends State<HomeScreen>
             ),
             GestureDetector(
               onTap: () {
-                if (bottomctrl.navigationBarIndexValue != 1) {
+                // if (bottomctrl.navigationBarIndexValue != 1) {
                   bottomctrl.navBarChange(1);
-                } else {
-                  Navigator.pop(context);
-                }
+                // } else {
+                //   Navigator.pop(context);
+                // }
               },
               child: Padding(
                 padding: const EdgeInsets.only(
@@ -662,6 +672,7 @@ class _HomeScreenState extends State<HomeScreen>
                                     filteredProducts[i].location,
                                     filteredProducts[i].desc,
                                     filteredProducts[i].id,
+                                    filteredProducts[i].manufacturerName,
                                   );
                                 },
                               ),
@@ -681,7 +692,8 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-  Widget StandsBox(context, image, name, slug, location, description, id) {
+  Widget StandsBox(
+      context, image, name, slug, location, description, id, manufacturename) {
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
     if (image.contains('no-image.png')) {
@@ -753,10 +765,10 @@ class _HomeScreenState extends State<HomeScreen>
             SizedBox(
               height: res_height * 0.0015,
             ),
-            // Text(
-            //   location.toString(),
-            //   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
-            // ),
+            Text(
+              manufacturename.toString(),
+              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+            ),
             // SizedBox(
             //   height: res_height * 0.0015,
             // ),

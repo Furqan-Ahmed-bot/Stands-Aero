@@ -1,5 +1,6 @@
 String globaltoken = "";
 String userid = "";
+var is_kyc;
 var requestFormdatafromQuote;
 var kycrequestFormdatafromQuote;
 var creditfirstFormData;

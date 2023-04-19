@@ -1,6 +1,6 @@
 import 'package:StandsAero/controller/usercontroller.dart';
+import 'package:StandsAero/helper/colors.dart';
 import 'package:StandsAero/helper/data_storage.dart';
-import 'package:StandsAero/helper/loader.dart';
 import 'package:StandsAero/screens/Profile/editprofile.dart';
 import 'package:StandsAero/screens/home/drawer.dart';
 import 'package:StandsAero/services/remote_services.dart';
@@ -164,9 +164,9 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
                 children: [
                   CircleAvatar(
                     backgroundColor: Colors.transparent,
-                    radius: 50,
+                    radius: 60,
                     backgroundImage:
-                        NetworkImage(userController.user.propic.toString()),
+                        AssetImage('assets/slicing/Untitled-31.png'),
                   ),
                   SizedBox(
                     height: 20,
@@ -213,7 +213,8 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
                     child: Container(
                       width: res_width * 0.9,
                       decoration: BoxDecoration(
-                          color: Color(0xffaf8a39),
+                          color: kPrimaryColor,
+                          // Color(0xffaf8a39),
                           borderRadius: BorderRadius.all(Radius.circular(7))),
                       child: Padding(
                         padding: const EdgeInsets.all(13.0),

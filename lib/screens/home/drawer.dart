@@ -1,21 +1,20 @@
 import 'dart:developer';
 
-import 'package:StandsAero/screens/notifications/notification.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:StandsAero/bottomcontroller.dart';
 import 'package:StandsAero/controller/usercontroller.dart';
 import 'package:StandsAero/screens/about/aboutus.dart';
-import 'package:StandsAero/screens/credit_Form/credit_form.dart';
 import 'package:StandsAero/screens/home/orderhistory.dart';
 import 'package:StandsAero/screens/home/payment_history.dart';
 import 'package:StandsAero/screens/home/privacy.dart';
 import 'package:StandsAero/screens/home/terms.dart';
-import 'package:StandsAero/screens/kyc_Form/kyc_form.dart';
-import 'package:StandsAero/screens/lease%20Form/lease_form.dart';
 import 'package:StandsAero/screens/notifications/chat.dart';
 import 'package:StandsAero/screens/taxcertificate/taxcertificate.dart';
 import 'package:StandsAero/services/remote_services.dart';
+
+import '../../tickets/create_tickets.dart';
+import '../../tickets/ticket_list.dart';
 
 class NavDrawer extends StatefulWidget {
   const NavDrawer({Key? key}) : super(key: key);
@@ -389,6 +388,108 @@ class _NavDrawerState extends State<NavDrawer> {
                   ),
                 ),
               ),
+              GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () {
+                  Get.to(() => CreateTickets());
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 13, right: 13),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: Padding(
+                              padding: const EdgeInsets.all(7.0),
+                              child:
+                                  Image.asset("assets/slicing/Untitled-40.png"),
+                            ),
+                            onPressed: () {},
+                          ),
+                          Text(
+                            'Tickets',
+                            style: TextStyle(fontSize: 15, color: Colors.white),
+                          )
+                        ],
+                      ),
+                      Container(
+                        height: 1,
+                        color: Colors.grey.withOpacity(0.2),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () {
+                  Get.to(() => ListOfTickets());
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 13, right: 13),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: Padding(
+                              padding: const EdgeInsets.all(7.0),
+                              child:
+                                  Image.asset("assets/slicing/Untitled-40.png"),
+                            ),
+                            onPressed: () {},
+                          ),
+                          Text(
+                            'Your Tickets',
+                            style: TextStyle(fontSize: 15, color: Colors.white),
+                          )
+                        ],
+                      ),
+                      Container(
+                        height: 1,
+                        color: Colors.grey.withOpacity(0.2),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              // GestureDetector(
+              //   behavior: HitTestBehavior.translucent,
+              //   onTap: () {
+              //     Get.to(() => EventScreen());
+              //   },
+              //   child: Padding(
+              //     padding: const EdgeInsets.only(left: 13, right: 13),
+              //     child: Column(
+              //       children: [
+              //         Row(
+              //           children: [
+              //             IconButton(
+              //               icon: Padding(
+              //                   padding: const EdgeInsets.all(7.0),
+              //                   child: Icon(
+              //                     Icons.event,
+              //                     color: Colors.white,
+              //                   )),
+              //               onPressed: () {
+              //                 // Get.to();
+              //               },
+              //             ),
+              //             Text(
+              //               'Events',
+              //               style: TextStyle(fontSize: 15, color: Colors.white),
+              //             )
+              //           ],
+              //         ),
+              //         Container(
+              //           height: 1,
+              //           color: Colors.grey.withOpacity(0.2),
+              //         )
+              //       ],
+              //     ),
+              //   ),
+              // ),
 
               GestureDetector(
                 behavior: HitTestBehavior.translucent,
@@ -490,6 +591,40 @@ class _NavDrawerState extends State<NavDrawer> {
                   ),
                 ),
               ),
+              // GestureDetector(
+              //   behavior: HitTestBehavior.translucent,
+              //   onTap: () {
+              //     Get.to(() => IndexPage());
+              //   },
+              //   child: Padding(
+              //     padding: const EdgeInsets.only(left: 13, right: 13),
+              //     child: Column(
+              //       children: [
+              //         Row(
+              //           children: [
+              //             IconButton(
+              //               icon: Padding(
+              //                   padding: const EdgeInsets.all(7.0),
+              //                   child: Icon(
+              //                     Icons.call,
+              //                     color: Colors.white,
+              //                   )),
+              //               onPressed: () {},
+              //             ),
+              //             Text(
+              //               'Audio Video Calling',
+              //               style: TextStyle(fontSize: 15, color: Colors.white),
+              //             )
+              //           ],
+              //         ),
+              //         Container(
+              //           height: 1,
+              //           color: Colors.grey.withOpacity(0.2),
+              //         )
+              //       ],
+              //     ),
+              //   ),
+              // ),
               GestureDetector(
                 behavior: HitTestBehavior.translucent,
                 onTap: () {

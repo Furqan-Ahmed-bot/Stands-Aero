@@ -1,19 +1,13 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:StandsAero/screens/mainhome.dart';
 import 'package:StandsAero/screens/taxcertificate/pdfview.dart';
 import 'package:StandsAero/services/remote_services.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 import '../../helper/loader.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
@@ -210,12 +204,12 @@ class _TexCertificateScreenState extends State<TexCertificateScreen> {
     return Container(
       width: res_width * 0.925,
       child: Card(
-         shape: RoundedRectangleBorder(
-    side: BorderSide(
-      color: Colors.transparent,
-    ),
-    borderRadius: BorderRadius.circular(10.0), //<-- SEE HERE
-  ),
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            color: Colors.transparent,
+          ),
+          borderRadius: BorderRadius.circular(10.0), //<-- SEE HERE
+        ),
         // margin: EdgeInsets.fromLTRB(18.0, 4.0, 18.0, 18.0),
         elevation: 8,
         child: Padding(
@@ -273,7 +267,7 @@ class _TexCertificateScreenState extends State<TexCertificateScreen> {
                       ));
                 },
                 child: Container(
-                    width: res_width * 0.35,
+                    width: res_width * 0.32,
                     height: res_height * 0.17,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(7))),
