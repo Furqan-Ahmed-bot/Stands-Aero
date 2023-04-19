@@ -851,7 +851,7 @@ class ApiService {
     log("place order get quote id ${getId}");
     var currentFileType = sendData['fileType'];
     var attachmentType = '';
-    final uri = Uri.parse('${apiGlobal}/api/user/order-leasewww/${getId}');
+    final uri = Uri.parse('${apiGlobal}/api/user/order-lease/${getId}');
     var request = http.MultipartRequest('POST', uri);
 
     var headers = {'Authorization': "bearer " + globaltoken};
@@ -870,6 +870,18 @@ class ApiService {
           filename: sendData['tax_file'].split('/').last,
           contentType: MediaType(attachmentType, currentFileType));
       request.files.add(multipartFile);
+    }
+
+    if (sendData['signature'] != null) {
+      var imagepath = sendData['signature'];
+      imagepath.split("File: '");
+      print(imagepath[1]);
+      //print(sendData['signature'].value);
+      var multipartImage = await http.MultipartFile.fromPath(
+          'signature_1', sendData['signature'],
+          filename: signaturetype,
+          contentType: MediaType(attachmentType, currentFileType));
+      request.files.add(multipartImage);
     }
 
     request.fields.addAll({
@@ -893,8 +905,8 @@ class ApiService {
       'signature_2': sendData['signature_2'],
       'customer_detail': sendData['customer_detail'],
       'redelivery_dates': sendData['redelivery_dates'],
-      'receiving_date': sendData[''],
-      'receiving_days': sendData[''],
+      'receiving_date': sendData['redelivery_days'],
+      'receiving_days': sendData['receiving_date'],
       'accepting_location': sendData['accepting_location'],
       'shipping_cost': sendData['shipping_cost'],
     });

@@ -26,6 +26,8 @@ var global_guarantor;
 var global_registered_agent;
 var global_signature_1;
 var global_signature_2;
+var signature;
+var signaturetype;
 
 final globalHeaders1 = {
   'Accept': 'application/json',

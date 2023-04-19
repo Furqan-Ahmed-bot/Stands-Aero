@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 
 import '../../helper/global.dart';
 import '../../services/remote_services.dart';
-import '../payment/paypal.dart';
+import '../payment/paymentrecieved.dart';
 
 class lease_form8 extends StatefulWidget {
   const lease_form8({Key? key}) : super(key: key);
@@ -515,6 +515,12 @@ class _lease_form8State extends State<lease_form8> {
                                   SizedBox(
                                     height: res_height * 0.01,
                                   ),
+                                  // CircleAvatar(
+                                  //           backgroundColor: Colors.transparent,
+                                  //           radius: 50,
+                                  //           backgroundImage:
+                                  //               FileImage( global_signature_1),
+                                  //         ),
                                   Column(
                                     children: [
                                       Row(
@@ -609,6 +615,7 @@ class _lease_form8State extends State<lease_form8> {
                                 'receiving_date': receiving_date.text,
                                 'accepting_location': accepting_location.text,
                                 'shipping_cost': shipping_cost.text,
+                                'signature': signature,
                               };
                               var res_data = await ApiService()
                                   .placeOrder(context, sendData);
@@ -616,7 +623,7 @@ class _lease_form8State extends State<lease_form8> {
                               print(
                                   "Lease Form RESPONSE" + res_data.toString());
                               if (res_data['status'] == true) {
-                                Get.to(PaymentScreen());
+                                Get.to(PaymentRecieved());
                               } else {
                                 Get.snackbar(
                                   'Error',

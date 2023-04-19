@@ -39,6 +39,7 @@ class _EditprofileState extends State<Editprofile> {
     if (xFile != null) {
       setState(() {
         imageFile = File(xFile.path);
+
         print("imageFile data" + imageFile.toString());
       });
       // imageProvider.addImage(imageFile);
