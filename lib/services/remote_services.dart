@@ -18,13 +18,13 @@ import '../helper/loader.dart';
 import '../helper/model.dart';
 import '../screens/List Quotes/quoteRecieved.dart';
 import '../screens/auth/forgotpasswordwithotp.dart';
-import '../screens/auth/mainlogin.dart';
 import '../screens/mainhome.dart';
 import '../tickets/ticket_submitted.dart';
 
 // String apiGlobal = "http://localhost:3000/api/v1";
 // String apiGlobal = "https://standsaero.jumppace.com";
-String apiGlobal = "https://standsaero-merger.jumppace.com/nsa";
+String apiGlobal = "https://stands.aero";
+//"https://standsaero-merger.jumppace.com/nsa";
 
 // String apiGlobal = "https://standsaero-dev.jumppace.com";
 final bottomctrl = Get.put(BottomController());
@@ -1092,7 +1092,7 @@ class ApiService {
   get_messages(context) async {
     final uri = await Uri.parse(
         //'https://standsaero-dev.jumppace.com/chatify/api/fetchMessages'
-        'https://standsaero-merger.jumppace.com/nsa/api/user/getAllMessage');
+        '${apiGlobal}/api/user/getAllMessage');
     print(uri);
     final headers = {
       'Authorization': 'bearer ${globaltoken}',
@@ -1111,7 +1111,7 @@ class ApiService {
     var dataa = {'submit_message': data['message'].toString()};
     final response = await http.post(
         Uri.parse(
-          'https://standsaero-merger.jumppace.com/nsa/api/user/sendMessage',
+          '${apiGlobal}/api/user/sendMessage',
         ),
         headers: {
           'Authorization': 'Bearer ${globaltoken}',
@@ -1388,5 +1388,4 @@ class ApiService {
 
     return res_data;
   }
-
 }

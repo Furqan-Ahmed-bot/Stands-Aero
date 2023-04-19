@@ -1,6 +1,8 @@
-import 'package:StandsAero/screens/orders/orderstatus.dart';
+import 'package:StandsAero/screens/mainhome.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../helper/colors.dart';
 
 class PaymentRecieved extends StatefulWidget {
   const PaymentRecieved({Key? key}) : super(key: key);
@@ -49,7 +51,7 @@ class _PaymentRecievedState extends State<PaymentRecieved> {
                         height: res_height * 0.02,
                       ),
                       Text(
-                        'Payment Recieved',
+                        'Order Placed Successfully',
                         style: TextStyle(
                             fontWeight: FontWeight.w500, fontSize: 20),
                       ),
@@ -57,7 +59,7 @@ class _PaymentRecievedState extends State<PaymentRecieved> {
                         height: res_height * 0.005,
                       ),
                       Text(
-                        'Lorem ipsum dolor sit amet consectetur adip- iscing elit libero, sollicitudin dignissim vel cubilia blandit pellentesque tellus.',
+                        'Thankyou',
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 13.5),
                       )
@@ -70,12 +72,12 @@ class _PaymentRecievedState extends State<PaymentRecieved> {
               ),
               GestureDetector(
                 onTap: () {
-                  Get.to(() => OrderStatus());
+                  Get.to(() => MainScreen());
                 },
                 child: Container(
                   width: res_width * 0.95,
                   decoration: BoxDecoration(
-                      color: Color(0xffaf8a39),
+                      color: kPrimaryColor,
                       borderRadius: BorderRadius.all(Radius.circular(7))),
                   child: Padding(
                     padding: const EdgeInsets.all(13.0),

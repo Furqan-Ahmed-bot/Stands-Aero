@@ -1,8 +1,10 @@
+import 'package:StandsAero/helper/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../helper/loader.dart';
 import '../services/remote_services.dart';
+import 'create_tickets.dart';
 import 'ticket_infomation.dart';
 
 class ListOfTickets extends StatefulWidget {
@@ -55,6 +57,16 @@ class _ListOfTicketsState extends State<ListOfTickets> {
         ),
       ),
       child: Scaffold(
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: kPrimaryColor,
+            child: Icon(
+              Icons.task,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Get.to(CreateTickets());
+            },
+          ),
           backgroundColor: Colors.transparent,
           appBar: AppBar(
             automaticallyImplyLeading: false,

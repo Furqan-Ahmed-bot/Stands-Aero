@@ -126,6 +126,8 @@ class _OrderStatusState extends State<OrderStatus> {
                                 Container(
                                   width: res_width * 0.9,
                                   child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
@@ -162,21 +164,21 @@ class _OrderStatusState extends State<OrderStatus> {
                                           Container(
                                               width: 35,
                                               child: Image.asset(
-                                                  'assets/slicing/Untitled-61.png')),
+                                                  'assets/slicing/Backinorder.png')),
                                           Divider(
                                             height: res_height * 0.095,
                                           ),
                                           Container(
                                               width: 35,
                                               child: Image.asset(
-                                                  'assets/slicing/Untitled-61.png')),
+                                                  'assets/slicing/Received-Back.png')),
                                           Divider(
                                             height: res_height * 0.095,
                                           ),
                                           Container(
                                               width: 35,
                                               child: Image.asset(
-                                                  'assets/slicing/Untitled-61.png')),
+                                                  'assets/slicing/Shipped-Back.png')),
                                           // Divider(
                                           //   height: res_height * 0.095,
                                           // ),
@@ -225,8 +227,7 @@ class _OrderStatusState extends State<OrderStatus> {
                                                           Container(
                                                               width: res_width *
                                                                   0.6,
-                                                              child: Text(
-                                                                  'Lorem ipsum dolor sit amet consectetur adipiscing elit estmaecenas aenean',
+                                                              child: Text('',
                                                                   style:
                                                                       TextStyle(
                                                                     color: Colors
@@ -289,8 +290,7 @@ class _OrderStatusState extends State<OrderStatus> {
                                                           Container(
                                                               width: res_width *
                                                                   0.68,
-                                                              child: Text(
-                                                                  'Lorem ipsum dolor sit amet consectetur adipiscing elit estmaecenas aenean',
+                                                              child: Text('',
                                                                   style:
                                                                       TextStyle(
                                                                     color: Colors
@@ -353,8 +353,8 @@ class _OrderStatusState extends State<OrderStatus> {
                                                           Container(
                                                               width: res_width *
                                                                   0.6,
-                                                              child: Text(
-                                                                  'Lorem ipsum dolor sit amet consectetur adipiscing elit estmaecenas aenean',
+                                                              child: Text('',
+                                                                  //'Lorem ipsum dolor sit amet consectetur adipiscing elit estmaecenas aenean',
                                                                   style:
                                                                       TextStyle(
                                                                     color: Colors
@@ -417,8 +417,7 @@ class _OrderStatusState extends State<OrderStatus> {
                                                           Container(
                                                               width: res_width *
                                                                   0.6,
-                                                              child: Text(
-                                                                  'Lorem ipsum dolor sit amet consectetur adipiscing elit estmaecenas aenean',
+                                                              child: Text('',
                                                                   style:
                                                                       TextStyle(
                                                                     color: Colors
@@ -481,8 +480,7 @@ class _OrderStatusState extends State<OrderStatus> {
                                                           Container(
                                                               width: res_width *
                                                                   0.6,
-                                                              child: Text(
-                                                                  'Lorem ipsum dolor sit amet consectetur adipiscing elit estmaecenas aenean',
+                                                              child: Text('',
                                                                   style:
                                                                       TextStyle(
                                                                     color: Colors
@@ -545,8 +543,7 @@ class _OrderStatusState extends State<OrderStatus> {
                                                           Container(
                                                               width: res_width *
                                                                   0.6,
-                                                              child: Text(
-                                                                  'Lorem ipsum dolor sit amet consectetur adipiscing elit estmaecenas aenean',
+                                                              child: Text('',
                                                                   style:
                                                                       TextStyle(
                                                                     color: Colors
@@ -609,8 +606,7 @@ class _OrderStatusState extends State<OrderStatus> {
                                                           Container(
                                                               width: res_width *
                                                                   0.6,
-                                                              child: Text(
-                                                                  'Lorem ipsum dolor sit amet consectetur adipiscing elit estmaecenas aenean',
+                                                              child: Text('',
                                                                   style:
                                                                       TextStyle(
                                                                     color: Colors
