@@ -1178,22 +1178,24 @@ class ApiService {
   send_ticket_comment(ticketcomment, categoryid) async {
     var data = {
       'comment': ticketcomment['comment'].toString(),
-      'status': ticketcomment['status'].toString(),
+      'status': ticketcomment['statuss'].toString(),
     };
 
-    final response = await http.post(
-        Uri.parse(
-          '${apiGlobal}/api/user/ticket/${categoryid}/comment',
-        ),
-        headers: {
-          'Authorization': 'Bearer ${globaltoken}',
-        },
-        body: data);
+    final response = await http.get(
+      Uri.parse(
+        '${apiGlobal}/api/user/ticket/${categoryid}/comment?comment=${ticketcomment['statuss'].toString() == 'null' ? ticketcomment['comment'].toString() : ticketcomment['statuss'].toString()}&status=${ticketcomment['statuss'].toString()}',
+      ),
+      headers: {
+        'Authorization': 'Bearer ${globaltoken}',
+      },
+    );
     print(response.statusCode);
 
     if (response.body == 200) {
       print(jsonDecode(response.body));
     }
+
+    return response;
     // print(response.statusCode);
   }
 

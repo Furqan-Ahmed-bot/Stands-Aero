@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:StandsAero/controller/usercontroller.dart';
 import 'package:StandsAero/helper/colors.dart';
+import 'package:StandsAero/screens/Profile/profile.dart';
 import 'package:StandsAero/widgets/custom_menu_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -363,7 +364,7 @@ class _EditprofileState extends State<Editprofile> {
                               var res_data = await ApiService()
                                   .updateProfile(context, data);
                               if (res_data['status'] == true) {
-                                Navigator.pop(context);
+                                Get.to(profile());
                               }
                             }
                           }

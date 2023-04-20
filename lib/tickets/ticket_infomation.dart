@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:StandsAero/helper/colors.dart';
 import 'package:StandsAero/services/remote_services.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../helper/global.dart';
 import '../helper/loader.dart';
+import 'ticket_list.dart';
 
 class TicketInformation extends StatefulWidget {
   final id;
@@ -80,11 +82,11 @@ class _TicketInformationState extends State<TicketInformation> {
 
   String selected = "";
   List checkListItems = [
-    {
-      "id": 0,
-      "value": false,
-      "title": "Leave as Current",
-    },
+    // {
+    //   "id": 0,
+    //   "value": false,
+    //   "title": "New",
+    // },
     {
       "id": 1,
       "value": false,
@@ -242,69 +244,69 @@ class _TicketInformationState extends State<TicketInformation> {
                 SizedBox(
                   height: 10,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: Container(
-                        alignment: Alignment.center,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Icon(
-                              Icons.call,
-                              color: Colors.white,
-                              size: 20,
-                            ),
-                            Text(
-                              'Audio Call',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 15),
-                            ),
-                          ],
-                        ),
-                        decoration: BoxDecoration(
-                          color: kPrimaryColor,
-                          border:
-                              Border.all(width: 1, color: Colors.transparent),
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                        height: 50,
-                        width: 150,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 10),
-                      child: Container(
-                        alignment: Alignment.center,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Icon(
-                              Icons.video_call,
-                              color: Colors.white,
-                              size: 20,
-                            ),
-                            Text(
-                              'Video Call',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 15),
-                            ),
-                          ],
-                        ),
-                        decoration: BoxDecoration(
-                          color: kPrimaryColor,
-                          border:
-                              Border.all(width: 1, color: Colors.transparent),
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                        height: 50,
-                        width: 150,
-                      ),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     Padding(
+                //       padding: const EdgeInsets.only(left: 10),
+                //       child: Container(
+                //         alignment: Alignment.center,
+                //         child: Row(
+                //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //           children: [
+                //             Icon(
+                //               Icons.call,
+                //               color: Colors.white,
+                //               size: 20,
+                //             ),
+                //             Text(
+                //               'Audio Call',
+                //               style:
+                //                   TextStyle(color: Colors.white, fontSize: 15),
+                //             ),
+                //           ],
+                //         ),
+                //         decoration: BoxDecoration(
+                //           color: kPrimaryColor,
+                //           border:
+                //               Border.all(width: 1, color: Colors.transparent),
+                //           borderRadius: BorderRadius.all(Radius.circular(10)),
+                //         ),
+                //         height: 50,
+                //         width: 150,
+                //       ),
+                //     ),
+                //     Padding(
+                //       padding: const EdgeInsets.only(right: 10),
+                //       child: Container(
+                //         alignment: Alignment.center,
+                //         child: Row(
+                //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //           children: [
+                //             Icon(
+                //               Icons.video_call,
+                //               color: Colors.white,
+                //               size: 20,
+                //             ),
+                //             Text(
+                //               'Video Call',
+                //               style:
+                //                   TextStyle(color: Colors.white, fontSize: 15),
+                //             ),
+                //           ],
+                //         ),
+                //         decoration: BoxDecoration(
+                //           color: kPrimaryColor,
+                //           border:
+                //               Border.all(width: 1, color: Colors.transparent),
+                //           borderRadius: BorderRadius.all(Radius.circular(10)),
+                //         ),
+                //         height: 50,
+                //         width: 150,
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 SizedBox(
                   height: 20,
                 ),
@@ -465,14 +467,25 @@ class _TicketInformationState extends State<TicketInformation> {
                                           //matxt = checkListItems[index]['title'];
                                         });
 
-                                        // var data = {
-                                        //   'status': checkListItems[index]
-                                        //       ['title']
-                                        // };
-                                        // ApiService().send_ticket_comment(
-                                        //     data, widget.id);
+                                        var data = {
+                                          'statuss': checkListItems[index]
+                                              ['title']
+                                        };
+                                        ApiService().send_ticket_comment(
+                                            data, widget.id);
 
-                                        //check(checkListItems[index]["value"]);
+                                        Get.snackbar(
+                                          'Status Updated Successfully',
+                                          '',
+                                          animationDuration:
+                                              Duration(seconds: 2),
+                                          snackPosition: SnackPosition.BOTTOM,
+                                        );
+
+                                        // check(checkListItems[index]["value"]);
+                                        Get.to(ListOfTickets(
+                                          flag: true,
+                                        ));
                                       },
                                     ),
                                   ),

@@ -8,7 +8,8 @@ import 'create_tickets.dart';
 import 'ticket_infomation.dart';
 
 class ListOfTickets extends StatefulWidget {
-  const ListOfTickets({super.key});
+  bool? flag;
+  ListOfTickets({super.key, this.flag});
 
   @override
   State<ListOfTickets> createState() => _ListOfTicketsState();
@@ -76,7 +77,14 @@ class _ListOfTicketsState extends State<ListOfTickets> {
             leading: GestureDetector(
               behavior: HitTestBehavior.translucent,
               onTap: () {
-                Navigator.pop(context);
+                if (widget.flag == true) {
+                  Get.back();
+                  Get.back();
+                  Get.back();
+                } else {
+                  Get.back();
+                }
+                // Navigator.pop(context);
                 // _key.currentState!.openDrawer();
                 // Get.back();
                 // Get.back();
