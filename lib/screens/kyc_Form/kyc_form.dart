@@ -112,10 +112,10 @@ class _kyc_formState extends State<kyc_form> {
                       children: [
                         kyc_main_text(
                             text:
-                                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,"),
+                                "The information requested below is in connection with The Uniting and Strengthening America by Providing Appropriate Tools to Intercept and Obstruct Terrorism (U.S.A. Patriot) Act of 2001,” Pub. L. No. 107-56 (the “Patriot Act”)"),
                         kyc_main_text(
                             text:
-                                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,"),
+                                "It is our practice to obtain certain information regarding the individual or entity that will be funding the lease. Accordingly, please provide us with certain basic information requested below as well as the documents listed on page 3:"),
                         SizedBox(
                           height: res_height * 0.01,
                         ),

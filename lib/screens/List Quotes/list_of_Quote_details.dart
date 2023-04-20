@@ -278,23 +278,23 @@ class _quotes_detailsState extends State<quotes_details> {
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 8.0),
-                          child: Text(
-                            'Daily Lease rate',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 15,
-                            ),
-                          ),
-                        ),
-                        Text(
-                          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 11,
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: EdgeInsets.only(top: 8.0),
+                        //   child: Text(
+                        //     'Daily Lease rate',
+                        //     style: TextStyle(
+                        //       color: Colors.black,
+                        //       fontSize: 15,
+                        //     ),
+                        //   ),
+                        // ),
+                        // Text(
+                        //   "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+                        //   style: TextStyle(
+                        //     color: Colors.black,
+                        //     fontSize: 11,
+                        //   ),
+                        // ),
                         SizedBox(
                           height: res_height * 0.01,
                         ),

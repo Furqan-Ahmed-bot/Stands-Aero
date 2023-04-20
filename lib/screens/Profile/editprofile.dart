@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:StandsAero/controller/usercontroller.dart';
+import 'package:StandsAero/helper/colors.dart';
 import 'package:StandsAero/widgets/custom_menu_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -370,7 +371,7 @@ class _EditprofileState extends State<Editprofile> {
                         child: Container(
                           width: res_width * 0.9,
                           decoration: BoxDecoration(
-                              color: Color(0xffaf8a39),
+                              color: kPrimaryColor,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(7))),
                           child: Padding(

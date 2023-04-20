@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:StandsAero/helper/colors.dart';
 import 'package:StandsAero/helper/global.dart';
 import 'package:StandsAero/screens/credit_Form/credit_form2.dart';
 import 'package:email_validator/email_validator.dart';
@@ -893,7 +894,7 @@ class _credit_formState extends State<credit_form> {
                           child: Container(
                             width: res_width * 0.925,
                             decoration: BoxDecoration(
-                                color: Color(0xffaf8a39),
+                                color: kPrimaryColor,
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(7))),
                             child: Padding(

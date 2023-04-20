@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:StandsAero/bottomcontroller.dart';
 import 'package:StandsAero/controller/usercontroller.dart';
+import 'package:StandsAero/helper/colors.dart';
 import 'package:StandsAero/helper/global.dart';
-import 'package:StandsAero/screens/kyc_Form/kyc_form.dart';
 import 'package:StandsAero/services/remote_services.dart';
 import 'package:StandsAero/widgets/disallow_indicator_widget.dart';
 import 'package:email_validator/email_validator.dart';
@@ -551,9 +551,9 @@ class _credit_from2State extends State<credit_from2> {
                         // SizedBox(
                         //   height: res_height * 0.02,
                         // ),
-                        kyc_main_text(
-                            text:
-                                "Agrement \nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,"),
+                        // kyc_main_text(
+                        //     text:
+                        //         "Agrement \nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,"),
                         SizedBox(
                           height: res_height * 0.03,
                         ),
@@ -730,7 +730,7 @@ class _credit_from2State extends State<credit_from2> {
                           child: Container(
                             width: res_width * 0.925,
                             decoration: BoxDecoration(
-                                color: Color(0xffaf8a39),
+                                color: kPrimaryColor,
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(7))),
                             child: Padding(

@@ -77,7 +77,7 @@ class _CreateTicketsState extends State<CreateTickets> {
         'message': _descriptioncontroller.text
       };
       // Get.to(TicketInformation());
-      ApiService().create_ticket(sendData);
+      ApiService().create_ticket(context, sendData);
     }
   }
 

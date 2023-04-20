@@ -1,8 +1,8 @@
-import 'package:StandsAero/screens/mainhome.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../helper/colors.dart';
+import '../mainhome.dart';
 
 class PaymentRecieved extends StatefulWidget {
   const PaymentRecieved({Key? key}) : super(key: key);
@@ -72,7 +72,7 @@ class _PaymentRecievedState extends State<PaymentRecieved> {
               ),
               GestureDetector(
                 onTap: () {
-                  Get.to(() => MainScreen());
+                  Get.offAll(() => MainScreen());
                 },
                 child: Container(
                   width: res_width * 0.95,

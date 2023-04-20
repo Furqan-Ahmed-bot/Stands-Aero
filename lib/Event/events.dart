@@ -57,9 +57,10 @@ class _EventScreenState extends State<EventScreen> {
       setState(() {
         eventfiltered = filteration
             .where(
-              (item) =>
-                  (item['title'].toLowerCase() + item['start'].toLowerCase())
-                      .contains(query.toLowerCase()),
+              (item) => (item['title'].toLowerCase() +
+                      item['start'].toLowerCase() +
+                      item['address'].toLowerCase())
+                  .contains(query.toLowerCase()),
             )
             .toList();
       });

@@ -18,6 +18,7 @@ import '../helper/loader.dart';
 import '../helper/model.dart';
 import '../screens/List Quotes/quoteRecieved.dart';
 import '../screens/auth/forgotpasswordwithotp.dart';
+import '../screens/lease Form/lease_form.dart';
 import '../screens/mainhome.dart';
 import '../tickets/ticket_submitted.dart';
 
@@ -666,7 +667,7 @@ class ApiService {
     log(res_data.toString());
 
     if (res_data["status"] == true) {
-      Get.offAll(() => MainScreen());
+      Get.offAll(() => lease_Form(''));
       Get.snackbar(
         'Success',
         'Your credit form submitted successfully',
@@ -1144,7 +1145,13 @@ class ApiService {
     return res_data;
   }
 
-  create_ticket(ticketdata) async {
+  create_ticket(context, ticketdata) async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return spinkit;
+        });
     var data = {
       'subject': ticketdata['subject'].toString(),
       'category': ticketdata['category'].toString(),
