@@ -521,53 +521,53 @@ class _lease_form8State extends State<lease_form8> {
                                   //           backgroundImage:
                                   //               FileImage( global_signature_1),
                                   //         ),
-                                  Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          Text('NATIONAL AERO STANDS, LLC'),
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          Text('By: '),
-                                          blank(
-                                            widt: 163,
-                                            //kontroller: stand_manufacturer
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          Text('Name: '),
-                                          blank(
-                                            widt: 140,
-                                            //kontroller: stand_manufacturer
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          Text('Title: '),
-                                          blank(
-                                            widt: 152,
-                                            //kontroller: stand_manufacturer
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: res_height * 0.01,
-                                  ),
+                                  // Column(
+                                  //   children: [
+                                  //     Row(
+                                  //       mainAxisAlignment:
+                                  //           MainAxisAlignment.end,
+                                  //       children: [
+                                  //         Text('NATIONAL AERO STANDS, LLC'),
+                                  //       ],
+                                  //     ),
+                                  //     Row(
+                                  //       mainAxisAlignment:
+                                  //           MainAxisAlignment.end,
+                                  //       children: [
+                                  //         Text('By: '),
+                                  //         blank(
+                                  //           widt: 163,
+                                  //           //kontroller: stand_manufacturer
+                                  //         ),
+                                  //       ],
+                                  //     ),
+                                  //     Row(
+                                  //       mainAxisAlignment:
+                                  //           MainAxisAlignment.end,
+                                  //       children: [
+                                  //         Text('Name: '),
+                                  //         blank(
+                                  //           widt: 140,
+                                  //           //kontroller: stand_manufacturer
+                                  //         ),
+                                  //       ],
+                                  //     ),
+                                  //     Row(
+                                  //       mainAxisAlignment:
+                                  //           MainAxisAlignment.end,
+                                  //       children: [
+                                  //         Text('Title: '),
+                                  //         blank(
+                                  //           widt: 152,
+                                  //           //kontroller: stand_manufacturer
+                                  //         ),
+                                  //       ],
+                                  //     ),
+                                  //   ],
+                                  // ),
+                                  // SizedBox(
+                                  //   height: res_height * 0.01,
+                                  // ),
                                 ],
                               ),
                             ),
@@ -664,7 +664,7 @@ class _lease_form8State extends State<lease_form8> {
                               padding: const EdgeInsets.all(13.0),
                               child: Center(
                                 child: Text(
-                                  'Continue',
+                                  'Place Order',
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,

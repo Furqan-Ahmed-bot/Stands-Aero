@@ -198,22 +198,22 @@ class Quotes_Card extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: res_height * 0.006,
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                "Pay Amount: ",
-                                style: TextStyle(
-                                    fontSize: 13, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                "$payAmount",
-                                style: TextStyle(fontSize: 13),
-                              ),
-                            ],
-                          ),
+                          // SizedBox(
+                          //   height: res_height * 0.006,
+                          // ),
+                          // Row(
+                          //   children: [
+                          //     Text(
+                          //       "Pay Amount: ",
+                          //       style: TextStyle(
+                          //           fontSize: 13, fontWeight: FontWeight.bold),
+                          //     ),
+                          //     Text(
+                          //       "$payAmount",
+                          //       style: TextStyle(fontSize: 13),
+                          //     ),
+                          //   ],
+                          // ),
                           SizedBox(
                             height: res_height * 0.006,
                           ),

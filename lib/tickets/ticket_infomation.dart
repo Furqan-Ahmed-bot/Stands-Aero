@@ -121,52 +121,58 @@ class _TicketInformationState extends State<TicketInformation> {
                 width: 350,
                 height: 70,
                 child: Center(
-                  child: Container(
-                    height: 60,
-                    child: TextFormField(
-                      controller: _commentcontroller,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(top: 15, left: 20),
-                        hintText: "Write message...",
-                        suffixIcon: InkWell(
-                          onTap: () {
-                            var data = {'comment': _commentcontroller.text};
-                            ApiService().send_ticket_comment(data, widget.id);
-                            _commentcontroller.clear();
-                            Future.delayed(Duration(seconds: 2), () {
-                              getticketinformation();
-                              // setState(() {
+                  child: widget.status.toString() == 'Solved'
+                      ? Container()
+                      : Container(
+                          height: 60,
+                          child: TextFormField(
+                            controller: _commentcontroller,
+                            decoration: InputDecoration(
+                              contentPadding:
+                                  EdgeInsets.only(top: 15, left: 20),
+                              hintText: "Write message...",
+                              suffixIcon: InkWell(
+                                onTap: () {
+                                  var data = {
+                                    'comment': _commentcontroller.text
+                                  };
+                                  ApiService()
+                                      .send_ticket_comment(data, widget.id);
+                                  _commentcontroller.clear();
+                                  Future.delayed(Duration(seconds: 2), () {
+                                    getticketinformation();
+                                    // setState(() {
 
-                              // });
-                            });
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: Image.asset(
-                              'assets/slicing/Untitled-72.png',
-                              scale: 4,
+                                    // });
+                                  });
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 10),
+                                  child: Image.asset(
+                                    'assets/slicing/Untitled-72.png',
+                                    scale: 4,
+                                  ),
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25),
+                                borderSide: BorderSide(
+                                  width: 1.0,
+                                  color: Color(0xffDCDFE2),
+                                ),
+                              ),
+                              fillColor: Colors.white,
+                              filled: true,
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25),
+                                borderSide: BorderSide(
+                                  width: 1.0,
+                                  color: Colors.black,
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                          borderSide: BorderSide(
-                            width: 1.0,
-                            color: Color(0xffDCDFE2),
-                          ),
-                        ),
-                        fillColor: Colors.white,
-                        filled: true,
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                          borderSide: BorderSide(
-                            width: 1.0,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
                 ),
               ),
             ),

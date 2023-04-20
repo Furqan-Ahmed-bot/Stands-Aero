@@ -64,7 +64,9 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
       phone.text = userController.user.phone.toString();
       country.text = userController.user.country.toString();
       city.text = userController.user.city.toString();
-      description.text = userController.user.description.toString();
+      description.text = userController.user.description.toString() == 'null'
+          ? 'Enter your Description'
+          : userController.user.description.toString();
     });
   }
 
@@ -162,6 +164,30 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
               padding: const EdgeInsets.fromLTRB(18.0, 8.0, 18.0, 18.0),
               child: Column(
                 children: [
+                  // ClipRRect(
+                  //   borderRadius: BorderRadius.circular(0),
+                  //   child: CachedNetworkImage(
+                  //     height: 100,
+                  //     width: 100,
+                  //     imageUrl: '',
+                  //     //usercontroller.user.propic.toString(),
+                  //     errorWidget: (context, url, error) {
+                  //       return Container(
+                  //         height: 50,
+                  //         width: 50,
+                  //         decoration: BoxDecoration(
+                  //           color: Colors.grey,
+                  //           borderRadius: BorderRadius.circular(0),
+                  //         ),
+                  //         child: Center(
+                  //             child: Icon(
+                  //           Icons.image,
+                  //           color: Colors.black,
+                  //         )),
+                  //       );
+                  //     },
+                  //   ),
+                  // ),
                   CircleAvatar(
                     backgroundColor: Colors.transparent,
                     radius: 60,
