@@ -78,6 +78,8 @@ class _ListOfTicketsState extends State<ListOfTickets> {
               onTap: () {
                 Navigator.pop(context);
                 // _key.currentState!.openDrawer();
+                // Get.back();
+                // Get.back();
               },
               child: Padding(
                 padding: const EdgeInsets.all(15),

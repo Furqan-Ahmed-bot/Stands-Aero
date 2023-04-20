@@ -31,11 +31,8 @@ class _TicketInformationState extends State<TicketInformation> {
   @override
   void initState() {
     _isLoading = true;
-    Future.delayed(Duration.zero, () {
-      setState(() {
-        getticketinformation();
-      });
-    });
+    getticketinformation();
+
     // timer = Timer.periodic(const Duration(seconds: 3), (timer) {
     //   print('dataaaaaaaaaaaaa');
     //   getticketinformation();
@@ -133,10 +130,12 @@ class _TicketInformationState extends State<TicketInformation> {
                           onTap: () {
                             var data = {'comment': _commentcontroller.text};
                             ApiService().send_ticket_comment(data, widget.id);
+                            _commentcontroller.clear();
                             Future.delayed(Duration(seconds: 2), () {
-                              setState(() {
-                                getticketinformation();
-                              });
+                              getticketinformation();
+                              // setState(() {
+
+                              // });
                             });
                           },
                           child: Padding(
@@ -466,12 +465,12 @@ class _TicketInformationState extends State<TicketInformation> {
                                           //matxt = checkListItems[index]['title'];
                                         });
 
-                                        var data = {
-                                          'status': checkListItems[index]
-                                              ['title']
-                                        };
-                                        ApiService().send_ticket_comment(
-                                            data, widget.id);
+                                        // var data = {
+                                        //   'status': checkListItems[index]
+                                        //       ['title']
+                                        // };
+                                        // ApiService().send_ticket_comment(
+                                        //     data, widget.id);
 
                                         //check(checkListItems[index]["value"]);
                                       },
@@ -516,138 +515,127 @@ class _TicketInformationState extends State<TicketInformation> {
                   ),
                 ),
                 FutureBuilder(
-                    future: getticketinformation(),
+                    // future: getticketinformation(),
                     builder: (context, snapshot) {
-                      return Column(
-                        children: [
-                          ticketinformation.length > 0
-                              ? ListView.builder(
-                                  reverse: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemCount: ticketinformation['data']
-                                          ['Conversions']
-                                      .length,
-                                  shrinkWrap: true,
-                                  itemBuilder: (context, index) {
-                                    // var doc = parse(ticketinformation['data']
-                                    //     ['Conversions'][index]['message']);
-                                    // var element =
-                                    //     doc.getElementsByClassName('<p>');
+                  return Column(
+                    children: [
+                      ticketinformation.length > 0
+                          ? ListView.builder(
+                              reverse: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: ticketinformation['data']
+                                      ['Conversions']
+                                  .length,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                // var doc = parse(ticketinformation['data']
+                                //     ['Conversions'][index]['message']);
+                                // var element =
+                                //     doc.getElementsByClassName('<p>');
 
-                                    // final p = HtmlParser(
-                                    //     ticketinformation['data']
-                                    //             ['Conversions'][index]
-                                    //         ['message']);
+                                // final p = HtmlParser(
+                                //     ticketinformation['data']
+                                //             ['Conversions'][index]
+                                //         ['message']);
 
-                                    // p.parse();
-                                    return Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 10),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          ticketinformation['data']
-                                                          ['Conversions'][index]
-                                                      ['user_name'] ==
-                                                  'Admin 1'
-                                              ? Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          bottom: 5, left: 5),
-                                                  child: Text(
-                                                    'Reply From Admin',
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                )
-                                              : Text(''),
-                                          Container(
-                                            width: res_width * 0.85,
-                                            decoration: BoxDecoration(
-                                                color: ticketinformation['data']
-                                                                        [
-                                                                        'Conversions']
-                                                                    [index]
-                                                                ['user_id']
-                                                            .toString() ==
-                                                        userid
-                                                    ? kPrimaryColor
-                                                    //Color(0xffaf8a39)
-                                                    : Colors.white,
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(10))),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(20.0),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                // p.parse();
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 10),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      ticketinformation['data']['Conversions']
+                                                  [index]['user_name'] ==
+                                              'Admin 1'
+                                          ? Padding(
+                                              padding: const EdgeInsets.only(
+                                                  bottom: 5, left: 5),
+                                              child: Text(
+                                                'Reply From Admin',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            )
+                                          : Text(''),
+                                      Container(
+                                        width: res_width * 0.85,
+                                        decoration: BoxDecoration(
+                                            color: ticketinformation['data']
+                                                                ['Conversions']
+                                                            [index]['user_id']
+                                                        .toString() ==
+                                                    userid
+                                                ? kPrimaryColor
+                                                //Color(0xffaf8a39)
+                                                : Colors.white,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10))),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(20.0),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                ticketinformation['data']
+                                                        ['Conversions'][index]
+                                                    ['user_name'],
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 16),
+                                              ),
+                                              // Divider(),
+
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Row(
+                                                // mainAxisAlignment:
+                                                //     MainAxisAlignment.spaceBetween,
                                                 children: [
                                                   Text(
-                                                    ticketinformation['data']
-                                                            ['Conversions']
-                                                        [index]['user_name'],
+                                                    'Last updated on: ',
                                                     style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontSize: 16),
+                                                        fontSize: 13,
+                                                        color: Colors.black),
                                                   ),
-                                                  // Divider(),
-
-                                                  SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  Row(
-                                                    // mainAxisAlignment:
-                                                    //     MainAxisAlignment.spaceBetween,
-                                                    children: [
-                                                      Text(
-                                                        'Last updated on: ',
-                                                        style: TextStyle(
-                                                            fontSize: 13,
-                                                            color:
-                                                                Colors.black),
-                                                      ),
-                                                      Text(
-                                                        ticketinformation[
-                                                                    'data']
-                                                                ['Conversions']
-                                                            [index]['time'],
-                                                        style: TextStyle(
-                                                            fontSize: 13,
-                                                            color:
-                                                                Colors.white),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: 10,
-                                                  ),
-
                                                   Text(
                                                     ticketinformation['data']
                                                             ['Conversions']
-                                                        [index]['message'],
+                                                        [index]['time'],
                                                     style: TextStyle(
                                                         fontSize: 13,
                                                         color: Colors.white),
                                                   ),
                                                 ],
                                               ),
-                                            ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+
+                                              Text(
+                                                ticketinformation['data']
+                                                        ['Conversions'][index]
+                                                    ['message'],
+                                                style: TextStyle(
+                                                    fontSize: 13,
+                                                    color: Colors.white),
+                                              ),
+                                            ],
                                           ),
-                                        ],
+                                        ),
                                       ),
-                                    );
-                                  })
-                              : Center(child: spinkit)
-                        ],
-                      );
-                    }),
+                                    ],
+                                  ),
+                                );
+                              })
+                          : Center(child: spinkit)
+                    ],
+                  );
+                }),
               ],
             ),
           ),
