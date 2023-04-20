@@ -53,6 +53,8 @@ dependencies:
   circular_countdown_timer: ^0.2.3
   flutter_otp_text_field: ^1.1.1
   agora_rtc_engine: ^5.3.0
+  html: ^0.15.2
+  flutter_html: ^3.0.0-alpha.6
   #flutter_html:
 dev_dependencies:
   carousel_slider: ^4.1.1
