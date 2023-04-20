@@ -257,7 +257,7 @@ class _HomeScreenState extends State<HomeScreen>
                                   SizedBox(
                                     width: 10,
                                   ),
-                                  officeTimings['data']['openingtiming'] ==
+                                  officeTimings['data']['status'] ==
                                           'online'
                                       ? Container(
                                           decoration: BoxDecoration(
@@ -307,7 +307,7 @@ class _HomeScreenState extends State<HomeScreen>
                               Padding(padding: EdgeInsets.all(7)),
                               GestureDetector(
                                 onTap: () async {
-                                  if (officeTimings['data']['openingtiming'] ==
+                                  if (officeTimings['data']['status'] ==
                                       'online') {
                                     Uri phoneno = Uri.parse('tel:+1307558873');
                                     if (await launchUrl(phoneno)) {
@@ -358,7 +358,7 @@ class _HomeScreenState extends State<HomeScreen>
                               Padding(padding: EdgeInsets.all(7)),
                               GestureDetector(
                                 onTap: () async {
-                                  if (officeTimings['data']['openingtiming'] ==
+                                  if (officeTimings['data']['status'] ==
                                       'online') {
                                     Uri email = Uri.parse(
                                         'mailto:+support@stands.aero');
