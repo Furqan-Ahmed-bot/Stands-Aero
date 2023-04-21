@@ -452,7 +452,9 @@ class _TicketInformationState extends State<TicketInformation> {
                                   Container(
                                     height: 30,
                                     child: Checkbox(
-                                      value: checkListItems[index]["value"],
+                                      value: widget.status == 'Solved'
+                                          ? true
+                                          : checkListItems[index]["value"],
                                       onChanged: (value) {
                                         setState(() {
                                           for (var element in checkListItems) {
@@ -627,7 +629,15 @@ class _TicketInformationState extends State<TicketInformation> {
                                                         [index]['time'],
                                                     style: TextStyle(
                                                         fontSize: 13,
-                                                        color: Colors.white),
+                                                        color: ticketinformation['data']['Conversions']
+                                                                            [
+                                                                            index]
+                                                                        [
+                                                                        'user_id']
+                                                                    .toString() ==
+                                                                userid
+                                                            ? Colors.white
+                                                            : Colors.black),
                                                   ),
                                                 ],
                                               ),
@@ -641,7 +651,15 @@ class _TicketInformationState extends State<TicketInformation> {
                                                     ['message'],
                                                 style: TextStyle(
                                                     fontSize: 13,
-                                                    color: Colors.white),
+                                                    color: ticketinformation['data']
+                                                                            [
+                                                                            'Conversions']
+                                                                        [index]
+                                                                    ['user_id']
+                                                                .toString() ==
+                                                            userid
+                                                        ? Colors.white
+                                                        : Colors.black),
                                               ),
                                             ],
                                           ),

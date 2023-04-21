@@ -13,7 +13,9 @@ import '../kyc_Form/kyc_form.dart';
 
 class quotes_details extends StatefulWidget {
   final quoteId;
-  const quotes_details({Key? key, required this.quoteId}) : super(key: key);
+  final orderstatus;
+  quotes_details({Key? key, required this.quoteId, this.orderstatus})
+      : super(key: key);
 
   @override
   State<quotes_details> createState() => _quotes_detailsState();
@@ -158,53 +160,80 @@ class _quotes_detailsState extends State<quotes_details> {
                                   ),
                                 ),
                               ),
-                              GestureDetector(
-                                onTap: () async {
-                                  FilePickerResult? resultvar =
-                                      await FilePicker.platform.pickFiles(
-                                    type: FileType.custom,
-                                    allowedExtensions: ['pdf', 'docx'],
-                                  );
-                                  if (resultvar != null) {
-                                    String? filevar =
-                                        resultvar.files.single.path;
-                                    filePath = filevar;
-                                    fileType = resultvar.files.single.extension;
+                              widget.orderstatus == true
+                                  ? GestureDetector(
+                                      onTap: () async {},
+                                      child: Container(
+                                        width: res_width * 0.6,
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(7))),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(13.0),
+                                          child: Center(
+                                            child: Text(
+                                              fileName != null
+                                                  ? fileName.toString()
+                                                  : 'Upload Your Tax Certificate',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 12),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  : GestureDetector(
+                                      onTap: () async {
+                                        FilePickerResult? resultvar =
+                                            await FilePicker.platform.pickFiles(
+                                          type: FileType.custom,
+                                          allowedExtensions: ['pdf', 'docx'],
+                                        );
+                                        if (resultvar != null) {
+                                          String? filevar =
+                                              resultvar.files.single.path;
+                                          filePath = filevar;
+                                          fileType =
+                                              resultvar.files.single.extension;
 
-                                    log("filevar" + filevar.toString());
-                                    log("filevar type" +
-                                        resultvar.files.single.extension
-                                            .toString());
+                                          log("filevar" + filevar.toString());
+                                          log("filevar type" +
+                                              resultvar.files.single.extension
+                                                  .toString());
 
-                                    setState(() {
-                                      fileName = resultvar.files.single.name;
-                                    });
-                                  } else {
-                                    // User canceled the picker
-                                  }
-                                },
-                                child: Container(
-                                  width: res_width * 0.6,
-                                  decoration: BoxDecoration(
-                                      color: Color(0xff85714e),
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(7))),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(13.0),
-                                    child: Center(
-                                      child: Text(
-                                        fileName != null
-                                            ? fileName.toString()
-                                            : 'Upload Your Tax Certificate',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 12),
+                                          setState(() {
+                                            fileName =
+                                                resultvar.files.single.name;
+                                          });
+                                        } else {
+                                          // User canceled the picker
+                                        }
+                                      },
+                                      child: Container(
+                                        width: res_width * 0.6,
+                                        decoration: BoxDecoration(
+                                            color: Color(0xff85714e),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(7))),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(13.0),
+                                          child: Center(
+                                            child: Text(
+                                              fileName != null
+                                                  ? fileName.toString()
+                                                  : 'Upload Your Tax Certificate',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 12),
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ),
-                              ),
                             ],
                           ),
                         ),
@@ -355,59 +384,87 @@ class _quotes_detailsState extends State<quotes_details> {
                           height: res_height * 0.02,
                         ),
                         responseData[0]['status'] == "Approved"
-                            ? GestureDetector(
-                                onTap: () {
-                                  // Get.to(() => payment());
-                                  // var sendData = {
-                                  //   'tax_file': filePath,
-                                  //   'quote_id': widget.quoteId,
-                                  //   'fileType': fileType
-                                  // };
-                                  // var res_data = ApiService()
-                                  //     .placeOrder(context, sendData);
-                                  // if (res_data = ['status'] == true) {}
-                                  // if(responseData[])
-
-                                  if (filePath == null && fileType == null) {
-                                    Get.snackbar(
-                                      'Error',
-                                      'Please upload tax certificate',
-                                      animationDuration: Duration(seconds: 2),
-                                      snackPosition: SnackPosition.BOTTOM,
-                                    );
-                                  } else if (is_kyc == 0) {
-                                    Get.to(kyc_form(
-                                      clientId: int.parse(userid),
-                                    ));
-                                  } else {
-                                    placeOrderData_tax_file = filePath;
-                                    placeOrderData_quote_id = widget.quoteId;
-                                    placeOrderData_fileType = fileType;
-                                    Get.to(lease_Form(placeOrderData));
-                                  }
-
-                                  //                             }
-                                },
-                                child: Container(
-                                  width: res_width * 0.95,
-                                  decoration: BoxDecoration(
-                                      color: Color(0xff85714e),
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(7))),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(13.0),
-                                    child: Center(
-                                      child: Text(
-                                        'Place Order',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 17),
+                            ? widget.orderstatus == true
+                                ? GestureDetector(
+                                    onTap: () {
+                                      //                             }
+                                    },
+                                    child: Container(
+                                      width: res_width * 0.95,
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(7))),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(13.0),
+                                        child: Center(
+                                          child: Text(
+                                            'Place Order',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 17),
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ),
-                              )
+                                  )
+                                : GestureDetector(
+                                    onTap: () {
+                                      // Get.to(() => payment());
+                                      // var sendData = {
+                                      //   'tax_file': filePath,
+                                      //   'quote_id': widget.quoteId,
+                                      //   'fileType': fileType
+                                      // };
+                                      // var res_data = ApiService()
+                                      //     .placeOrder(context, sendData);
+                                      // if (res_data = ['status'] == true) {}
+                                      // if(responseData[])
+
+                                      if (filePath == null &&
+                                          fileType == null) {
+                                        Get.snackbar(
+                                          'Error',
+                                          'Please upload tax certificate',
+                                          animationDuration:
+                                              Duration(seconds: 2),
+                                          snackPosition: SnackPosition.BOTTOM,
+                                        );
+                                      } else if (is_kyc == 0) {
+                                        Get.to(kyc_form(
+                                          clientId: int.parse(userid),
+                                        ));
+                                      } else {
+                                        placeOrderData_tax_file = filePath;
+                                        placeOrderData_quote_id =
+                                            widget.quoteId;
+                                        placeOrderData_fileType = fileType;
+                                        Get.to(lease_Form(placeOrderData));
+                                      }
+
+                                      //                             }
+                                    },
+                                    child: Container(
+                                      width: res_width * 0.95,
+                                      decoration: BoxDecoration(
+                                          color: Color(0xff85714e),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(7))),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(13.0),
+                                        child: Center(
+                                          child: Text(
+                                            'Place Order',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 17),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
                             : Container(),
                         SizedBox(
                           height: res_height * 0.01,

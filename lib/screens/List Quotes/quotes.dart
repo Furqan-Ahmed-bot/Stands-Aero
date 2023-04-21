@@ -129,26 +129,34 @@ class _quotesState extends State<quotes> with TickerProviderStateMixin {
                                               quotations_data['data']
                                                   .length
                                                   .toString());
-                                          return quotations_data['data'].length > 0
+                                          return quotations_data['data']
+                                                      .length >
+                                                  0
                                               ? Quotess_Card(
                                                   id: quotations_data['data']
                                                       [index]['quote_id'],
-                                                  status: quotations_data['data']
-                                                      [index]['status'],
+                                                  status:
+                                                      quotations_data['data']
+                                                          [index]['status'],
                                                   name: quotations_data['data']
                                                       [index]['product_name'],
-                                                  location: quotations_data['data']
-                                                                  [index]
+                                                  location: quotations_data[
+                                                                  'data'][index]
                                                               ['location'] ==
                                                           null
                                                       ? "No Location"
                                                       : quotations_data['data']
                                                           [index]['location'],
-                                                  description: quotations_data['data']
-                                                          [index]
+                                                  description: quotations_data[
+                                                          'data'][index]
                                                       ['product_description'],
                                                   image: quotations_data['data']
-                                                      [index]['product_image'])
+                                                      [index]['product_image'],
+                                                  orderstatus:
+                                                      quotations_data['data']
+                                                              [index]
+                                                          ['order_status'],
+                                                )
                                               : Text("No Quotes found");
                                         })
                                     : Container(
@@ -183,7 +191,7 @@ class _quotesState extends State<quotes> with TickerProviderStateMixin {
 
 // ignore: must_be_immutable
 class Quotess_Card extends StatelessWidget {
-  dynamic name, location, description, status, image, id;
+  dynamic name, location, description, status, image, id, orderstatus;
 
   Quotess_Card(
       {Key? key,
@@ -192,7 +200,8 @@ class Quotess_Card extends StatelessWidget {
       this.description,
       this.status,
       this.image,
-      this.id})
+      this.id,
+      this.orderstatus})
       : super(key: key);
 
   @override
@@ -208,7 +217,10 @@ class Quotess_Card extends StatelessWidget {
             log("onclic id" + id);
 
             if (id != null) {
-              Get.to(() => quotes_details(quoteId: id));
+              Get.to(() => quotes_details(
+                    quoteId: id,
+                    orderstatus: orderstatus,
+                  ));
             }
 
             // Get.to(quotes_details(
