@@ -22,6 +22,8 @@ class _lease_form8State extends State<lease_form8> {
     stand_color.text = global_stand_color;
     stand_type.text = global_stand_type;
     stand_serial_number.text = global_stand_serial_number;
+    stand_quantity.text = global_stand_quantity;
+
     super.initState();
   }
 
@@ -452,9 +454,51 @@ class _lease_form8State extends State<lease_form8> {
                                               fontSize: 15,
                                             ),
                                           ),
-                                          blank(
-                                              widt: 50,
-                                              kontroller: stand_manufacturer),
+                                          // blank(
+                                          //     widt: 50,
+                                          //     kontroller: stand_quantity),
+                                          TextFormField(
+                                            controller: stand_quantity,
+                                            validator: (value) {
+                                              if (value == null ||
+                                                  value.isEmpty) {
+                                                return 'Required';
+                                              }
+                                              return null;
+                                            },
+                                            // maxLength: 5,
+                                            keyboardType: TextInputType.number,
+                                            inputFormatters: <
+                                                TextInputFormatter>[
+                                              FilteringTextInputFormatter
+                                                  .digitsOnly
+                                            ],
+                                            decoration: InputDecoration(
+                                              isCollapsed: true,
+                                              // contentPadding: EdgeInsets.symmetric(vertical: 0),
+                                              constraints: BoxConstraints(
+                                                  maxWidth: 60, minWidth: 10),
+                                              border: UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.grey),
+                                              ),
+                                              enabledBorder:
+                                                  UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.grey),
+                                              ),
+                                              focusedBorder:
+                                                  UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.grey),
+                                              ),
+                                              disabledBorder:
+                                                  UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.grey),
+                                              ),
+                                            ),
+                                          ),
                                         ],
                                       ),
                                       Row(
