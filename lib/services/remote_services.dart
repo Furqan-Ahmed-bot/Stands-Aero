@@ -371,7 +371,7 @@ class ApiService {
     print(uri);
 
     var request = http.MultipartRequest('POST', uri);
-    request.fields['name'] = data['name'].toString();
+    request.fields['username'] = data['name'].toString();
     request.fields['email'] = data['email'].toString();
     request.fields['phone'] = data['phone'].toString();
     request.fields['country'] = data['country'].toString();
@@ -384,7 +384,7 @@ class ApiService {
       print(data['photo'].toString());
       print(data['photo'].path.toString());
       var multipartFile = await http.MultipartFile.fromPath(
-          'photo', data['photo']!.path,
+          'image', data['photo']!.path,
           filename: data['photo'].path.split('/').last,
           contentType: MediaType("image", "jpg"));
       request.files.add(multipartFile);

@@ -60,7 +60,9 @@ class _EditprofileState extends State<Editprofile> {
     country.text = usercontroller.user.country.toString();
     city.text = usercontroller.user.city.toString();
     _selectedValue1 = usercontroller.user.city.toString();
-    description.text = usercontroller.user.description.toString();
+    description.text = usercontroller.user.description.toString() == 'null'
+          ? 'Enter your Description'
+          : usercontroller.user.description.toString();
 
     log('settingvalue: $email');
     log('settingvalue2: $phone');
