@@ -4,6 +4,7 @@ import 'package:StandsAero/helper/data_storage.dart';
 import 'package:StandsAero/screens/Profile/editprofile.dart';
 import 'package:StandsAero/screens/home/drawer.dart';
 import 'package:StandsAero/services/remote_services.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -164,36 +165,39 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
               padding: const EdgeInsets.fromLTRB(18.0, 8.0, 18.0, 18.0),
               child: Column(
                 children: [
-                  // ClipRRect(
-                  //   borderRadius: BorderRadius.circular(0),
-                  //   child: CachedNetworkImage(
-                  //     height: 100,
-                  //     width: 100,
-                  //     imageUrl: '',
-                  //     //usercontroller.user.propic.toString(),
-                  //     errorWidget: (context, url, error) {
-                  //       return Container(
-                  //         height: 50,
-                  //         width: 50,
-                  //         decoration: BoxDecoration(
-                  //           color: Colors.grey,
-                  //           borderRadius: BorderRadius.circular(0),
-                  //         ),
-                  //         child: Center(
-                  //             child: Icon(
-                  //           Icons.image,
-                  //           color: Colors.black,
-                  //         )),
-                  //       );
-                  //     },
-                  //   ),
+                  // userController.user.propic?.contains('1567655174profile.jpg')
+                  // ?
+                  Container(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(100),
+                      child: CachedNetworkImage(
+                        height: 100,
+                        width: 100,
+                        imageUrl:userController.user.propic.toString(),
+                        errorWidget: (context, url, error) {
+                          return Container(
+                            height: 50,
+                            width: 50,
+                            decoration: BoxDecoration(
+                              color: Colors.grey,
+                              borderRadius: BorderRadius.circular(0),
+                            ),
+                            child: Center(
+                                child: Icon(
+                              Icons.image,
+                              color: Colors.black,
+                            )),
+                          );
+                        },
+                      ),
+                    ),
+                  ), 
+                  // CircleAvatar(
+                  //   backgroundColor: Colors.transparent,
+                  //   radius: 60,
+                  //   backgroundImage:
+                  //       AssetImage('assets/slicing/Untitled-31.png'),
                   // ),
-                  CircleAvatar(
-                    backgroundColor: Colors.transparent,
-                    radius: 60,
-                    backgroundImage:
-                        AssetImage('assets/slicing/Untitled-31.png'),
-                  ),
                   SizedBox(
                     height: 20,
                   ),
