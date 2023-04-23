@@ -1,8 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:StandsAero/screens/payment/paymentrecieved.dart';
 
@@ -70,11 +68,11 @@ class _AwaitingConfirmState extends State<AwaitingConfirm> {
                       SizedBox(
                         height: res_height * 0.005,
                       ),
-                      Text(
-                        'Lorem ipsum dolor sit amet consectetur adip- iscing elit libero, sollicitudin dignissim vel cubilia blandit pellentesque tellus.',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 13.5),
-                      )
+                      // Text(
+                      //   'Lorem ipsum dolor sit amet consectetur adip- iscing elit libero, sollicitudin dignissim vel cubilia blandit pellentesque tellus.',
+                      //   textAlign: TextAlign.center,
+                      //   style: TextStyle(fontSize: 13.5),
+                      // )
                     ],
                   ),
                 ),

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class OrderStatusDetail extends StatefulWidget {
   final type;
@@ -67,8 +65,7 @@ class _OrderStatusDetailState extends State<OrderStatusDetail> {
               Quotes_Card(
                 MODEL: "CF34-10 DAE",
                 location: "Miami, Florida",
-                description:
-                    "Lorem Ipsum is simply \ndummy text of the printing \nand typesetting industry",
+                description: "",
               ),
               SizedBox(
                 height: res_height * 0.03,
@@ -105,15 +102,15 @@ class _OrderStatusDetailState extends State<OrderStatusDetail> {
                           SizedBox(
                             height: res_height * 0.006,
                           ),
-                          Container(
-                              width: res_width * 0.725,
-                              child: Text(
-                                  'Lorem ipsum dolor sit amet consectetur adipiscing elit estmaecenas aenea. Lorem ipsum dolor sit amet consectetur adipiscing elit estmaecenas aenea. Lorem ipsum dolor sit amet consectetur adipiscing elit estmaecenas aenea.',
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    height: 1.5,
-                                    fontSize: 13,
-                                  )))
+                          // Container(
+                          //     width: res_width * 0.725,
+                          //     child: Text(
+                          //         'Lorem ipsum dolor sit amet consectetur adipiscing elit estmaecenas aenea. Lorem ipsum dolor sit amet consectetur adipiscing elit estmaecenas aenea. Lorem ipsum dolor sit amet consectetur adipiscing elit estmaecenas aenea.',
+                          //         style: TextStyle(
+                          //           color: Colors.grey,
+                          //           height: 1.5,
+                          //           fontSize: 13,
+                          //         )))
                         ],
                       ),
                     ],
