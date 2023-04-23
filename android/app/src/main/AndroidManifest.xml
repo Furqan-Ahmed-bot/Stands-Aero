@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.StandsAero">
+    package="com.nationalaero.stands">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="Stands Aero"

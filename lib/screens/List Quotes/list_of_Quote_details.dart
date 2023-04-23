@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:StandsAero/helper/global.dart';
 import 'package:StandsAero/helper/loader.dart';
@@ -8,7 +9,8 @@ import 'package:StandsAero/services/remote_services.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as path;
 import '../kyc_Form/kyc_form.dart';
 
 class quotes_details extends StatefulWidget {
@@ -193,21 +195,57 @@ class _quotes_detailsState extends State<quotes_details> {
                                           allowedExtensions: ['pdf', 'docx'],
                                         );
                                         if (resultvar != null) {
-                                          String? filevar =
-                                              resultvar.files.single.path;
-                                          filePath = filevar;
+                                          File? filevar = File(
+                                              resultvar.files.single.path!);
+
+                                          if (Platform.isIOS) {
+                                            final documentPath =
+                                                (await getApplicationDocumentsDirectory())
+                                                    .path;
+                                            filevar = await filevar.copy(
+                                                '$documentPath/${path.basename(filevar.path)}');
+                                          }
+
+                                          filePath = filevar.path;
                                           fileType =
                                               resultvar.files.single.extension;
 
-                                          log("filevar" + filevar.toString());
-                                          log("filevar type" +
-                                              resultvar.files.single.extension
-                                                  .toString());
+                                          File file = File(filePath.toString());
+                                          bool exists = await file.exists();
 
-                                          setState(() {
-                                            fileName =
-                                                resultvar.files.single.name;
-                                          });
+                                          if (exists) {
+                                            // File exists
+                                            print('File exists at $filePath');
+                                            log("filevar" + filevar.toString());
+                                            log("filevar type" +
+                                                resultvar.files.single.extension
+                                                    .toString());
+
+                                            bool isReadable = file
+                                                    .statSync()
+                                                    .modeString()[0] ==
+                                                'r';
+                                            bool isWritable = file
+                                                    .statSync()
+                                                    .modeString()[1] ==
+                                                'w';
+                                            if (isReadable && isWritable) {
+                                              // File can be accessed
+                                              print('File can be accessed.');
+                                            } else {
+                                              // File permissions are insufficient
+                                              print(
+                                                  'Insufficient file permissions.');
+                                            }
+                                            setState(() {
+                                              fileName =
+                                                  resultvar.files.single.name;
+                                            });
+                                          } else {
+                                            // File does not exist
+                                            print(
+                                                'File does not exist at $filePath');
+                                          }
                                         } else {
                                           // User canceled the picker
                                         }

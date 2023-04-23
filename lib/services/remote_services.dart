@@ -867,9 +867,9 @@ class ApiService {
         attachmentType = 'application';
       }
       var multipartFile = await http.MultipartFile.fromPath(
-          'tax_file', sendData['tax_file'],
-          filename: sendData['tax_file'].split('/').last,
-          contentType: MediaType(attachmentType, currentFileType));
+        'tax_file',
+        sendData['tax_file'].toString(),
+      );
       request.files.add(multipartFile);
     }
 

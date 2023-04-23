@@ -2,8 +2,24 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app requires access to the photo library</string>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Need camera access for to update the profile picture</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Allow access to your microphone</string>
+	<key>NSDocumentsFolderUsageDescription</key>
+	<string>Allow access to the documents folder</string>
+	<key>NSDownloadsFolderUsageDescription</key>
+	<string>Allow access to the downloads folder</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>Allow access to your reminders</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>Allow tracking of your activity across apps and websites owned by other companies</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -45,5 +61,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
 </dict>
 </plist>
