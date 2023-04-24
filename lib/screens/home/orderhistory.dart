@@ -120,11 +120,18 @@ class _OrderHistoryState extends State<OrderHistory> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Image.asset(
-                                    'assets/slicing/no-data-found.png',
-                                    fit: BoxFit.cover,
-                                    height: 300,
-                                  ),
+                                  Text(
+                                    'No Order Has been placed yet.',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  )
+
+                                  // Image.asset(
+                                  //   'assets/slicing/no-data-found.png',
+                                  //   fit: BoxFit.cover,
+                                  //   height: 300,
+                                  // ),
                                 ],
                               )),
                     ),

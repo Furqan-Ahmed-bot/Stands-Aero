@@ -176,11 +176,18 @@ class _TexCertificateScreenState extends State<TexCertificateScreen> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Image.asset(
-                                          'assets/slicing/no-data-found.png',
-                                          fit: BoxFit.cover,
-                                          height: 300,
-                                        ),
+                                        Text(
+                                          'No Text Certificate Avalible Yet.',
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
+                                        )
+
+                                        // Image.asset(
+                                        //   'assets/slicing/no-data-found.png',
+                                        //   fit: BoxFit.cover,
+                                        //   height: 300,
+                                        // ),
                                       ],
                                     )),
                           )

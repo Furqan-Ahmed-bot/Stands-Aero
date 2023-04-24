@@ -165,11 +165,17 @@ class _quotesState extends State<quotes> with TickerProviderStateMixin {
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            Image.asset(
-                                              'assets/slicing/no-data-found.png',
-                                              fit: BoxFit.cover,
-                                              height: 300,
-                                            ),
+                                            Text(
+                                              'No Quotation Has been Created yet.',
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold),
+                                            )
+                                            // Image.asset(
+                                            //   'assets/slicing/no-data-found.png',
+                                            //   fit: BoxFit.cover,
+                                            //   height: 300,
+                                            // ),
                                           ],
                                         )),
                               ),

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:StandsAero/helper/loader.dart';
-import 'package:StandsAero/screens/List%20Quotes/list_of_Quote_details.dart';
 import 'package:StandsAero/screens/home/drawer.dart';
 import 'package:StandsAero/services/remote_services.dart';
 
@@ -114,11 +112,17 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Image.asset(
-                                    'assets/slicing/no-data-found.png',
-                                    fit: BoxFit.cover,
-                                    height: 300,
-                                  ),
+                                  Text(
+                                    'No Payment History Yet.',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  )
+                                  // Image.asset(
+                                  //   'assets/slicing/no-data-found.png',
+                                  //   fit: BoxFit.cover,
+                                  //   height: 300,
+                                  // ),
                                 ],
                               )),
                     ),
@@ -163,10 +167,9 @@ class Quotes_Card extends StatelessWidget {
             child: Container(
               width: res_width * 0.90,
               child: Card(
-                 shape: RoundedRectangleBorder(
-   
-    borderRadius: BorderRadius.circular(10.0), //<-- SEE HERE
-  ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0), //<-- SEE HERE
+                ),
                 // margin: EdgeInsets.fromLTRB(18.0, 4.0, 18.0, 18.0),
                 elevation: 8,
                 child: Padding(
