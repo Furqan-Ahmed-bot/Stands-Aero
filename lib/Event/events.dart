@@ -1,5 +1,7 @@
+import 'package:StandsAero/Event/eventdetails.dart';
 import 'package:StandsAero/helper/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../services/remote_services.dart';
 import 'package:intl/intl.dart';
@@ -125,7 +127,7 @@ class _EventScreenState extends State<EventScreen> {
               height: 60,
               child: TextFormField(
                 onChanged: (value) {
-                  search('');
+                  search(value);
                 },
                 controller: _searchcontroller,
                 decoration: InputDecoration(
@@ -133,7 +135,7 @@ class _EventScreenState extends State<EventScreen> {
                   hintText: "Search...",
                   suffixIcon: InkWell(
                     onTap: () {
-                      search(_searchcontroller.text);
+                      // search(_searchcontroller.text);
                     },
                     child: Padding(
                         padding: const EdgeInsets.only(right: 10),
@@ -220,7 +222,7 @@ class _EventScreenState extends State<EventScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(right: 20),
+                  padding: const EdgeInsets.only(right: 10),
                   child: InkWell(
                     onTap: () async {
                       DateTime? pickedDate = await showDatePicker(
@@ -257,9 +259,14 @@ class _EventScreenState extends State<EventScreen> {
                         height: 55,
                         width: res_width * 0.4,
                         child: DropdownButtonFormField(
+                          dropdownColor: kPrimaryColor,
+                          iconEnabledColor: Colors.white,
                           isDense: true,
                           isExpanded: true,
                           decoration: InputDecoration(
+                            hintText: '       Location',
+                            hintStyle:
+                                TextStyle(color: Colors.white, fontSize: 14),
                             labelStyle: TextStyle(color: Colors.white),
 
                             prefixIconConstraints: BoxConstraints(minWidth: 25),
@@ -285,8 +292,7 @@ class _EventScreenState extends State<EventScreen> {
                                 child: new Text(
                                   item, //Names that the api dropdown contains
                                   style: TextStyle(
-                                    fontSize: 13.0,
-                                  ),
+                                      fontSize: 13.0, color: Colors.white),
                                 ),
                                 value: item
                                     .toString() //Id that has to be passed that the dropdown has.....
@@ -304,6 +310,7 @@ class _EventScreenState extends State<EventScreen> {
                             //   }
                             // }
                             search(newVal);
+                            _isButtonVisible = true;
                           },
                           value:
                               SelectedValue, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
@@ -312,138 +319,155 @@ class _EventScreenState extends State<EventScreen> {
                     ),
                   ),
                 ),
-              ],
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                TextFormField(
-                  controller: delivery_date,
-                  readOnly: true,
-                  onSaved: (newValue) => delivery_date.text,
-                  style: TextStyle(color: Colors.black),
-                  decoration: InputDecoration(
-                    isCollapsed: true,
-                    // contentPadding: EdgeInsets.symmetric(vertical: 0),
-                    constraints: BoxConstraints(maxWidth: 120, minWidth: 10),
-                    border: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey),
-                    ),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey),
-                    ),
-                    disabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey),
-                    ),
-                  ),
-                  onTap: () async {
-                    DateTime? pickedDate = await showDatePicker(
-                        context: context, //context of current state
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(
-                            2000), //DateTime.now() - not to allow to choose before today.
-                        lastDate: DateTime(2101));
-
-                    if (pickedDate != null) {
-                      // print("date"+
-                      //     pickedDate.toString()); //pickedDate output format => 2021-03-10 00:00:00.000
-                      String formattedDate =
-                          DateFormat('yyyy-MM-dd').format(pickedDate);
-                      // print("final date" + formattedDate);
-                      setState(() {
-                        _isButtonVisible = true;
-                        print('Okkkkkkkkkkkkkk');
-                        delivery_date.text = formattedDate;
-                        search(delivery_date
-                            .text); //set output date to TextField value.
-                      });
-                      // print("delivery_date.text" + delivery_date.text);
-                      //formatted date output using intl package =>  2021-03-16
-                    } else {
-                      print("Date is not selected");
-                    }
-                  },
-                ),
-                DropdownButtonHideUnderline(
-                  child:
-
-                      //starting the dropdown
-                      SizedBox(
-                    height: 55,
-                    width: res_width * 0.4,
-                    child: DropdownButtonFormField(
-                      isDense: true,
-                      isExpanded: true,
-                      decoration: InputDecoration(
-                        prefixIconConstraints: BoxConstraints(minWidth: 25),
-                        //prefixIcon: Icon(Icons.arrow_drop_down),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                          ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                          ),
-                        ),
-
-                        filled: true,
-                        fillColor: kPrimaryColor,
-                      ),
-                      items: eventlocations.map((item) {
-                        return new DropdownMenuItem(
-                            child: new Text(
-                              item, //Names that the api dropdown contains
-                              style: TextStyle(
-                                fontSize: 13.0,
-                              ),
-                            ),
-                            value: item
-                                .toString() //Id that has to be passed that the dropdown has.....
-                            //e.g   India (Name)    and   its   ID (55fgf5f6frf56f) somethimg like that....
-                            );
-                      }).toList(),
-                      onChanged: (newVal) {
-                        // for (var i = 0; i < mylistt.length; i++) {
-                        //   if (newVal == mylistt[i]['name']) {
-                        //     setState(() {
-                        //       categoryid = mylistt[i]['id'];
-                        //       print('priorityyyyyyy ${categoryid}');
-                        //     });
-                        //     break;
-                        //   }
-                        // }
-                      },
-                      value:
-                          SelectedValue, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
                 _isButtonVisible
-                    ? InkWell(
-                        onTap: () {
-                          setState(() {
-                            search('');
-                            delivery_date.clear();
-                            _isButtonVisible = false;
-                          });
-                        },
-                        child: Icon(Icons.clear))
+                    ? Padding(
+                        padding: const EdgeInsets.only(right: 5),
+                        child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                search('');
+                                delivery_date.clear();
+                                _isButtonVisible = false;
+                              });
+                            },
+                            child: Icon(Icons.clear)),
+                      )
                     : Container()
               ],
+            ),
+            // SizedBox(
+            //   height: 30,
+            // ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   crossAxisAlignment: CrossAxisAlignment.center,
+            //   children: [
+            //     TextFormField(
+            //       controller: delivery_date,
+            //       readOnly: true,
+            //       onSaved: (newValue) => delivery_date.text,
+            //       style: TextStyle(color: Colors.black),
+            //       decoration: InputDecoration(
+            //         isCollapsed: true,
+            //         // contentPadding: EdgeInsets.symmetric(vertical: 0),
+            //         constraints: BoxConstraints(maxWidth: 120, minWidth: 10),
+            //         border: UnderlineInputBorder(
+            //           borderSide: BorderSide(color: Colors.grey),
+            //         ),
+            //         enabledBorder: UnderlineInputBorder(
+            //           borderSide: BorderSide(color: Colors.grey),
+            //         ),
+            //         focusedBorder: UnderlineInputBorder(
+            //           borderSide: BorderSide(color: Colors.grey),
+            //         ),
+            //         disabledBorder: UnderlineInputBorder(
+            //           borderSide: BorderSide(color: Colors.grey),
+            //         ),
+            //       ),
+            //       onTap: () async {
+            //         DateTime? pickedDate = await showDatePicker(
+            //             context: context, //context of current state
+            //             initialDate: DateTime.now(),
+            //             firstDate: DateTime(
+            //                 2000), //DateTime.now() - not to allow to choose before today.
+            //             lastDate: DateTime(2101));
+
+            //         if (pickedDate != null) {
+            //           // print("date"+
+            //           //     pickedDate.toString()); //pickedDate output format => 2021-03-10 00:00:00.000
+            //           String formattedDate =
+            //               DateFormat('yyyy-MM-dd').format(pickedDate);
+            //           // print("final date" + formattedDate);
+            //           setState(() {
+            //             _isButtonVisible = true;
+            //             print('Okkkkkkkkkkkkkk');
+            //             delivery_date.text = formattedDate;
+            //             search(delivery_date
+            //                 .text); //set output date to TextField value.
+            //           });
+            //           // print("delivery_date.text" + delivery_date.text);
+            //           //formatted date output using intl package =>  2021-03-16
+            //         } else {
+            //           print("Date is not selected");
+            //         }
+            //       },
+            //     ),
+            //     DropdownButtonHideUnderline(
+            //       child:
+
+            //           //starting the dropdown
+            //           SizedBox(
+            //         height: 55,
+            //         width: res_width * 0.4,
+            //         child: DropdownButtonFormField(
+            //           isDense: true,
+            //           isExpanded: true,
+            //           decoration: InputDecoration(
+            //             prefixIconConstraints: BoxConstraints(minWidth: 25),
+            //             //prefixIcon: Icon(Icons.arrow_drop_down),
+            //             focusedBorder: OutlineInputBorder(
+            //               borderRadius: BorderRadius.circular(10.0),
+            //               borderSide: BorderSide(
+            //                 color: Colors.transparent,
+            //               ),
+            //             ),
+            //             enabledBorder: OutlineInputBorder(
+            //               borderRadius: BorderRadius.circular(10.0),
+            //               borderSide: BorderSide(
+            //                 color: Colors.transparent,
+            //               ),
+            //             ),
+
+            //             filled: true,
+            //             fillColor: kPrimaryColor,
+            //           ),
+            //           items: eventlocations.map((item) {
+            //             return new DropdownMenuItem(
+            //                 child: new Text(
+            //                   item, //Names that the api dropdown contains
+            //                   style: TextStyle(
+            //                     fontSize: 13.0,
+            //                   ),
+            //                 ),
+            //                 value: item
+            //                     .toString() //Id that has to be passed that the dropdown has.....
+            //                 //e.g   India (Name)    and   its   ID (55fgf5f6frf56f) somethimg like that....
+            //                 );
+            //           }).toList(),
+            //           onChanged: (newVal) {
+            //             // for (var i = 0; i < mylistt.length; i++) {
+            //             //   if (newVal == mylistt[i]['name']) {
+            //             //     setState(() {
+            //             //       categoryid = mylistt[i]['id'];
+            //             //       print('priorityyyyyyy ${categoryid}');
+            //             //     });
+            //             //     break;
+            //             //   }
+            //             // }
+            //           },
+            //           value:
+            //               SelectedValue, //pasing the default id that has to be viewed... //i havnt used something ... //you can place some (id)
+            //         ),
+            //       ),
+            //     ),
+            //     SizedBox(
+            //       width: 10,
+            //     ),
+            //     _isButtonVisible
+            //         ? InkWell(
+            //             onTap: () {
+            //               setState(() {
+            //                 search('');
+            //                 delivery_date.clear();
+            //                 _isButtonVisible = false;
+            //               });
+            //             },
+            //             child: Icon(Icons.clear))
+            //         : Container()
+            //   ],
+            // ),
+            SizedBox(
+              height: 10,
             ),
             Expanded(
               child: SingleChildScrollView(
@@ -455,25 +479,24 @@ class _EventScreenState extends State<EventScreen> {
                           shrinkWrap: true,
                           itemCount: eventfiltered.length,
                           itemBuilder: (context, index) {
+                            String str = eventfiltered[index]['url'];
+                            var arr = str.split('/');
                             // var doc = parse(getticketdata['data']
                             //     ['ticket'][index]['message']);
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: InkWell(
                                 onTap: () {
-                                  // Get.to(TicketInformation(
-                                  //   id: getticketdata['data']['ticket']
-                                  //       [index]['ticket_id'],
-                                  //   category: getticketdata['data']
-                                  //           ['ticket'][index]
-                                  //       ['category_name'],
-                                  //   date: getticketdata['data']
-                                  //       ['ticket'][index]['created_at'],
-                                  //   status: getticketdata['data']
-                                  //       ['ticket'][index]['status'],
-                                  //   description: getticketdata['data']
-                                  //       ['ticket'][index]['message'],
-                                  // ));
+                                  Get.to(EventsDetails(
+                                    eventtitle: eventfiltered[index]['title'],
+                                    eventdate: eventfiltered[index]['start'],
+                                    eventlocation: eventfiltered[index]
+                                        ['address'],
+                                    eventimage: eventfiltered[index]['image'],
+                                    eventdescription: eventfiltered[index]
+                                        ['description'],
+                                    eventurl: eventfiltered[index]['url'],
+                                  ));
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
@@ -494,27 +517,32 @@ class _EventScreenState extends State<EventScreen> {
                                             padding: const EdgeInsets.fromLTRB(
                                                 20, 20, 10, 10),
                                             child: Container(
-                                              decoration: BoxDecoration(
-                                                  color: Colors.grey[400],
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(10))),
-                                              height: 100,
-                                              width: 100,
-                                              child: Image.network(
-                                                eventfiltered[index]['image'] !=
+                                                // color: Colors.blue,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.grey[400],
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10))),
+                                                height: 100,
+                                                width: 100,
+                                                child: eventfiltered[index]
+                                                            ['image'] !=
                                                         null
-                                                    ? eventfiltered[index]
-                                                        ['image']
-                                                    : '',
-                                              ),
-                                            ),
+                                                    ? Image.network(
+                                                        eventfiltered[index]
+                                                            ['image'],
+                                                      )
+                                                    : Image.asset(
+                                                        'assets/images/dummyProduct.png',
+                                                        fit: BoxFit.cover,
+                                                      )),
                                           ),
                                           SizedBox(
                                             width: res_width * 0.013,
                                           ),
                                           Container(
-                                            width: 210,
+                                            width: res_width * 0.51,
                                             child: Column(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
@@ -585,6 +613,38 @@ class _EventScreenState extends State<EventScreen> {
                                                     ),
                                                   ],
                                                 ),
+                                                // SizedBox(
+                                                //   height: 10,
+                                                // ),
+                                                // Row(
+                                                //   // mainAxisAlignment:
+                                                //   //     MainAxisAlignment.spaceBetween,
+                                                //   children: [
+                                                //     Text(
+                                                //       'Url : ',
+                                                //       style: TextStyle(
+                                                //           fontWeight:
+                                                //               FontWeight.bold,
+                                                //           fontSize: 13,
+                                                //           color: Colors.black),
+                                                //     ),
+                                                //     InkWell(
+                                                //       onTap: () {
+                                                //         _launchURL();
+                                                //       },
+                                                //       child: Container(
+                                                //         width: res_width * 0.35,
+                                                //         child: Text(
+                                                //           arr[2].toString(),
+                                                //           style: TextStyle(
+                                                //               fontSize: 13,
+                                                //               color: Colors
+                                                //                   .grey[600]),
+                                                //         ),
+                                                //       ),
+                                                //     ),
+                                                //   ],
+                                                // ),
                                               ],
                                             ),
                                           )

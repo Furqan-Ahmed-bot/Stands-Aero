@@ -257,8 +257,7 @@ class _HomeScreenState extends State<HomeScreen>
                                   SizedBox(
                                     width: 10,
                                   ),
-                                  officeTimings['data']['status'] ==
-                                          'online'
+                                  officeTimings['data']['status'] == 'online'
                                       ? Container(
                                           decoration: BoxDecoration(
                                               color: Color(0xffff3ea548),
@@ -415,7 +414,7 @@ class _HomeScreenState extends State<HomeScreen>
             GestureDetector(
               onTap: () {
                 // if (bottomctrl.navigationBarIndexValue != 1) {
-                  bottomctrl.navBarChange(1);
+                bottomctrl.navBarChange(1);
                 // } else {
                 //   Navigator.pop(context);
                 // }
@@ -725,7 +724,7 @@ class _HomeScreenState extends State<HomeScreen>
           mainAxisSize: MainAxisSize.min,
           children: [
             SizedBox(
-              // height: 170,
+              height: res_height * 0.15,
               // width: double.infinity,
               child: Image.network(
                 image,
@@ -737,7 +736,7 @@ class _HomeScreenState extends State<HomeScreen>
                       borderRadius: BorderRadius.circular(10),
                       child: image == null || image.contains('no-image.png')
                           ? Image.asset(
-                              'assets/images/dummyProduct.png',
+                              'assets/images/ComingSoon.jpg',
                               fit: BoxFit.cover,
                             )
                           : Image.network(
@@ -749,7 +748,7 @@ class _HomeScreenState extends State<HomeScreen>
                   return ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Image.asset(
-                        'assets/images/dummyProduct.png',
+                        'assets/images/ComingSoon.jpg',
                         fit: BoxFit.cover,
                       ));
                 },

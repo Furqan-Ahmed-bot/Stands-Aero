@@ -6,7 +6,6 @@ import 'package:StandsAero/bottomcontroller.dart';
 import 'package:StandsAero/controller/usercontroller.dart';
 import 'package:StandsAero/screens/about/aboutus.dart';
 import 'package:StandsAero/screens/home/orderhistory.dart';
-import 'package:StandsAero/screens/home/payment_history.dart';
 import 'package:StandsAero/screens/home/privacy.dart';
 import 'package:StandsAero/screens/home/terms.dart';
 import 'package:StandsAero/screens/notifications/chat.dart';
@@ -216,39 +215,39 @@ class _NavDrawerState extends State<NavDrawer> {
                   ),
                 ),
               ),
-              GestureDetector(
-                behavior: HitTestBehavior.translucent,
-                onTap: () {
-                  Get.to(() => PaymentHistory());
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 13, right: 13),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          IconButton(
-                            icon: Padding(
-                              padding: const EdgeInsets.all(7.0),
-                              child:
-                                  Image.asset("assets/slicing/Untitled-36.png"),
-                            ),
-                            onPressed: () {},
-                          ),
-                          Text(
-                            'Payment History',
-                            style: TextStyle(fontSize: 15, color: Colors.white),
-                          )
-                        ],
-                      ),
-                      Container(
-                        height: 1,
-                        color: Colors.grey.withOpacity(0.2),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+              // GestureDetector(
+              //   behavior: HitTestBehavior.translucent,
+              //   onTap: () {
+              //     Get.to(() => PaymentHistory());
+              //   },
+              //   child: Padding(
+              //     padding: const EdgeInsets.only(left: 13, right: 13),
+              //     child: Column(
+              //       children: [
+              //         Row(
+              //           children: [
+              //             IconButton(
+              //               icon: Padding(
+              //                 padding: const EdgeInsets.all(7.0),
+              //                 child:
+              //                     Image.asset("assets/slicing/Untitled-36.png"),
+              //               ),
+              //               onPressed: () {},
+              //             ),
+              //             Text(
+              //               'Payment History',
+              //               style: TextStyle(fontSize: 15, color: Colors.white),
+              //             )
+              //           ],
+              //         ),
+              //         Container(
+              //           height: 1,
+              //           color: Colors.grey.withOpacity(0.2),
+              //         )
+              //       ],
+              //     ),
+              //   ),
+              // ),
 
               // GestureDetector(
               //   behavior: HitTestBehavior.translucent,
