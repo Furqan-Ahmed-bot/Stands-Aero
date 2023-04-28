@@ -113,7 +113,8 @@ class _OrderHistoryState extends State<OrderHistory> {
                                     orderID: order_historyvar['data'][index]
                                         ['id'],
                                     paymentStatus: order_historyvar['data']
-                                        [index]['payment_status']);
+                                        [index]['payment_status'],
+                                    mydata: order_historyvar['data']);
                               })
                           : Container(
                               height: res_height * 0.8,
@@ -148,7 +149,13 @@ class _OrderHistoryState extends State<OrderHistory> {
 
 class Quotes_Card extends StatelessWidget {
   // var MODEL, location, description;
-  var orderNumber, payAmount, orderDate, orderStatus, paymentStatus, orderID;
+  var orderNumber,
+      payAmount,
+      orderDate,
+      orderStatus,
+      paymentStatus,
+      orderID,
+      mydata;
 
   Quotes_Card(
       {Key? key,
@@ -157,7 +164,8 @@ class Quotes_Card extends StatelessWidget {
       this.orderDate,
       this.orderStatus,
       this.paymentStatus,
-      this.orderID})
+      this.orderID,
+      this.mydata})
       : super(key: key);
 
   @override
@@ -267,6 +275,16 @@ class Quotes_Card extends StatelessWidget {
                                 "$paymentStatus",
                                 style: TextStyle(fontSize: 13),
                               ),
+                              SizedBox(
+                                width: 50,
+                              ),
+                              // InkWell(
+                              //     onTap: () {
+                              //       Get.to(PdfPreview(
+                              //         build: (context) => makePdf(mydata),
+                              //       ));
+                              //     },
+                              //     child: Icon(Icons.download))
                             ],
                           ),
                         ],

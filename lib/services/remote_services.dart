@@ -923,6 +923,27 @@ class ApiService {
     return res_data;
   }
 
+  downloadLeaseForm() async {
+    // showDialog(
+    //     context: context,
+    //     barrierDismissible: false,
+    //     builder: (BuildContext context) {
+    //       return spinkit;
+    //     });
+    final uri = Uri.parse('${apiGlobal}/api/user/details');
+    final headers = {
+      'Authorization': 'Bearer ${globaltoken}',
+    };
+    http.Response response = await http.get(
+      uri,
+      headers: headers,
+    );
+
+    var res_data = json.decode(response.body);
+    print("response.body" + json.decode(response.body).toString());
+    return res_data;
+  }
+
   previewPDF(context, id) async {
     showDialog(
         context: context,

@@ -16,11 +16,11 @@ class lease_Form extends StatefulWidget {
 class _lease_FormState extends State<lease_Form> {
   @override
   void initState() {
-    // stand_manufacturer.text = global_stand_manufacturer;
-    // stand_color.text = global_stand_color;
-    // stand_type.text = global_stand_type;
-    // stand_quantity.text = global_stand_quantity;
-    // stand_serial_number.text = global_stand_serial_number;
+    stand_manufacturer.text = global_stand_manufacturer;
+    stand_color.text = global_stand_color;
+    stand_type.text = global_stand_type;
+    stand_quantity.text = global_stand_quantity;
+    stand_serial_number.text = global_stand_serial_number;
   }
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();

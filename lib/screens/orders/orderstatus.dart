@@ -2,6 +2,7 @@ import 'package:StandsAero/helper/loader.dart';
 import 'package:StandsAero/screens/mainhome.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../services/remote_services.dart';
 
@@ -19,6 +20,7 @@ class OrderStatus extends StatefulWidget {
 class _OrderStatusState extends State<OrderStatus> {
   int _currentStep = 0;
   dynamic order_historyvar;
+  var leaseformid;
   dynamic productDetails = [];
   late String orderStatus;
   Color primaryColor = Colors.white;
@@ -39,6 +41,7 @@ class _OrderStatusState extends State<OrderStatus> {
     order_historyvar = await ApiService().orderDetails(widget.orderID);
     productDetails = order_historyvar['data'];
     orderStatus = order_historyvar['data']["order_status"].toString();
+    leaseformid = order_historyvar['data']['lease_details']['id'];
 
     print("orderStatus detail" + orderStatus);
   }
@@ -110,16 +113,18 @@ class _OrderStatusState extends State<OrderStatus> {
                           ? Column(
                               children: [
                                 Quotes_Card(
-                                    MODEL: productDetails['stand_details']
-                                        ['name'],
-                                    location: productDetails['stand_details']
-                                        ['location'],
-                                    description: productDetails['stand_details']
-                                        ['desc'],
-                                    image: productDetails['stand_details']
-                                        ['thumbnail'],
-                                    serialno: productDetails['stand_details']
-                                        ['serial_number']),
+                                  MODEL: productDetails['stand_details']
+                                      ['name'],
+                                  location: productDetails['stand_details']
+                                      ['location'],
+                                  description: productDetails['stand_details']
+                                      ['desc'],
+                                  image: productDetails['stand_details']
+                                      ['thumbnail'],
+                                  serialno: productDetails['stand_details']
+                                      ['serial_number'],
+                                  leaseform: leaseformid,
+                                ),
                                 SizedBox(
                                   height: res_height * 0.03,
                                 ),
@@ -676,7 +681,7 @@ class _OrderStatusState extends State<OrderStatus> {
 
 // ignore: must_be_immutable
 class Quotes_Card extends StatelessWidget {
-  var MODEL, location, description, image, serialno;
+  var MODEL, location, description, image, serialno, leaseform;
 
   Quotes_Card(
       {Key? key,
@@ -684,8 +689,29 @@ class Quotes_Card extends StatelessWidget {
       this.location,
       this.description,
       this.image,
-      this.serialno})
+      this.serialno,
+      this.leaseform})
       : super(key: key);
+
+  _launchURL() async {
+    Uri _url = Uri.parse(
+        'https://stands.aero/api/user/order-lease/${leaseform}/download');
+    if (await launchUrl(_url, mode: LaunchMode.externalApplication)) {
+      launchUrl(_url);
+    } else {
+      throw 'Could not launch $_url';
+    }
+  }
+
+  // _launchURL() async {
+  //   Uri _url = Uri.parse(
+  //       'https://stands.aero/api/user/order-lease/${leaseform}/download');
+  //   if (await launchUrl(_url, mode: LaunchMode.externalApplication)) {
+  //     launchUrl(_url);
+  //   } else {
+  //     throw 'Could not launch $_url';
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -756,6 +782,32 @@ class Quotes_Card extends StatelessWidget {
                           ),
                         ),
                       ),
+                      Row(
+                        children: [
+                          Text('Download Lease Form :'),
+                          InkWell(
+                              onTap: () {
+                                _launchURL();
+
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //       builder: (context) => WebView(
+                                //             javascriptMode:
+                                //                 JavascriptMode.unrestricted,
+                                //             initialUrl:
+                                //                 'https://stands.aero/api/user/order-lease/${leaseform}/download',
+                                //             gestureNavigationEnabled: true,
+                                //             onProgress: (int progress) {
+                                //               print(
+                                //                   "WebView is loading (progress : $progress%)");
+                                //             },
+                                //           )),
+                                // );
+                              },
+                              child: Icon(Icons.download)),
+                        ],
+                      )
                     ],
                   ),
                   // SizedBox(

@@ -32,6 +32,7 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
 
   @override
   void initState() {
+    profiledata();
     // Future.delayed(Duration.zero, () {
     //   setState(() {
     //     getProfileInfo();
@@ -69,6 +70,17 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
           ? 'Enter your Description'
           : userController.user.description.toString();
     });
+  }
+
+  dynamic profiledetails;
+  dynamic kycformdata;
+  Future<void> profiledata() async {
+    profiledetails = await ApiService().downloadLeaseForm();
+
+    print("order_historyvar" + profiledetails['data'].toString());
+    kycformdata = profiledetails['data']['credit_application_details'];
+
+    print('KYC ${kycformdata}');
   }
 
   // Future<void> getProfileInfo() async {
@@ -173,7 +185,7 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
                       child: CachedNetworkImage(
                         height: 100,
                         width: 100,
-                        imageUrl:userController.user.propic.toString(),
+                        imageUrl: userController.user.propic.toString(),
                         errorWidget: (context, url, error) {
                           return Container(
                             height: 50,
@@ -191,7 +203,7 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
                         },
                       ),
                     ),
-                  ), 
+                  ),
                   // CircleAvatar(
                   //   backgroundColor: Colors.transparent,
                   //   radius: 60,
@@ -235,6 +247,7 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
                   SizedBox(
                     height: res_height * 0.01,
                   ),
+                  // Text('Helo'),
                   GestureDetector(
                     onTap: () async {
                       await DataStorage.getInstance.clearSession();

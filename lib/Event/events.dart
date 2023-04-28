@@ -534,7 +534,7 @@ class _EventScreenState extends State<EventScreen> {
                                                             ['image'],
                                                       )
                                                     : Image.asset(
-                                                        'assets/images/dummyProduct.png',
+                                                        'assets/images/ComingSoon.jpg',
                                                         fit: BoxFit.cover,
                                                       )),
                                           ),

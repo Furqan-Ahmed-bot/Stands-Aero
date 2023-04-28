@@ -8,6 +8,8 @@ import 'package:StandsAero/screens/home/drawer.dart';
 import 'package:StandsAero/services/remote_services.dart';
 import 'package:StandsAero/helper/loader.dart';
 
+import '../../helper/global.dart';
+
 class quotes extends StatefulWidget {
   const quotes({Key? key}) : super(key: key);
 
@@ -125,20 +127,20 @@ class _quotesState extends State<quotes> with TickerProviderStateMixin {
                                         itemCount:
                                             quotations_data['data'].length,
                                         itemBuilder: (context, index) {
-                                          // global_stand_manufacturer =
-                                          //     quotations_data['data'][index]
-                                          //         ['manufacturar'];
-                                          // global_stand_color =
-                                          //     quotations_data['data'][index]
-                                          //         ['engine_stand_color'];
+                                          global_stand_manufacturer =
+                                              quotations_data['data'][index]
+                                                  ['manufacturar'];
+                                          global_stand_color =
+                                              quotations_data['data'][index]
+                                                  ['engine_stand_color'];
 
-                                          // global_stand_type =
-                                          //     quotations_data['data'][index]
-                                          //         ['product_name'];
-                                          // global_stand_serial_number =
-                                          //     quotations_data['data'][index]
-                                          //         ['serial_no'];
-                                          // global_stand_quantity = '1';
+                                          global_stand_type =
+                                              quotations_data['data'][index]
+                                                  ['product_name'];
+                                          global_stand_serial_number =
+                                              quotations_data['data'][index]
+                                                  ['serial_no'];
+                                          global_stand_quantity = '1';
 
                                           print("length" +
                                               quotations_data['data']
