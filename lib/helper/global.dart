@@ -1,5 +1,6 @@
 String globaltoken = "";
 String userid = "";
+dynamic currecntuid;
 var is_kyc;
 var requestFormdatafromQuote;
 var kycrequestFormdatafromQuote;
@@ -28,6 +29,7 @@ var global_signature_1;
 var global_signature_2;
 var signature;
 var signaturetype;
+var webtoken;
 
 final globalHeaders1 = {
   'Accept': 'application/json',

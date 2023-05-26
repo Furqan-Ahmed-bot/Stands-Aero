@@ -2,14 +2,13 @@
 
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:StandsAero/screens/auth/emaillogin.dart';
 import 'package:StandsAero/screens/auth/otp.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../bottomcontroller.dart';
 import '../controller/usercontroller.dart';
 import '../helper/data_storage.dart';
@@ -23,8 +22,8 @@ import '../screens/mainhome.dart';
 import '../tickets/ticket_submitted.dart';
 
 // String apiGlobal = "http://localhost:3000/api/v1";
-// String apiGlobal = "https://standsaero.jumppace.com";
-String apiGlobal = "https://stands.aero";
+String apiGlobal = "https://standsaero-merger.jumppace.com/nsa";
+// String apiGlobal = "https://stands.aero";
 //"https://standsaero-merger.jumppace.com/nsa";
 
 // String apiGlobal = "https://standsaero-dev.jumppace.com";
@@ -124,14 +123,17 @@ class ApiService {
     return res_data;
   }
 
-  login(context, data) async {
+  login(context, data, {loader = false}) async {
     final uri = Uri.parse('${apiGlobal}/api/user/login');
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return spinkit;
-        });
+    if (loader == true) {
+    } else {
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return spinkit;
+          });
+    }
 
     print(uri);
     String jsonBody = json.encode(data);
@@ -185,6 +187,7 @@ class ApiService {
 
       userid = res_data['data']['user']['id'].toString();
       is_kyc = res_data['data']['user']['is_kyc'];
+      currecntuid = res_data['data']['user']['id'];
       // userid = res_data['data']['user']['id'].toString();
       log("USER MODEL" + userController.toString());
       print("nameee :  " + userController.user.propic.toString());
@@ -201,6 +204,39 @@ class ApiService {
       //     clientId: res_data['data']['user']['id'],
       //   ));
       // } else {
+      final SharedPreferences pref = await SharedPreferences.getInstance();
+      pref.setString(
+        'email',
+        res_data['data']['user']['email'],
+      );
+      // pref.setString(
+      //   'fullName',
+      //   res_data['data']['user']['full_name'],
+      // );
+      // // pref.setString(
+      // //   'phone',
+      // //   res_data['data']['user']['phone'],
+      // // );
+      // pref.setString(
+      //   'propic',
+      //   res_data['data']['user']['propic'],
+      // );
+      // pref.setString(
+      //   'city',
+      //   res_data['data']['user']['city'],
+      // );
+      // pref.setString(
+      //   'description',
+      //   res_data['data']['user']['description'],
+      // );
+      // pref.setString(
+      //   'is_kyc',
+      //   res_data['data']['user']['is_kyc'],
+      // );
+      // pref.setString(
+      //   'is_creditappform',
+      //   res_data['data']['user']['is_creditappform'],
+      // );
       Get.offAll(() => MainScreen());
     }
     // }
@@ -940,7 +976,7 @@ class ApiService {
     );
 
     var res_data = json.decode(response.body);
-    print("response.body" + json.decode(response.body).toString());
+    // print("response.body" + json.decode(response.body).toString());
     return res_data;
   }
 
@@ -1416,6 +1452,22 @@ class ApiService {
         snackPosition: SnackPosition.BOTTOM,
       );
 
+    return res_data;
+  }
+
+  cancelAudioVideoCalling() async {
+    final url = Uri.parse('${apiGlobal}/api/user/cancelVideoNotification');
+    final headers = {
+      'Authorization': 'Bearer ${globaltoken}',
+    };
+    http.Response response = await http.get(
+      url,
+      headers: headers,
+      // body: jsonBody,
+    );
+    var res_data = json.decode(response.body);
+
+    print(res_data);
     return res_data;
   }
 }

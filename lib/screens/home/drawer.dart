@@ -11,6 +11,7 @@ import 'package:StandsAero/screens/home/terms.dart';
 import 'package:StandsAero/screens/notifications/chat.dart';
 import 'package:StandsAero/screens/taxcertificate/taxcertificate.dart';
 import 'package:StandsAero/services/remote_services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Event/events.dart';
 import '../../tickets/ticket_list.dart';
@@ -662,7 +663,10 @@ class _NavDrawerState extends State<NavDrawer> {
               ),
               GestureDetector(
                 behavior: HitTestBehavior.translucent,
-                onTap: () {
+                onTap: () async {
+                  final SharedPreferences pref =
+                      await SharedPreferences.getInstance();
+                  pref.clear();
                   ApiService().logout(context);
                 },
                 child: Padding(

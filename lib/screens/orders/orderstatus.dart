@@ -693,13 +693,26 @@ class Quotes_Card extends StatelessWidget {
       this.leaseform})
       : super(key: key);
 
-  _launchURL() async {
-    Uri _url = Uri.parse(
-        'https://stands.aero/api/user/order-lease/${leaseform}/download');
-    if (await launchUrl(_url, mode: LaunchMode.externalApplication)) {
-      launchUrl(_url);
+  // _launchURL() async {
+  //   Uri _url = Uri.parse(
+  //       'https://stands.aero/api/user/order-lease/${leaseform}/download');
+  //   if (await launchUrl(_url, mode: LaunchMode.externalApplication)) {
+  //     launchUrl(_url);
+  //   } else {
+  //     throw 'Could not launch $_url';
+  //   }
+  // }
+
+  Future<void> _launchURL() async {
+    if (await canLaunchUrl(Uri.parse(
+        'https://stands.aero/api/user/order-lease/${leaseform}/download'))) {
+      await launchUrl(
+        Uri.parse(
+            'https://stands.aero/api/user/order-lease/${leaseform}/download'),
+        mode: LaunchMode.externalApplication,
+      );
     } else {
-      throw 'Could not launch $_url';
+      print('Can not use url');
     }
   }
 
@@ -788,7 +801,6 @@ class Quotes_Card extends StatelessWidget {
                           InkWell(
                               onTap: () {
                                 _launchURL();
-
                                 // Navigator.push(
                                 //   context,
                                 //   MaterialPageRoute(

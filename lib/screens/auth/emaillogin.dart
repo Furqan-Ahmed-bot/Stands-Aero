@@ -4,6 +4,7 @@ import 'package:StandsAero/screens/auth/register.dart';
 import 'package:StandsAero/services/remote_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../widgets/remove_focus_widget.dart';
 import 'forgot.dart';
@@ -171,6 +172,10 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                     ),
                     GestureDetector(
                       onTap: () async {
+                        final SharedPreferences pref =
+                            await SharedPreferences.getInstance();
+
+                        pref.setString('password', password.text);
                         print("login");
                         var sendData = {
                           "email": email

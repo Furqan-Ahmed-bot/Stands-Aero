@@ -5,6 +5,9 @@ import 'package:StandsAero/screens/auth/emaillogin.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'services/remote_services.dart';
 
 void main() {
   runApp(const MyApp());
@@ -59,16 +62,27 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   start() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+
+    if (pref.getString('email') != null) {
+      var sendData = {
+        "email":
+            pref.getString('email'), // "hammadkhaultz@gmail.com", //email.text,
+        "password": pref.getString('password'), //"password", //password.text,
+        "device_token": "123654"
+      };
+
+      ApiService().login(context, sendData, loader: true);
+    } else {
+      Timer(Duration(seconds: 2), () => Get.offAll(() => EmailLoginScreen()));
+    }
+
     log('start called');
-    Timer(Duration(seconds: 2), () => Get.offAll(() => EmailLoginScreen()));
-    // bool isLoggedIn = await DataStorage.getInstance.getSession();
-    // if (isLoggedIn) {
-    //   log('LOGGED: $isLoggedIn');
-    //   Timer(Duration(seconds: 2), () => Get.offAll(() => MainScreen()));
-    // } else {
-    //   log('NOTLOGGED: $isLoggedIn');
-    //   Timer(Duration(seconds: 2), () => Get.offAll(() => EmailLoginScreen()));
-    // }
+    // Timer(
+    //   Duration(seconds: 2),
+    //   () => Get.offAll(() =>
+    //       pref.getString('email') == null ? EmailLoginScreen() : HomeScreen()),
+    // );
   }
 
   @override

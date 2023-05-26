@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:StandsAero/tickets/create_tickets.dart';
 import 'package:StandsAero/widgets/disallow_indicator_widget.dart';
 import 'package:StandsAero/widgets/remove_focus_widget.dart';
+import 'package:agora_uikit/agora_uikit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:StandsAero/services/remote_services.dart';
@@ -12,7 +13,9 @@ import 'package:StandsAero/helper/colors.dart';
 import 'package:StandsAero/screens/booking/booking.dart';
 import 'package:StandsAero/screens/home/drawer.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../audio_video_calling_agora/videocalling/callpage.dart';
 import '../../helper/loader.dart';
+
 // import 'package:StandsAero/screens/home/Profile/editprofile.dart';
 // import 'package:StandsAero/screens/home/Profile/profile.dart';
 
@@ -27,6 +30,8 @@ TextEditingController searchController = TextEditingController();
 
 class _HomeScreenState extends State<HomeScreen>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+  ClientRole? _role = ClientRole.Broadcaster;
+
   late AnimationController animation;
   late Animation<double> _fadeInFadeOut;
   final productController = Get.put(ProductController());
@@ -44,6 +49,9 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   void initState() {
     super.initState();
+    requestPermissions();
+    // [Permission.microphone].request();
+    // [Permission.camera].request();
 
     Future.delayed(Duration.zero, () {
       getProducts();
@@ -65,6 +73,21 @@ class _HomeScreenState extends State<HomeScreen>
       }
     });
     animation.forward();
+  }
+
+  Future<void> requestPermissions() async {
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.microphone,
+      Permission.camera,
+    ].request();
+
+    if (statuses[Permission.microphone] != PermissionStatus.granted ||
+        statuses[Permission.camera] != PermissionStatus.granted) {
+      // Permissions were denied. Handle the scenario accordingly.
+      // For example, display an error message or disable certain features.
+    } else {
+      // Permissions were granted. Proceed with the app logic.
+    }
   }
 
   Future<void> getOfficeTimings() async {
@@ -98,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen>
                 categoryId: element['category_id'],
                 manufacturerId: element['manufacturer_id'],
                 categoryName: element['category_name'],
-                manufacturerName: element['manufacturer_name'],
+                manufacturerName: element['manufacturer_name'] ?? "",
                 availableStatus: element['available_status'] ?? "",
                 color: element['color'],
                 // status: element['status'],
@@ -201,6 +224,31 @@ class _HomeScreenState extends State<HomeScreen>
             ],
           ),
           actions: [
+            GestureDetector(
+              onTap: () {
+                print('Hello');
+                Get.to(CallPage(
+                  channelName: '117supportCaller',
+
+                  role: _role,
+                  // RtcToken: rtcToken['pusherData']['webToken'],
+                ));
+
+                // if (bottomctrl.navigationBarIndexValue != 1) {
+                // bottomctrl.navBarChange(1);
+                // } else {
+                //   Navigator.pop(context);
+                // }
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    bottom: 8, top: 12, left: 12, right: 15),
+                child: Container(
+                    width: 20,
+                    height: 20,
+                    child: Image.asset('assets/slicing/videocallicon.png')),
+              ),
+            ),
             GestureDetector(
               onTap: () {
                 showDialog<String>(

@@ -36,8 +36,6 @@ dependencies:
   get: ^4.6.5
   http: ^0.13.5
   image_picker: ^0.8.5+3
-  json_serializable: ^6.3.1
-  json_annotation: ^4.6.0
   flutter_spinkit: ^5.1.0
   file_picker: ^5.2.0+1
   email_validator: ^2.1.17
@@ -48,6 +46,7 @@ dependencies:
   permission_handler: ^10.2.0
   webview_flutter: ^3.0.4
   syncfusion_flutter_pdfviewer: ^20.3.52
+
   shared_preferences: ^2.0.17
   cached_network_image: ^3.2.3
   circular_countdown_timer: ^0.2.3
@@ -55,10 +54,13 @@ dependencies:
   agora_rtc_engine: ^5.3.0
   html: ^0.15.2
   url_launcher: ^6.1.8
-
   flutter_html: ^3.0.0-alpha.6
   pdf:
   printing:
+  agora_uikit:
+  sensors_plus: ^2.0.5
+  flutter_screenutil: ^5.7.0
+  flutter_ringtone_player: ^3.2.0
 
   #flutter_html:
 dev_dependencies:

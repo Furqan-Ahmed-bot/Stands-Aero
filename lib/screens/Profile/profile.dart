@@ -7,6 +7,12 @@ import 'package:StandsAero/services/remote_services.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:printing/printing.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../helper/global.dart';
+import '../credit_Form/downloadcreditform.dart';
+import '../kyc_Form/downloadkycform.dart';
 
 // import 'package:StandsAero/screens/home/Profile/editprofile.dart';
 
@@ -33,11 +39,11 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
   @override
   void initState() {
     profiledata();
-    // Future.delayed(Duration.zero, () {
-    //   setState(() {
-    //     getProfileInfo();
-    //   });
-    // });
+    Future.delayed(Duration.zero, () {
+      setState(() {
+        profiledata();
+      });
+    });
 
     super.initState();
 
@@ -74,13 +80,16 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
 
   dynamic profiledetails;
   dynamic kycformdata;
+  dynamic creditformdata;
   Future<void> profiledata() async {
     profiledetails = await ApiService().downloadLeaseForm();
 
-    print("order_historyvar" + profiledetails['data'].toString());
-    kycformdata = profiledetails['data']['credit_application_details'];
+    //print("order_historyvar" + profiledetails['data'].toString());
+    creditformdata = profiledetails['data']['credit_application_details'];
+    kycformdata = profiledetails['data']['kyc_details'];
 
-    print('KYC ${kycformdata}');
+    print('creditformdata ${creditformdata}');
+    print('kycformdata ${kycformdata}');
   }
 
   // Future<void> getProfileInfo() async {
@@ -247,9 +256,115 @@ class _profileState extends State<profile> with TickerProviderStateMixin {
                   SizedBox(
                     height: res_height * 0.01,
                   ),
-                  // Text('Helo'),
+                  // InkWell(
+                  //     onTap: () {
+                  //       Get.to(PdfPreview(
+                  //         build: (context) =>
+                  //             downloadcreditapplicationform(creditformdata),
+                  //       ));
+                  //     },
+                  //     child: Icon(Icons.download)),
+
+                  // InkWell(
+                  //     onTap: () {
+                  //       Get.to(PdfPreview(
+                  //           build: (context) => downloadkycform(kycformdata)));
+                  //     },
+                  //     child: Icon(Icons.download)),
+                  is_kyc == 1
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: InkWell(
+                                onTap: () {
+                                  Get.to(PdfPreview(
+                                    build: (context) =>
+                                        downloadcreditapplicationform(
+                                            creditformdata),
+                                  ));
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Icon(
+                                        Icons.picture_as_pdf,
+                                        color: Colors.white,
+                                        size: 20,
+                                      ),
+                                      Text(
+                                        'Credit Form',
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 15),
+                                      ),
+                                    ],
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: kPrimaryColor,
+                                    border: Border.all(
+                                        width: 1, color: Colors.transparent),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                  ),
+                                  height: 50,
+                                  width: 150,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 10),
+                              child: InkWell(
+                                onTap: () {
+                                  Get.to(PdfPreview(
+                                      build: (context) =>
+                                          downloadkycform(kycformdata)));
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Icon(
+                                        Icons.picture_as_pdf,
+                                        color: Colors.white,
+                                        size: 20,
+                                      ),
+                                      Text(
+                                        'KYC Form',
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 15),
+                                      ),
+                                    ],
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: kPrimaryColor,
+                                    border: Border.all(
+                                        width: 1, color: Colors.transparent),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                  ),
+                                  height: 50,
+                                  width: 150,
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Container(),
+                  SizedBox(
+                    height: res_height * 0.01,
+                  ),
+
                   GestureDetector(
                     onTap: () async {
+                      final SharedPreferences pref =
+                          await SharedPreferences.getInstance();
+                      pref.clear();
                       await DataStorage.getInstance.clearSession();
                       ApiService().logout(context);
                     },

@@ -309,7 +309,7 @@ class _EventScreenState extends State<EventScreen> {
                             //     break;
                             //   }
                             // }
-                            search(newVal);
+
                             _isButtonVisible = true;
                           },
                           value:

@@ -2,8 +2,11 @@ import 'dart:async';
 
 import 'package:StandsAero/helper/colors.dart';
 import 'package:StandsAero/services/remote_services.dart';
+import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../audio_video_calling_agora/videocalling/audiocalling.dart';
+import '../audio_video_calling_agora/videocalling/callpage.dart';
 import '../helper/global.dart';
 import '../helper/loader.dart';
 import 'ticket_list.dart';
@@ -51,6 +54,7 @@ class _TicketInformationState extends State<TicketInformation> {
   ];
   dynamic ticketinformation = [];
   Timer? timer;
+  ClientRole? _role = ClientRole.Broadcaster;
 
   Future<void> getticketinformation() async {
     ticketinformation = await ApiService().get_ticket_information(widget.id);
@@ -250,69 +254,89 @@ class _TicketInformationState extends State<TicketInformation> {
                 SizedBox(
                   height: 10,
                 ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //   children: [
-                //     Padding(
-                //       padding: const EdgeInsets.only(left: 10),
-                //       child: Container(
-                //         alignment: Alignment.center,
-                //         child: Row(
-                //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //           children: [
-                //             Icon(
-                //               Icons.call,
-                //               color: Colors.white,
-                //               size: 20,
-                //             ),
-                //             Text(
-                //               'Audio Call',
-                //               style:
-                //                   TextStyle(color: Colors.white, fontSize: 15),
-                //             ),
-                //           ],
-                //         ),
-                //         decoration: BoxDecoration(
-                //           color: kPrimaryColor,
-                //           border:
-                //               Border.all(width: 1, color: Colors.transparent),
-                //           borderRadius: BorderRadius.all(Radius.circular(10)),
-                //         ),
-                //         height: 50,
-                //         width: 150,
-                //       ),
-                //     ),
-                //     Padding(
-                //       padding: const EdgeInsets.only(right: 10),
-                //       child: Container(
-                //         alignment: Alignment.center,
-                //         child: Row(
-                //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //           children: [
-                //             Icon(
-                //               Icons.video_call,
-                //               color: Colors.white,
-                //               size: 20,
-                //             ),
-                //             Text(
-                //               'Video Call',
-                //               style:
-                //                   TextStyle(color: Colors.white, fontSize: 15),
-                //             ),
-                //           ],
-                //         ),
-                //         decoration: BoxDecoration(
-                //           color: kPrimaryColor,
-                //           border:
-                //               Border.all(width: 1, color: Colors.transparent),
-                //           borderRadius: BorderRadius.all(Radius.circular(10)),
-                //         ),
-                //         height: 50,
-                //         width: 150,
-                //       ),
-                //     ),
-                //   ],
-                // ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: InkWell(
+                        onTap: () {
+                          Get.to(AudioCall(
+                            channelID: '',
+                            userID: '',
+                          ));
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Icon(
+                                Icons.call,
+                                color: Colors.white,
+                                size: 20,
+                              ),
+                              Text(
+                                'Audio Call',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 15),
+                              ),
+                            ],
+                          ),
+                          decoration: BoxDecoration(
+                            color: kPrimaryColor,
+                            border:
+                                Border.all(width: 1, color: Colors.transparent),
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
+                          height: 50,
+                          width: 150,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: InkWell(
+                        onTap: () {
+                          Get.to(
+                            CallPage(
+                              channelName: '117supportCaller',
+
+                              role: _role,
+                              // RtcToken: rtcToken['pusherData']['webToken'],
+                            ),
+                          );
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Icon(
+                                Icons.video_call,
+                                color: Colors.white,
+                                size: 20,
+                              ),
+                              Text(
+                                'Video Call',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 15),
+                              ),
+                            ],
+                          ),
+                          decoration: BoxDecoration(
+                            color: kPrimaryColor,
+                            border:
+                                Border.all(width: 1, color: Colors.transparent),
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
+                          height: 50,
+                          width: 150,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 SizedBox(
                   height: 20,
                 ),

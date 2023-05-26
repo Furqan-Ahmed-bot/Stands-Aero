@@ -3,13 +3,13 @@ import 'dart:io';
 
 import 'package:StandsAero/controller/usercontroller.dart';
 import 'package:StandsAero/helper/colors.dart';
-import 'package:StandsAero/screens/Profile/profile.dart';
 import 'package:StandsAero/widgets/custom_menu_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../bottomcontroller.dart';
 import '../../services/remote_services.dart';
 import '../../widgets/remove_focus_widget.dart';
 
@@ -21,6 +21,7 @@ class Editprofile extends StatefulWidget {
 }
 
 class _EditprofileState extends State<Editprofile> {
+  final bottomctrl = Get.put(BottomController());
   final usercontroller = Get.put(UserController());
   final _formKey = GlobalKey<FormState>();
   TextEditingController name = TextEditingController();
@@ -61,8 +62,8 @@ class _EditprofileState extends State<Editprofile> {
     city.text = usercontroller.user.city.toString();
     _selectedValue1 = usercontroller.user.city.toString();
     description.text = usercontroller.user.description.toString() == 'null'
-          ? 'Enter your Description'
-          : usercontroller.user.description.toString();
+        ? 'Enter your Description'
+        : usercontroller.user.description.toString();
 
     log('settingvalue: $email');
     log('settingvalue2: $phone');
@@ -366,7 +367,7 @@ class _EditprofileState extends State<Editprofile> {
                               var res_data = await ApiService()
                                   .updateProfile(context, data);
                               if (res_data['status'] == true) {
-                                Get.to(profile());
+                                bottomctrl.navBarChange(3);
                               }
                             }
                           }

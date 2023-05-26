@@ -2,7 +2,7 @@ import 'dart:typed_data';
 import 'package:pdf/widgets.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
-Future<Uint8List> downloadcreditapplicationform(creditapplicationdata) async {
+Future<Uint8List> downloadkycform(mydata) async {
   final pdf = Document();
   final imageLogo = MemoryImage(
       (await rootBundle.load('assets/slicing/Untitled-4.png'))
@@ -14,7 +14,7 @@ Future<Uint8List> downloadcreditapplicationform(creditapplicationdata) async {
         return Column(
           children: [
             Center(
-              child: Text('Credit Application Form',
+              child: Text('KYC FORM',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             ),
             Container(height: 10),
@@ -79,14 +79,34 @@ Future<Uint8List> downloadcreditapplicationform(creditapplicationdata) async {
             //   borderStyle: BorderStyle.dashed,
             // ),
             Container(height: 50),
+            // ListView.builder(
+
+            //   itemBuilder: ((context, index) {
+            //   return Table(
+            //        border: TableBorder.all(),
+            //        children: [
+            //          TableRow(
+            //       children: [
+            //         Text(index.toString()),
+            //         Text(
+            //           mydata[index]['${index}'],
+            //         ),
+            //       ],
+            //     ),
+            //        ]
+
+            //   );
+
+            // }), itemCount: mydata.length ,),
+
             Table(
               border: TableBorder.all(),
               children: [
                 TableRow(
                   children: [
-                    Text('client_id'),
+                    Text('Client Id'),
                     Text(
-                      creditapplicationdata['client_id'],
+                      mydata['client_id'],
                     ),
                   ],
                 ),
@@ -96,7 +116,7 @@ Future<Uint8List> downloadcreditapplicationform(creditapplicationdata) async {
                       'Company Name',
                     ),
                     Text(
-                      creditapplicationdata['company_name'],
+                      mydata['company_name'],
                     )
                   ],
                 ),
@@ -106,27 +126,27 @@ Future<Uint8List> downloadcreditapplicationform(creditapplicationdata) async {
                       'Company Address',
                     ),
                     Text(
-                      creditapplicationdata['company_address'],
+                      mydata['company_address'],
                     )
                   ],
                 ),
                 TableRow(
                   children: [
                     Text(
-                      'City',
+                      'Company Type',
                     ),
                     Text(
-                      creditapplicationdata['city'],
+                      mydata['company_type'],
                     )
                   ],
                 ),
                 TableRow(
                   children: [
                     Text(
-                      'Contact Name',
+                      'Company State Country',
                     ),
                     Text(
-                      creditapplicationdata['contact_name'],
+                      mydata['company_state_country'],
                     )
                   ],
                 ),
@@ -136,57 +156,27 @@ Future<Uint8List> downloadcreditapplicationform(creditapplicationdata) async {
                       'Phone',
                     ),
                     Text(
-                      creditapplicationdata['phone'],
+                      mydata['number'],
                     )
                   ],
                 ),
                 TableRow(
                   children: [
                     Text(
-                      'Sole Proprietorship',
+                      'Contact Person',
                     ),
                     Text(
-                      creditapplicationdata['sole_proprietorship'],
+                      mydata['contact_person'],
                     )
                   ],
                 ),
                 TableRow(
                   children: [
                     Text(
-                      'Corporation',
+                      'Company Website',
                     ),
                     Text(
-                      creditapplicationdata['corporation'],
-                    )
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    Text(
-                      'Other',
-                    ),
-                    Text(
-                      creditapplicationdata['other'],
-                    )
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    Text(
-                      'Date Business Started',
-                    ),
-                    Text(
-                      creditapplicationdata['date_business_stared'],
-                    )
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    Text(
-                      'State',
-                    ),
-                    Text(
-                      creditapplicationdata['state'],
+                      mydata['company_website'],
                     )
                   ],
                 ),
@@ -196,207 +186,87 @@ Future<Uint8List> downloadcreditapplicationform(creditapplicationdata) async {
                       'Email',
                     ),
                     Text(
-                      creditapplicationdata['email'],
+                      mydata['email'],
                     )
                   ],
                 ),
                 TableRow(
                   children: [
                     Text(
-                      'Partnership',
+                      'Company Website',
                     ),
                     Text(
-                      creditapplicationdata['partnership'],
+                      mydata['company_website'],
                     )
                   ],
                 ),
                 TableRow(
                   children: [
                     Text(
-                      'Type Of Business',
+                      'Company Primary Business	',
                     ),
                     Text(
-                      creditapplicationdata['type_of_business'],
+                      mydata['company_prmy_bsns'],
                     )
                   ],
                 ),
                 TableRow(
                   children: [
                     Text(
-                      'd_and_b',
+                      'Company Fund Source	',
                     ),
                     Text(
-                      creditapplicationdata['d_and_b'],
+                      mydata['fund_src'],
                     )
                   ],
                 ),
                 TableRow(
                   children: [
                     Text(
-                      'Bank Name',
+                      'Company Country List	',
                     ),
                     Text(
-                      creditapplicationdata['bank_name'],
+                      mydata['company_countrylist'],
                     )
                   ],
                 ),
                 TableRow(
                   children: [
                     Text(
-                      'Bank Address',
+                      'Company 2 Name	',
                     ),
                     Text(
-                      creditapplicationdata['bank_address'],
+                      mydata['company2_name'],
                     )
                   ],
                 ),
                 TableRow(
                   children: [
                     Text(
-                      'Bank City',
+                      'By',
                     ),
                     Text(
-                      creditapplicationdata['bank_city'],
+                      mydata['_by'],
                     )
                   ],
                 ),
                 TableRow(
                   children: [
                     Text(
-                      'Bank Contact Name',
+                      'Title',
                     ),
                     Text(
-                      creditapplicationdata['bank_contact_name'],
+                      mydata['title'],
                     )
                   ],
                 ),
                 TableRow(
                   children: [
                     Text(
-                      'Bank State',
+                      'Date',
                     ),
                     Text(
-                      creditapplicationdata['bank_state'],
-                    )
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    Text(
-                      'Bank Zip',
-                    ),
-                    Text(
-                      creditapplicationdata['bank_zip'],
-                    )
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    Text(
-                      'Bank Phone',
-                    ),
-                    Text(
-                      creditapplicationdata['bank_phone'],
-                    )
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    Text(
-                      'Business Trade Company Name',
-                    ),
-                    Text(
-                      creditapplicationdata['bsns_trde_company_name'],
-                    )
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    Text(
-                      'Business Trade Company Address	',
-                    ),
-                    Text(
-                      creditapplicationdata['bsns_trde_company_address'],
-                    )
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    Text(
-                      'Business Trade City',
-                    ),
-                    Text(
-                      creditapplicationdata['bsns_trde_city'],
-                    )
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    Text(
-                      'Business Trade State',
-                    ),
-                    Text(
-                      creditapplicationdata['bsns_trde_state'],
-                    )
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    Text(
-                      'Business Trade Zip',
-                    ),
-                    Text(
-                      creditapplicationdata['bsns_trde_zip'],
-                    )
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    Text(
-                      'Business Trade Phone',
-                    ),
-                    Text(
-                      creditapplicationdata['bsns_trde_phone'],
-                    )
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    Text(
-                      'Business Trade Fax',
-                    ),
-                    Text(
-                      creditapplicationdata['bsns_trde_fax'],
-                    )
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    Text(
-                      'Business Trade Email',
-                    ),
-                    Text(
-                      creditapplicationdata['bsns_trde_email'],
-                    )
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    Text(
-                      'Signature Name Title',
-                    ),
-                    Text(
-                      creditapplicationdata['sig_name_title'],
-                    )
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    Text(
-                      'Signature Date',
-                    ),
-                    Text(
-                      creditapplicationdata['sig_date'],
+                      mydata['date'],
                     )
                   ],
                 ),
