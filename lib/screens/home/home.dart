@@ -803,14 +803,14 @@ class _HomeScreenState extends State<HomeScreen>
               ),
             ),
             SizedBox(
-              height: res_height * 0.01,
+              height: 3,
             ),
             Text(
               name.toString(),
               style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
             ),
             SizedBox(
-              height: res_height * 0.0015,
+              height: res_height * 0.0002,
             ),
             Text(
               manufacturename.toString(),

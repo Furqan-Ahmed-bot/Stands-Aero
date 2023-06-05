@@ -42,6 +42,8 @@ class _AudioCallState extends State<AudioCall> {
 
   dynamic rtcToken = '';
   dynamic channel;
+  dynamic receiverUserUid;
+  dynamic receiverUserUid2;
   Future<void> getRtCToken() async {
     String Url = 'https://stands.aero/api/user/DriectCall';
     var response = await http.get(Uri.parse(Url), headers: globalHeaders);
@@ -52,6 +54,8 @@ class _AudioCallState extends State<AudioCall> {
       print('RTC Token ${rtcToken['pusherData']['webToken']}');
       channel = rtcToken['pusherData']['channel'];
       webtoken = rtcToken['pusherData']['webToken'];
+      receiverUserUid = rtcToken['pusherData']['receiverUserUid'];
+      receiverUserUid2 = int.parse(receiverUserUid);
       print(globaltoken);
     } else {
       print('Status Code ${response.statusCode}');
@@ -72,7 +76,7 @@ class _AudioCallState extends State<AudioCall> {
     await [Permission.microphone].request();
     _engine = await RtcEngine.create(appId);
     await _engine.enableAudio();
-    await _engine.joinChannel(webtoken, "117supportCaller", null, 117);
+    await _engine.joinChannel(webtoken, channel, null, currecntuid);
     _engine.setEventHandler(RtcEngineEventHandler(
         joinChannelSuccess: (String channel, int uid, int elapsed) {
       print("Local User $uid joined");
@@ -224,14 +228,18 @@ class _AudioCallState extends State<AudioCall> {
                               await ApiService().cancelAudioVideoCalling();
 
                           if (res['status'] == true) {
-                            Get.to(
-                              CallPage(
-                                channelName: '117supportCaller',
-                                role: _role,
+                               Future.delayed(
+                                const Duration(seconds: 2),
+                                () => Get.to(
+                                      CallPage(
+                                        channelName: '117supportCaller',
+                                        role: _role,
 
-                                // RtcToken: rtcToken['pusherData']['webToken'],
-                              ),
-                            );
+                                        // RtcToken: rtcToken['pusherData']['webToken'],
+                                      ),
+                                    ));
+
+                        
                           }
                         }),
 

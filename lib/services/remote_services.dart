@@ -248,8 +248,9 @@ class ApiService {
         animationDuration: Duration(seconds: 2),
         snackPosition: SnackPosition.BOTTOM,
       );
-      Navigator.pop(context);
-    }
+    
+    Get.to(EmailLoginScreen());
+        }
 
     return res_data;
   }
