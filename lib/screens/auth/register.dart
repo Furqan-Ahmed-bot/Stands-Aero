@@ -1,13 +1,9 @@
-import 'dart:developer';
-
 import 'package:StandsAero/helper/colors.dart';
 import 'package:StandsAero/screens/auth/emaillogin.dart';
-import 'package:StandsAero/screens/auth/mainlogin.dart';
 import 'package:StandsAero/services/remote_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../widgets/custom_menu_widget.dart';
 import '../../widgets/remove_focus_widget.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -77,13 +73,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     controller: fullname,
                     decoration: new InputDecoration(
                       hintText: 'Name',
-                      enabledBorder:  OutlineInputBorder(
-
+                      enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(7.0),
                           borderSide: BorderSide(
                             color: Colors.white,
-                          )
-                          ),
+                          )),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(7.0),
                           borderSide: BorderSide(
@@ -109,13 +103,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     keyboardType: TextInputType.emailAddress,
                     decoration: new InputDecoration(
                       hintText: 'Email',
-                      enabledBorder:  OutlineInputBorder(
-
+                      enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(7.0),
                           borderSide: BorderSide(
                             color: Colors.white,
-                          )
-                          ),
+                          )),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(7.0),
                           borderSide: BorderSide(
@@ -136,9 +128,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       return null;
                     },
                   ),
-                  SizedBox(
-                    height: res_height * 0.015,
-                  ),
+                  // SizedBox(
+                  //   height: res_height * 0.015,
+                  // ),
                   // Container(
                   //   width: MediaQuery.of(context).size.width * 0.9,
                   //   child: TextFormField(
@@ -157,113 +149,142 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   //     ),
                   //   ),
                   // ),
-                  GestureDetector(
-                    onTap: () {
-                      CustomMenuWidget.showBottomSheet(context, [
-                        CustomMenuTile(
-                            onTapped: () {
-                              setState(() {
-                                _selectedValue1 = 'New York';
-                                city.text = 'New York';
-                                isCityValidation = false;
-                              });
-                              Navigator.pop(context);
-                            },
-                            text: 'New York'),
-                        CustomMenuTile(
-                            onTapped: () {
-                              setState(() {
-                                _selectedValue1 = 'New Jersey';
-                                city.text = 'New Jersey';
-                                isCityValidation = false;
-                              });
-                              Navigator.pop(context);
-                            },
-                            text: 'New Jersey'),
-                      ]);
-                    },
-                    child: Container(
-                      width: Get.width * 0.9,
-                      height: 50,
-                      padding: const EdgeInsets.only(left: 18, right: 10),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(7.0),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            _selectedValue1 ?? 'City',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
-                                color: _selectedValue1 == null
-                                    ? Colors.black54
-                                    : Colors.black),
-                          ),
-                          Icon(Icons.arrow_drop_down),
-                        ],
-                      ),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     CustomMenuWidget.showBottomSheet(context, [
+                  //       CustomMenuTile(
+                  //           onTapped: () {
+                  //             setState(() {
+                  //               _selectedValue1 = 'New York';
+                  //               city.text = 'New York';
+                  //               isCityValidation = false;
+                  //             });
+                  //             Navigator.pop(context);
+                  //           },
+                  //           text: 'New York'),
+                  //       CustomMenuTile(
+                  //           onTapped: () {
+                  //             setState(() {
+                  //               _selectedValue1 = 'New Jersey';
+                  //               city.text = 'New Jersey';
+                  //               isCityValidation = false;
+                  //             });
+                  //             Navigator.pop(context);
+                  //           },
+                  //           text: 'New Jersey'),
+                  //     ]);
+                  //   },
+                  //   child: Container(
+                  //     width: Get.width * 0.9,
+                  //     height: 50,
+                  //     padding: const EdgeInsets.only(left: 18, right: 10),
+                  //     decoration: BoxDecoration(
+                  //       color: Colors.white,
+                  //       borderRadius: BorderRadius.circular(7.0),
+                  //     ),
+                  //     child: Row(
+                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //       children: [
+                  //         Text(
+                  //           _selectedValue1 ?? 'City',
+                  //           style: TextStyle(
+                  //               fontWeight: FontWeight.w500,
+                  //               fontSize: 16,
+                  //               color: _selectedValue1 == null
+                  //                   ? Colors.black54
+                  //                   : Colors.black),
+                  //         ),
+                  //         Icon(Icons.arrow_drop_down),
+                  //       ],
+                  //     ),
 
-                      //    DropdownButtonFormField<String>(
-                      //       decoration: InputDecoration(
-                      //           fillColor: Colors.white,
-                      //           contentPadding: EdgeInsets.all(12)),
-                      //       hint: Text(
-                      //         'City',
-                      //         style: TextStyle(
-                      //           fontSize: 17,
-                      //         ),
-                      //       ),
-                      //       isExpanded: true,
-                      //       items: <String>['New York', 'New Jersey']
-                      //           .map((String value) {
-                      //         return DropdownMenuItem<String>(
-                      //           value: value,
-                      //           child: Text(value),
-                      //         );
-                      //       }).toList(),
-                      //       onChanged: (value) {
-                      //         setState(() {
-                      //           _selectedValue1 = value!;
-                      //           city.text = _selectedValue1;
-                      //           print(
-                      //               "selected value" + _selectedValue1.toString());
-                      //           print("selected city" + city.text);
-                      //           // city = _selectedValue1 as TextEditingController;
-                      //         });
-                      //       },
-                      //       style: TextStyle(color: Colors.grey),
-                      //       // icon: Icon(
-                      //       //   Icons.arrow_forward_ios,
-                      //       //   color: kPrimaryColor,
-                      //       //   size: 20,
-                      //       // ),
-                      //       // iconSize: 20,
-                      //       validator: (text) {
-                      //         if (text == null || text.isEmpty || text.length < 5) {
-                      //           return 'Select City !';
-                      //         }
-                      //         return null;
-                      //       }),
-                    ),
+                  //     //    DropdownButtonFormField<String>(
+                  //     //       decoration: InputDecoration(
+                  //     //           fillColor: Colors.white,
+                  //     //           contentPadding: EdgeInsets.all(12)),
+                  //     //       hint: Text(
+                  //     //         'City',
+                  //     //         style: TextStyle(
+                  //     //           fontSize: 17,
+                  //     //         ),
+                  //     //       ),
+                  //     //       isExpanded: true,
+                  //     //       items: <String>['New York', 'New Jersey']
+                  //     //           .map((String value) {
+                  //     //         return DropdownMenuItem<String>(
+                  //     //           value: value,
+                  //     //           child: Text(value),
+                  //     //         );
+                  //     //       }).toList(),
+                  //     //       onChanged: (value) {
+                  //     //         setState(() {
+                  //     //           _selectedValue1 = value!;
+                  //     //           city.text = _selectedValue1;
+                  //     //           print(
+                  //     //               "selected value" + _selectedValue1.toString());
+                  //     //           print("selected city" + city.text);
+                  //     //           // city = _selectedValue1 as TextEditingController;
+                  //     //         });
+                  //     //       },
+                  //     //       style: TextStyle(color: Colors.grey),
+                  //     //       // icon: Icon(
+                  //     //       //   Icons.arrow_forward_ios,
+                  //     //       //   color: kPrimaryColor,
+                  //     //       //   size: 20,
+                  //     //       // ),
+                  //     //       // iconSize: 20,
+                  //     //       validator: (text) {
+                  //     //         if (text == null || text.isEmpty || text.length < 5) {
+                  //     //           return 'Select City !';
+                  //     //         }
+                  //     //         return null;
+                  //     //       }),
+                  //   ),
+                  // ),
+                  // if (isCityValidation)
+                  //   const SizedBox(
+                  //     height: 8,
+                  //   ),
+                  // if (isCityValidation)
+                  //   Align(
+                  //     alignment: Alignment.centerLeft,
+                  //     child: Text(
+                  //       'Please select a valid city!',
+                  //       style: TextStyle(
+                  //           fontWeight: FontWeight.w100,
+                  //           fontSize: 12,
+                  //           color: Colors.red),
+                  //     ),
+                  //   ),
+                  SizedBox(
+                    height: res_height * 0.015,
                   ),
-                  if (isCityValidation)
-                    const SizedBox(
-                      height: 8,
+                  TextFormField(
+                    controller: city,
+                    decoration: new InputDecoration(
+                      hintText: 'City',
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(7.0),
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                          )),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(7.0),
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                          )),
+                      hintStyle: TextStyle(),
+                      contentPadding: EdgeInsets.only(top: 16, left: 16),
+                      fillColor: Color.fromRGBO(255, 255, 255, 1),
+                      filled: true,
                     ),
-                  if (isCityValidation)
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Please select a valid city!',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w100,
-                            fontSize: 12,
-                            color: Colors.red),
-                      ),
-                    ),
+                    validator: (text) {
+                      if (text == null || text.isEmpty) {
+                        return 'Enter City !';
+                      }
+                      return null;
+                    },
+                  ),
                   SizedBox(
                     height: res_height * 0.015,
                   ),
@@ -272,13 +293,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     keyboardType: TextInputType.phone,
                     decoration: new InputDecoration(
                       hintText: 'Phone Number',
-                      enabledBorder:  OutlineInputBorder(
-
+                      enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(7.0),
                           borderSide: BorderSide(
                             color: Colors.white,
-                          )
-                          ),
+                          )),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(7.0),
                           borderSide: BorderSide(
@@ -307,13 +326,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     obscureText: !_passwordVisible,
                     decoration: new InputDecoration(
                         hintText: 'Password',
-                        enabledBorder:  OutlineInputBorder(
-
-                          borderRadius: BorderRadius.circular(7.0),
-                          borderSide: BorderSide(
-                            color: Colors.white,
-                          )
-                          ),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(7.0),
+                            borderSide: BorderSide(
+                              color: Colors.white,
+                            )),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(7.0),
                             borderSide: BorderSide(
@@ -363,13 +380,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     obscureText: !_passwordVisible1,
                     decoration: new InputDecoration(
                       hintText: 'Confirm Password',
-                      enabledBorder:  OutlineInputBorder(
-
+                      enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(7.0),
                           borderSide: BorderSide(
                             color: Colors.white,
-                          )
-                          ),
+                          )),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(7.0),
                           borderSide: BorderSide(
@@ -468,10 +483,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Text(
                         "Already have an account? ",
                         style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
-                              fontSize: 17,
-                            ),
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                          fontSize: 17,
+                        ),
                       ),
                       GestureDetector(
                         onTap: () {

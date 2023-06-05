@@ -248,7 +248,7 @@ class ApiService {
         animationDuration: Duration(seconds: 2),
         snackPosition: SnackPosition.BOTTOM,
       );
-      Navigator.pop(context);
+      Get.to(EmailLoginScreen());
     }
 
     return res_data;
@@ -1211,7 +1211,6 @@ class ApiService {
         });
     var data = {
       'subject': ticketdata['subject'].toString(),
-      'category': ticketdata['category'].toString(),
       'message': ticketdata['message'].toString(),
     };
 
