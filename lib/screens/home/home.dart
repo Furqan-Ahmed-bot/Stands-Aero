@@ -773,7 +773,7 @@ class _HomeScreenState extends State<HomeScreen>
           children: [
             SizedBox(
               height: res_height * 0.15,
-              // width: double.infinity,
+              width: res_width * 0.5,
               child: Image.network(
                 image,
                 loadingBuilder: (context, child, loadingProgress) {

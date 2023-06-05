@@ -58,8 +58,7 @@ class _CallPageState extends State<CallPage> {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${globaltoken}',
     };
-    String Url =
-        'https://standsaero-merger.jumppace.com/nsa/api/user/DriectCall?type=video';
+    String Url = 'https://stands.aero/api/user/DriectCall?type=video';
     var response = await http.get(Uri.parse(Url), headers: headers);
     if (response.statusCode == 200) {
       var res = response.body;

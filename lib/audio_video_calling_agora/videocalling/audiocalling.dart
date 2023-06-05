@@ -43,8 +43,7 @@ class _AudioCallState extends State<AudioCall> {
   dynamic rtcToken = '';
   dynamic channel;
   Future<void> getRtCToken() async {
-    String Url =
-        'https://standsaero-merger.jumppace.com/nsa/api/user/DriectCall';
+    String Url = 'https://stands.aero/api/user/DriectCall';
     var response = await http.get(Uri.parse(Url), headers: globalHeaders);
     if (response.statusCode == 200) {
       var res = response.body;
