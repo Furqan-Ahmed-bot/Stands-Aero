@@ -30,6 +30,7 @@ class _ListOfTicketsState extends State<ListOfTickets> {
 // <body>
 //   <h2>Header 1</h2>
 //   <p>Text.</p>
+
 //   <h2>Header 2</h2>
 //   More text.
 //   <br/>

@@ -42,6 +42,8 @@ class _AudioCallState extends State<AudioCall> {
 
   dynamic rtcToken = '';
   dynamic channel;
+  dynamic receiverUserUid;
+  dynamic receiverUserUid2;
   Future<void> getRtCToken() async {
     String Url = 'https://stands.aero/api/user/DriectCall';
     var response = await http.get(Uri.parse(Url), headers: globalHeaders);
@@ -52,6 +54,8 @@ class _AudioCallState extends State<AudioCall> {
       print('RTC Token ${rtcToken['pusherData']['webToken']}');
       channel = rtcToken['pusherData']['channel'];
       webtoken = rtcToken['pusherData']['webToken'];
+      receiverUserUid = rtcToken['pusherData']['receiverUserUid'];
+      receiverUserUid2 = int.parse(receiverUserUid);
       print(globaltoken);
     } else {
       print('Status Code ${response.statusCode}');
@@ -177,6 +181,7 @@ class _AudioCallState extends State<AudioCall> {
                       )),
                   InkWell(
                     onTap: () {
+                      ApiService().cancelAudioVideoCalling();
                       endCall();
                     },
                     child: Container(
@@ -279,7 +284,6 @@ class _AudioCallState extends State<AudioCall> {
     //       Text(
     //         "User Name",
     //         style: TextStyle(fontSize: 20),
-    //       ),
     //       IconButton(
     //         icon: Icon(_speakerEnabled ? Icons.volume_up : Icons.volume_off),
     //         onPressed: _toggleSpeakerEnabled,

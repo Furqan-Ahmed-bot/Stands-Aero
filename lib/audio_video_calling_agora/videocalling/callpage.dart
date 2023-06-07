@@ -187,18 +187,15 @@ class _CallPageState extends State<CallPage> {
   /// Video view row wrapper
   Widget _expandedVideoRow(List<Widget> views) {
     final wrappedViews = views.map<Widget>(_videoView).toList();
-    return Expanded(
-      child: Row(
-        children: wrappedViews,
-      ),
+    return Row(
+      children: wrappedViews,
     );
   }
 
   Widget _expandedVideoRow1() {
-    return Expanded(
-        child: Container(
+    return Container(
       color: Colors.black,
-    ));
+    );
   }
 
   /// Video layout wrapper
@@ -211,9 +208,27 @@ class _CallPageState extends State<CallPage> {
           children: <Widget>[_videoView(views[0])],
         ));
       case 2:
-        return Column(
+        return Stack(
+          clipBehavior: Clip.none,
+          alignment: Alignment.bottomRight,
+          children: [
+            _expandedVideoRow([views[1]]),
+            Positioned(
+                bottom: 110,
+                right: 10,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Container(
+                    height: 200,
+                    width: 150,
+                    child: _expandedVideoRow([views[0]]),
+                  ),
+                ))
+          ],
+        );
+
+        Column(
           children: <Widget>[
-            _expandedVideoRow([views[0]]),
             _expandedVideoRow([views[1]])
 
             // if (mutevideo == false) ...[
@@ -415,6 +430,7 @@ class _CallPageState extends State<CallPage> {
     //         padding: const EdgeInsets.all(15.0),
     //       ),
     //       RawMaterialButton(
+
     //         onPressed: _onSwitchCamera,
     //         child: Icon(
     //           Icons.switch_camera,

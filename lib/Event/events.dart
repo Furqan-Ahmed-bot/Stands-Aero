@@ -515,7 +515,7 @@ class _EventScreenState extends State<EventScreen> {
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.fromLTRB(
-                                                20, 20, 10, 10),
+                                                10, 20, 10, 10),
                                             child: Container(
                                                 // color: Colors.blue,
                                                 decoration: BoxDecoration(
@@ -542,7 +542,7 @@ class _EventScreenState extends State<EventScreen> {
                                             width: res_width * 0.013,
                                           ),
                                           Container(
-                                            width: res_width * 0.51,
+                                            width: res_width * 0.50,
                                             child: Column(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
@@ -601,7 +601,7 @@ class _EventScreenState extends State<EventScreen> {
                                                           color: Colors.black),
                                                     ),
                                                     Container(
-                                                      width: res_width * 0.35,
+                                                      width: res_width * 0.32,
                                                       child: Text(
                                                         eventfiltered[index]
                                                             ['address'],

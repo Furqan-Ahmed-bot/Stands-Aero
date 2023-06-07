@@ -13,6 +13,7 @@ import 'package:StandsAero/helper/colors.dart';
 import 'package:StandsAero/screens/booking/booking.dart';
 import 'package:StandsAero/screens/home/drawer.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../audio_video_calling_agora/videocalling/audiocalling.dart';
 import '../../audio_video_calling_agora/videocalling/callpage.dart';
 import '../../helper/loader.dart';
 
@@ -280,12 +281,23 @@ class _HomeScreenState extends State<HomeScreen>
                                     children: [
                                       Column(
                                         children: [
-                                          Text(
-                                            "Live Call With Contact Support",
-                                            style: TextStyle(
-                                                color: Colors.grey[700],
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w100),
+                                          InkWell(
+                                            onTap: () {
+                                              officeTimings['data']['status'] ==
+                                                      'online'
+                                                  ? Get.to(AudioCall(
+                                                      channelID: '',
+                                                      userID: '',
+                                                    ))
+                                                  : Get.to(CreateTickets());
+                                            },
+                                            child: Text(
+                                              "Live Call With Contact Support",
+                                              style: TextStyle(
+                                                  color: Colors.grey[700],
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w100),
+                                            ),
                                           )
                                         ],
                                       ),
@@ -785,11 +797,11 @@ class _HomeScreenState extends State<HomeScreen>
                       child: image == null || image.contains('no-image.png')
                           ? Image.asset(
                               'assets/images/ComingSoon.jpg',
-                              fit: BoxFit.cover,
+                              fit: BoxFit.fill,
                             )
                           : Image.network(
                               image,
-                              fit: BoxFit.cover,
+                              fit: BoxFit.fill,
                             ));
                 },
                 errorBuilder: (context, error, stackTrace) {
@@ -803,14 +815,14 @@ class _HomeScreenState extends State<HomeScreen>
               ),
             ),
             SizedBox(
-              height: res_height * 0.01,
+              height: 3,
             ),
             Text(
               name.toString(),
               style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
             ),
             SizedBox(
-              height: res_height * 0.0015,
+              height: res_height * 0.0002,
             ),
             Text(
               manufacturename.toString(),

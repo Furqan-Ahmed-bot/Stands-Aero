@@ -336,13 +336,16 @@ class _CreateTicketsState extends State<CreateTickets> {
                   child: Material(
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.grey,
-                    child: TextFormField(
-                      controller: _descriptioncontroller,
-                      decoration: InputDecoration(
-                          labelStyle: TextStyle(color: Colors.black),
-                          border: InputBorder.none),
-                      keyboardType: TextInputType.multiline,
-                      maxLines: 4,
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 8),
+                      child: TextFormField(
+                        controller: _descriptioncontroller,
+                        decoration: InputDecoration(
+                            labelStyle: TextStyle(color: Colors.black),
+                            border: InputBorder.none),
+                        keyboardType: TextInputType.multiline,
+                        maxLines: 4,
+                      ),
                     ),
                   ),
                 ),
