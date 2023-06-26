@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:StandsAero/tickets/create_tickets.dart';
@@ -12,7 +13,9 @@ import 'package:StandsAero/helper/ProductModel.dart';
 import 'package:StandsAero/helper/colors.dart';
 import 'package:StandsAero/screens/booking/booking.dart';
 import 'package:StandsAero/screens/home/drawer.dart';
+import 'package:pusher_client/pusher_client.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../audio_video_calling_agora/videocalling/acceptandrejectcaalscreen.dart';
 import '../../audio_video_calling_agora/videocalling/audiocalling.dart';
 import '../../audio_video_calling_agora/videocalling/callpage.dart';
 import '../../helper/loader.dart';
@@ -46,11 +49,20 @@ class _HomeScreenState extends State<HomeScreen>
   dynamic officeTimings;
   @override
   bool get wantKeepAlive => true;
+  final _channelController = TextEditingController();
+  final _messageController = TextEditingController();
+  final _messages = <String>[];
+  late PusherClient _pusher;
+  late Channel _channel;
+  String pusherAppKey = '87dcfbf1725d5ae0f886';
+  String pusherAppCluster = 'ap2';
 
   @override
   void initState() {
     super.initState();
     requestPermissions();
+    //connectPusher();
+
     // [Permission.microphone].request();
     // [Permission.camera].request();
 
@@ -74,6 +86,37 @@ class _HomeScreenState extends State<HomeScreen>
       }
     });
     animation.forward();
+  }
+
+  Future<void> connectPusher() async {
+    try {
+      _pusher = PusherClient(
+        pusherAppKey,
+        PusherOptions(cluster: pusherAppCluster),
+        enableLogging: true,
+      );
+      _pusher.connect();
+      _channel = _pusher.subscribe('client.call');
+      print('Channel Subscribed');
+      _channel.bind('nsa-video-call', (dynamic data) {
+        setState(() {
+          Map<String, dynamic> map = jsonDecode(data.data);
+          print('Bind Dataaaaa $map');
+          print('Channel name is ${map['channel']}');
+          print('Token name is ${map['token']}');
+          print('Receiver Id  ${map['receiverUserUid']}');
+          Get.to(AcceptAndRejectCall(
+            incomingchannelname: map['channel'],
+            incomingvideocalltoken: map['token'],
+            receiveruserid: 117,
+            role: _role,
+          ));
+          // _messages.add('${data.data}: ${data['message']}');
+        });
+      });
+    } catch (error) {
+      print(error);
+    }
   }
 
   Future<void> requestPermissions() async {

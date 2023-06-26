@@ -473,6 +473,15 @@ class _quotes_detailsState extends State<quotes_details> {
                                         Get.to(kyc_form(
                                           clientId: int.parse(userid),
                                         ));
+                                      } else if (!filePath!.endsWith('pdf') &&
+                                          !filePath!.endsWith('docx')) {
+                                        Get.snackbar(
+                                          'Error',
+                                          'Please upload Doc or PDF file',
+                                          animationDuration:
+                                              Duration(seconds: 2),
+                                          snackPosition: SnackPosition.BOTTOM,
+                                        );
                                       } else {
                                         placeOrderData_tax_file = filePath;
                                         placeOrderData_quote_id =

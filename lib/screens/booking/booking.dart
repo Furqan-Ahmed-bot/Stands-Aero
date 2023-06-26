@@ -1,6 +1,5 @@
 // import 'dart:html';
 
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:StandsAero/helper/colors.dart';
@@ -40,7 +39,7 @@ class _bookingState extends State<booking> {
   String _range = '';
   String _rangeCount = '';
 
-  final kToday = DateTime.now();
+  dynamic kToday = DateTime.now();
 
   var kFirstDay = DateTime(
       DateTime.now().year, DateTime.now().month - 3, DateTime.now().day);
@@ -78,7 +77,7 @@ class _bookingState extends State<booking> {
   List filteredResponse = [];
   int checkBuild = 0;
   int productId = 0;
-  
+
   @override
   Widget build(BuildContext context) {
     double res_width = MediaQuery.of(context).size.width;
@@ -210,10 +209,9 @@ class _bookingState extends State<booking> {
                               ),
                             ),
                             decoration: BoxDecoration(color: Colors.white)),
-                        firstDay: DateTime.now(), // kFirstDay,
+                        firstDay: kFirstDay, // kFirstDay,
                         lastDay: DateTime.utc(2030, 1, 1), //kLastDay,
-                        focusedDay:
-                            DateTime.now().add(Duration(days: 1)), //kFirstDay,
+                        focusedDay: kToday,
                         rangeStartDay: _rangeStart,
                         rangeEndDay: _rangeEnd,
                         calendarFormat: _calendarFormat,
@@ -221,7 +219,7 @@ class _bookingState extends State<booking> {
                         onRangeSelected: (start, end, focusedDay) {
                           setState(() {
                             _selectedDay = null;
-                            // _focusedDay = focusedDay;
+                            kToday = focusedDay;
                             _rangeStart = start;
                             _rangeEnd = end;
                             _rangeSelectionMode = RangeSelectionMode.toggledOn;
@@ -240,7 +238,9 @@ class _bookingState extends State<booking> {
                       return DropdownMenuItem(
                           value: category['id'],
                           child: Text(
-                            category['address']==null?category['location'] :category['address'].toString(),
+                            category['address'] == null
+                                ? category['location']
+                                : category['address'].toString(),
                             style: TextStyle(
                                 color: Color(0xffAFAEAE), fontSize: 14),
                           ));

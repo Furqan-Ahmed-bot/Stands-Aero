@@ -21,9 +21,9 @@ import '../screens/lease Form/lease_form.dart';
 import '../screens/mainhome.dart';
 import '../tickets/ticket_submitted.dart';
 
-// String apiGlobal = "http://localhost:3000/api/v1";
-//String apiGlobal = "https://standsaero-merger.jumppace.com/nsa";
-String apiGlobal = "https://stands.aero";
+//String apiGlobal = "https://localhost/national_aero_stand/";
+String apiGlobal = "https://standsaero-merger.jumppace.com/nsa";
+//String apiGlobal = "https://stands.aero";
 //"https://standsaero-merger.jumppace.com/nsa";
 
 // String apiGlobal = "https://standsaero-dev.jumppace.com";

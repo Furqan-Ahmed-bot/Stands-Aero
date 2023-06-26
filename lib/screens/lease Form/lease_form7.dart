@@ -388,7 +388,12 @@ class _lease_form7State extends State<lease_form7> {
                         GestureDetector(
                           onTap: () async {
                             if (formKey.currentState!.validate()) {
-                              Get.to(lease_form8());
+                              if (signaturetype == null) {
+                                Get.snackbar(
+                                    'Error', 'Please Upload Signature');
+                              } else {
+                                Get.to(lease_form8());
+                              }
                             }
                             // Get.to(lease_form7());
                           },

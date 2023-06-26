@@ -1,34 +1,36 @@
-import 'dart:convert';
 import 'package:StandsAero/services/remote_services.dart';
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
 import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 
-import '../../helper/global.dart';
 import 'setting.dart';
 
-class CallPage extends StatefulWidget {
+class IncomingVideoCalling extends StatefulWidget {
   /// non-modifiable channel name of the page
-  final String? channelName;
-  final RtcToken;
-  final ticketid;
+
+  final incomingvideocalltoken;
+  final incomingchannelname;
+  final receiveruserid;
 
   /// non-modifiable client role of the page
   final ClientRole? role;
 
   /// Creates a call page with given channel name.
-  const CallPage(
-      {Key? key, this.channelName, this.role, this.RtcToken, this.ticketid})
+  const IncomingVideoCalling(
+      {Key? key,
+      this.role,
+      this.incomingvideocalltoken,
+      this.incomingchannelname,
+      this.receiveruserid})
       : super(key: key);
 
   @override
-  _CallPageState createState() => _CallPageState();
+  _IncomingVideoCallingState createState() => _IncomingVideoCallingState();
 }
 
-class _CallPageState extends State<CallPage> {
+class _IncomingVideoCallingState extends State<IncomingVideoCalling> {
   final _users = <int>[];
   final _infoStrings = <String>[];
   bool muted = false;
@@ -51,49 +53,12 @@ class _CallPageState extends State<CallPage> {
     await _engine.destroy();
   }
 
-  dynamic rtcToken = '';
-  dynamic channel;
-  dynamic receiverUserUid;
-  dynamic receiverUserUid2;
-  Future<void> getRtCToken() async {
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${globaltoken}',
-    };
-    String Url = widget.ticketid == null
-        ? 'https://standsaero-merger.jumppace.com/nsa/api/user/DriectCall?type=video'
-        : 'https://standsaero-merger.jumppace.com/nsa/api/user/ticket/video/call?channel=${widget.ticketid}';
-    var response = await http.get(Uri.parse(Url), headers: headers);
-    if (response.statusCode == 200) {
-      var res = response.body;
-      dynamic data = json.decode(res);
-      rtcToken = data;
-
-      print('RTC Token ${rtcToken['pusherData']['webToken']}');
-      channel = rtcToken['pusherData']['channel'];
-      webtoken = rtcToken['pusherData']['webToken'];
-      receiverUserUid = rtcToken['pusherData']['receiverUserUid'];
-
-      receiverUserUid2 = int.parse(receiverUserUid);
-
-      print(globaltoken);
-    } else {
-      print('Status Code ${response.statusCode}');
-      print('Response  ${response.body}');
-    }
-  }
-
   @override
   void initState() {
+    initialize();
     super.initState();
 
     // initialize agora sdk
-
-    getRtCToken().then(
-      (value) {
-        initialize();
-      },
-    );
   }
 
   Future<void> initialize() async {
@@ -120,7 +85,8 @@ class _CallPageState extends State<CallPage> {
     VideoEncoderConfiguration configuration = VideoEncoderConfiguration();
     configuration.dimensions = VideoDimensions(width: 1920, height: 1080);
     await _engine.setVideoEncoderConfiguration(configuration);
-    await _engine.joinChannel(webtoken, channel, null, currecntuid);
+    await _engine.joinChannel(widget.incomingvideocalltoken,
+        widget.incomingchannelname, null, widget.receiveruserid);
   }
 
   /// Create agora sdk instance and initialize
@@ -164,6 +130,7 @@ class _CallPageState extends State<CallPage> {
         _users.remove(uid);
         _remoteUid = null;
         Get.back();
+        Get.back();
       });
     }, firstRemoteVideoFrame: (uid, width, height, elapsed) {
       setState(() {
@@ -179,8 +146,8 @@ class _CallPageState extends State<CallPage> {
     if (widget.role == ClientRole.Broadcaster) {
       list.add(RtcLocalView.SurfaceView());
     }
-    _users.forEach((int uid) =>
-        list.add(RtcRemoteView.SurfaceView(channelId: channel, uid: uid)));
+    _users.forEach((int uid) => list.add(RtcRemoteView.SurfaceView(
+        channelId: widget.incomingchannelname, uid: uid)));
     return list;
   }
 
@@ -506,6 +473,7 @@ class _CallPageState extends State<CallPage> {
   void _onCallEnd(BuildContext context) {
     ApiService().cancelAudioVideoCalling();
     Navigator.pop(context);
+    Navigator.pop(context);
   }
 
   void _onvideoClose(BuildContext context) {
@@ -532,6 +500,9 @@ class _CallPageState extends State<CallPage> {
 
   @override
   Widget build(BuildContext context) {
+    print('Receiver User id  ${widget.receiveruserid}');
+    print('Receiver Channel Name ${widget.incomingchannelname}');
+    print('Receiversssss  ${widget.incomingvideocalltoken}');
     // if (_remoteUid != null) {
     //   FlutterRingtonePlayer.stop();
     // }
@@ -554,7 +525,7 @@ class _CallPageState extends State<CallPage> {
                     height: 100,
                   ),
                   Text("CSR"),
-                  Text("Calling"),
+                  Text("Connecting"),
                   SizedBox(
                     height: 50,
                   ),
@@ -591,6 +562,7 @@ class _CallPageState extends State<CallPage> {
                         ),
                         InkWell(
                           onTap: () {
+                            Get.back();
                             Get.back();
                           },
                           child: Container(

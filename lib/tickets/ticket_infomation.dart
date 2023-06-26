@@ -101,6 +101,7 @@ class _TicketInformationState extends State<TicketInformation> {
   bool valuesecond = false;
   @override
   Widget build(BuildContext context) {
+    print('Id issssssss ${widget.id} ');
     double res_width = MediaQuery.of(context).size.width;
     double res_height = MediaQuery.of(context).size.height;
     return Container(
@@ -262,6 +263,7 @@ class _TicketInformationState extends State<TicketInformation> {
                       child: InkWell(
                         onTap: () {
                           Get.to(AudioCall(
+                            ticketid: widget.id,
                             channelID: '',
                             userID: '',
                           ));
@@ -301,7 +303,7 @@ class _TicketInformationState extends State<TicketInformation> {
                           Get.to(
                             CallPage(
                               channelName: '117supportCaller',
-
+                              ticketid: widget.id,
                               role: _role,
                               // RtcToken: rtcToken['pusherData']['webToken'],
                             ),
