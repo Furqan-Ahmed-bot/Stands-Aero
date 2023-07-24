@@ -44,8 +44,8 @@ class _AudioCallState extends State<AudioCall> {
   dynamic receiverUserUid2;
   Future<void> getRtCToken() async {
     String Url = widget.ticketid == null
-        ? 'https://standsaero-merger.jumppace.com/nsa/api/user/DriectCall'
-        : 'https://standsaero-merger.jumppace.com/nsa/api/user/ticket/audio/call?channel=${widget.ticketid}';
+        ? 'https://stands.aero/api/user/DriectCall'
+        : 'https://stands.aero/api/user/ticket/audio/call?channel=${widget.ticketid}';
     var response = await http.get(Uri.parse(Url), headers: globalHeaders);
     if (response.statusCode == 200) {
       var res = response.body;

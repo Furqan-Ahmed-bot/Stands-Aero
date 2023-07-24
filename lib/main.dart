@@ -18,7 +18,8 @@ final _messageController = TextEditingController();
 final _messages = <String>[];
 late PusherClient _pusher;
 late Channel _channel;
-String pusherAppKey = '87dcfbf1725d5ae0f886';
+//String pusherAppKey = '87dcfbf1725d5ae0f886';
+String pusherAppKey = 'fd0c41974048021823a7';
 String pusherAppCluster = 'ap2';
 ClientRole? _role = ClientRole.Broadcaster;
 
